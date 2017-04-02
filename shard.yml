@@ -4,4 +4,9 @@ version: 0.0.1
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
 
+description: |
+  Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
+
+crystal: 0.21.1
+
 license: MIT
