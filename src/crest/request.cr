@@ -20,13 +20,13 @@ module Crest
     # * :headers a hash containing the request headers
     # * :payload a hash containing query params
     #
-    def initialize(method : Symbol, url : String, headers, payload = nil, **args)
+    def initialize(method : Symbol, url : String, headers = {} of String => String, payload = {} of String => String, **args)
       @method = parse_verb(method)
       @url = url
 
       @headers = read_headers(headers)
 
-      if payload
+      unless payload.empty?
         @payload, content_type = Payload.generate(payload)
         @headers.add("Content-Type", content_type)
       end

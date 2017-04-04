@@ -1,9 +1,5 @@
 require "./spec_helper"
+require "./crest/*"
 
 describe Crest do
-  # TODO: Write tests
-
-  it "works" do
-    false.should eq(true)
-  end
 end
