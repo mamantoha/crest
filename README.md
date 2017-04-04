@@ -1,5 +1,7 @@
 # crest
 
+[![Build Status][travis_badge]][travis]
+
 TODO: Write a description here
 
 ## Installation
@@ -35,3 +37,6 @@ TODO: Write development instructions here
 ## Contributors
 
 - [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+
+[travis_badge]: http://img.shields.io/travis/mamantoha/crest.svg?style=flat
+[travis]: https://travis-ci.org/mamantoha/crest
