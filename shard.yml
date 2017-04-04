@@ -9,4 +9,9 @@ description: |
 
 crystal: 0.21.1
 
+development_dependencies:
+  kemal:
+    github: sdogruyol/kemal
+    version: ~> 0.18
+
 license: MIT

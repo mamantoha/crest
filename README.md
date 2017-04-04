@@ -24,6 +24,12 @@ TODO: Write usage instructions here
 
 ## Development
 
+To run test:
+
+```
+make test
+```
+
 TODO: Write development instructions here
 
 ## Contributing
