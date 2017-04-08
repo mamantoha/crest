@@ -11,4 +11,9 @@ describe Crest do
     response = Crest.post("#{TEST_SERVER_URL}/upload", payload: {:image1 => file})
     (response.body).should eq("Upload ok")
   end
+
+  it "do POST nested params" do
+    response = Crest.post("#{TEST_SERVER_URL}/post_nested", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+    (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
+  end
 end

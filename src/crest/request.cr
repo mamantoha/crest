@@ -51,5 +51,4 @@ module Crest
     end
   end
 
-
 end
