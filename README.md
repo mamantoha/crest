@@ -2,7 +2,7 @@
 
 [![Build Status][travis_badge]][travis]
 
-TODO: Write a description here
+Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
 ## Installation
 
@@ -20,7 +20,28 @@ dependencies:
 require "crest"
 ```
 
-TODO: Write usage instructions here
+Basic usage:
+
+```crystal
+Crest.get("http://example.com/resource")
+Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+```
+
+### Passing advanced options
+
+```crystal
+Crest::Request.new(:get, "http://example.com/resource", {"Content-Type" => "application/json"})
+Crest::Request.new(:post, "http://example.com/resource", {"Content-Type" => "application/json"}, {:foo => "bar"})
+```
+
+### Multipart
+
+Yeah, that's right! This does multipart sends for you!
+
+```crystal
+file = File.open("#{__DIR__}/example.png")
+Crest.post("http://example.com/upload", payload: {:image => file})
+```
 
 ## Development
 
@@ -29,8 +50,6 @@ To run test:
 ```
 make test
 ```
-
-TODO: Write development instructions here
 
 ## Contributing
 
@@ -43,6 +62,12 @@ TODO: Write development instructions here
 ## Contributors
 
 - [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+
+## License
+
+Copyright: 2017 Anton Maminov (anton.maminov@gmail.com)
+
+This library is distributed under the MIT license. Please see the LICENSE file.
 
 [travis_badge]: http://img.shields.io/travis/mamantoha/crest.svg?style=flat
 [travis]: https://travis-ci.org/mamantoha/crest
