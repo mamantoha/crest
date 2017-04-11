@@ -18,11 +18,11 @@ describe Crest::Request do
       (request.payload.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
     end
 
-    # it "POST request with nested hashes" do
-    #   request = Crest::Request.new(:post, "http://localhost", {"Content-Type" => "application/json"}, {:params1 => "one", :nested => {:params2 => "two"}})
-    #   (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-    #   (request.payload.to_s).should contain("IDK")
-    # end
+    it "POST request with nested hashes" do
+      request = Crest::Request.new(:post, "http://localhost", {"Content-Type" => "application/json"}, {:params1 => "one", :nested => {:params2 => "two"}})
+      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
+      (request.payload.to_s).should contain("form-data; name=\"nested[params2]\"")
+    end
 
   end
 end
