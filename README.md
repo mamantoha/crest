@@ -45,6 +45,12 @@ Crest.post("http://example.com/upload", payload: {:image => file})
 
 ## Development
 
+Install dependencies:
+
+```
+shards
+```
+
 To run test:
 
 ```
