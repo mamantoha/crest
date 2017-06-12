@@ -66,7 +66,7 @@ module Crest
     end
 
     def self.parse_params(params : Hash)
-      flatten_params(params).to_h
+      flatten_params(params)
     end
 
   end
