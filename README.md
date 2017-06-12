@@ -43,6 +43,14 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+
+### Resource
+
+```crystal
+resource = Crest::Resource.new("http://localhost", {"Content-Type" => "application/json"})
+resource.get({"X-Something" => "1"})
+```
+
 ## Development
 
 Install dependencies:

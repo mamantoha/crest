@@ -9,13 +9,4 @@ describe Crest::Resource do
       resource.headers.should eq({"X-Something" => "1"})
     end
   end
-
-  describe "Resource delegation" do
-    describe "GET" do
-      it "creates request" do
-        resource = Crest::Resource.new("http://localhost", {"Content-Type" => "application/json"})
-        response = resource.get({"X-Something" => "1"})
-      end
-    end
-  end
 end
