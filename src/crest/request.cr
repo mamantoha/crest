@@ -33,6 +33,8 @@ module Crest
     end
 
     def execute() : HTTP::Client::Response
+      # TODO: JSON
+      # payload="{\"title\": \"Title\"}"
       HTTP::Client.exec(method, url, body: payload, headers: headers)
     end
 

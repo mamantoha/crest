@@ -6,6 +6,11 @@ describe Crest do
     (response.body).should eq("Hello World!")
   end
 
+  it "do POST request" do
+    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", payload: {:image1 => file})
@@ -19,8 +24,24 @@ describe Crest do
 
   describe "Resource" do
     it "do GET request" do
-      resource = Crest::Resource.new("#{TEST_SERVER_URL}", {"Content-Type" => "application/json"})
-      response = resource.get({"X-Something" => "1"})
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments", {"Content-Type" => "application/json"})
+      response = resource.get()
+      (response.body).should eq("Post 1: comments")
     end
+
+    it "do POST request" do
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+      response = resource.post({:title => "Title"})
+      (response.body).should eq("Post with title `Title` created")
+    end
+
+    # TODO JSON
+    # it "do POST JSON request" do
+    #   params = {:title => "Title"}.to_json
+    #   resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/json", {"Content-Type" => "application/json"})
+    #   response = resource.post(params)
+    #   (response.body).should eq("Post with title `Title` created")
+    # end
+
   end
 end
