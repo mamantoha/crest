@@ -29,11 +29,24 @@ describe Crest do
       (response.body).should eq("Post 1: comments")
     end
 
+    it "do GET request with []" do
+      site = Crest::Resource.new("#{TEST_SERVER_URL}", {"Content-Type" => "application/json"})
+      response = site["/post/1/comments"].get()
+      (response.body).should eq("Post 1: comments")
+    end
+
     it "do POST request" do
       resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
       response = resource.post({:title => "Title"})
       (response.body).should eq("Post with title `Title` created")
     end
+
+    it "do POST request with []" do
+      site = Crest::Resource.new(TEST_SERVER_URL)
+      response = site["/post/1/comments"].post({:title => "Title"})
+      (response.body).should eq("Post with title `Title` created")
+    end
+
 
     # TODO JSON
     # it "do POST JSON request" do

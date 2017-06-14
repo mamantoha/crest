@@ -51,6 +51,13 @@ resource = Crest::Resource.new("http://localhost", {"Content-Type" => "applicati
 resource.get({"X-Something" => "1"})
 ```
 
+### Resource Nesting
+
+```crystal
+site = Crest::Resource.new('http://example.com')
+response = site["/api/article"].post({:title => "Hello world", :body => "Crystal is awesome!"})
+```
+
 ## Development
 
 Install dependencies:

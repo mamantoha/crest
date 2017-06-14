@@ -20,5 +20,17 @@ module Crest
       Request.execute(method: :post, url: url, headers: headers, payload: payload)
     end
 
+    def[](suburl)
+      self.class.new(concat_urls(url, suburl), headers)
+    end
+
+    private def concat_urls(url : String, suburl : String) : String
+      if url.byte_slice(-1, 1) == "/" || suburl.byte_slice(0, 1) == "/"
+        url + suburl
+      else
+        "#{url}/#{suburl}"
+      end
+    end
+
   end
 end

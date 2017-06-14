@@ -8,5 +8,14 @@ describe Crest::Resource do
       resource.url.should eq("http://localhost")
       resource.headers.should eq({"X-Something" => "1"})
     end
+
+    it "initialize new resource with []" do
+      site = Crest::Resource.new("http://localhost", {"X-Something" => "1"})
+      resource = site["/resource"]
+
+      resource.url.should eq("http://localhost/resource")
+      resource.headers.should eq({"X-Something" => "1"})
+    end
+
   end
 end
