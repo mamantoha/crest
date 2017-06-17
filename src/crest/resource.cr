@@ -1,23 +1,24 @@
 module Crest
   class Resource
 
-    getter url, headers
+    getter url, headers, params
 
-    def initialize(url : String, headers = {} of String => String)
+    def initialize(url : String, headers = {} of String => String, params = {} of String => String, **args)
       @url = url
       @headers = headers
+      @params = params
     end
 
-    def get(additional_headers = {} of String => String)
+    def get(additional_headers = {} of String => String, params = {} of String => String)
       @headers = (@headers || {} of String => String).merge(additional_headers)
 
-      Request.execute(method: :get, url: url, headers: headers)
+      Request.execute(method: :get, url: url, headers: headers, params: params)
     end
 
-    def post(payload = {} of String => String, additional_headers = {} of String => String)
+    def post(payload = {} of String => String, additional_headers = {} of String => String, params = {} of String => String)
       @headers = (@headers || {} of String => String).merge(additional_headers)
 
-      Request.execute(method: :post, url: url, headers: headers, payload: payload)
+      Request.execute(method: :post, url: url, headers: headers, payload: payload, params: params)
     end
 
     def[](suburl)

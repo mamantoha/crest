@@ -23,7 +23,7 @@ require "crest"
 Basic usage:
 
 ```crystal
-Crest.get("http://example.com/resource")
+Crest.get("http://example.com/resource", params: {:lang => "ua"})
 Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
 ```
 
@@ -31,7 +31,8 @@ Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested =
 
 ```crystal
 Crest::Request.new(:get, "http://example.com/resource", {"Content-Type" => "application/json"})
-Crest::Request.new(:post, "http://example.com/resource", {"Content-Type" => "application/json"}, {:foo => "bar"})
+Crest::Request.new(:get, "http://example.com/resource", params: {:lang => "ua"})
+Crest::Request.new(:post, "http://example.com/resource", {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
 ```
 
 ### Multipart

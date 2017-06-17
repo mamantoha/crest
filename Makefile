@@ -1,4 +1,4 @@
-test: test_unit test_integration clean
+test: clean test_unit server test_integration clean
 
 test_unit:
 	crystal spec ./spec/unit/**
@@ -6,9 +6,9 @@ test_unit:
 server:
 	mkdir -p ./tmp
 	crystal build ./spec/support/server.cr -o ./tmp/server
-	./tmp/server -p 4567 > ./tmp/server.log & echo $$! >> ./tmp/server.pid
+	./tmp/server -p 4567 > ./tmp/server.log & echo $$! > ./tmp/server.pid
 
-test_integration: server
+test_integration:
 	crystal spec ./spec/integration/**
 
 clean:
