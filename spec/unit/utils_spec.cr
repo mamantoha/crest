@@ -40,6 +40,20 @@ describe Crest::Utils do
       Crest::Utils.encode_query_string(input).should eq(output)
     end
 
+    it "serialize hash with nil" do
+      input = {:foo => nil, :bar => "456"}
+      output = "foo&bar=456"
+
+      Crest::Utils.encode_query_string(input).should eq(output)
+    end
+
+    it "serialize hash with symbol" do
+      input = {:foo => :bar}
+      output = "foo=bar"
+
+      Crest::Utils.encode_query_string(input).should eq(output)
+    end
+
     it "serialize hash with numeric values" do
       input = {:foo => 123, :bar => 456}
       output = "foo=123&bar=456"

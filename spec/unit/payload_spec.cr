@@ -26,6 +26,13 @@ describe Crest::Payload do
       Crest::Payload.parse_params(input).should eq(output)
     end
 
+    it "parse simple params with nil value" do
+      input = {:key1 => nil}
+      output = {"key1" => nil}
+
+      Crest::Payload.parse_params(input).should eq(output)
+    end
+
     it "parse nested params" do
       input = {:key1 => {:key2 => "123"}}
       output = {"key1[key2]" => "123"}

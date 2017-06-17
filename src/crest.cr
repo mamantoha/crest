@@ -3,6 +3,8 @@ require "uri"
 require "./crest/**"
 
 module Crest
+  alias TextValue = String | Symbol | Int32 | Nil
+
   def self.get(url : String, headers = {} of String => String, params = {} of String => String)
     Request.execute(method: :get, url: url, headers: headers, params: params)
   end

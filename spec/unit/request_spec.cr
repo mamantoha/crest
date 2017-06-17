@@ -17,6 +17,20 @@ describe Crest::Request do
       (request.payload).should eq(nil)
     end
 
+    it "initialize the GET request with params in url" do
+      request = Crest::Request.new(:get, "http://localhost?json", params: {:key => 123})
+      (request.method).should eq("GET")
+      (request.url).should eq("http://localhost?json&key=123")
+      (request.payload).should eq(nil)
+    end
+
+    it "initialize the GET request with nil value in params" do
+      request = Crest::Request.new(:get, "http://localhost", params: {:json => nil, :key => 123})
+      (request.method).should eq("GET")
+      (request.url).should eq("http://localhost?json&key=123")
+      (request.payload).should eq(nil)
+    end
+
     it "initialize the POST request with payload" do
       request = Crest::Request.new(:post, "http://localhost", {"Content-Type" => "application/json"}, {:foo => "bar"})
       (request.method).should eq("POST")

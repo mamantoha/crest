@@ -30,6 +30,13 @@ get "/resize" do |env|
   "Width: #{width}, height: #{height}"
 end
 
+# Matches /add_key?json&key=123
+get "/add_key" do |env|
+  key = env.params.query["key"]
+
+  "JSON: key[#{key}]"
+end
+
 # TODO: JSON
 post "/post/:id/json" do |env|
   title = env.params.json["title"].as(String)

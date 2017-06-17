@@ -19,7 +19,7 @@ module Crest
       return io.to_s, content_type.receive
     end
 
-    def self.add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : String | Symbol | Int32)
+    def self.add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : TextValue)
       formdata.field(name.to_s, value.to_s)
     end
 
