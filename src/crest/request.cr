@@ -12,7 +12,8 @@ module Crest
       new(method, url, **args).execute
     end
 
-    # Crest::Request.execute(method: :post, url: "http://example.com/user?name=Kurt", payload: {:age => "27"})
+    # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+    #
     # Mandatory parameters:
     # * :method
     # * :url

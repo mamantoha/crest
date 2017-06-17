@@ -3,7 +3,7 @@ module Crest
 
     getter url, headers, params
 
-    def initialize(url : String, headers = {} of String => String, params = {} of String => String)
+    def initialize(url : String, headers = {} of String => String, params = {} of String => String, **args)
       @url = url
       @headers = headers
       @params = params
