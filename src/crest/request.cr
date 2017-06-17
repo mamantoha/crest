@@ -19,10 +19,16 @@ module Crest
     # Optional parameters:
     # * :headers a hash containing the request headers
     # * :payload a hash containing query params
+    # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
+    #          a sequence of attribute–value pairs separated by a delimiter (&).
     #
-    def initialize(method : Symbol, url : String, headers = {} of String => String, payload = {} of String => String, **args)
+    def initialize(method : Symbol, url : String, headers = {} of String => String, payload = {} of String => String, params = {} of String => String, **args)
       @method = parse_verb(method)
       @url = url
+
+      unless params.empty?
+        @url = url + process_url_params(params)
+      end
 
       @headers = read_headers(headers)
 
@@ -50,6 +56,18 @@ module Crest
       end
 
       headers
+    end
+
+    # Extract the query parameters and append them to the url
+    #
+    private def process_url_params(url_params) : String
+      query_string = Crest::Utils.encode_query_string(url_params)
+
+      if url.includes?("?")
+        return "&" + query_string
+      else
+        return "?" + query_string
+      end
     end
   end
 

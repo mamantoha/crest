@@ -22,6 +22,14 @@ post "/post/:id/comments" do |env|
   "Post with title `#{env.params.body["title"]}` created"
 end
 
+# Matches /resize?width=200&height=200
+get "/resize" do |env|
+  width = env.params.query["width"]
+  height = env.params.query["height"]
+
+  "Width: #{width}, height: #{height}"
+end
+
 # TODO: JSON
 post "/post/:id/json" do |env|
   title = env.params.json["title"].as(String)

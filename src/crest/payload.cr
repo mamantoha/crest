@@ -19,7 +19,7 @@ module Crest
       return io.to_s, content_type.receive
     end
 
-    def self.add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : String | Symbol)
+    def self.add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : String | Symbol | Int32)
       formdata.field(name.to_s, value.to_s)
     end
 
@@ -28,45 +28,8 @@ module Crest
       formdata.file(name.to_s, value, metadata)
     end
 
-    # Transform deeply nested param containers into a flat hash of `key => value`.
-    #
-    # >> flatten_params({:key1 => {:key2 => "123"}})
-    # => {"key1[key2]" => "123"}
-    #
-    def self.flatten_params(object : Hash, parent_key = nil)
-      object.reduce({} of String => (String | File)) do |memo, item|
-        k, v = item
-
-        processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
-
-        case v
-        when Hash, Array
-          memo.merge!(flatten_params(v, processed_key))
-        else
-          memo[processed_key] = v
-        end
-
-        memo
-      end
-    end
-
-    # >> flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
-    # => {"key1[arr][]" => "1", "key1[arr][]" => "2", "key1[arr][]" => "3"}
-    #
-    def self.flatten_params(object : Array, parent_key = nil)
-      object.reduce({} of String => (String | File)) do |memo, item|
-        k = :""
-        v = item
-
-        processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
-        memo[processed_key] = v
-
-        memo
-      end
-    end
-
     def self.parse_params(params : Hash)
-      flatten_params(params)
+      Crest::Utils.flatten_params(params)
     end
 
   end
