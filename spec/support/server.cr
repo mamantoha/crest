@@ -43,4 +43,8 @@ post "/post/:id/json" do |env|
   "Post with title `#{env.params.json["title"]}` created"
 end
 
+get "/404" do |env|
+  env.response.status_code = 404
+end
+
 Kemal.run

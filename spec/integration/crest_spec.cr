@@ -97,4 +97,11 @@ describe Crest do
     # end
 
   end
+
+  describe "Error handlng" do
+    it "404" do
+      response = Crest.get("#{TEST_SERVER_URL}/404")
+      (response.status_code).should eq(404)
+    end
+  end
 end
