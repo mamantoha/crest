@@ -45,5 +45,13 @@ describe Crest::Request do
       (request.payload.to_s).should contain("form-data; name=\"nested[params2]\"")
     end
 
+    it "initialize the PUT request with payload" do
+      request = Crest::Request.new(:put, "http://localhost", {"Content-Type" => "application/json"}, {:foo => "bar"})
+      (request.method).should eq("PUT")
+      (request.url).should eq("http://localhost")
+      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
+      (request.payload.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
+    end
+
   end
 end
