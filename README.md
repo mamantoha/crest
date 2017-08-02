@@ -3,6 +3,7 @@
 [![Build Status][travis_badge]][travis]
 
 Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
+Support HTTP methods: get, post, put, patch, post, delete.
 
 ## Installation
 
@@ -24,15 +25,20 @@ Basic usage:
 
 ```crystal
 Crest.get("http://example.com/resource", params: {:lang => "ua"})
+Crest.delete("http://example.com/resource/1")
 Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+Crest.put("http://example.com/resource/1", payload: {:params1 => "one", :nested => {:params2 => "two"}})
 ```
+
+In the high level helpers, only `POST`, `PATCH`, and `PUT` take a payload argument.
 
 ### Passing advanced options
 
 ```crystal
 Crest::Request.new(:get, "http://example.com/resource", {"Content-Type" => "application/json"})
-Crest::Request.new(:get, "http://example.com/resource", params: {:lang => "ua"})
+Crest::Request.new(:delete, "http://example.com/resource/1", params: {:lang => "ua"})
 Crest::Request.new(:post, "http://example.com/resource", {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+Crest::Request.new(:patch, "http://example.com/resource/1", {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
 ```
 
 ### Multipart

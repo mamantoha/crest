@@ -32,6 +32,22 @@ describe Crest do
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
 
+  it "do PUT request" do
+    response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", payload: {:title => "Put Update"})
+    (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
+  end
+
+  it "do PATCH request" do
+    response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", payload: {:title => "Patch Update"})
+    (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
+  end
+
+  it "do DELETE request" do
+    response = Crest.delete("#{TEST_SERVER_URL}/post/1/comments/1")
+    (response.body).should eq("Delete Comment `1` for Post `1`")
+  end
+
+
   describe "Request" do
     it "do GET request" do
       response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/post/1/comments")
@@ -95,6 +111,24 @@ describe Crest do
     #   response = resource.post(params)
     #   (response.body).should eq("Post with title `Title` created")
     # end
+
+    it "do PUT request" do
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+      response = resource.put({:title => "Put Update"})
+      (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
+    end
+
+    it "do PATCH request" do
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+      response = resource.patch({:title => "Patch Update"})
+      (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
+    end
+
+    it "do DELETE request" do
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+      response = resource.delete()
+      (response.body).should eq("Delete Comment `1` for Post `1`")
+    end
 
   end
 

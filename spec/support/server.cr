@@ -14,13 +14,33 @@ post "/post_nested" do |env|
   params.body
 end
 
+### Comments
+#
+# index
 get "/post/:id/comments" do |env|
   "Post #{env.params.url["id"]}: comments"
 end
 
+# create
 post "/post/:id/comments" do |env|
   "Post with title `#{env.params.body["title"]}` created"
 end
+
+# update
+put "/post/:post_id/comments/:id" do |env|
+  "Update Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}` with title `#{env.params.body["title"]}`"
+end
+
+# update
+patch "/post/:post_id/comments/:id" do |env|
+  "Update Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}` with title `#{env.params.body["title"]}`"
+end
+
+# delete
+delete "/post/:post_id/comments/:id" do |env|
+  "Delete Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}`"
+end
+###
 
 # Matches /resize?width=200&height=200
 get "/resize" do |env|
