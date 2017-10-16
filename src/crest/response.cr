@@ -36,7 +36,8 @@ module Crest
       # handle relative redirects
       unless url.starts_with?("http")
         uri = URI.parse(@request.url)
-        url = "#{uri.scheme}://#{uri.host}:#{uri.port}#{url}"
+        port = uri.port ? ":#{uri.port}" : ""
+        url = "#{uri.scheme}://#{uri.host}#{port}#{url}"
       end
 
       # prepare new request
