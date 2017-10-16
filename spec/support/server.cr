@@ -67,4 +67,22 @@ get "/404" do |env|
   env.response.status_code = 404
 end
 
+get "/500" do |env|
+  env.response.status_code = 500
+end
+
+# Redirect
+#
+get "/redirect" do |env|
+  env.redirect("/")
+end
+
+get "/redirect/circle1" do |env|
+  env.redirect("/redirect/circle2")
+end
+
+get "/redirect/circle2" do |env|
+  env.redirect("/redirect/circle1")
+end
+
 Kemal.run
