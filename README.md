@@ -1,6 +1,9 @@
 # crest
 
 [![Build Status][travis_badge]][travis]
+[![Dependency Status](https://shards.rocks/badge/github/mamantoha/crest/status.svg)](https://shards.rocks/github/mamantoha/crest)
+[![devDependency Status](https://shards.rocks/badge/github/mamantoha/crest/dev_status.svg)](https://shards.rocks/github/mamantoha/crest)
+[![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
 
 Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 Support HTTP methods: get, post, put, patch, post, delete.
