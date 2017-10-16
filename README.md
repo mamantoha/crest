@@ -86,6 +86,18 @@ Crest::Request.execute(method: :get, url: "http://httpbin.org/redirect/1", max_r
 # Crest::RequestFailed: 302 Found
 ```
 
+## Result handling
+
+The result of a `Crest::Request` is a `Crest::Response` object.
+
+Response objects have several useful methods.
+
+- `Response#body`: The response body as a string
+- `Response#status_code`: The HTTP response code
+- `Response#headers`: A hash of HTTP response headers
+- `Response#request`: The `Crest::Request` object used to make the request
+- `Response#http_client_res`: The `HTTP::Client::Response` object
+
 ## Development
 
 Install dependencies:

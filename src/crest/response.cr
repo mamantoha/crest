@@ -4,6 +4,8 @@ module Crest
     @http_client_res : HTTP::Client::Response
     @request : Crest::Request
 
+    getter http_client_res, request, code
+
     def self.create(http_client_res : HTTP::Client::Response , request : Crest::Request)
       result = self.new(http_client_res, request)
       result
@@ -57,8 +59,22 @@ module Crest
       @http_client_res.body
     end
 
+    # A hash of the headers, beautified with strings and underscores.
+    # e.g. "Content-type" will become "content_type".
     def headers
-      @request.headers
+      beautify_headers(@request.headers)
+    end
+
+    private def beautify_headers(headers : HTTP::Headers)
+      raw_headers = headers.to_h
+      headers = {} of String => String
+      raw_headers.each do |item|
+        k, v = item
+        key = k.tr("-", "_").downcase
+        value = v.join(", ").to_s
+        headers[key] = value
+      end
+      headers
     end
 
     private def check_max_redirects
