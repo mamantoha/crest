@@ -5,8 +5,9 @@ module Crest
     @url : String
     @headers : HTTP::Headers
     @payload : String? = nil
+    @max_redirects : Int32
 
-    getter method, url, payload, headers
+    getter method, url, payload, headers, max_redirects
 
     def self.execute(method, url, **args)
       new(method, url, **args).execute
@@ -22,10 +23,13 @@ module Crest
     # * :payload a hash containing query params
     # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
     #          a sequence of attribute–value pairs separated by a delimiter (&).
+    # * :max_redirects maximum number of redirections (default to 10)
     #
     def initialize(method : Symbol, url : String, headers = {} of String => String, payload = {} of String => String, params = {} of String => String, **args)
       @method = parse_verb(method)
       @url = url
+
+      @max_redirects = args.fetch(:max_redirects, 10)
 
       unless params.empty?
         @url = url + process_url_params(params)
@@ -39,10 +43,14 @@ module Crest
       end
     end
 
-    def execute() : HTTP::Client::Response
-      # TODO: JSON
-      # payload="{\"title\": \"Title\"}"
-      HTTP::Client.exec(method, url, body: payload, headers: headers)
+    def execute() : Crest::Response
+      response = HTTP::Client.exec(method, url, body: payload, headers: headers)
+      process_result(response)
+    end
+
+    private def process_result(http_client_res)
+      response = Response.create(http_client_res, self)
+      response.return!
     end
 
     private def parse_verb(method : String | Symbol) : String

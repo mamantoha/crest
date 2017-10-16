@@ -65,6 +65,24 @@ site = Crest::Resource.new('http://example.com')
 response = site["/api/article"].post({:title => "Hello world", :body => "Crystal is awesome!"})
 ```
 
+### Exceptions
+
+- for result codes between `200` and `207`, a `Crest::Response` will be returned
+- for result codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
+- for other cases, a `Crest::RequestFailed` holding the Response will be raised
+- call `.response` on the exception to get the server's response
+
+### Redirection
+
+By default, `crest` will follow HTTP 30x redirection requests.
+
+To disable automatic redirection, set `:max_redirects => 0`.
+
+```crystal
+Crest::Request.execute(method: :get, url: "http://httpbin.org/redirect/1", max_redirects: 0)
+# Crest::RequestFailed: 302 Found
+```
+
 ## Development
 
 Install dependencies:

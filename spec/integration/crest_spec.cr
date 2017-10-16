@@ -104,7 +104,7 @@ describe Crest do
       (response.body).should eq("Post with title `Title` created")
     end
 
-    # TODO JSON
+    # TODO: JSON
     # it "do POST JSON request" do
     #   params = {:title => "Title"}.to_json
     #   resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/json", {"Content-Type" => "application/json"})
@@ -128,14 +128,6 @@ describe Crest do
       resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
       response = resource.delete()
       (response.body).should eq("Delete Comment `1` for Post `1`")
-    end
-
-  end
-
-  describe "Error handlng" do
-    it "404" do
-      response = Crest.get("#{TEST_SERVER_URL}/404")
-      (response.status_code).should eq(404)
     end
   end
 end
