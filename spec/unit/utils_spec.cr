@@ -60,8 +60,5 @@ describe Crest::Utils do
 
       Crest::Utils.encode_query_string(input).should eq(output)
     end
-
   end
 end
-
-

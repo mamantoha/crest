@@ -31,6 +31,5 @@ module Crest
     def self.parse_params(params : Hash)
       Crest::Utils.flatten_params(params)
     end
-
   end
 end

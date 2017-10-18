@@ -1,7 +1,6 @@
 require "../spec_helper"
 
 describe Crest::Payload do
-
   describe "#generate" do
     it "generate payload" do
       input = {"files[one]" => "one", "files[two]" => "two"}

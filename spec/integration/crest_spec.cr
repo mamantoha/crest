@@ -47,7 +47,6 @@ describe Crest do
     (response.body).should eq("Delete Comment `1` for Post `1`")
   end
 
-
   describe "Request" do
     it "do GET request" do
       response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/post/1/comments")
@@ -76,13 +75,13 @@ describe Crest do
   describe "Resource" do
     it "do GET request" do
       resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments", {"Content-Type" => "application/json"})
-      response = resource.get()
+      response = resource.get
       (response.body).should eq("Post 1: comments")
     end
 
     it "do GET request with []" do
       site = Crest::Resource.new("#{TEST_SERVER_URL}", {"Content-Type" => "application/json"})
-      response = site["/post/1/comments"].get()
+      response = site["/post/1/comments"].get
       (response.body).should eq("Post 1: comments")
     end
 
@@ -126,7 +125,7 @@ describe Crest do
 
     it "do DELETE request" do
       resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
-      response = resource.delete()
+      response = resource.delete
       (response.body).should eq("Delete Comment `1` for Post `1`")
     end
   end

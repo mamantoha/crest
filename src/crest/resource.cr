@@ -1,6 +1,5 @@
 module Crest
   class Resource
-
     getter url, headers, params
 
     def initialize(url : String, headers = {} of String => String, params = {} of String => String, **args)
@@ -25,7 +24,7 @@ module Crest
       end
     {% end %}
 
-    def[](suburl)
+    def [](suburl)
       self.class.new(concat_urls(url, suburl), headers)
     end
 
@@ -36,6 +35,5 @@ module Crest
         "#{url}/#{suburl}"
       end
     end
-
   end
 end

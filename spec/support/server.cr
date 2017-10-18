@@ -14,7 +14,7 @@ post "/post_nested" do |env|
   params.body
 end
 
-### Comments
+# Comments
 #
 # index
 get "/post/:id/comments" do |env|

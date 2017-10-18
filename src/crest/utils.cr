@@ -48,6 +48,5 @@ module Crest
         memo
       end
     end
-
   end
 end

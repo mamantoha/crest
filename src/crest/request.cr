@@ -1,6 +1,5 @@
 module Crest
   class Request
-
     @method : String
     @url : String
     @headers : HTTP::Headers
@@ -43,7 +42,7 @@ module Crest
       end
     end
 
-    def execute() : Crest::Response
+    def execute : Crest::Response
       response = HTTP::Client.exec(method, url, body: payload, headers: headers)
       process_result(response)
     end
@@ -79,5 +78,4 @@ module Crest
       end
     end
   end
-
 end

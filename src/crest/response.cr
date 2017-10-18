@@ -1,12 +1,11 @@
 module Crest
   class Response
-
     @http_client_res : HTTP::Client::Response
     @request : Crest::Request
 
     getter http_client_res, request, code
 
-    def self.create(http_client_res : HTTP::Client::Response , request : Crest::Request)
+    def self.create(http_client_res : HTTP::Client::Response, request : Crest::Request)
       result = self.new(http_client_res, request)
       result
     end
@@ -82,6 +81,5 @@ module Crest
         raise RequestFailed.new(self, status_code)
       end
     end
-
   end
 end

@@ -1,5 +1,4 @@
 module Crest
-
   # Hash of HTTP status code => message.
   #
   # 1xx: Informational - Request received, continuing process
@@ -15,7 +14,7 @@ module Crest
   #
   STATUSES = {100 => "Continue",
               101 => "Switching Protocols",
-              102 => "Processing", #WebDAV
+              102 => "Processing", # WebDAV
 
               200 => "OK",
               201 => "Created",
@@ -24,17 +23,17 @@ module Crest
               204 => "No Content",
               205 => "Reset Content",
               206 => "Partial Content",
-              207 => "Multi-Status", #WebDAV
+              207 => "Multi-Status",     # WebDAV
               208 => "Already Reported", # RFC5842
-              226 => "IM Used", # RFC3229
+              226 => "IM Used",          # RFC3229
 
               300 => "Multiple Choices",
               301 => "Moved Permanently",
               302 => "Found",
               303 => "See Other", # http/1.1
               304 => "Not Modified",
-              305 => "Use Proxy", # http/1.1
-              306 => "Switch Proxy", # no longer used
+              305 => "Use Proxy",          # http/1.1
+              306 => "Switch Proxy",       # no longer used
               307 => "Temporary Redirect", # http/1.1
               308 => "Permanent Redirect", # RFC7538
 
@@ -52,22 +51,22 @@ module Crest
               411 => "Length Required",
               412 => "Precondition Failed",
               413 => "Payload Too Large", # RFC7231 (renamed, see below)
-              414 => "URI Too Long", # RFC7231 (renamed, see below)
+              414 => "URI Too Long",      # RFC7231 (renamed, see below)
               415 => "Unsupported Media Type",
               416 => "Range Not Satisfiable", # RFC7233 (renamed, see below)
               417 => "Expectation Failed",
-              418 => "I\"m A Teapot", #RFC2324
+              418 => "I\"m A Teapot", # RFC2324
               421 => "Too Many Connections From This IP",
-              422 => "Unprocessable Entity", #WebDAV
-              423 => "Locked", #WebDAV
-              424 => "Failed Dependency", #WebDAV
-              425 => "Unordered Collection", #WebDAV
+              422 => "Unprocessable Entity", # WebDAV
+              423 => "Locked",               # WebDAV
+              424 => "Failed Dependency",    # WebDAV
+              425 => "Unordered Collection", # WebDAV
               426 => "Upgrade Required",
-              428 => "Precondition Required", #RFC6585
-              429 => "Too Many Requests", #RFC6585
-              431 => "Request Header Fields Too Large", #RFC6585
-              449 => "Retry With", #Microsoft
-              450 => "Blocked By Windows Parental Controls", #Microsoft
+              428 => "Precondition Required",                # RFC6585
+              429 => "Too Many Requests",                    # RFC6585
+              431 => "Request Header Fields Too Large",      # RFC6585
+              449 => "Retry With",                           # Microsoft
+              450 => "Blocked By Windows Parental Controls", # Microsoft
 
               500 => "Internal Server Error",
               501 => "Not Implemented",
@@ -76,9 +75,9 @@ module Crest
               504 => "Gateway Timeout",
               505 => "HTTP Version Not Supported",
               506 => "Variant Also Negotiates",
-              507 => "Insufficient Storage", #WebDAV
-              508 => "Loop Detected", # RFC5842
-              509 => "Bandwidth Limit Exceeded", #Apache
+              507 => "Insufficient Storage",     # WebDAV
+              508 => "Loop Detected",            # RFC5842
+              509 => "Bandwidth Limit Exceeded", # Apache
               510 => "Not Extended",
               511 => "Network Authentication Required", # RFC6585
   }
@@ -90,14 +89,12 @@ module Crest
   # For example, the entire result body (which is
   # probably an HTML error page) is e.response.
   class Exception < Exception
-
     getter response, original_excetion, message
     setter response, original_exception
 
     @response : Crest::Response
     @message : String? = nil
     @initial_response_code : Int32? = nil
-
 
     def initialize(response, initial_response_code = nil)
       @response = response
@@ -148,5 +145,4 @@ module Crest
   # TODO: Create HTTP status exception classes
   STATUSES.each do |code, message|
   end
-
 end
