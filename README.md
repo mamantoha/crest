@@ -31,6 +31,7 @@ Crest.get("http://example.com/resource", params: {:lang => "ua"})
 Crest.delete("http://example.com/resource/1")
 Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
 Crest.put("http://example.com/resource/1", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+Crest.get("http://example.com/resource", user: "admin", password: "1234")
 ```
 
 In the high level helpers, only `POST`, `PATCH`, and `PUT` take a payload argument.
@@ -38,10 +39,10 @@ In the high level helpers, only `POST`, `PATCH`, and `PUT` take a payload argume
 ### Passing advanced options
 
 ```crystal
-Crest::Request.new(:get, "http://example.com/resource", {"Content-Type" => "application/json"})
+Crest::Request.new(:get, "http://example.com/resource", headers: {"Content-Type" => "application/json"})
 Crest::Request.new(:delete, "http://example.com/resource/1", params: {:lang => "ua"})
-Crest::Request.new(:post, "http://example.com/resource", {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
-Crest::Request.new(:patch, "http://example.com/resource/1", {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+Crest::Request.new(:post, "http://example.com/resource", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+Crest::Request.new(:patch, "http://example.com/resource/1", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
 ```
 
 ### Multipart
@@ -53,11 +54,19 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+### Basic authentication
+
+For basic access authentication for an HTTP user agent you should to provide a user name and password when making a request.
+
+```crystal
+Crest.get("http://example.com/admin", user: "admin", password: "1234")
+```
+
 
 ### Resource
 
 ```crystal
-resource = Crest::Resource.new("http://localhost", {"Content-Type" => "application/json"})
+resource = Crest::Resource.new("http://localhost", headers: {"Content-Type" => "application/json"})
 resource.get({"X-Something" => "1"})
 ```
 

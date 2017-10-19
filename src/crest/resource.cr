@@ -1,18 +1,23 @@
 module Crest
   class Resource
-    getter url, headers, params
+    @user : String?
+    @password : String?
 
-    def initialize(url : String, headers = {} of String => String, params = {} of String => String, **args)
+    getter url, headers, params, user, password
+
+    def initialize(url : String, *, headers = {} of String => String, params = {} of String => String, **args)
       @url = url
       @headers = headers
       @params = params
+      @user = args.fetch(:user, nil)
+      @password = args.fetch(:password, nil)
     end
 
     {% for method in %w{get delete} %}
       def {{method.id}}(additional_headers = {} of String => String, params = {} of String => String)
         @headers = (@headers || {} of String => String).merge(additional_headers)
 
-        Request.execute(method: :{{method.id}}, url: url, headers: headers, params: params)
+        Request.execute(method: :{{method.id}}, url: url, headers: headers, params: params, user: user, password: password)
       end
     {% end %}
 
@@ -20,12 +25,12 @@ module Crest
       def {{method.id}}(payload = {} of String => String, additional_headers = {} of String => String, params = {} of String => String)
         @headers = (@headers || {} of String => String).merge(additional_headers)
 
-        Request.execute(method: :{{method.id}}, url: url, headers: headers, payload: payload, params: params)
+        Request.execute(method: :{{method.id}}, url: url, headers: headers, payload: payload, params: params, user: user, password: password)
       end
     {% end %}
 
     def [](suburl)
-      self.class.new(concat_urls(url, suburl), headers)
+      self.class.new(concat_urls(url, suburl), headers: headers)
     end
 
     private def concat_urls(url : String, suburl : String) : String
