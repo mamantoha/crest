@@ -1,7 +1,24 @@
 require "kemal"
+require "./kemal_basic_auth"
+
+class BasicAuthHandler < KemalBasicAuth::Handler
+  only ["/secret"]
+
+  def call(env)
+    return call_next(env) unless only_match?(env)
+
+    super
+  end
+end
+
+add_handler BasicAuthHandler.new("username", "password")
 
 get "/" do
   "Hello World!"
+end
+
+get "/secret" do |env|
+  "Secret World!"
 end
 
 post "/upload" do |env|

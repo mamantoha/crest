@@ -74,13 +74,13 @@ describe Crest do
 
   describe "Resource" do
     it "do GET request" do
-      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments", {"Content-Type" => "application/json"})
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments", headers: {"Content-Type" => "application/json"})
       response = resource.get
       (response.body).should eq("Post 1: comments")
     end
 
     it "do GET request with []" do
-      site = Crest::Resource.new("#{TEST_SERVER_URL}", {"Content-Type" => "application/json"})
+      site = Crest::Resource.new("#{TEST_SERVER_URL}", headers: {"Content-Type" => "application/json"})
       response = site["/post/1/comments"].get
       (response.body).should eq("Post 1: comments")
     end
