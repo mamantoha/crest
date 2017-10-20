@@ -1,3 +1,11 @@
 language: crystal
+crystal:
+  - latest
+  - nightly
+
 script:
   - make test
+
+matrix:
+  allow_failures:
+    - crystal: nightly
