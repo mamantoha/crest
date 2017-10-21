@@ -37,6 +37,11 @@ describe Crest::Request do
       (request.payload).should eq(nil)
     end
 
+    it "initialize the GET request with cookies" do
+      request = Crest::Request.new(:get, "http://localhost", cookies: {:foo => "123", :bar => 456})
+      (request.headers).should eq(HTTP::Headers{"Cookie" => "foo=123; bar=456"})
+    end
+
     it "initialize the POST request with payload" do
       request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
       (request.method).should eq("POST")

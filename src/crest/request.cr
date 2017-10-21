@@ -3,12 +3,13 @@ module Crest
     @method : String
     @url : String
     @headers : HTTP::Headers
+    @cookies : HTTP::Cookies
     @payload : String?
     @max_redirects : Int32
     @user : String?
     @password : String?
 
-    getter method, url, payload, headers, max_redirects, user, password
+    getter method, url, payload, headers, cookies, max_redirects, user, password
 
     def self.execute(method, url, **args)
       new(method, url, **args).execute
@@ -21,6 +22,7 @@ module Crest
     # * url
     # Optional parameters:
     # * :headers a hash containing the request headers
+    # * :cookies a hash containing the request cookies
     # * :payload a hash containing query params
     # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
     #          a sequence of attribute–value pairs separated by a delimiter (&).
@@ -32,13 +34,18 @@ module Crest
                    url : String,
                    *,
                    headers = {} of String => String,
+                   cookies = {} of String => String,
                    payload = {} of String => String,
                    params = {} of String => String,
                    max_redirects = 10,
                    **options)
       @method = parse_verb(method)
       @url = url
-      @headers = read_headers(headers)
+      @headers = HTTP::Headers.new
+      @cookies = HTTP::Cookies.new
+
+      set_headers!(headers)
+      set_cookies!(cookies) unless cookies.empty?
 
       unless params.empty?
         @url = url + process_url_params(params)
@@ -81,14 +88,20 @@ module Crest
       method.to_s.upcase
     end
 
-    private def read_headers(params) : HTTP::Headers
-      headers = HTTP::Headers.new
-
+    private def set_headers!(params) : HTTP::Headers
       params.each do |key, value|
-        headers.add(key, value)
+        @headers.add(key, value)
       end
 
-      headers
+      @headers
+    end
+
+    # Adds "Cookie" headers for the cookies in this collection to the @header instance and returns it
+    private def set_cookies!(cookies) : HTTP::Headers
+      cookies.each do |k, v|
+        @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
+      end
+      @cookies.add_request_headers(@headers)
     end
 
     # Extract the query parameters and append them to the url
