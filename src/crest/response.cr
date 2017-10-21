@@ -15,7 +15,7 @@ module Crest
       @http_client_res = http_client_res
       @request = request
       @response_cookies = http_client_res.cookies
-   end
+    end
 
     def return!
       case status_code
@@ -76,16 +76,16 @@ module Crest
       @request.headers.to_h
     end
 
-    def request_cookies
+    def cookies
+      request_cookies.merge(response_cookies)
+    end
+
+    private def request_cookies
       cookies_to_h(@request.cookies)
     end
 
-    def response_cookies
+    private def response_cookies
       cookies_to_h(@response_cookies)
-    end
-
-    def cookies
-      request_cookies.merge(response_cookies)
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)

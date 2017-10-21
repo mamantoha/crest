@@ -6,7 +6,7 @@ describe Crest do
       it "should set cookies" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}", cookies: {"k1" => "v1", "k2" => "v2"})
         (response.status_code).should eq(200)
-        (response.request_cookies).should eq({"k1" => "v1", "k2" => "v2"})
+        (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
       end
 
       it "should access cookies from the server" do
@@ -21,7 +21,7 @@ describe Crest do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_redirect", params: {"k1" => "v1", "k2" => "v2"})
 
         (response.status_code).should eq(200)
-        (response.request_cookies).should eq({"k1" => "v1", "k2" => "v2"})
+        (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
         (response.headers).should eq({"Cookie" => ["k1=v1; k2=v2"]})
         (JSON.parse(response.body)).should eq({"cookies" => {"k1" => "v1", "k2" => "v2"}})
       end
