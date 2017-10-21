@@ -2,7 +2,7 @@ module Crest
   class Response
     @http_client_res : HTTP::Client::Response
     @request : Crest::Request
-    @cookies : HTTP::Cookies
+    @response_cookies : HTTP::Cookies
 
     getter http_client_res, request, code
 
@@ -14,8 +14,8 @@ module Crest
     def initialize(http_client_res, request)
       @http_client_res = http_client_res
       @request = request
-      @cookies = http_client_res.cookies
-    end
+      @response_cookies = http_client_res.cookies
+   end
 
     def return!
       case status_code
@@ -58,6 +58,10 @@ module Crest
       new_req.execute
     end
 
+    def url : String
+      @request.url
+    end
+
     # HTTP status code
     def status_code : Int32
       @http_client_res.status_code.to_i
@@ -76,8 +80,12 @@ module Crest
       cookies_to_h(@request.cookies)
     end
 
+    def response_cookies
+      cookies_to_h(@response_cookies)
+    end
+
     def cookies
-      cookies_to_h(@cookies)
+      request_cookies.merge(response_cookies)
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)
