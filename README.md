@@ -1,4 +1,4 @@
-# crest
+![Crest Logo](https://raw.github.com/mamantoha/crest/master/crest.png)
 
 [![Build Status][travis_badge]][travis]
 [![Dependency Status](https://shards.rocks/badge/github/mamantoha/crest/status.svg)](https://shards.rocks/github/mamantoha/crest)
