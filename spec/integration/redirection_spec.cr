@@ -5,6 +5,7 @@ describe Crest do
     it "should redirect" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect")
       (response.status_code).should eq(200)
+      (response.url).should eq("#{TEST_SERVER_URL}/")
       (response.body).should eq("Hello World!")
     end
 

@@ -102,4 +102,49 @@ get "/redirect/circle2" do |env|
   env.redirect("/redirect/circle1")
 end
 
+# Returns header dict.
+get "/headers" do |env|
+  result = {} of String => String
+  env.request.headers.each do |key, value|
+    result[key] = value.join(";")
+  end
+
+  {"headers" => result}.to_json
+end
+
+# Returns cookie data
+get "/cookies" do |env|
+  result = {} of String => String
+  env.request.cookies.to_h.each do |str, cookie|
+    result[cookie.name] = cookie.value
+  end
+
+  {"cookies" => result}.to_json
+end
+
+# /cookies/set?name=value Sets one or more simple cookies.
+get "/cookies/set" do |env|
+  env.params.query.each do |param|
+    puts param
+    env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
+  end
+
+  result = {} of String => String
+  env.response.cookies.to_h.each do |str, cookie|
+    result[cookie.name] = cookie.value
+  end
+
+  {"cookies" => result}.to_json
+end
+
+# /cookies/set_redirect?name=value Sets one or more simple cookies and redirect.
+get "/cookies/set_redirect" do |env|
+  env.params.query.each do |param|
+    puts param
+    env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
+  end
+
+  env.redirect("/cookies")
+end
+
 Kemal.run
