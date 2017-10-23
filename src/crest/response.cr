@@ -4,7 +4,7 @@ module Crest
     @request : Crest::Request
     @response_cookies : HTTP::Cookies
 
-    getter http_client_res, request, code
+    getter http_client_res, request
 
     def self.create(http_client_res : HTTP::Client::Response, request : Crest::Request)
       result = self.new(http_client_res, request)
@@ -46,7 +46,7 @@ module Crest
       max_redirects = @request.max_redirects - 1
 
       # prepare new request
-      new_req = Request.new(
+      new_request = Request.new(
         method: :get,
         url: url,
         headers: headers,
@@ -54,8 +54,11 @@ module Crest
         cookies: cookies
       )
 
+      # append self to redirection history
+      new_request.redirection_history = history + [self]
+
       # execute redirected request
-      new_req.execute
+      new_request.execute
     end
 
     def url : String
@@ -78,6 +81,10 @@ module Crest
 
     def cookies
       request_cookies.merge(response_cookies)
+    end
+
+    def history : Array
+      @request.redirection_history || [] of self
     end
 
     private def request_cookies
