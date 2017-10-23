@@ -6,7 +6,6 @@
 [![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
 
 Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
-Support HTTP methods: get, post, put, patch, post, delete.
 
 ## Installation
 
@@ -28,21 +27,36 @@ Basic usage:
 
 ```crystal
 Crest.get("http://example.com/resource", params: {:lang => "ua"})
-Crest.delete("http://example.com/resource/1")
 Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
-Crest.put("http://example.com/resource/1", payload: {:params1 => "one", :nested => {:params2 => "two"}})
-Crest.get("http://example.com/resource", user: "admin", password: "1234")
 ```
 
-In the high level helpers, only `POST`, `PATCH`, and `PUT` take a payload argument.
-
 ### Passing advanced options
+
+`Crest::Request` accept next parameters:
+
+Mandatory parameters:
+
+* `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`,  `:delete`)
+* `:url` - URL (e.g.: "http://httpbin.org/ip")
+
+Optional parameters:
+
+* `:payload` -  a hash containing query params
+* `:headers` -  a hash containing the request headers
+* `:cookies` -  a hash containing the request cookies
+* `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
+* `:user` and `:password` -  for Basic Authentication
+* `:max_redirects` -  maximum number of redirections (default to 10)
+
+
+More detailed examples:
 
 ```crystal
 Crest::Request.new(:get, "http://example.com/resource", headers: {"Content-Type" => "application/json"})
 Crest::Request.new(:delete, "http://example.com/resource/1", params: {:lang => "ua"})
 Crest::Request.new(:post, "http://example.com/resource", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
 Crest::Request.new(:patch, "http://example.com/resource/1", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+Crest::Request.new(:get, "http://example.com/resource", user: "admin", password: "1234")
 ```
 
 ### Multipart
@@ -54,12 +68,36 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+### Headers
+
+Request headers can be set by passing a hash containing keys and values representing header names and values:
+
+```
+response = Crest.get("http://httpbin.org/headers", headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"})
+response.headers
+# => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
+```
+
+### Cookies
+
+`Request` and `Response` objects know about HTTP cookies, and will automatically extract and set headers for them as needed:
+
+```crystal
+response = Crest.get("http://httpbin.org/cookies/set", params: {"k1" => "v1", "k2" => "v2"})
+response.cookies
+# => {"k1" => "v1", "k2" => "v2"}
+
+response = Crest.get("http://httpbin.org/cookies", cookies: {"k1" => "v1"})
+response.cookies
+# => {"k1" => "v1"}
+```
+
 ### Basic authentication
 
 For basic access authentication for an HTTP user agent you should to provide a user name and password when making a request.
 
 ```crystal
-Crest.get("http://example.com/admin", user: "admin", password: "1234")
+Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
 ```
 
 
