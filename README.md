@@ -142,8 +142,10 @@ Response objects have several useful methods.
 - `Response#body`: The response body as a string
 - `Response#status_code`: The HTTP response code
 - `Response#headers`: A hash of HTTP response headers
+- `Response#cookies`: A hash of HTTP cookies set by the server
 - `Response#request`: The `Crest::Request` object used to make the request
 - `Response#http_client_res`: The `HTTP::Client::Response` object
+- `Response#history`: A list of each response received in a redirection chain
 
 ## Development
 

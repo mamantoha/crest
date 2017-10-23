@@ -7,6 +7,9 @@ describe Crest do
       (response.status_code).should eq(200)
       (response.url).should eq("#{TEST_SERVER_URL}/")
       (response.body).should eq("Hello World!")
+      (response.history.size).should eq(1)
+      (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect")
+      (response.history.first.status_code).should eq(302)
     end
 
     it "should raise error when too many redirects" do

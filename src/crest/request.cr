@@ -10,6 +10,8 @@ module Crest
     @password : String?
 
     getter method, url, payload, headers, cookies, max_redirects, user, password
+    # An array of previous redirection responses
+    property redirection_history
 
     def self.execute(method, url, **args)
       new(method, url, **args).execute
@@ -43,6 +45,7 @@ module Crest
       @url = url
       @headers = HTTP::Headers.new
       @cookies = HTTP::Cookies.new
+      @redirection_history = [] of Crest::Response
 
       set_headers!(headers)
       set_cookies!(cookies) unless cookies.empty?
