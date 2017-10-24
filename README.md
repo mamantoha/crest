@@ -68,6 +68,14 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+### JSON payload
+
+`crest` does not speak JSON natively, so serialize your payload to a string before passing it to `crest`.
+
+```crystal
+Crest.post("http://example.com/", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"}.to_json)
+```
+
 ### Headers
 
 Request headers can be set by passing a hash containing keys and values representing header names and values:
