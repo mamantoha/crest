@@ -2,6 +2,7 @@ module Crest
   class Request
     @method : String
     @url : String
+    @http_client : HTTP::Client
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
     @payload : String?
@@ -54,6 +55,9 @@ module Crest
         @url = url + process_url_params(params)
       end
 
+      uri = URI.parse(@url)
+      @http_client = HTTP::Client.new(uri)
+
       unless payload.empty?
         @payload, content_type = Payload.generate(payload)
         @headers.add("Content-Type", content_type)
@@ -65,21 +69,13 @@ module Crest
       @password = options.fetch(:password, nil)
 
       if @user && @password
-        basic_auth(@user, @password)
+        @http_client.basic_auth(@user, @password)
       end
     end
 
     def execute : Crest::Response
-      response = HTTP::Client.exec(method, url, body: payload, headers: headers)
+      response = @http_client.exec(method, url, body: payload, headers: headers)
       process_result(response)
-    end
-
-    # Make Basic authorization header
-    private def basic_auth(user, password)
-      return unless user && password
-
-      value = "Basic " + Base64.encode(user + ":" + password).chomp
-      @headers.add("Authorization", value)
     end
 
     private def process_result(http_client_res)
