@@ -66,6 +66,7 @@ module Vk
       img_captcha_node = xml.xpath_node("//img[@class='captcha_img']/@src")
 
       if img_captcha_node
+        puts img_captcha_node.content
         print "Captcha: "
         captcha_key = gets(chomp = true).to_s
 

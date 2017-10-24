@@ -72,7 +72,7 @@ Crest.post("http://example.com/upload", payload: {:image => file})
 
 Request headers can be set by passing a hash containing keys and values representing header names and values:
 
-```
+```crystal
 response = Crest.get("http://httpbin.org/headers", headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"})
 response.headers
 # => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
@@ -99,7 +99,6 @@ For basic access authentication for an HTTP user agent you should to provide a u
 ```crystal
 Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
 ```
-
 
 ### Resource
 
