@@ -61,7 +61,6 @@ describe Crest::Request do
       (request.payload.to_s).should eq("{\"foo\":\"bar\"}")
     end
 
-
     it "POST request with nested hashes" do
       request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:params1 => "one", :nested => {:params2 => "two"}})
       (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
