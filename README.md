@@ -68,11 +68,19 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+### JSON payload
+
+`crest` does not speak JSON natively, so serialize your payload to a string before passing it to `crest`.
+
+```crystal
+Crest.post("http://example.com/", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"}.to_json)
+```
+
 ### Headers
 
 Request headers can be set by passing a hash containing keys and values representing header names and values:
 
-```
+```crystal
 response = Crest.get("http://httpbin.org/headers", headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"})
 response.headers
 # => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
@@ -105,7 +113,6 @@ Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "
 ```crystal
 Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128, p_user: "user", p_pass: "qwerty")
 ```
-
 
 ### Resource
 

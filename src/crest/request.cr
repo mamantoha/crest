@@ -2,6 +2,7 @@ module Crest
   class Request
     @method : String
     @url : String
+    @http_client : HTTP::Client
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
     @payload : String?
@@ -23,6 +24,7 @@ module Crest
     end
 
     # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+    # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
     #
     # Mandatory parameters:
     # * method
@@ -30,7 +32,7 @@ module Crest
     # Optional parameters:
     # * :headers a hash containing the request headers
     # * :cookies a hash containing the request cookies
-    # * :payload a hash containing query params
+    # * :payload a hash containing query params or a raw string
     # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
     #          a sequence of attribute–value pairs separated by a delimiter (&).
     # * :user and :password for basic auth
@@ -43,7 +45,7 @@ module Crest
                    *,
                    headers = {} of String => String,
                    cookies = {} of String => String,
-                   payload = {} of String => String,
+                   payload = {} of String => String | String,
                    params = {} of String => String,
                    max_redirects = 10,
                    **options)
@@ -55,15 +57,14 @@ module Crest
 
       set_headers!(headers)
       set_cookies!(cookies) unless cookies.empty?
+      set_payload!(payload) if payload
 
       unless params.empty?
         @url = url + process_url_params(params)
       end
 
-      unless payload.empty?
-        @payload, content_type = Payload.generate(payload)
-        @headers.add("Content-Type", content_type)
-      end
+      uri = URI.parse(@url)
+      @http_client = HTTP::Client.new(uri)
 
       @max_redirects = max_redirects
 
@@ -95,6 +96,19 @@ module Crest
 
     private def parse_verb(method : String | Symbol) : String
       method.to_s.upcase
+    end
+
+    private def set_payload!(payload : Hash) : String?
+      unless payload.empty?
+        @payload, content_type = Payload.generate(payload)
+        @headers.add("Content-Type", content_type)
+
+        @payload
+      end
+    end
+
+    private def set_payload!(payload : String) : String?
+      @payload = payload
     end
 
     private def set_headers!(params) : HTTP::Headers

@@ -1,20 +1,12 @@
 module Crest
   class Response
-    @http_client_res : HTTP::Client::Response
-    @request : Crest::Request
-    @response_cookies : HTTP::Cookies
-
     getter http_client_res, request
 
     def self.create(http_client_res : HTTP::Client::Response, request : Crest::Request)
-      result = self.new(http_client_res, request)
-      result
+      self.new(http_client_res, request)
     end
 
-    def initialize(http_client_res, request)
-      @http_client_res = http_client_res
-      @request = request
-      @response_cookies = http_client_res.cookies
+    def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
     end
 
     def return!
@@ -92,7 +84,7 @@ module Crest
     end
 
     private def response_cookies
-      cookies_to_h(@response_cookies)
+      cookies_to_h(@http_client_res.cookies)
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)
