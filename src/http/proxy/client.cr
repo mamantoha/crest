@@ -7,7 +7,10 @@ require "base64"
 {% end %}
 
 module HTTP
+  # :nodoc:
   module Proxy
+    # Represents a proxy client with all its attributes.
+    # Provides convenient access and modification of them.
     class Client
       getter host : String
       getter port : Int32
@@ -98,7 +101,9 @@ module HTTP
   end
 
   class Client
-    def set_proxy(proxy : HTTP::Proxy::Client)
+    def set_proxy(proxy : HTTP::Proxy::Client?)
+      return unless proxy
+
       begin
         @socket = proxy.open(host: @host, port: @port, tls: @tls, connection_options: proxy_connection_options)
 

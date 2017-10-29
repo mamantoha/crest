@@ -8,8 +8,13 @@ module Crest
     @max_redirects : Int32
     @user : String?
     @password : String?
+    @proxy : HTTP::Proxy::Client?
+    @p_addr : String?
+    @p_port : Int32?
+    @p_user : String?
+    @p_pass : String?
 
-    getter method, url, payload, headers, cookies, max_redirects, user, password
+    getter method, url, payload, headers, cookies, max_redirects, user, password, proxy
     # An array of previous redirection responses
     property redirection_history
 
@@ -29,6 +34,7 @@ module Crest
     # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
     #          a sequence of attribute–value pairs separated by a delimiter (&).
     # * :user and :password for basic auth
+    # * :p_addr, :p_port, :p_user, :p_pass for proxy
     # * :max_redirects maximum number of redirections (default to 10)
     #
     def initialize(
@@ -61,25 +67,25 @@ module Crest
 
       @max_redirects = max_redirects
 
-      @user = options.fetch(:user, nil)
-      @password = options.fetch(:password, nil)
+      @user = options.fetch(:user, nil).as(String | Nil)
+      @password = options.fetch(:password, nil).as(String | Nil)
 
-      if @user && @password
-        basic_auth(@user, @password)
-      end
+      basic_auth(@user, @password)
+
+      @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
+      @p_port = options.fetch(:p_port, nil).as(Int32 | Nil)
+      @p_user = options.fetch(:p_user, nil).as(String | Nil)
+      @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
+
+      set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
     end
 
     def execute : Crest::Response
-      response = HTTP::Client.exec(method, url, body: payload, headers: headers)
+      uri = URI.parse(url)
+      client = HTTP::Client.new(uri)
+      client.set_proxy(@proxy)
+      response = client.exec(method, url, body: payload, headers: headers)
       process_result(response)
-    end
-
-    # Make Basic authorization header
-    private def basic_auth(user, password)
-      return unless user && password
-
-      value = "Basic " + Base64.encode(user + ":" + password).chomp
-      @headers.add("Authorization", value)
     end
 
     private def process_result(http_client_res)
@@ -105,6 +111,20 @@ module Crest
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
       @cookies.add_request_headers(@headers)
+    end
+
+    # Make Basic authorization header
+    private def basic_auth(user, password)
+      return unless user && password
+
+      value = "Basic " + Base64.encode(user + ":" + password).chomp
+      @headers.add("Authorization", value)
+    end
+
+    private def set_proxy!(p_addr, p_port, p_user, p_pass)
+      return unless p_addr && p_port
+
+      @proxy = HTTP::Proxy::Client.new(p_addr, p_port, username: p_user, password: p_pass)
     end
 
     # Extract the query parameters and append them to the url

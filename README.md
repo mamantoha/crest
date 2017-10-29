@@ -100,6 +100,12 @@ For basic access authentication for an HTTP user agent you should to provide a u
 Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
 ```
 
+### Proxy
+
+```crystal
+Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128, p_user: "user", p_pass: "qwerty")
+```
+
 
 ### Resource
 
