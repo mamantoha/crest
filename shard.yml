@@ -1,5 +1,5 @@
 name: crest
-version: 0.0.1
+version: 0.9.1
 
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
@@ -7,7 +7,7 @@ authors:
 description: |
   Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
-crystal: 0.22.0
+crystal: 0.23.1
 
 development_dependencies:
   kemal:
