@@ -6,6 +6,9 @@ describe Crest::Request do
       request = Crest::Request.new(:get, "http://localhost")
       (request.url).should eq("http://localhost")
       (request.max_redirects).should eq(10)
+      (request.user).should be_nil
+      (request.password).should be_nil
+      (request.proxy).should be_nil
     end
 
     it "initialize the GET request" do
@@ -58,7 +61,6 @@ describe Crest::Request do
       (request.payload.to_s).should eq("{\"foo\":\"bar\"}")
     end
 
-
     it "POST request with nested hashes" do
       request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:params1 => "one", :nested => {:params2 => "two"}})
       (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
@@ -76,6 +78,17 @@ describe Crest::Request do
     it "initialize Request with :max_redirects" do
       request = Crest::Request.new(:get, "http://localhost", max_redirects: 3)
       (request.max_redirects).should eq(3)
+    end
+
+    it "initialize Request with basic auth params" do
+      request = Crest::Request.new(:get, "http://localhost", user: "user", password: "password")
+      (request.user).should eq("user")
+      (request.password).should eq("password")
+    end
+
+    it "initialize Request with proxy params" do
+      request = Crest::Request.new(:get, "http://localhost", p_addr: "localhost", p_port: 3128)
+      (request.proxy).should be_a(HTTP::Proxy::Client)
     end
   end
 end

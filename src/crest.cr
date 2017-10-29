@@ -2,6 +2,7 @@ require "http"
 require "uri"
 require "base64"
 require "./crest/**"
+require "./http/proxy/client"
 
 module Crest
   alias TextValue = String | Symbol | Int32 | Nil
