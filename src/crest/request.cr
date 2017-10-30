@@ -40,15 +40,16 @@ module Crest
     # * :max_redirects maximum number of redirections (default to 10)
     #
     def initialize(
-                   method : Symbol,
-                   url : String,
-                   *,
-                   headers = {} of String => String,
-                   cookies = {} of String => String,
-                   payload = {} of String => String | String,
-                   params = {} of String => String,
-                   max_redirects = 10,
-                   **options)
+      method : Symbol,
+      url : String,
+      *,
+      headers = {} of String => String,
+      cookies = {} of String => String,
+      payload = {} of String => String | String,
+      params = {} of String => String,
+      max_redirects = 10,
+      **options
+    )
       @method = parse_verb(method)
       @url = url
       @headers = HTTP::Headers.new
