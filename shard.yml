@@ -7,11 +7,12 @@ authors:
 description: |
   Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
-crystal: 0.23.1
+crystal: 0.24.0
 
 development_dependencies:
   kemal:
     github: sdogruyol/kemal
-    version: ~> 0.21
+    branch: crystal-next
+    # version: ~> 0.21
 
 license: MIT
