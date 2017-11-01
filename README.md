@@ -46,6 +46,7 @@ Optional parameters:
 * `:cookies` -  a hash containing the request cookies
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `:user` and `:password` -  for Basic Authentication
+* `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:max_redirects` -  maximum number of redirections (default to 10)
 
 
@@ -109,6 +110,14 @@ Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "
 ```
 
 ### Proxy
+
+If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:
+
+```crystal
+Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128)
+```
+
+To use HTTP Basic Auth with your proxy, use next syntax:
 
 ```crystal
 Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128, p_user: "user", p_pass: "qwerty")
