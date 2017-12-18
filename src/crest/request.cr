@@ -14,13 +14,17 @@ module Crest
     @p_port : Int32?
     @p_user : String?
     @p_pass : String?
+    @logger : Crest::Logger
+    @logging : Bool
 
-    getter method, url, payload, headers, cookies, max_redirects, user, password, proxy
+    getter method, url, payload, headers, cookies, max_redirects, user, password, proxy, logging, logger
     # An array of previous redirection responses
     property redirection_history
 
     def self.execute(method, url, **args)
-      new(method, url, **args).execute
+      request = new(method, url, **args)
+      request.logger.request(request) if request.logging
+      request.execute
     end
 
     # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
@@ -38,6 +42,8 @@ module Crest
     # * :user and :password for basic auth
     # * :p_addr, :p_port, :p_user, :p_pass for proxy
     # * :max_redirects maximum number of redirections (default to 10)
+    # * :logging enable logging (default to `false`)
+    # * :logger set logger (default to `Crest::CommonLogger`)
     #
     def initialize(
                    method : Symbol,
@@ -70,14 +76,14 @@ module Crest
 
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
-
-      basic_auth(@user, @password)
-
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
       @p_port = options.fetch(:p_port, nil).as(Int32 | Nil)
       @p_user = options.fetch(:p_user, nil).as(String | Nil)
       @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
+      @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
+      @logging = options.fetch(:logging, false).as(Bool)
 
+      basic_auth(@user, @password)
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
     end
 
@@ -91,6 +97,7 @@ module Crest
 
     private def process_result(http_client_res)
       response = Response.create(http_client_res, self)
+      logger.response(response) if logging
       response.return!
     end
 
