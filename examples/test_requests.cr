@@ -16,7 +16,8 @@ Crest.get(
   "http://httpbin.org/get",
   headers: {"Access-Token" => ["secret1", "secret2"]},
   params: payload,
-  logging: true
+  logging: true,
+  logger: MyLogger.new
 )
 
 Crest.post(
@@ -24,5 +25,4 @@ Crest.post(
   headers: {"Access-Token" => ["secret1", "secret2"]},
   payload: payload,
   logging: true,
-  logger: MyLogger.new
 )
