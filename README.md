@@ -48,7 +48,8 @@ Optional parameters:
 * `:user` and `:password` -  for Basic Authentication
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:max_redirects` -  maximum number of redirections (default to 10)
-
+* `:logging` -  enable logging (default to `false`)
+* `:logger` -  set logger (default to `Crest::CommonLogger`)
 
 More detailed examples:
 
@@ -121,6 +122,31 @@ To use HTTP Basic Auth with your proxy, use next syntax:
 
 ```crystal
 Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128, p_user: "user", p_pass: "qwerty")
+```
+
+### Logging
+
+By default, the `Crest` does not enable logging. You can enable it per request by setting `logging: true`:
+
+```crystal
+Crest.get("http://example.com/resource", logging: true)
+```
+
+You can create the custom logger by integration `Crest::Logger` abstract class.
+Here has two methods must be implement: `Crest::Logger.request` and `Crest::Logger.response`.
+
+```crystal
+class MyLogger < Crest::Logger
+  def request(request)
+    @logger.info ">> | %s | %s" % [request.method, request.url]
+  end
+
+  def response(response)
+    @logger.info "<< | %s | %s" % [response.status_code, response.url]
+  end
+end
+
+Crest.get("http://example.com/resource", logging: true, logger: MyLogger.new)
 ```
 
 ### Resource

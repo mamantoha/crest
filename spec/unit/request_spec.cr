@@ -2,13 +2,14 @@ require "../spec_helper"
 
 describe Crest::Request do
   describe "#initialize" do
-    it "new Request with defailt arguments" do
+    it "new Request with default arguments" do
       request = Crest::Request.new(:get, "http://localhost")
       (request.url).should eq("http://localhost")
       (request.max_redirects).should eq(10)
       (request.user).should be_nil
       (request.password).should be_nil
       (request.proxy).should be_nil
+      (request.logging).should be_false
     end
 
     it "initialize the GET request" do
@@ -89,6 +90,12 @@ describe Crest::Request do
     it "initialize Request with proxy params" do
       request = Crest::Request.new(:get, "http://localhost", p_addr: "localhost", p_port: 3128)
       (request.proxy).should be_a(HTTP::Proxy::Client)
+    end
+
+    it "initialize Request with :logging and logger" do
+      request = Crest::Request.new(:get, "http://localhost", logging: true)
+      (request.logging).should eq(true)
+      (request.logger).should be_a(Crest::Logger)
     end
   end
 end
