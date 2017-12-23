@@ -25,11 +25,12 @@ module HTTP
       # * :username - the user name to use when authenticating to the proxy
       # * :password - the password to use when authenticating
       def initialize(
-                     @host : String,
-                     @port = 80,
-                     *,
-                     @username : String?,
-                     @password : String?)
+        @host : String,
+        @port = 80,
+        *,
+        @username : String?,
+        @password : String?
+      )
       end
 
       # Return a new socket connected to the given host and port via the
