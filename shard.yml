@@ -13,5 +13,6 @@ development_dependencies:
   kemal:
     github: sdogruyol/kemal
     version: ~> 0.21
+    branch: crystal-next
 
 license: MIT
