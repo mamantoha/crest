@@ -43,7 +43,9 @@ module Crest
         url: url,
         headers: headers,
         max_redirects: max_redirects,
-        cookies: cookies
+        cookies: cookies,
+        logging: @request.logging,
+        logger: @request.logger
       )
 
       # append self to redirection history

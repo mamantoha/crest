@@ -37,7 +37,7 @@ module Crest
                    when "HEAD"
                      [:white, :magenta]
                    else
-                     [:dark_grey, :white]
+                     [:dark_gray, :white]
                    end
       colorful((" %-7s" % method), fore, back)
     end
@@ -45,7 +45,7 @@ module Crest
     private def colorful_status_code(status_code)
       fore, back = case status_code
                    when 300..399
-                     [:dark_grey, :white]
+                     [:dark_gray, :white]
                    when 400..499
                      [:white, :yellow]
                    when 500..599
