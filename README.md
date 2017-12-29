@@ -209,6 +209,15 @@ To run test:
 make test
 ```
 
+### Workbook
+
+```
+crystal play
+open http://localhost:8080
+```
+
+Then select the Workbook -> Requests from the menu.
+
 ## Contributing
 
 1. Fork it ( https://github.com/mamantoha/crest/fork )
