@@ -28,7 +28,7 @@ end
 
 post "/post_nested" do |env|
   params = env.params
-  params.body
+  params.body.to_s
 end
 
 # Comments
