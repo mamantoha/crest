@@ -1,3 +1,7 @@
+# 0.9.5
+
+* Bug fixes and performance improvements
+
 # 0.9.4
 
 * Tested with Crystal 0.24.1
