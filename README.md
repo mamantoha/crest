@@ -1,6 +1,7 @@
 ![Crest Logo](https://raw.github.com/mamantoha/crest/master/crest.png)
 
-[![Build Status][travis_badge]][travis]
+[![Build Status](http://img.shields.io/travis/mamantoha/crest.svg?style=flat)](https://travis-ci.org/mamantoha/crest)
+[![GitHub release](https://img.shields.io/github/release/mamantoha/crest.svg)](https://github.com/mamantoha/crest/releases)
 [![Dependency Status](https://shards.rocks/badge/github/mamantoha/crest/status.svg)](https://shards.rocks/github/mamantoha/crest)
 [![devDependency Status](https://shards.rocks/badge/github/mamantoha/crest/dev_status.svg)](https://shards.rocks/github/mamantoha/crest)
 [![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
@@ -235,6 +236,3 @@ Then select the Workbook -> Requests from the menu.
 Copyright: 2017 Anton Maminov (anton.maminov@gmail.com)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
-
-[travis_badge]: http://img.shields.io/travis/mamantoha/crest.svg?style=flat
-[travis]: https://travis-ci.org/mamantoha/crest
