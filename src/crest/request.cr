@@ -17,7 +17,9 @@ module Crest
     @logger : Crest::Logger
     @logging : Bool
 
-    getter method, url, payload, headers, cookies, max_redirects, user, password, proxy, logging, logger
+    getter method, url, payload, headers, cookies, max_redirects, user, password,
+      proxy, logging, logger, p_addr, p_port, p_user, p_pass
+
     # An array of previous redirection responses
     property redirection_history
 
