@@ -45,7 +45,11 @@ module Crest
         max_redirects: max_redirects,
         cookies: cookies,
         logging: @request.logging,
-        logger: @request.logger
+        logger: @request.logger,
+        p_addr: @request.p_addr,
+        p_port: @request.p_port,
+        p_user: @request.p_user,
+        p_pass: @request.p_pass
       )
 
       # append self to redirection history

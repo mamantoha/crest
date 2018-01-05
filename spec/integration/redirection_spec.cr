@@ -12,6 +12,12 @@ describe Crest do
       (response.history.first.status_code).should eq(302)
     end
 
+    it "should redirect with logger" do
+      response = Crest.get("#{TEST_SERVER_URL}/redirect", logging: true)
+      (response.request.logging).should eq(true)
+      (response.request.logger).should be_a(Crest::Logger)
+    end
+
     it "should raise error when too many redirects" do
       expect_raises Crest::RequestFailed, "HTTP status code 302" do
         Crest.get("#{TEST_SERVER_URL}/redirect/circle1")
