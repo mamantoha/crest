@@ -1,3 +1,8 @@
+# 0.9.6
+
+* Proxy on redirects
+* Logger in redirects
+
 # 0.9.5
 
 * Bug fixes and performance improvements
