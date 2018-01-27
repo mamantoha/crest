@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/mamantoha/crest">
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../js/doc.js"></script>
+  <title>Crest::Payload - github.com/mamantoha/crest</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/mamantoha/crest/Crest" data-name="crest">
+      <a href="../Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="../Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Exception" data-name="crest::exception">
+      <a href="../Crest/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Logger" data-name="crest::logger">
+      <a href="../Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/mamantoha/crest/Crest/Payload" data-name="crest::payload">
+      <a href="../Crest/Payload.html">Payload</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Request" data-name="crest::request">
+      <a href="../Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="../Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Resource" data-name="crest::resource">
+      <a href="../Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Response" data-name="crest::response">
+      <a href="../Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/TextValue" data-name="crest::textvalue">
+      <a href="../Crest/TextValue.html">TextValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Utils" data-name="crest::utils">
+      <a href="../Crest/Utils.html">Utils</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mamantoha/crest/HTTP" data-name="http">
+      <a href="../HTTP.html">HTTP</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/HTTP/Client" data-name="http::client">
+      <a href="../HTTP/Client.html">Client</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Crest::Payload
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/payload.cr#L2" target="_blank">crest/payload.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#add_field%28formdata%3AHTTP%3A%3AFormData%3A%3ABuilder%2Cname%3AString%7CSymbol%2Cvalue%3AFile%29-class-method" class="signature"><strong>.add_field</strong>(formdata : HTTP::FormData::Builder, name : String | Symbol, value : File)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#add_field%28formdata%3AHTTP%3A%3AFormData%3A%3ABuilder%2Cname%3AString%7CSymbol%2Cvalue%3ATextValue%29-class-method" class="signature"><strong>.add_field</strong>(formdata : HTTP::FormData::Builder, name : String | Symbol, value : TextValue)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#generate%28params%3AHash%29-class-method" class="signature"><strong>.generate</strong>(params : Hash)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_params%28params%3AHash%29-class-method" class="signature"><strong>.parse_params</strong>(params : Hash)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="add_field(formdata:HTTP::FormData::Builder,name:String|Symbol,value:File)-class-method">
+      <div class="signature">
+        
+        def self.<strong>add_field</strong>(formdata : HTTP::FormData::Builder, name : String | Symbol, value : File)
+
+        <a class="method-permalink" href="#add_field%28formdata%3AHTTP%3A%3AFormData%3A%3ABuilder%2Cname%3AString%7CSymbol%2Cvalue%3AFile%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/payload.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_field(formdata:HTTP::FormData::Builder,name:String|Symbol,value:TextValue)-class-method">
+      <div class="signature">
+        
+        def self.<strong>add_field</strong>(formdata : HTTP::FormData::Builder, name : String | Symbol, value : <a href="../Crest/TextValue.html">TextValue</a>)
+
+        <a class="method-permalink" href="#add_field%28formdata%3AHTTP%3A%3AFormData%3A%3ABuilder%2Cname%3AString%7CSymbol%2Cvalue%3ATextValue%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/payload.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="generate(params:Hash)-class-method">
+      <div class="signature">
+        
+        def self.<strong>generate</strong>(params : Hash)
+
+        <a class="method-permalink" href="#generate%28params%3AHash%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/payload.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_params(params:Hash)-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_params</strong>(params : Hash)
+
+        <a class="method-permalink" href="#parse_params%28params%3AHash%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/payload.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

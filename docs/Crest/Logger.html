@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/mamantoha/crest">
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../js/doc.js"></script>
+  <title>Crest::Logger - github.com/mamantoha/crest</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/mamantoha/crest/Crest" data-name="crest">
+      <a href="../Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="../Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Exception" data-name="crest::exception">
+      <a href="../Crest/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/mamantoha/crest/Crest/Logger" data-name="crest::logger">
+      <a href="../Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Payload" data-name="crest::payload">
+      <a href="../Crest/Payload.html">Payload</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Request" data-name="crest::request">
+      <a href="../Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="../Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Resource" data-name="crest::resource">
+      <a href="../Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Response" data-name="crest::response">
+      <a href="../Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/TextValue" data-name="crest::textvalue">
+      <a href="../Crest/TextValue.html">TextValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Utils" data-name="crest::utils">
+      <a href="../Crest/Utils.html">Utils</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mamantoha/crest/HTTP" data-name="http">
+      <a href="../HTTP.html">HTTP</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/HTTP/Client" data-name="http::client">
+      <a href="../HTTP/Client.html">Client</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">abstract class</span> Crest::Logger
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Crest/Logger.html">Crest::Logger</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Direct Known Subclasses</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../Crest/CommonLogger.html">Crest::CommonLogger</a></li>
+  
+  </ul>
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L4" target="_blank">crest/logger.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28filename%3AString%29-class-method" class="signature"><strong>.new</strong>(filename : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28io%3AIO%3DSTDOUT%29-class-method" class="signature"><strong>.new</strong>(io : IO = <span class="t">STDOUT</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#default_formatter-instance-method" class="signature"><strong>#default_formatter</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request%28request%3ACrest%3A%3ARequest%29%3AString-instance-method" class="signature"><strong>#request</strong>(request : Crest::Request) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#response%28response%3ACrest%3A%3AResponse%29%3AString-instance-method" class="signature"><strong>#response</strong>(response : Crest::Response) : String</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Macro Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#method_missing%28call%29-macro" class="signature"><strong>method_missing</strong>(call)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(filename:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(filename : String)
+
+        <a class="method-permalink" href="#new%28filename%3AString%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(io:IO=STDOUT)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(io : IO = <span class="t">STDOUT</span>)
+
+        <a class="method-permalink" href="#new%28io%3AIO%3DSTDOUT%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="default_formatter-instance-method">
+      <div class="signature">
+        
+        def <strong>default_formatter</strong>
+
+        <a class="method-permalink" href="#default_formatter-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="request(request:Crest::Request):String-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>request</strong>(request : <a href="../Crest/Request.html">Crest::Request</a>) : String
+
+        <a class="method-permalink" href="#request%28request%3ACrest%3A%3ARequest%29%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="response(response:Crest::Response):String-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>response</strong>(response : <a href="../Crest/Response.html">Crest::Response</a>) : String
+
+        <a class="method-permalink" href="#response%28response%3ACrest%3A%3AResponse%29%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail" id="method_missing(call)-macro">
+      <div class="signature">
+        
+        macro <strong>method_missing</strong>(call)
+
+        <a class="method-permalink" href="#method_missing%28call%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/logger.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>
