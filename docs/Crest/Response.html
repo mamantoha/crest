@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/mamantoha/crest">
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../js/doc.js"></script>
+  <title>Crest::Response - github.com/mamantoha/crest</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/mamantoha/crest/Crest" data-name="crest">
+      <a href="../Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="../Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Exception" data-name="crest::exception">
+      <a href="../Crest/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Logger" data-name="crest::logger">
+      <a href="../Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Payload" data-name="crest::payload">
+      <a href="../Crest/Payload.html">Payload</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Request" data-name="crest::request">
+      <a href="../Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="../Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Resource" data-name="crest::resource">
+      <a href="../Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/mamantoha/crest/Crest/Response" data-name="crest::response">
+      <a href="../Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/TextValue" data-name="crest::textvalue">
+      <a href="../Crest/TextValue.html">TextValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/Crest/Utils" data-name="crest::utils">
+      <a href="../Crest/Utils.html">Utils</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mamantoha/crest/HTTP" data-name="http">
+      <a href="../HTTP.html">HTTP</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mamantoha/crest/HTTP/Client" data-name="http::client">
+      <a href="../HTTP/Client.html">Client</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Crest::Response
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Crest/Response.html">Crest::Response</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L2" target="_blank">crest/response.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28http_client_res%3AHTTP%3A%3AClient%3A%3AResponse%2Crequest%3ACrest%3A%3ARequest%29-class-method" class="signature"><strong>.new</strong>(http_client_res : HTTP::Client::Response, request : Crest::Request)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#create%28http_client_res%3AHTTP%3A%3AClient%3A%3AResponse%2Crequest%3ACrest%3A%3ARequest%29-class-method" class="signature"><strong>.create</strong>(http_client_res : HTTP::Client::Response, request : Crest::Request)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#body-instance-method" class="signature"><strong>#body</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cookies-instance-method" class="signature"><strong>#cookies</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#follow_redirection-instance-method" class="signature"><strong>#follow_redirection</strong></a>
+        
+          <div class="summary"><p>Follow a redirection response by making a new HTTP request to the redirection target.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#headers-instance-method" class="signature"><strong>#headers</strong></a>
+        
+          <div class="summary"><p>A hash of the headers.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#history%3AArray-instance-method" class="signature"><strong>#history</strong> : Array</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#http_client_res%3AHTTP%3A%3AClient%3A%3AResponse-instance-method" class="signature"><strong>#http_client_res</strong> : HTTP::Client::Response</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request%3ACrest%3A%3ARequest-instance-method" class="signature"><strong>#request</strong> : Crest::Request</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#return%21-instance-method" class="signature"><strong>#return!</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#status_code%3AInt32-instance-method" class="signature"><strong>#status_code</strong> : Int32</a>
+        
+          <div class="summary"><p>HTTP status code</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#url%3AString-instance-method" class="signature"><strong>#url</strong> : String</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(http_client_res:HTTP::Client::Response,request:Crest::Request)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(http_client_res : HTTP::Client::Response, request : <a href="../Crest/Request.html">Crest::Request</a>)
+
+        <a class="method-permalink" href="#new%28http_client_res%3AHTTP%3A%3AClient%3A%3AResponse%2Crequest%3ACrest%3A%3ARequest%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="create(http_client_res:HTTP::Client::Response,request:Crest::Request)-class-method">
+      <div class="signature">
+        
+        def self.<strong>create</strong>(http_client_res : HTTP::Client::Response, request : <a href="../Crest/Request.html">Crest::Request</a>)
+
+        <a class="method-permalink" href="#create%28http_client_res%3AHTTP%3A%3AClient%3A%3AResponse%2Crequest%3ACrest%3A%3ARequest%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="body-instance-method">
+      <div class="signature">
+        
+        def <strong>body</strong>
+
+        <a class="method-permalink" href="#body-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cookies-instance-method">
+      <div class="signature">
+        
+        def <strong>cookies</strong>
+
+        <a class="method-permalink" href="#cookies-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L80" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="follow_redirection-instance-method">
+      <div class="signature">
+        
+        def <strong>follow_redirection</strong>
+
+        <a class="method-permalink" href="#follow_redirection-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Follow a redirection response by making a new HTTP request to the
+redirection target.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="headers-instance-method">
+      <div class="signature">
+        
+        def <strong>headers</strong>
+
+        <a class="method-permalink" href="#headers-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>A hash of the headers.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L76" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="history:Array-instance-method">
+      <div class="signature">
+        
+        def <strong>history</strong> : Array
+
+        <a class="method-permalink" href="#history%3AArray-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="http_client_res:HTTP::Client::Response-instance-method">
+      <div class="signature">
+        
+        def <strong>http_client_res</strong> : HTTP::Client::Response
+
+        <a class="method-permalink" href="#http_client_res%3AHTTP%3A%3AClient%3A%3AResponse-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="request:Crest::Request-instance-method">
+      <div class="signature">
+        
+        def <strong>request</strong> : <a href="../Crest/Request.html">Crest::Request</a>
+
+        <a class="method-permalink" href="#request%3ACrest%3A%3ARequest-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="return!-instance-method">
+      <div class="signature">
+        
+        def <strong>return!</strong>
+
+        <a class="method-permalink" href="#return%21-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="status_code:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>status_code</strong> : Int32
+
+        <a class="method-permalink" href="#status_code%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>HTTP status code</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="url:String-instance-method">
+      <div class="signature">
+        
+        def <strong>url</strong> : String
+
+        <a class="method-permalink" href="#url%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/2da09f70a77982623047e203e1676a70dca430f3/src/crest/response.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
