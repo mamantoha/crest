@@ -5,7 +5,7 @@ crystal:
 
 script:
   - make test
-  - crystal tool format --check
+  - crystal tool format src/ --check
   - crystal docs
 
 deploy:
