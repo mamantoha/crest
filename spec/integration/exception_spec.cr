@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Crest do
   describe "Raise exception" do
     it "404" do
-      expect_raises Crest::RequestFailed, "HTTP status code 404" do
+      expect_raises Crest::RequestFailed, "HTTP status code 404: Not Found" do
         Crest.get("#{TEST_SERVER_URL}/404")
       end
     end
