@@ -106,6 +106,10 @@ get "/redirect/circle2" do |env|
   env.redirect("/redirect/circle1")
 end
 
+get "/redirect/not_found" do |env|
+  env.redirect("/404")
+end
+
 # Returns header dict.
 get "/headers" do |env|
   result = {} of String => String

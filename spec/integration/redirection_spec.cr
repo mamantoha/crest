@@ -24,6 +24,12 @@ describe Crest do
       end
     end
 
+    it "should raise last error" do
+      expect_raises Crest::RequestFailed, "HTTP status code 404" do
+        Crest.get("#{TEST_SERVER_URL}/redirect/not_found")
+      end
+    end
+
     it "should not follow redirection when max_redirects is 0" do
       expect_raises Crest::RequestFailed, "HTTP status code 302" do
         response = Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect", max_redirects: 0)

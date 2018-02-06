@@ -84,65 +84,24 @@ module Crest
 
   # This is the base Crest exception class. Rescue it if you want to
   # catch any exception that your request might raise
-  # You can get the status code by e.http_code, or see anything about the
-  # response via e.response.
+  # You can see anything about the response via e.response.
   # For example, the entire result body (which is
-  # probably an HTML error page) is e.response.
-  class Exception < Exception
-    getter response, original_excetion, message
-    setter response, original_exception
+  # probably an HTML error page) is e.response.body.
+  class RequestFailed < Exception
+    getter response
 
     @response : Crest::Response
-    @message : String? = nil
-    @initial_response_code : Int32? = nil
 
-    def initialize(response, initial_response_code = nil)
+    def initialize(response)
       @response = response
-      @message = nil
-      @initial_response_code = initial_response_code
     end
 
     def http_code
-      if @response
-        @response.status_code.to_i
-      else
-        @initial_response_code
-      end
-    end
-
-    def http_headers
-      @response.headers if @response
-    end
-
-    def http_body
-      @response.body if @response
-    end
-
-    def to_s
-      message
+      @response.status_code.to_i
     end
 
     def message
-      @message || default_message
+      "HTTP status code #{http_code}: #{STATUSES[http_code]}"
     end
-
-    def default_message
-      self.class.name
-    end
-  end
-
-  # The request failed with an error code not managed by the code
-  class RequestFailed < Crest::Exception
-    def default_message
-      "HTTP status code #{http_code}"
-    end
-
-    def to_s
-      message
-    end
-  end
-
-  # TODO: Create HTTP status exception classes
-  STATUSES.each do |code, message|
   end
 end

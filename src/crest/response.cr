@@ -17,7 +17,7 @@ module Crest
         check_max_redirects
         follow_redirection
       else
-        raise RequestFailed.new(self, status_code)
+        raise RequestFailed.new(self)
       end
     end
 
@@ -99,7 +99,7 @@ module Crest
 
     private def check_max_redirects
       if @request.max_redirects <= 0
-        raise RequestFailed.new(self, status_code)
+        raise RequestFailed.new(self)
       end
     end
   end
