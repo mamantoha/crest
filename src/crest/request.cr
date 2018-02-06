@@ -1,3 +1,7 @@
+require "http"
+require "../http/proxy/client"
+require "./logger"
+
 module Crest
   class Request
     @method : String
