@@ -1,4 +1,5 @@
 require "colorize"
+require "../logger"
 
 module Crest
   class CommonLogger < Logger

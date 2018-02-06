@@ -1,3 +1,6 @@
+require "http"
+require "./request"
+
 module Crest
   class Response
     getter http_client_res, request

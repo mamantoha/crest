@@ -1,3 +1,5 @@
+require "./response"
+
 module Crest
   # Hash of HTTP status code => message.
   #
