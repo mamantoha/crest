@@ -1,8 +1,29 @@
 module Crest
+  # A class that can be instantiated for access to a RESTful resource,
+  # including authentication, proxy and logging.
   class Resource
     getter url, headers, params, user, password,
       logging, logger, p_addr, p_port, p_user, p_pass
 
+    # Example:
+    #
+    # ```crystal
+    # resource = Crest::Resource.new("https://httpbin.org/get")
+    # response = resource.get
+    # ```
+    #
+    # With HTTP basic authentication:
+    #
+    # ```crystal
+    # resource = Crest::Resource.new("https://httpbin.org/get", user: "user", password: "password")
+    # ```
+    #
+    # Use the `[]` syntax to allocate subresources:
+    #
+    # ```crystal
+    # resource = Crest::Resource.new("https://httpbin.org")
+    # resource.get("/get")
+    # ```
     def initialize(
       @url : String,
       *,
