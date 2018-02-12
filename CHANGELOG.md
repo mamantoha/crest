@@ -1,3 +1,9 @@
+# ...
+
+* Allow `Crest::Resource` to accept more parameters(proxy authentication credentials, logging setup)
+* Refactor exceptions class
+* Setup GitHub Pages branch to host docs
+
 # 0.9.6
 
 * Proxy on redirects
