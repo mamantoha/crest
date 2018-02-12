@@ -153,12 +153,27 @@ Crest.get("http://example.com/resource", logging: true, logger: MyLogger.new)
 
 ### Resource
 
+A `Crest::Resource` class can be instantiated for access to a RESTful resource,
+including authentication, proxy and logging.
+
 ```crystal
-resource = Crest::Resource.new("http://localhost", headers: {"Content-Type" => "application/json"})
+resource = Crest::Resource.new("http://localhost", headers: {"Content-Type" => "application/json"}, logging: true)
 resource.get({"X-Something" => "1"})
 ```
 
-### Resource Nesting
+With HTTP basic authentication:
+
+```crystal
+resource = Crest::Resource.new("https://httpbin.org/get", user: "user", password: "password")
+```
+
+With Proxy authentication:
+
+```crystal
+resource = Crest::Resource.new("https://httpbin.org/get", p_host: "localhost", p_port: 3128)
+```
+
+ Use the `[]` syntax to allocate subresources:
 
 ```crystal
 site = Crest::Resource.new('http://example.com')

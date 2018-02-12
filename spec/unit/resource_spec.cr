@@ -9,6 +9,20 @@ describe Crest::Resource do
       resource.headers.should eq({"X-Something" => "1"})
     end
 
+    it "initialize new resource with proxy params" do
+      resource = Crest::Resource.new("http://localhost", p_addr: "localhost", p_port: 3128)
+
+      resource.p_addr.should eq("localhost")
+      resource.p_port.should eq(3128)
+    end
+
+    it "initialize new resource with logger" do
+      resource = Crest::Resource.new("http://localhost", logging: true)
+
+      (resource.logging).should eq(true)
+      (resource.logger).should be_a(Crest::Logger)
+    end
+
     it "initialize new resource without headers" do
       resource = Crest::Resource.new("http://localhost")
 
