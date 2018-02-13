@@ -1,5 +1,6 @@
 # ...
 
+* Allow `Crest::Resource` to accept default `params` and `headers`
 * Allow `Crest::Resource` to accept more parameters(proxy authentication credentials, logging setup)
 * Refactor exceptions class
 * Setup GitHub Pages branch to host docs
