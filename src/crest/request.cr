@@ -57,7 +57,7 @@ module Crest
       *,
       headers = {} of String => String,
       cookies = {} of String => String,
-      payload = {} of String => String | String,
+      payload = {} of String => String,
       params = {} of String => String,
       max_redirects = 10,
       **options

@@ -28,8 +28,15 @@ require "crest"
 Basic usage:
 
 ```crystal
-Crest.get("http://example.com/resource", params: {:lang => "ua"})
-Crest.post("http://example.com/resource", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+Crest.get(
+  "http://example.com/users",
+  params: {:lang => "en"}
+)
+
+Crest.post(
+  "http://example.com/users",
+  payload: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
+)
 ```
 
 ### Passing advanced options
@@ -56,11 +63,31 @@ Optional parameters:
 More detailed examples:
 
 ```crystal
-Crest::Request.new(:get, "http://example.com/resource", headers: {"Content-Type" => "application/json"})
-Crest::Request.new(:delete, "http://example.com/resource/1", params: {:lang => "ua"})
-Crest::Request.new(:post, "http://example.com/resource", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
-Crest::Request.new(:patch, "http://example.com/resource/1", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
-Crest::Request.new(:get, "http://example.com/resource", user: "admin", password: "1234")
+Crest::Request.execute(:get,
+  "https://example.com/resource",
+  params: {:width => 640, "height" => "480"},
+  headers: {"Content-Type" => "application/json"})
+)
+
+Crest::Request.new(:post,
+  "http://example.com/resource",
+  headers: {"Content-Type" => "application/json"},
+  payload: {:width => 640, "height" => "480"}
+)
+
+Crest::Request.new(:get,
+  "http://example.com/resource",
+  user: "admin",
+  password: "1234"
+)
+
+Crest::Request.new(:get,
+  "http://example.com/resource",
+  p_addr: "127.0.0.1",
+  p_port: 3128,
+  p_user: "admin",
+  p_pass: "1234"
+)
 ```
 
 ### Multipart
@@ -77,7 +104,11 @@ Crest.post("http://example.com/upload", payload: {:image => file})
 `crest` does not speak JSON natively, so serialize your payload to a string before passing it to `crest`.
 
 ```crystal
-Crest.post("http://example.com/", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"}.to_json)
+Crest.post(
+  "http://example.com/",
+  headers: {"Content-Type" => "application/json"},
+  payload: {:foo => "bar"}.to_json
+)
 ```
 
 ### Headers
@@ -85,7 +116,10 @@ Crest.post("http://example.com/", headers: {"Content-Type" => "application/json"
 Request headers can be set by passing a hash containing keys and values representing header names and values:
 
 ```crystal
-response = Crest.get("http://httpbin.org/headers", headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"})
+response = Crest.get(
+  "http://httpbin.org/headers",
+  headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"}
+)
 response.headers
 # => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
 ```
@@ -95,21 +129,31 @@ response.headers
 `Request` and `Response` objects know about HTTP cookies, and will automatically extract and set headers for them as needed:
 
 ```crystal
-response = Crest.get("http://httpbin.org/cookies/set", params: {"k1" => "v1", "k2" => "v2"})
+response = Crest.get(
+  "http://httpbin.org/cookies/set",
+  params: {"k1" => "v1", "k2" => "v2"}
+)
 response.cookies
 # => {"k1" => "v1", "k2" => "v2"}
 
-response = Crest.get("http://httpbin.org/cookies", cookies: {"k1" => "v1"})
+response = Crest.get(
+  "http://httpbin.org/cookies",
+  cookies: {"k1" => "v1"}
+)
 response.cookies
 # => {"k1" => "v1"}
 ```
 
 ### Basic authentication
 
-For basic access authentication for an HTTP user agent you should to provide a user name and password when making a request.
+For basic access authentication for an HTTP user agent you should to provide a `user` name and `password` when making a request.
 
 ```crystal
-Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
+Crest.get(
+  "http://httpbin.org/basic-auth/user/passwd",
+  user: "user",
+  password: "passwd"
+)
 ```
 
 ### Proxy
@@ -117,13 +161,23 @@ Crest.get("http://httpbin.org/basic-auth/user/passwd", user: "user", password: "
 If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:
 
 ```crystal
-Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128)
+Crest.get(
+  "http://httpbin.org/ip",
+  p_addr: "localhost",
+  p_port: 3128
+)
 ```
 
 To use HTTP Basic Auth with your proxy, use next syntax:
 
 ```crystal
-Crest.get("http://httpbin.org/ip", p_addr: "localhost", p_port: 3128, p_user: "user", p_pass: "qwerty")
+Crest.get(
+  "http://httpbin.org/ip",
+  p_addr: "localhost",
+  p_port: 3128,
+  p_user: "user",
+  p_pass: "qwerty"
+)
 ```
 
 ### Logging
@@ -156,21 +210,52 @@ Crest.get("http://example.com/resource", logging: true, logger: MyLogger.new)
 A `Crest::Resource` class can be instantiated for access to a RESTful resource,
 including authentication, proxy and logging.
 
+Additionally, you can set default `params` and `headers` separately.
+So can use `Crest::Resource` to share common `headers` and `params`.
+
+The final `headers` and `params` consist of:
+
+* default headers from initializer
+* headers provided in call method (`get`, `post` etc)
+
+This is especially useful if you wish to define your site in one place and
+call it in multiple locations.
+
 ```crystal
-resource = Crest::Resource.new("http://localhost", headers: {"Content-Type" => "application/json"}, logging: true)
-resource.get({"X-Something" => "1"})
+resource = Crest::Resource.new(
+  "https://example.com",
+  params: {"key" => "value"},
+  headers: {"Content-Type" => "application/json"}
+)
+
+response = response["/admin/users"].get(
+  headers: {"Auth-Token" => "secret"}
+)
+
+response = response["/post"].post(
+  payload: {:height => 100, "width" => "100"},
+  params: {:secret => "secret"}
+)
 ```
 
 With HTTP basic authentication:
 
 ```crystal
-resource = Crest::Resource.new("https://httpbin.org/get", user: "user", password: "password")
+resource = Crest::Resource.new(
+  "https://httpbin.org/get",
+  user: "user",
+  password: "password"
+)
 ```
 
 With Proxy authentication:
 
 ```crystal
-resource = Crest::Resource.new("https://httpbin.org/get", p_host: "localhost", p_port: 3128)
+resource = Crest::Resource.new(
+  "https://httpbin.org/get",
+  p_host: "localhost",
+  p_port: 3128
+)
 ```
 
  Use the `[]` syntax to allocate subresources:
