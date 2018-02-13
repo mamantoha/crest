@@ -71,6 +71,16 @@ get "/resize" do |env|
   "Width: #{width}, height: #{height}"
 end
 
+# Matches /resize?api_key=secter
+post "/resize" do |env|
+  height = env.params.body.[]("height")
+  width = env.params.body.[]("width")
+  key = env.params.query["key"]
+  secret = env.params.query["secret"]
+
+  "Width: #{width}, height: #{height}. Key: #{key}, secret: #{secret}"
+end
+
 # Matches /add_key?json&key=123
 get "/add_key" do |env|
   key = env.params.query["key"]

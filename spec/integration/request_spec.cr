@@ -1,3 +1,5 @@
+require "../spec_helper"
+
 describe Crest::Request do
   it "do GET request" do
     response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/post/1/comments")

@@ -2,7 +2,7 @@ module Crest
   # A class that can be instantiated for access to a RESTful resource,
   # including authentication, proxy and logging.
   class Resource
-    getter url, headers, params, user, password,
+    getter url, user, password, headers, params,
       logging, logger, p_addr, p_port, p_user, p_pass
 
     # Example:
@@ -24,15 +24,27 @@ module Crest
     # resource = Crest::Resource.new("https://httpbin.org")
     # resource.get("/get")
     # ```
+    #
+    # You can pass advanced parameters like default `params` or `headers`:
+    #
+    # ```crystal
+    # resource = Crest::Resource.new(
+    #   "https://httpbin.org",
+    #   params: {"key" => "key"},
+    #   headers: {"Content-Type" => "application/json"}
+    # )
+    # response = response["/post"].post(
+    #   payload: {:height => 100, "width" => "100"},
+    #   params: {:secret => "secret"}
+    # )
+    # ```
     def initialize(
       @url : String,
       *,
-      headers = {} of String => String,
-      params = {} of String => String,
+      @headers = {} of String => String,
+      @params : Params = {} of String => String,
       **options
     )
-      @headers = headers
-      @params = params
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -45,16 +57,17 @@ module Crest
 
     {% for method in %w{get delete} %}
       def {{method.id}}(
-        additional_headers = {} of String => String,
+        headers = {} of String => String,
         params = {} of String => String
       )
-        @headers = (@headers || {} of String => String).merge(additional_headers)
+        @headers = @headers.merge(headers)
+        @params = merge_params(params)
 
         Request.execute(
           method: :{{method.id}},
           url: url,
-          headers: headers,
-          params: params,
+          params: @params,
+          headers: @headers,
           user: user,
           password: password,
           p_addr: p_addr,
@@ -70,17 +83,18 @@ module Crest
     {% for method in %w{post put patch} %}
       def {{method.id}}(
         payload = {} of String => String,
-        additional_headers = {} of String => String,
+        headers = {} of String => String,
         params = {} of String => String
       )
-        @headers = (@headers || {} of String => String).merge(additional_headers)
+        @headers = @headers.merge(headers)
+        @params = merge_params(params)
 
         Request.execute(
           method: :{{method.id}},
           url: url,
-          headers: headers,
+          params: @params,
+          headers: @headers,
           payload: payload,
-          params: params,
           user: user,
           password: password,
           p_addr: p_addr,
@@ -96,7 +110,8 @@ module Crest
     def [](suburl)
       self.class.new(
         concat_urls(url, suburl),
-        headers: headers,
+        params: @params,
+        headers: @headers,
         user: user,
         password: password,
         p_addr: p_addr,
@@ -106,6 +121,13 @@ module Crest
         logging: logging,
         logger: logger
       )
+    end
+
+    private def merge_params(other = {} of String => String)
+      @params.try do |params|
+        other = params.merge(other)
+      end
+      return other
     end
 
     private def concat_urls(url : String, suburl : String) : String

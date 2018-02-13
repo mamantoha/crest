@@ -114,11 +114,16 @@ module Vk
     end
 
     def api_request(method_name : String, params = {} of String => String)
-      api_url = "https://api.vk.com"
-      params = params.merge({"access_token" => @access_token, "v" => API_VERSION})
-      resp = Crest.get("#{api_url}/method/#{method_name}", params: params)
-
-      JSON.parse(resp.body)
+      @access_token.try do |access_token|
+        api = Crest::Resource.new(
+          "https://api.vk.com/method/",
+          params: {"access_token" => access_token, "v" => API_VERSION},
+          logging: true
+        )
+        resp = api[method_name].get(params: params)
+        resp = api[method_name].post(params: params)
+        JSON.parse(resp.body)
+      end
     end
 
     private def query_to_h(str : String)
