@@ -16,7 +16,6 @@ describe Crest do
     (response.body).should eq("Width: 100, height: 100")
   end
 
-
   it "do GET request with params with nil" do
     response = Crest.get("#{TEST_SERVER_URL}/add_key", params: {:json => nil, :key => 123})
     (response.body).should eq("JSON: key[123]")
