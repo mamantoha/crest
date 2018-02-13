@@ -13,6 +13,12 @@ describe Crest::Request do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "do GET request with different params" do
+    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/resize", params: {"width" => 100, :height => "100"})
+
+    (response.body).should eq("Width: 100, height: 100")
+  end
+
   it "do GET request with params with nil" do
     response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/add_key", params: {:json => nil, :key => 123})
     (response.body).should eq("JSON: key[123]")
