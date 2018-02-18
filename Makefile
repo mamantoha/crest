@@ -21,4 +21,4 @@ clean: stop_server
 
 .PHONY: stop_server
 stop_server:
-	[ -e ./tmp/server.pid ] && $$(ps $$(cat ./tmp/server.pid) | grep -q $$(cat ./tmp/server.pid)) && kill $$(cat ./tmp/server.pid) || true
+	kill $$(ps aux | grep '/tmp/server -p 4567' | grep -v grep | awk '{print $$2}') || true
