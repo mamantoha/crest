@@ -11,35 +11,52 @@ module Vk
     @access_token : String? = nil
     @user_id : String? = nil
 
-    getter access_token, client_id, user_id
+    getter access_token, client_id, user_id, cookies,
+      display, scope, response_type, email, password
+
+    REDIRECT_URI = "https://oauth.vk.com/blank.html"
+    AUTH_URL     = "https://oauth.vk.com/authorize"
 
     def initialize(client_id : String)
       @client_id = client_id
+      @cookies = {} of String => String
     end
 
-    def login(email : String, password : String, scope = "")
-      redirect_uri = "https://oauth.vk.com/blank.html"
-      display = "mobile"
-      response_type = "token"
+    def login(
+      @email : String,
+      @password : String,
+      *,
+      @scope = "",
+      @display = "mobile",
+      @response_type = "token"
+    )
+      get_access_token(
+        submit_form_with_captcha(
+          submit_login_form(
+            get_login_page
+          )
+        )
+      )
+    end
 
+    private def get_login_page : Crest::Response
       query = {
         "client_id"     => client_id,
-        "redirect_uri"  => redirect_uri,
+        "redirect_uri"  => REDIRECT_URI,
         "display"       => display,
         "scope"         => scope,
         "response_type" => response_type,
       }
 
-      url = "https://oauth.vk.com/authorize"
+      response = Crest.get(AUTH_URL, params: query)
+      cookies.merge!(response.cookies)
 
-      response = Crest.get(url, params: query)
+      return response
+    end
 
-      body = response.body
-      cookies = response.cookies
+    private def submit_login_form(response : Crest::Response) : Crest::Response
+      xml = XML.parse_html(response.body)
 
-      xml = XML.parse_html(body)
-
-      # Submit login form
       form = xml.xpath_node("//*[contains(@class, 'form_item')]/form")
 
       if form
@@ -55,14 +72,16 @@ module Vk
         end
       end
 
-      form_params.merge!({"email" => email, "pass" => password})
+      form_params.merge!({"email" => email.not_nil!, "pass" => password.not_nil!})
       response = Crest.post(login_url.to_s, payload: form_params, cookies: cookies)
 
-      body = response.body
-      cookies = cookies.merge(response.cookies)
+      cookies.merge!(response.cookies)
 
-      # Submit form with captcha
-      xml = XML.parse_html(body)
+      return response
+    end
+
+    private def submit_form_with_captcha(response : Crest::Response) : Crest::Response
+      xml = XML.parse_html(response.body)
       img_captcha_node = xml.xpath_node("//img[@class='captcha_img']/@src")
 
       if img_captcha_node
@@ -85,11 +104,16 @@ module Vk
           end
         end
 
-        form_params.merge!({"email" => email, "pass" => password, "captcha_key" => captcha_key.to_s})
+        form_params.merge!({"email" => email.not_nil!, "pass" => password.not_nil!, "captcha_key" => captcha_key.to_s})
 
         response = Crest.post(login_url.to_s, payload: form_params, cookies: cookies)
+        check_captcha(response)
       end
 
+      return response
+    end
+
+    private def check_captcha(response)
       query = URI.parse(response.url).query
 
       if query
@@ -102,7 +126,9 @@ module Vk
           raise Error.new("Wrong email or password")
         end
       end
+    end
 
+    def get_access_token(response : Crest::Response)
       fragment = URI.parse(response.url).fragment
       return if fragment.nil?
       params = query_to_h(fragment)
@@ -147,7 +173,7 @@ rescue e : IndexError
 end
 
 client = Vk::Client.new(client_id)
-client.login(email, password, scope)
+client.login(email, password, scope: scope)
 puts "Access token: #{client.access_token}"
 
 resp = client.api_request("users.get", {"name_case" => "Nom", "fields" => "photo_50,city,verified"})
