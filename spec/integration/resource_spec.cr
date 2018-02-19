@@ -55,6 +55,22 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100. Key: key, secret: secret")
   end
 
+  it "upload file" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/upload")
+    response = resource.post(payload: {:image1 => file})
+
+    (response.body).should eq("Upload ok")
+  end
+
+  it "upload file with []" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}")
+    response = resource["/upload"].post(payload: {:image1 => file})
+
+    (response.body).should eq("Upload ok")
+  end
+
   it "do PUT request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
     response = resource.put({:title => "Put Update"})
