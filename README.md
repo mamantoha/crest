@@ -99,6 +99,12 @@ file = File.open("#{__DIR__}/example.png")
 Crest.post("http://example.com/upload", payload: {:image => file})
 ```
 
+```crystal
+file = File.open("#{__DIR__}/example.png")
+resource = Crest::Resource.new("https://example.com")
+response = resource["/upload"].post(payload: {:image => file})
+```
+
 ### JSON payload
 
 `crest` does not speak JSON natively, so serialize your payload to a string before passing it to `crest`.
