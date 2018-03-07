@@ -3,6 +3,31 @@ require "../http/proxy/client"
 require "./logger"
 
 module Crest
+  # A class that used to make the requests
+  # The result of a `Crest::Request` is a `Crest::Response` object.
+  #
+  # Example:
+  #
+  # ```
+  # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
+  # ```
+  #
+  # Mandatory parameters:
+  # * `method`
+  # * `url`
+  #
+  # Optional parameters:
+  # * `:headers` a hash containing the request headers
+  # * `:cookies` a hash containing the request cookies
+  # * `:payload` a hash containing query params or a raw string
+  # * `:params` a hash that represent query-string separated from the preceding part by a question mark (?)
+  #          a sequence of attribute–value pairs separated by a delimiter (&).
+  # * `:user` and `:password` for basic auth
+  # * `:p_addr`, `:p_port`, `:p_user`, `:p_pass` for proxy
+  # * `:max_redirects` maximum number of redirections (default to `10`)
+  # * `:logging` enable logging (default to `false`)
+  # * `:logger` set logger (default to `Crest::CommonLogger`)
   class Request
     @method : String
     @url : String
@@ -33,24 +58,6 @@ module Crest
       request.execute
     end
 
-    # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
-    # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
-    #
-    # Mandatory parameters:
-    # * method
-    # * url
-    # Optional parameters:
-    # * :headers a hash containing the request headers
-    # * :cookies a hash containing the request cookies
-    # * :payload a hash containing query params or a raw string
-    # * :params a hash that represent query-string separated from the preceding part by a question mark (?)
-    #          a sequence of attribute–value pairs separated by a delimiter (&).
-    # * :user and :password for basic auth
-    # * :p_addr, :p_port, :p_user, :p_pass for proxy
-    # * :max_redirects maximum number of redirections (default to 10)
-    # * :logging enable logging (default to `false`)
-    # * :logger set logger (default to `Crest::CommonLogger`)
-    #
     def initialize(
       method : Symbol,
       url : String,

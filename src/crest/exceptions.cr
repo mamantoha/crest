@@ -1,19 +1,6 @@
 require "./response"
 
 module Crest
-  # Hash of HTTP status code => message.
-  #
-  # 1xx: Informational - Request received, continuing process
-  # 2xx: Success - The action was successfully received, understood, and
-  #      accepted
-  # 3xx: Redirection - Further action must be taken in order to complete the
-  #      request
-  # 4xx: Client Error - The request contains bad syntax or cannot be fulfilled
-  # 5xx: Server Error - The server failed to fulfill an apparently valid
-  #      request
-  #
-  # See http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-  #
   STATUSES = {100 => "Continue",
               101 => "Switching Protocols",
               102 => "Processing", # WebDAV
@@ -84,11 +71,24 @@ module Crest
               511 => "Network Authentication Required", # RFC6585
   }
 
-  # This is the base Crest exception class. Rescue it if you want to
+  # This is the base `Crest` exception class. Rescue it if you want to
   # catch any exception that your request might raise
-  # You can see anything about the response via e.response.
+  # You can see anything about the response via `e.response`.
   # For example, the entire result body (which is
-  # probably an HTML error page) is e.response.body.
+  # probably an HTML error page) is `e.response.body`.
+  #
+  # Hash of HTTP status `code => message`.
+  #
+  # `1xx`: Informational - Request received, continuing process
+  # `2xx`: Success - The action was successfully received, understood, and
+  #      accepted
+  # `3xx`: Redirection - Further action must be taken in order to complete the
+  #      request
+  # `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
+  # `5xx`: Server Error - The server failed to fulfill an apparently valid
+  #      request
+  #
+  # See http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
   class RequestFailed < Exception
     getter response
 
