@@ -22,7 +22,7 @@ module Crest
   # * `:cookies` a hash containing the request cookies
   # * `:payload` a hash containing query params or a raw string
   # * `:params` a hash that represent query-string separated from the preceding part by a question mark (?)
-  #          a sequence of attribute–value pairs separated by a delimiter (&).
+  #    a sequence of attribute–value pairs separated by a delimiter (&).
   # * `:user` and `:password` for basic auth
   # * `:p_addr`, `:p_port`, `:p_user`, `:p_pass` for proxy
   # * `:max_redirects` maximum number of redirections (default to `10`)
