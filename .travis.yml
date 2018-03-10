@@ -1,7 +1,6 @@
 language: crystal
 crystal:
   - latest
-  - nightly
 
 script:
   - make test
@@ -16,7 +15,3 @@ deploy:
   on:
     branch: master
   local_dir: docs
-
-matrix:
-  allow_failures:
-    - crystal: nightly
