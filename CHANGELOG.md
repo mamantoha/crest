@@ -1,5 +1,7 @@
 # ...
 
+* Tested with Crystal 0.24.2
+
 # 0.9.7
 
 * Allow `Crest::Resource` to accept default `params` and `headers`
