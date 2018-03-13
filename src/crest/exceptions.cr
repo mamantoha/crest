@@ -3,17 +3,16 @@ require "./response"
 module Crest
   # Hash of HTTP status code => message.
   #
-  # 1xx: Informational - Request received, continuing process
-  # 2xx: Success - The action was successfully received, understood, and
-  #      accepted
-  # 3xx: Redirection - Further action must be taken in order to complete the
-  #      request
-  # 4xx: Client Error - The request contains bad syntax or cannot be fulfilled
-  # 5xx: Server Error - The server failed to fulfill an apparently valid
-  #      request
+  # * 1xx: Informational - Request received, continuing process
+  # * 2xx: Success - The action was successfully received, understood, and
+  #   accepted
+  # * 3xx: Redirection - Further action must be taken in order to complete the
+  #   request
+  # * 4xx: Client Error - The request contains bad syntax or cannot be fulfilled
+  # * 5xx: Server Error - The server failed to fulfill an apparently valid
+  #   request
   #
   # See http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-  #
   STATUSES = {100 => "Continue",
               101 => "Switching Protocols",
               102 => "Processing", # WebDAV
