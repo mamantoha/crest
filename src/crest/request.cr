@@ -152,7 +152,7 @@ module Crest
     private def basic_auth(user, password)
       return unless user && password
 
-      value = "Basic " + Base64.encode(user + ":" + password).chomp
+      value = "Basic #{Base64.strict_encode("#{user}:#{password}")}"
       @headers.add("Authorization", value)
     end
 
