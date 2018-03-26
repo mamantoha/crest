@@ -5,7 +5,7 @@ crystal:
 script:
   - make test
   - crystal tool format src/ --check
-  - bin/ameba
+  - bin/ameba src/
   - crystal docs
 
 deploy:
