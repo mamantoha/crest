@@ -16,5 +16,7 @@ development_dependencies:
   http_proxy:
     github: mamantoha/http_proxy
     version: ~> 0.3.1
+  ameba:
+    github: veelenga/ameba
 
 license: MIT
