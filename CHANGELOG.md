@@ -1,6 +1,9 @@
 # ...
 
+# 0.9.8
+
 * Tested with Crystal 0.24.2
+* Fix Basic Authentication
 
 # 0.9.7
 
