@@ -22,7 +22,7 @@ describe Crest do
 
         (response.status_code).should eq(200)
         (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
-        (response.headers).should eq({"Cookie" => ["k1=v1; k2=v2"]})
+        (response.headers.[]("Cookie")).should eq("k1=v1; k2=v2")
         (JSON.parse(response.body)).should eq({"cookies" => {"k1" => "v1", "k2" => "v2"}})
       end
     end
