@@ -76,6 +76,12 @@ describe Crest::Request do
       (request.payload.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
     end
 
+    it "initialize the OPTIONS request" do
+      request = Crest::Request.new(:options, "http://localhost")
+      (request.method).should eq("OPTIONS")
+      (request.url).should eq("http://localhost")
+    end
+
     it "initialize Request with :max_redirects" do
       request = Crest::Request.new(:get, "http://localhost", max_redirects: 3)
       (request.max_redirects).should eq(3)

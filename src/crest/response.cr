@@ -53,7 +53,7 @@ module Crest
       new_request = Request.new(
         method: :get,
         url: url,
-        headers: headers,
+        headers: request_headers,
         max_redirects: max_redirects,
         cookies: cookies,
         logging: @request.logging,
@@ -86,7 +86,9 @@ module Crest
 
     # A hash of the headers.
     def headers
-      @request.headers.to_h
+      @request.headers.merge!(http_client_res.headers)
+
+      normalize_headers(@request.headers)
     end
 
     def cookies
@@ -103,6 +105,21 @@ module Crest
 
     private def response_cookies
       cookies_to_h(@http_client_res.cookies)
+    end
+
+    private def request_headers
+      @request.headers.to_h
+    end
+
+    private def normalize_headers(headers : HTTP::Headers)
+      headers.map do |e|
+        key = e[0]
+        value = e[1]
+        if value.is_a?(Array) && value.size == 1
+          value = value.first
+        end
+        {key, value}
+      end.to_h
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)

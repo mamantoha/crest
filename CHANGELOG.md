@@ -1,5 +1,8 @@
 # ...
 
+* Add method `OPTIONS`
+* Fix `Crest::Response#headers` method to return response headers
+
 # 0.9.8
 
 * Tested with Crystal 0.24.2

@@ -39,4 +39,10 @@ describe Crest::Request do
 
     (response.body).should eq("Post with title `Title` created")
   end
+
+  it "do OPTIONS request" do
+    response = Crest::Request.execute(:options, "#{TEST_SERVER_URL}")
+
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
+  end
 end

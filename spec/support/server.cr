@@ -17,6 +17,10 @@ get "/" do
   "Hello World!"
 end
 
+options "/" do |env|
+  env.response.headers["Allow"] = "OPTIONS, GET"
+end
+
 get "/secret" do |env|
   "Secret World!"
 end
@@ -120,7 +124,7 @@ get "/redirect/not_found" do |env|
   env.redirect("/404")
 end
 
-# Returns header dict.
+# Return request headers
 get "/headers" do |env|
   result = {} of String => String
   env.request.headers.each do |key, value|
@@ -130,7 +134,16 @@ get "/headers" do |env|
   {"headers" => result}.to_json
 end
 
-# Returns cookie data
+# Set response headers
+get "/headers/set" do |env|
+  env.params.query.each do |param|
+    env.response.headers[param[0]] = param[1]
+  end
+
+  ""
+end
+
+# Returns cookies data
 get "/cookies" do |env|
   result = {} of String => String
   env.request.cookies.to_h.each do |str, cookie|
@@ -143,7 +156,6 @@ end
 # /cookies/set?name=value Sets one or more simple cookies.
 get "/cookies/set" do |env|
   env.params.query.each do |param|
-    puts param
     env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
   end
 
@@ -158,7 +170,6 @@ end
 # /cookies/set_redirect?name=value Sets one or more simple cookies and redirect.
 get "/cookies/set_redirect" do |env|
   env.params.query.each do |param|
-    puts param
     env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
   end
 
