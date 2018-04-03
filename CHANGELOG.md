@@ -1,5 +1,7 @@
 # ...
 
+# 0.9.9
+
 * Add method `OPTIONS`
 * Fix `Crest::Response#headers` method to return response headers
 
