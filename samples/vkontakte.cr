@@ -146,7 +146,6 @@ module Vk
           params: {"access_token" => access_token, "v" => API_VERSION},
           logging: true
         )
-        resp = api[method_name].get(params: params)
         resp = api[method_name].post(params: params)
         JSON.parse(resp.body)
       end
@@ -176,5 +175,6 @@ client = Vk::Client.new(client_id)
 client.login(email, password, scope: scope)
 puts "Access token: #{client.access_token}"
 
-resp = client.api_request("users.get", {"name_case" => "Nom", "fields" => "photo_50,city,verified"})
+fields = "photo_50,city,verified,counters"
+resp = client.api_request("users.get", {"name_case" => "Nom", "fields" => fields})
 puts resp
