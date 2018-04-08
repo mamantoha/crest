@@ -282,6 +282,12 @@ response = site["/api/article"].post({:title => "Hello world", :body => "Crystal
 ```crystal
 Crest.get("http://example.com/nonexistent")
 # => HTTP status code 404: Not Found (Crest::NotFound)
+
+begin
+  Crest.get("http://httpbin.org/404")
+rescue ex : Crest::NotFound
+  puts ex.response
+end
 ```
 
 ### Redirection

@@ -27,4 +27,8 @@ Crest.post(
   logging: true,
 )
 
-Crest.get("http://httpbin.org/404")
+begin
+  Crest.get("http://example.com/nonexistent")
+rescue ex : Crest::NotFound
+  puts ex.response
+end
