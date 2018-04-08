@@ -108,4 +108,14 @@ module Crest
       "HTTP status code #{http_code}: #{STATUSES[http_code]}"
     end
   end
+
+  EXCEPTIONS_MAP = {} of Int32 => Crest::RequestFailed.class
+
+  # {% for code, status in {404 => "NotFound"} %}
+  {% for code, status in STATUSES %}
+    class {{status.gsub(/\W/, "").id}} < RequestFailed
+    end
+
+    EXCEPTIONS_MAP[{{code.id}}] = Crest::{{status.gsub(/\W/, "").id}}
+  {% end %}
 end

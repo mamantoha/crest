@@ -26,3 +26,5 @@ Crest.post(
   payload: payload,
   logging: true,
 )
+
+Crest.get("http://httpbin.org/404")
