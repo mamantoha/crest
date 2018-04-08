@@ -298,7 +298,7 @@ To disable automatic redirection, set `:max_redirects => 0`.
 
 ```crystal
 Crest::Request.execute(method: :get, url: "http://httpbin.org/redirect/1", max_redirects: 0)
-# Crest::RequestFailed: 302 Found
+# => Crest::Found: 302 Found
 ```
 
 ## Result handling
