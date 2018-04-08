@@ -284,7 +284,7 @@ Crest.get("http://example.com/nonexistent")
 # => HTTP status code 404: Not Found (Crest::NotFound)
 
 begin
-  Crest.get("http://httpbin.org/404")
+  Crest.get("http://example.com/nonexistent")
 rescue ex : Crest::NotFound
   puts ex.response
 end
