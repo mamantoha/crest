@@ -290,6 +290,13 @@ rescue ex : Crest::NotFound
 end
 ```
 
+To not raise exceptions but return the `Crest::Response` you can set `:handle_errors => false`.
+
+```crystal
+response = Crest.get("http://example.com/nonexistent", handle_errors: false)
+response.status_code # => 404
+```
+
 ### Redirection
 
 By default, `crest` will follow HTTP 30x redirection requests.

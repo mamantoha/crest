@@ -44,5 +44,27 @@ describe Crest do
 
       (response.status_code).should eq(404)
     end
+
+    context "with handle_errors: false" do
+      it "do not raise error for Crest" do
+        response = Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false)
+
+        (response.status_code).should eq(404)
+      end
+
+      it "do not raise error for Request" do
+        request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/404", handle_errors: false)
+        response = request.execute
+
+        (response.status_code).should eq(404)
+      end
+
+      it "do not raise error for Resource" do
+        resource = Crest::Resource.new(TEST_SERVER_URL, handle_errors: false)
+        response = resource["/404"].get
+
+        (response.status_code).should eq(404)
+      end
+    end
   end
 end

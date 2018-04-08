@@ -29,7 +29,8 @@ module Crest
         check_max_redirects
         follow_redirection
       else
-        raise exception_with_response
+        raise exception_with_response if request.handle_errors
+        self
       end
     end
 
@@ -67,6 +68,7 @@ module Crest
         cookies: cookies,
         logging: @request.logging,
         logger: @request.logger,
+        handle_errors: @request.handle_errors,
         p_addr: @request.p_addr,
         p_port: @request.p_port,
         p_user: @request.p_user,
