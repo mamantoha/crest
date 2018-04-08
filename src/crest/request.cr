@@ -28,6 +28,7 @@ module Crest
   # * `max_redirects` maximum number of redirections (default to `10`)
   # * `logging` enable logging (default to `false`)
   # * `logger` set logger (default to `Crest::CommonLogger`)
+  # * `handle_errors` error handling (default to `true`)
   class Request
     @method : String
     @url : String
@@ -45,9 +46,10 @@ module Crest
     @p_pass : String?
     @logger : Crest::Logger
     @logging : Bool
+    @handle_errors : Bool
 
     getter method, url, payload, headers, cookies, max_redirects, user, password,
-      proxy, logging, logger, p_addr, p_port, p_user, p_pass
+      proxy, logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
 
     # An array of previous redirection responses
     property redirection_history
@@ -96,6 +98,7 @@ module Crest
       @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
+      @handle_errors = options.fetch(:handle_errors, true).as(Bool)
 
       basic_auth(@user, @password)
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)

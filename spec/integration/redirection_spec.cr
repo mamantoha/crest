@@ -30,6 +30,13 @@ describe Crest do
       end
     end
 
+    it "should not raise last error if handle_errors is false" do
+      response = Crest.get("#{TEST_SERVER_URL}/redirect/not_found", handle_errors: false)
+
+      (response.status_code).should eq(404)
+      (response.history.first.status_code).should eq(302)
+    end
+
     it "should not follow redirection when max_redirects is 0" do
       expect_raises Crest::RequestFailed, "HTTP status code 302" do
         response = Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect", max_redirects: 0)

@@ -37,7 +37,7 @@ module Crest
   # ```
   class Resource
     getter url, user, password, headers, params,
-      logging, logger, p_addr, p_port, p_user, p_pass
+      logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
 
     def initialize(
       @url : String,
@@ -54,6 +54,7 @@ module Crest
       @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
+      @handle_errors = options.fetch(:handle_errors, true).as(Bool)
     end
 
     {% for method in %w{get delete} %}
@@ -76,7 +77,8 @@ module Crest
           p_user: p_user,
           p_pass: p_pass,
           logging: logging,
-          logger: logger
+          logger: logger,
+          handle_errors: handle_errors
         )
       end
     {% end %}
@@ -103,7 +105,8 @@ module Crest
           p_user: p_user,
           p_pass: p_pass,
           logging: logging,
-          logger: logger
+          logger: logger,
+          handle_errors: handle_errors
         )
       end
     {% end %}
@@ -120,7 +123,8 @@ module Crest
         p_user: p_user,
         p_pass: p_pass,
         logging: logging,
-        logger: logger
+        logger: logger,
+        handle_errors: handle_errors
       )
     end
 

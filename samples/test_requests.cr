@@ -32,3 +32,6 @@ begin
 rescue ex : Crest::NotFound
   puts ex.response
 end
+
+response = Crest.get("http://example.com/nonexistent", handle_errors: false)
+puts response.status_code
