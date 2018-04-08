@@ -1,5 +1,7 @@
 # ...
 
+# 0.9.10
+
 * Add option `:handle_errors` to don't raise exceptions but return the `Response`
 * Add custom exceptions for each status code
 
