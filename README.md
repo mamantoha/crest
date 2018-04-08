@@ -279,6 +279,11 @@ response = site["/api/article"].post({:title => "Hello world", :body => "Crystal
 - for other cases, a `Crest::RequestFailed` holding the Response will be raised
 - call `.response` on the exception to get the server's response
 
+```crystal
+Crest.get("http://example.com/nonexistent")
+# => HTTP status code 404: Not Found (Crest::NotFound)
+```
+
 ### Redirection
 
 By default, `crest` will follow HTTP 30x redirection requests.
