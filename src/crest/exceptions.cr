@@ -112,6 +112,7 @@ module Crest
   EXCEPTIONS_MAP = {} of Int32 => Crest::RequestFailed.class
 
   {% for code, status in STATUSES %}
+    # :nodoc:
     class {{status.gsub(/\W/, "").id}} < RequestFailed
     end
 
