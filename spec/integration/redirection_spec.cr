@@ -35,5 +35,11 @@ describe Crest do
         response = Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect", max_redirects: 0)
       end
     end
+
+    it "should not follow redirection when max_redirects is 0 and raise Crest::Found" do
+      expect_raises Crest::Found, "HTTP status code 302" do
+        response = Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect", max_redirects: 0)
+      end
+    end
   end
 end

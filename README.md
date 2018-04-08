@@ -279,6 +279,17 @@ response = site["/api/article"].post({:title => "Hello world", :body => "Crystal
 - for other cases, a `Crest::RequestFailed` holding the Response will be raised
 - call `.response` on the exception to get the server's response
 
+```crystal
+Crest.get("http://example.com/nonexistent")
+# => HTTP status code 404: Not Found (Crest::NotFound)
+
+begin
+  Crest.get("http://example.com/nonexistent")
+rescue ex : Crest::NotFound
+  puts ex.response
+end
+```
+
 ### Redirection
 
 By default, `crest` will follow HTTP 30x redirection requests.
@@ -287,7 +298,7 @@ To disable automatic redirection, set `:max_redirects => 0`.
 
 ```crystal
 Crest::Request.execute(method: :get, url: "http://httpbin.org/redirect/1", max_redirects: 0)
-# Crest::RequestFailed: 302 Found
+# => Crest::Found: 302 Found
 ```
 
 ## Result handling

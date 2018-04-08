@@ -1,5 +1,7 @@
 # ...
 
+* Add custom exceptions for each status code
+
 # 0.9.9
 
 * Add method `OPTIONS`

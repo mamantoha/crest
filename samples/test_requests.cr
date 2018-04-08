@@ -26,3 +26,9 @@ Crest.post(
   payload: payload,
   logging: true,
 )
+
+begin
+  Crest.get("http://example.com/nonexistent")
+rescue ex : Crest::NotFound
+  puts ex.response
+end

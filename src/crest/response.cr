@@ -29,6 +29,15 @@ module Crest
         check_max_redirects
         follow_redirection
       else
+        raise exception_with_response
+      end
+    end
+
+    def exception_with_response
+      exception_class = EXCEPTIONS_MAP[status_code]?
+      if exception_class
+        raise exception_class.new(self)
+      else
         raise RequestFailed.new(self)
       end
     end
@@ -128,7 +137,7 @@ module Crest
 
     private def check_max_redirects
       if @request.max_redirects <= 0
-        raise RequestFailed.new(self)
+        raise exception_with_response
       end
     end
   end

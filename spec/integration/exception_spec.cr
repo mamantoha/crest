@@ -15,8 +15,21 @@ describe Crest do
       end
     end
 
+    it "404 raises NotFound" do
+      expect_raises Crest::NotFound, "HTTP status code 404: Not Found" do
+        resource = Crest::Resource.new(TEST_SERVER_URL)
+        resource["/404"].get
+      end
+    end
+
     it "500" do
       expect_raises Crest::RequestFailed, "HTTP status code 500" do
+        Crest.get("#{TEST_SERVER_URL}/500")
+      end
+    end
+
+    it "500 raises InternalServerError" do
+      expect_raises Crest::InternalServerError, "HTTP status code 500" do
         Crest.get("#{TEST_SERVER_URL}/500")
       end
     end
