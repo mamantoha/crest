@@ -14,8 +14,5 @@ deploy:
   github_token: $GITHUB_TOKEN
   project_name: crest
   local_dir: docs
-  # Workaround for travis-ci/travis-ci#9312
-  edge:
-    branch: pages-ivar-set
   on:
     branch: master
