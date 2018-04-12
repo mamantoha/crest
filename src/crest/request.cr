@@ -48,8 +48,9 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter method, url, payload, headers, cookies, max_redirects, user, password,
-      proxy, logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
+    getter http_client, method, url, payload, headers, cookies, max_redirects,
+      user, password, proxy, logging, logger, handle_errors,
+      p_addr, p_port, p_user, p_pass
 
     # An array of previous redirection responses
     property redirection_history
@@ -105,10 +106,8 @@ module Crest
     end
 
     def execute : Crest::Response
-      uri = URI.parse(url)
-      client = HTTP::Client.new(uri)
-      client.set_proxy(@proxy)
-      response = client.exec(method, url, body: payload, headers: headers)
+      @http_client.set_proxy(@proxy)
+      response = @http_client.exec(method, url, body: payload, headers: headers)
       process_result(response)
     end
 
