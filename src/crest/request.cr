@@ -8,7 +8,7 @@ module Crest
   #
   # Example:
   #
-  # ```
+  # ```crystal
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
   # ```
@@ -52,7 +52,6 @@ module Crest
       user, password, proxy, logging, logger, handle_errors,
       p_addr, p_port, p_user, p_pass
 
-    # An array of previous redirection responses
     property redirection_history
 
     def self.execute(method, url, **args)
@@ -165,7 +164,6 @@ module Crest
     end
 
     # Extract the query parameters and append them to the url
-    #
     private def process_url_params(url_params) : String
       query_string = Crest::Utils.encode_query_string(url_params)
 

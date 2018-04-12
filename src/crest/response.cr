@@ -45,7 +45,6 @@ module Crest
 
     # Follow a redirection response by making a new HTTP request to the
     # redirection target.
-    #
     def follow_redirection
       # parse location header and merge into existing URL
       url = @http_client_res.headers["Location"]
@@ -75,10 +74,8 @@ module Crest
         p_pass: @request.p_pass
       )
 
-      # append self to redirection history
       new_request.redirection_history = history + [self]
 
-      # execute redirected request
       new_request.execute
     end
 
@@ -86,7 +83,6 @@ module Crest
       @request.url
     end
 
-    # HTTP status code
     def status_code : Int32
       @http_client_res.status_code.to_i
     end
@@ -95,7 +91,6 @@ module Crest
       @http_client_res.body
     end
 
-    # A hash of the headers.
     def headers
       @request.headers.merge!(http_client_res.headers)
 

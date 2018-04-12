@@ -10,7 +10,7 @@ require "./http/proxy/client"
 #
 # Examples:
 #
-# ```
+# ```crystal
 # Crest.get(
 #   "http://example.com/resource",
 #   headers: {"Content-Type" => "image/jpg"},
@@ -38,7 +38,7 @@ module Crest
   {% for method in %w{get delete post put patch options} %}
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
     #
-    # ```
+    # ```crystal
     # response = Crest.{{method.id}}("http://www.example.com")
     # ```
     def self.{{method.id}}(url : String, **args)
