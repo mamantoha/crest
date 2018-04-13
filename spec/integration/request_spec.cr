@@ -61,6 +61,22 @@ describe Crest::Request do
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
   end
 
+  it "change HTTP::Client in Crest::Request" do
+    url = "#{TEST_SERVER_URL}/delay/2"
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.read_timeout = 5.minutes
+
+    request = Crest::Request.new(:get, url, http_client: client)
+
+    request.http_client.read_timeout = 1.second
+
+    expect_raises IO::Timeout do
+      request.execute
+    end
+  end
+
   it "do POST request" do
     response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
 

@@ -35,7 +35,6 @@ describe Crest::Response do
   end
 
   it "initializer can accept HTTP::Client as http_client" do
-    url = "#{TEST_SERVER_URL}/headers"
     uri = URI.parse(TEST_SERVER_URL)
 
     client = HTTP::Client.new(uri)
@@ -58,6 +57,21 @@ describe Crest::Response do
     response = resource["/headers"].get
 
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "change HTTP::Client in Crest::Resource" do
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.read_timeout = 5.minutes
+
+    resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
+
+    resource.http_client.read_timeout = 1.second
+
+    expect_raises IO::Timeout do
+      response = resource["/delay/2"].get
+    end
   end
 
   it "do POST request" do

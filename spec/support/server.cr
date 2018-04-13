@@ -176,4 +176,12 @@ get "/cookies/set_redirect" do |env|
   env.redirect("/cookies")
 end
 
+# Delays responding for `:seconds` seconds.
+get "/delay/:seconds" do |env|
+  seconds = env.params.url["seconds"].to_i
+  sleep seconds
+
+  "Delay #{seconds} seconds"
+end
+
 Kemal.run
