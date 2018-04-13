@@ -51,15 +51,17 @@ Mandatory parameters:
 
 Optional parameters:
 
-* `:payload` -  a hash containing query params
 * `:headers` -  a hash containing the request headers
 * `:cookies` -  a hash containing the request cookies
+* `:payload` -  a hash containing query params
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `:user` and `:password` -  for Basic Authentication
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:max_redirects` -  maximum number of redirections (default to 10)
 * `:logging` -  enable logging (default to `false`)
 * `:logger` -  set logger (default to `Crest::CommonLogger`)
+* `:handle_errors` - error handling (default to `true`)
+* `:http_client` - instance of `HTTP::Client`
 
 More detailed examples:
 
@@ -89,6 +91,26 @@ Crest::Request.new(:get,
   p_user: "admin",
   p_pass: "1234"
 )
+```
+
+#### Access HTTP::Client
+
+You can access `HTTP::Client` via the `http_client` instance method.
+
+This is usually used to set additional options (e.g. read timeout, authorization header etc.)
+
+```crystal
+client = HTTP::Client.new("http://example.com")
+client.read_timeout = 1.second
+
+begin
+  Crest::Request.new(:get,
+    "http://example.com/delay",
+    http_client: client
+  )
+rescue IO::Timeout
+  puts "Timeout!"
+end
 ```
 
 ### Multipart

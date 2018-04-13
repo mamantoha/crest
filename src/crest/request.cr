@@ -29,6 +29,7 @@ module Crest
   # * `logging` enable logging (default to `false`)
   # * `logger` set logger (default to `Crest::CommonLogger`)
   # * `handle_errors` error handling (default to `true`)
+  # * `http_client` instance of `HTTP::Client`
   class Request
     @method : String
     @url : String
