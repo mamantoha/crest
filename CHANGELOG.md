@@ -1,5 +1,10 @@
 # ...
 
+* `Crest::Request` initializer can accept `HTTP::Client` as `http_client`
+* `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
+* Access instance of `HTTP::Client` via `Crest::Request#http_client`
+* Access instance of `HTTP::Client` via `Crest::Resource#http_client`
+
 # 0.9.10
 
 * Add option `:handle_errors` to don't raise exceptions but return the `Response`

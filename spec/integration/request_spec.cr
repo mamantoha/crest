@@ -34,6 +34,33 @@ describe Crest::Request do
     (response.body).should eq("JSON: key[123]")
   end
 
+  it "initializer can accept HTTP::Client as http_client" do
+    url = "#{TEST_SERVER_URL}/headers"
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.before_request do |request|
+      request.headers.add("foo", "bar")
+    end
+
+    response = Crest::Request.execute(:get, url, http_client: client)
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "access http_client in instance of Crest::Request" do
+    url = "#{TEST_SERVER_URL}/headers"
+
+    request = Crest::Request.new(:get, url)
+
+    request.http_client.before_request do |req|
+      req.headers.add("foo", "bar")
+    end
+
+    response = request.execute
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "do POST request" do
     response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
 

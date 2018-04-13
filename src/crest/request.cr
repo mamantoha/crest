@@ -85,10 +85,15 @@ module Crest
         @url = url + process_url_params(params)
       end
 
-      uri = URI.parse(@url)
-      @http_client = HTTP::Client.new(uri)
-
       @max_redirects = max_redirects
+
+      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
+      if http_client
+        @http_client = http_client
+      else
+        uri = URI.parse(@url)
+        @http_client = HTTP::Client.new(uri)
+      end
 
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)

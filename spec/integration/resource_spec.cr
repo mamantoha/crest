@@ -34,6 +34,32 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "initializer can accept HTTP::Client as http_client" do
+    url = "#{TEST_SERVER_URL}/headers"
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.before_request do |request|
+      request.headers.add("foo", "bar")
+    end
+
+    resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "access http_client in instance of Crest::Resource" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    resource.http_client.before_request do |req|
+      req.headers.add("foo", "bar")
+    end
+
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "do POST request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
     response = resource.post({:title => "Title"})

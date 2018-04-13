@@ -36,7 +36,7 @@ module Crest
   # )
   # ```
   class Resource
-    getter url, user, password, headers, params,
+    getter http_client, url, user, password, headers, params,
       logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
 
     def initialize(
@@ -46,6 +46,14 @@ module Crest
       @params : Params = {} of String => String,
       **options
     )
+      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
+      if http_client
+        @http_client = http_client
+      else
+        uri = URI.parse(@url)
+        @http_client = HTTP::Client.new(uri)
+      end
+
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -78,7 +86,8 @@ module Crest
           p_pass: p_pass,
           logging: logging,
           logger: logger,
-          handle_errors: handle_errors
+          handle_errors: handle_errors,
+          http_client: http_client,
         )
       end
     {% end %}
@@ -106,7 +115,8 @@ module Crest
           p_pass: p_pass,
           logging: logging,
           logger: logger,
-          handle_errors: handle_errors
+          handle_errors: handle_errors,
+          http_client: http_client,
         )
       end
     {% end %}
@@ -124,7 +134,8 @@ module Crest
         p_pass: p_pass,
         logging: logging,
         logger: logger,
-        handle_errors: handle_errors
+        handle_errors: handle_errors,
+        http_client: http_client,
       )
     end
 
