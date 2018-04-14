@@ -2,11 +2,21 @@ module Crest
   # A class that can be instantiated for access to a RESTful resource,
   # including authentication, proxy and logging.
   #
-  # Example:
+  # Simple example:
   #
   # ```crystal
   # resource = Crest::Resource.new("https://httpbin.org/get")
   # response = resource.get
+  # ```
+  #
+  # Block style:
+  #
+  # ```crystal
+  # resource = Crest::Resource.new("http://httpbin.org") do |resource|
+  #   resource.headers.merge!({"foo" => "bar"})
+  # end
+  #
+  # response = resource["/headers"].get
   # ```
   #
   # With HTTP basic authentication:

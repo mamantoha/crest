@@ -6,11 +6,21 @@ module Crest
   # A class that used to make the requests
   # The result of a `Crest::Request` is a `Crest::Response` object.
   #
-  # Example:
+  # Simple example:
   #
   # ```crystal
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
+  # ```
+  #
+  # Block style:
+  #
+  # ```crystal
+  # request = Crest::Request.new(:get, "http://example.com") do |request|
+  #   request.headers.add("foo", "bar")
+  # end
+  #
+  # response = request.execute
   # ```
   #
   # Mandatory parameters:

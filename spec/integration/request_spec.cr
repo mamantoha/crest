@@ -38,9 +38,7 @@ describe Crest::Request do
     url = "#{TEST_SERVER_URL}/headers"
 
     request = Crest::Request.new(:get, url) do |request|
-      request.http_client.before_request do |http_request|
-        http_request.headers.add("foo", "bar")
-      end
+      request.headers.add("foo", "bar")
     end
 
     response = request.execute

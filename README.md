@@ -93,6 +93,18 @@ Crest::Request.new(:get,
 )
 ```
 
+A block can be passed to the `Crest::Request` instance.
+
+This block will then be called with the `Crest::Request`.
+
+```crystal
+request = Crest::Request.new(:get, "http://httpbin.org/headers") do |request|
+  request.headers.add("foo", "bar")
+end
+
+response = request.execute
+```
+
 #### Access HTTP::Client
 
 You can access `HTTP::Client` via the `http_client` instance method.
@@ -267,6 +279,18 @@ response = response["/post"].post(
 )
 ```
 
+A block can be passed to the `Crest::Resource` instance.
+
+This block will then be called with the `Crest::Resource`.
+
+```crystal
+resource = Crest::Resource.new("http://httpbin.org") do |resource|
+  resource.headers.merge!({"foo" => "bar"})
+end
+
+response = resource["/headers"].get
+```
+
 With HTTP basic authentication:
 
 ```crystal
@@ -290,7 +314,7 @@ resource = Crest::Resource.new(
  Use the `[]` syntax to allocate subresources:
 
 ```crystal
-site = Crest::Resource.new('http://example.com')
+site = Crest::Resource.new("http://example.com")
 response = site["/api/article"].post({:title => "Hello world", :body => "Crystal is awesome!"})
 ```
 
