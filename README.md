@@ -66,25 +66,20 @@ Optional parameters:
 More detailed examples:
 
 ```crystal
+request = Crest::Request.new(:post,
+  "http://example.com/resource",
+  headers: {"Content-Type" => "application/json"},
+  payload: {:width => 640, "height" => "480"}
+)
+request.execute
+
 Crest::Request.execute(:get,
   "https://example.com/resource",
   params: {:width => 640, "height" => "480"},
   headers: {"Content-Type" => "application/json"})
 )
 
-Crest::Request.new(:post,
-  "http://example.com/resource",
-  headers: {"Content-Type" => "application/json"},
-  payload: {:width => 640, "height" => "480"}
-)
-
-Crest::Request.new(:get,
-  "http://example.com/resource",
-  user: "admin",
-  password: "1234"
-)
-
-Crest::Request.new(:get,
+Crest::Request.get(
   "http://example.com/resource",
   p_addr: "127.0.0.1",
   p_port: 3128,

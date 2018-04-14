@@ -14,6 +14,12 @@ describe Crest::Request do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "call get method" do
+    response = Crest::Request.get("#{TEST_SERVER_URL}/post/1/comments")
+
+    (response.body).should eq("Post 1: comments")
+  end
+
   it "do GET request with params" do
     response = Crest::Request.execute(:get,
       "#{TEST_SERVER_URL}/resize",
@@ -95,8 +101,20 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  it "call post method" do
+    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
   it "do OPTIONS request" do
     response = Crest::Request.execute(:options, "#{TEST_SERVER_URL}")
+
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
+  end
+
+  it "call options method" do
+    response = Crest::Request.options("#{TEST_SERVER_URL}")
 
     (response.headers["Allow"]).should eq("OPTIONS, GET")
   end

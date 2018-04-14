@@ -9,8 +9,12 @@ module Crest
   # Simple example:
   #
   # ```crystal
-  # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # request = Crest::Request.new(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # request.execute
+  #
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
+  #
+  # Crest::Request.post(url: "http://example.com/user", payload: {:age => 27}.to_json)
   # ```
   #
   # Block style:
@@ -130,6 +134,17 @@ module Crest
     )
       initialize(method, url, **args) { }
     end
+
+    {% for method in %w{get delete post put patch options} %}
+      # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
+      #
+      # ```crystal
+      # response = Crest::Request.{{method.id}}("http://www.example.com")
+      # ```
+      def self.{{method.id}}(url : String, **args)
+        self.execute(:{{method.id}}, url, **args)
+      end
+    {% end %}
 
     def execute : Crest::Response
       @http_client.set_proxy(@proxy)

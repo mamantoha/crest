@@ -7,6 +7,7 @@
 * Access instance of `HTTP::Client` via `Crest::Request#http_client`
 * Access instance of `HTTP::Client` via `Crest::Resource#http_client`
 * Add method `options` to `HTTP::Resource`
+* Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
 
 # 0.9.10
 
