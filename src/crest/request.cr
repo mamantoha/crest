@@ -108,6 +108,17 @@ module Crest
 
       basic_auth(@user, @password)
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
+
+      yield self
+    end
+
+    # When block is not given.
+    def initialize(
+      method : Symbol,
+      url : String,
+      **args
+    )
+      initialize(method, url, **args) { }
     end
 
     def execute : Crest::Response

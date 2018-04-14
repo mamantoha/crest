@@ -34,6 +34,20 @@ describe Crest::Request do
     (response.body).should eq("JSON: key[123]")
   end
 
+  it "should accept block" do
+    url = "#{TEST_SERVER_URL}/headers"
+
+    request = Crest::Request.new(:get, url) do |request|
+      request.http_client.before_request do |http_request|
+        http_request.headers.add("foo", "bar")
+      end
+    end
+
+    response = request.execute
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "initializer can accept HTTP::Client as http_client" do
     url = "#{TEST_SERVER_URL}/headers"
     uri = URI.parse(TEST_SERVER_URL)

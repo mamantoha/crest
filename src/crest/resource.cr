@@ -63,6 +63,16 @@ module Crest
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
+
+      yield self
+    end
+
+    # When block is not given.
+    def initialize(
+      @url : String,
+      **args
+    )
+      initialize(@url, **args) { }
     end
 
     {% for method in %w{get delete} %}

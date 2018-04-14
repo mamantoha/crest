@@ -1,5 +1,7 @@
 # ...
 
+* `Crest::Request` initializer can accept block
+* `Crest::Resource` initializer can accept block
 * `Crest::Request` initializer can accept `HTTP::Client` as `http_client`
 * `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
 * Access instance of `HTTP::Client` via `Crest::Request#http_client`

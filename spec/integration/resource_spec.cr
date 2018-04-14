@@ -34,6 +34,16 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "should accept block" do
+    resource = Crest::Resource.new(TEST_SERVER_URL) do |resource|
+      resource.headers.merge!({"foo" => "bar"})
+    end
+
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "initializer can accept HTTP::Client as http_client" do
     uri = URI.parse(TEST_SERVER_URL)
 

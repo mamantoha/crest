@@ -35,3 +35,12 @@ end
 
 response = Crest.get("http://example.com/nonexistent", handle_errors: false)
 puts response.status_code
+
+request = Crest::Request.new(:get, "http://httpbin.org/headers") do |request|
+  request.http_client.before_request do |http_request|
+    http_request.headers.add("foo", "bar")
+  end
+end
+
+response = request.execute
+puts response.body
