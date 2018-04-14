@@ -148,12 +148,12 @@ module Crest
     end
 
     private def set_payload!(payload : Hash) : String?
-      unless payload.empty?
-        @payload, content_type = Payload.generate(payload)
-        @headers.add("Content-Type", content_type)
+      return if payload.empty?
 
-        @payload
-      end
+      @payload, content_type = Payload.generate(payload)
+      @headers.add("Content-Type", content_type)
+
+      @payload
     end
 
     private def set_payload!(payload : String) : String?
@@ -173,6 +173,7 @@ module Crest
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
+
       @cookies.add_request_headers(@headers)
     end
 

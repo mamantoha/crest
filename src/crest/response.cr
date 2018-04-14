@@ -36,6 +36,7 @@ module Crest
 
     def exception_with_response
       exception_class = EXCEPTIONS_MAP[status_code]?
+
       if exception_class
         raise exception_class.new(self)
       else
@@ -118,9 +119,9 @@ module Crest
     end
 
     private def normalize_headers(headers : HTTP::Headers)
-      headers.map do |e|
-        key = e[0]
-        value = e[1]
+      headers.map do |header|
+        key, value = header
+
         if value.is_a?(Array) && value.size == 1
           value = value.first
         end
