@@ -23,6 +23,10 @@ require "./http/proxy/client"
 #   payload: {:fizz => "buz"},
 #   logging: true,
 # )
+#
+# Crest.get("http://example.com/resource") do |request|
+#   request.headers.add("Content-Type", "image/jpg")
+# end
 # ```
 module Crest
   alias TextValue = String | Symbol | Int32 | Nil
@@ -36,10 +40,12 @@ module Crest
                  Hash(Symbol, Int32)
 
   {% for method in %w{get delete post put patch options} %}
-    # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
+    # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
     #
     # ```crystal
-    # Crest.{{method.id}}("http://www.example.com")
+    # Crest.{{method.id}}("http://www.example.com") do |request|
+    #   request.headers.add("Content-Type", "application/json")
+    # end
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
       request = Request.new(:{{method.id}}, url, **args)
@@ -49,12 +55,10 @@ module Crest
       exec(request)
     end
 
-    # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+    # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
     #
     # ```crystal
-    # Crest.{{method.id}}("http://www.example.com") do |request|
-    #   request.headers.add("Content-Type", "application/json")
-    # end
+    # Crest.{{method.id}}("http://www.example.com")
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
       {{method.id}}(url, **args) { }
