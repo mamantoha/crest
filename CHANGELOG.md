@@ -1,5 +1,6 @@
 # ...
 
+* `Crest` method (`get`, `post`, etc.) can yields the `Crest::Request` to the block
 * `Crest::Request` initializer can accept block
 * `Crest::Resource` initializer can accept block
 * `Crest::Request` initializer can accept `HTTP::Client` as `http_client`

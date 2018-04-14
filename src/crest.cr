@@ -39,10 +39,31 @@ module Crest
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
     #
     # ```crystal
-    # response = Crest.{{method.id}}("http://www.example.com")
+    # Crest.{{method.id}}("http://www.example.com")
     # ```
-    def self.{{method.id}}(url : String, **args)
-      Request.execute(:{{method.id}}, url, **args)
+    def self.{{method.id}}(url : String, **args) : Crest::Response
+      request = Request.new(:{{method.id}}, url, **args)
+
+      yield request
+
+      exec(request)
     end
+
+    # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+    #
+    # ```crystal
+    # Crest.{{method.id}}("http://www.example.com") do |request|
+    #   request.headers.add("Content-Type", "application/json")
+    # end
+    # ```
+    def self.{{method.id}}(url : String, **args) : Crest::Response
+      {{method.id}}(url, **args) { }
+    end
+
   {% end %}
+
+  # Executes a `request`.
+  private def self.exec(request : Crest::Request) : Crest::Response
+    request.execute
+  end
 end
