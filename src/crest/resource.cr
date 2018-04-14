@@ -78,10 +78,7 @@ module Crest
     end
 
     # When block is not given.
-    def initialize(
-      @url : String,
-      **args
-    )
+    def initialize(@url : String, **args)
       initialize(@url, **args) { }
     end
 

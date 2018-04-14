@@ -127,11 +127,7 @@ module Crest
     end
 
     # When block is not given.
-    def initialize(
-      method : Symbol,
-      url : String,
-      **args
-    )
+    def initialize(method : Symbol, url : String, **args)
       initialize(method, url, **args) { }
     end
 
