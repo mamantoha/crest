@@ -85,7 +85,7 @@ module Crest
       initialize(@url, **args) { }
     end
 
-    {% for method in %w{get delete} %}
+    {% for method in %w{get delete options} %}
       def {{method.id}}(
         headers = {} of String => String,
         params = {} of String => String

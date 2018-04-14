@@ -6,6 +6,7 @@
 * `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
 * Access instance of `HTTP::Client` via `Crest::Request#http_client`
 * Access instance of `HTTP::Client` via `Crest::Resource#http_client`
+* Add method `options` to `HTTP::Resource`
 
 # 0.9.10
 

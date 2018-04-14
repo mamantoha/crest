@@ -144,4 +144,11 @@ describe Crest::Response do
     response = resource["/post/1/comments"].get
     (response.body).should eq("Post 1: comments")
   end
+
+  it "do OPTIONS request" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    response = resource.options
+
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
+  end
 end
