@@ -1,14 +1,12 @@
 # ...
 
-* `Crest` method (`get`, `post`, etc.) can yields the `Crest::Request` to the block
-* `Crest::Request` initializer can accept block
-* `Crest::Resource` initializer can accept block
-* `Crest::Request` initializer can accept `HTTP::Client` as `http_client`
-* `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
+* Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
+* `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) can yields the `Crest::Request` to the block
+* `Crest::Request` and `Crest::Resource` initializer can accept block
+* `Crest::Request` and `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
 * Access instance of `HTTP::Client` via `Crest::Request#http_client`
 * Access instance of `HTTP::Client` via `Crest::Resource#http_client`
 * Add method `options` to `HTTP::Resource`
-* Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
 
 # 0.9.10
 

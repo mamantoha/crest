@@ -136,13 +136,28 @@ module Crest
     end
 
     {% for method in %w{get delete post put patch options} %}
+      # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+      #
+      # ```crystal
+      # Crest::Request.{{method.id}}("http://www.example.com") do |request|
+      #   request.headers.add("Content-Type", "application/json")
+      # end
+      # ```
+      def self.{{method.id}}(url : String, **args) : Crest::Response
+        request = Request.new(:{{method.id}}, url, **args)
+
+        yield request
+
+        request.execute
+      end
+
       # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
       #
       # ```crystal
-      # response = Crest::Request.{{method.id}}("http://www.example.com")
+      # Crest::Request.{{method.id}}("http://www.example.com")
       # ```
-      def self.{{method.id}}(url : String, **args)
-        self.execute(:{{method.id}}, url, **args)
+      def self.{{method.id}}(url : String, **args) : Crest::Response
+        {{method.id}}(url, **args) { }
       end
     {% end %}
 

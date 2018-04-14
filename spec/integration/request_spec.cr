@@ -20,6 +20,14 @@ describe Crest::Request do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "call get method with block" do
+    response = Crest::Request.get("#{TEST_SERVER_URL}/headers") do |request|
+      request.headers.add("foo", "bar")
+    end
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "do GET request with params" do
     response = Crest::Request.execute(:get,
       "#{TEST_SERVER_URL}/resize",
