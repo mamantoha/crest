@@ -29,7 +29,7 @@ module Crest
   #
   # ```crystal
   # resource = Crest::Resource.new("https://httpbin.org")
-  # resource.get("/get")
+  # resource["/get"].get
   # ```
   #
   # You can pass advanced parameters like default `params` or `headers`:
