@@ -64,10 +64,10 @@ module Crest
     @handle_errors : Bool
 
     getter http_client, method, url, payload, headers, cookies, max_redirects,
-      user, password, proxy, logging, logger, handle_errors,
-      p_addr, p_port, p_user, p_pass
+      logging, logger, handle_errors,
+      proxy, p_addr, p_port, p_user, p_pass
 
-    property redirection_history
+    property redirection_history, user, password
 
     def self.execute(method, url, **args)
       request = new(method, url, **args)
@@ -120,10 +120,11 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
 
-      basic_auth(@user, @password)
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
 
       yield self
+
+      basic_auth(@user, @password)
     end
 
     # When block is not given.
