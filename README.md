@@ -100,6 +100,12 @@ end
 response = request.execute
 ```
 
+```crystal
+response = Crest::Request.get("http://httpbin.org/headers") do |request|
+  request.headers.add("foo", "bar")
+end
+```
+
 #### Access HTTP::Client
 
 You can access `HTTP::Client` via the `http_client` instance method.

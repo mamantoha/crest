@@ -22,6 +22,8 @@ module Crest
   # ```crystal
   # request = Crest::Request.new(:get, "http://example.com") do |request|
   #   request.headers.add("foo", "bar")
+  #   request.user = "username"
+  #   request.password = "password"
   # end
   #
   # response = request.execute
@@ -124,7 +126,7 @@ module Crest
 
       yield self
 
-      basic_auth(@user, @password)
+      basic_auth!(@user, @password)
     end
 
     # When block is not given.
@@ -138,12 +140,16 @@ module Crest
       # ```crystal
       # Crest::Request.{{method.id}}("http://www.example.com") do |request|
       #   request.headers.add("Content-Type", "application/json")
+      #   request.user = "username"
+      #   request.password = "password"
       # end
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
         request = Request.new(:{{method.id}}, url, **args)
 
         yield request
+
+        request.basic_auth!(request.user, request.password)
 
         request.execute
       end
@@ -205,7 +211,7 @@ module Crest
     end
 
     # Make Basic authorization header
-    private def basic_auth(user, password)
+    protected def basic_auth!(user, password)
       return unless user && password
 
       value = "Basic #{Base64.strict_encode("#{user}:#{password}")}"

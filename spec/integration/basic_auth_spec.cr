@@ -27,6 +27,16 @@ describe Crest do
         (response.body).should eq("Secret World!")
       end
 
+      it "should be successful in the verb method block" do
+        response = Crest::Request.get("#{TEST_SERVER_URL}/secret") do |request|
+          request.user = "username"
+          request.password = "password"
+        end
+
+        (response.status_code).should eq(200)
+        (response.body).should eq("Secret World!")
+      end
+
       it "should be successful with valid credentials on redirect" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret_redirect", user: "username", password: "password")
         (response.status_code).should eq(200)
