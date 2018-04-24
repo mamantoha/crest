@@ -6,6 +6,14 @@ describe Crest do
     (response.body).should eq("Hello World!")
   end
 
+  it "do GET request with block" do
+    response = Crest.get("#{TEST_SERVER_URL}/headers") do |request|
+      request.headers.add("foo", "bar")
+    end
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
   it "do GET request with params" do
     response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
     (response.body).should eq("Width: 100, height: 100")

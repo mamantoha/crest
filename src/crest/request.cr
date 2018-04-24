@@ -6,11 +6,27 @@ module Crest
   # A class that used to make the requests
   # The result of a `Crest::Request` is a `Crest::Response` object.
   #
-  # Example:
+  # Simple example:
   #
-  # ```
-  # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # ```crystal
+  # request = Crest::Request.new(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # request.execute
+  #
   # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
+  #
+  # Crest::Request.post(url: "http://example.com/user", payload: {:age => 27}.to_json)
+  # ```
+  #
+  # Block style:
+  #
+  # ```crystal
+  # request = Crest::Request.new(:get, "http://example.com") do |request|
+  #   request.headers.add("foo", "bar")
+  #   request.user = "username"
+  #   request.password = "password"
+  # end
+  #
+  # response = request.execute
   # ```
   #
   # Mandatory parameters:
@@ -29,6 +45,7 @@ module Crest
   # * `logging` enable logging (default to `false`)
   # * `logger` set logger (default to `Crest::CommonLogger`)
   # * `handle_errors` error handling (default to `true`)
+  # * `http_client` instance of `HTTP::Client`
   class Request
     @method : String
     @url : String
@@ -48,11 +65,11 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter method, url, payload, headers, cookies, max_redirects, user, password,
-      proxy, logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
+    getter http_client, method, url, payload, headers, cookies, max_redirects,
+      logging, logger, handle_errors,
+      proxy, p_addr, p_port, p_user, p_pass
 
-    # An array of previous redirection responses
-    property redirection_history
+    property redirection_history, user, password
 
     def self.execute(method, url, **args)
       request = new(method, url, **args)
@@ -85,10 +102,15 @@ module Crest
         @url = url + process_url_params(params)
       end
 
-      uri = URI.parse(@url)
-      @http_client = HTTP::Client.new(uri)
-
       @max_redirects = max_redirects
+
+      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
+      if http_client
+        @http_client = http_client
+      else
+        uri = URI.parse(@url)
+        @http_client = HTTP::Client.new(uri)
+      end
 
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
@@ -100,15 +122,51 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
 
-      basic_auth(@user, @password)
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
+
+      yield self
+
+      basic_auth!(@user, @password)
     end
 
+    # When block is not given.
+    def initialize(method : Symbol, url : String, **args)
+      initialize(method, url, **args) { }
+    end
+
+    {% for method in %w{get delete post put patch options} %}
+      # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+      #
+      # ```crystal
+      # Crest::Request.{{method.id}}("http://www.example.com") do |request|
+      #   request.headers.add("Content-Type", "application/json")
+      #   request.user = "username"
+      #   request.password = "password"
+      # end
+      # ```
+      def self.{{method.id}}(url : String, **args) : Crest::Response
+        request = Request.new(:{{method.id}}, url, **args)
+
+        yield request
+
+        request.basic_auth!(request.user, request.password)
+
+        request.execute
+      end
+
+      # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
+      #
+      # ```crystal
+      # Crest::Request.{{method.id}}("http://www.example.com")
+      # ```
+      def self.{{method.id}}(url : String, **args) : Crest::Response
+        {{method.id}}(url, **args) { }
+      end
+    {% end %}
+
     def execute : Crest::Response
-      uri = URI.parse(url)
-      client = HTTP::Client.new(uri)
-      client.set_proxy(@proxy)
-      response = client.exec(method, url, body: payload, headers: headers)
+      @http_client.set_proxy(@proxy)
+      response = @http_client.exec(method, url, body: payload, headers: headers)
       process_result(response)
     end
 
@@ -123,12 +181,12 @@ module Crest
     end
 
     private def set_payload!(payload : Hash) : String?
-      unless payload.empty?
-        @payload, content_type = Payload.generate(payload)
-        @headers.add("Content-Type", content_type)
+      return if payload.empty?
 
-        @payload
-      end
+      @payload, content_type = Payload.generate(payload)
+      @headers.add("Content-Type", content_type)
+
+      @payload
     end
 
     private def set_payload!(payload : String) : String?
@@ -148,11 +206,12 @@ module Crest
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
+
       @cookies.add_request_headers(@headers)
     end
 
     # Make Basic authorization header
-    private def basic_auth(user, password)
+    protected def basic_auth!(user, password)
       return unless user && password
 
       value = "Basic #{Base64.strict_encode("#{user}:#{password}")}"
@@ -166,7 +225,6 @@ module Crest
     end
 
     # Extract the query parameters and append them to the url
-    #
     private def process_url_params(url_params) : String
       query_string = Crest::Utils.encode_query_string(url_params)
 

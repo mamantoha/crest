@@ -22,8 +22,8 @@ module HTTP
       # Create a new socket factory that tunnels via the given host and  port.
       # The following optional arguments are supported:
       #
-      # * :username - the user name to use when authenticating to the proxy
-      # * :password - the password to use when authenticating
+      # * `username` - the user name to use when authenticating to the proxy
+      # * `password` - the password to use when authenticating
       def initialize(
         @host : String,
         @port = 80,

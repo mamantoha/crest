@@ -34,6 +34,56 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "should accept block" do
+    resource = Crest::Resource.new(TEST_SERVER_URL) do |resource|
+      resource.headers.merge!({"foo" => "bar"})
+    end
+
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "initializer can accept HTTP::Client as http_client" do
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.before_request do |request|
+      request.headers.add("foo", "bar")
+    end
+
+    resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "access http_client in instance of Crest::Resource" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    resource.http_client.before_request do |req|
+      req.headers.add("foo", "bar")
+    end
+
+    response = resource["/headers"].get
+
+    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+  end
+
+  it "change HTTP::Client in Crest::Resource" do
+    uri = URI.parse(TEST_SERVER_URL)
+
+    client = HTTP::Client.new(uri)
+    client.read_timeout = 5.minutes
+
+    resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
+
+    resource.http_client.read_timeout = 1.second
+
+    expect_raises IO::Timeout do
+      response = resource["/delay/2"].get
+    end
+  end
+
   it "do POST request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
     response = resource.post({:title => "Title"})
@@ -93,5 +143,12 @@ describe Crest::Response do
     resource = Crest::Resource.new(TEST_SERVER_URL, logging: true)
     response = resource["/post/1/comments"].get
     (response.body).should eq("Post 1: comments")
+  end
+
+  it "do OPTIONS request" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    response = resource.options
+
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
 end

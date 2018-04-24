@@ -2,11 +2,21 @@ module Crest
   # A class that can be instantiated for access to a RESTful resource,
   # including authentication, proxy and logging.
   #
-  # Example:
+  # Simple example:
   #
   # ```crystal
   # resource = Crest::Resource.new("https://httpbin.org/get")
   # response = resource.get
+  # ```
+  #
+  # Block style:
+  #
+  # ```crystal
+  # resource = Crest::Resource.new("http://httpbin.org") do |resource|
+  #   resource.headers.merge!({"foo" => "bar"})
+  # end
+  #
+  # response = resource["/headers"].get
   # ```
   #
   # With HTTP basic authentication:
@@ -19,7 +29,7 @@ module Crest
   #
   # ```crystal
   # resource = Crest::Resource.new("https://httpbin.org")
-  # resource.get("/get")
+  # resource["/get"].get
   # ```
   #
   # You can pass advanced parameters like default `params` or `headers`:
@@ -36,7 +46,7 @@ module Crest
   # )
   # ```
   class Resource
-    getter url, user, password, headers, params,
+    getter http_client, url, user, password, headers, params,
       logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
 
     def initialize(
@@ -46,6 +56,14 @@ module Crest
       @params : Params = {} of String => String,
       **options
     )
+      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
+      if http_client
+        @http_client = http_client
+      else
+        uri = URI.parse(@url)
+        @http_client = HTTP::Client.new(uri)
+      end
+
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -55,9 +73,16 @@ module Crest
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
+
+      yield self
     end
 
-    {% for method in %w{get delete} %}
+    # When block is not given.
+    def initialize(@url : String, **args)
+      initialize(@url, **args) { }
+    end
+
+    {% for method in %w{get delete options} %}
       def {{method.id}}(
         headers = {} of String => String,
         params = {} of String => String
@@ -78,7 +103,8 @@ module Crest
           p_pass: p_pass,
           logging: logging,
           logger: logger,
-          handle_errors: handle_errors
+          handle_errors: handle_errors,
+          http_client: http_client,
         )
       end
     {% end %}
@@ -106,7 +132,8 @@ module Crest
           p_pass: p_pass,
           logging: logging,
           logger: logger,
-          handle_errors: handle_errors
+          handle_errors: handle_errors,
+          http_client: http_client,
         )
       end
     {% end %}
@@ -124,7 +151,8 @@ module Crest
         p_pass: p_pass,
         logging: logging,
         logger: logger,
-        handle_errors: handle_errors
+        handle_errors: handle_errors,
+        http_client: http_client,
       )
     end
 

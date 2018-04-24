@@ -9,8 +9,7 @@ module Crest
         content_type.send(formdata.content_type)
 
         # Creates an `HTTP::FormData` instance from the key-value
-        # pairs of the given *params*.
-        #
+        # pairs of the given `params`.
         parsed_params.each do |name, value|
           add_field(formdata, name.to_s, value)
         end
