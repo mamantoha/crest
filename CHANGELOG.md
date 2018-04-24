@@ -1,5 +1,7 @@
 # ...
 
+# 0.10.0
+
 * Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
 * `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) can yields the `Crest::Request` to the block
 * `Crest::Request` and `Crest::Resource` initializer can accept block
