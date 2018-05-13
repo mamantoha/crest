@@ -26,7 +26,7 @@ describe Crest::Utils do
 
     it "transform nested param with array" do
       input = {:key1 => {:arr => ["1", "2", "3"]}, :key2 => "123"}
-      output = {"key1[arr][]" => "1", "key1[arr][]" => "2", "key1[arr][]" => "3", "key2" => "123"}
+      output = {"key1[arr][]" => "2", "key1[arr][]" => "3", "key2" => "123"}
 
       Crest::Utils.flatten_params(input).should eq(output)
     end

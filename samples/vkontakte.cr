@@ -87,7 +87,7 @@ module Vk
       if img_captcha_node
         puts img_captcha_node.content
         print "Captcha: "
-        captcha_key = gets(chomp = true).to_s
+        captcha_key = gets(chomp: true).to_s
 
         form = xml.xpath_node("//*[contains(@class, 'form_item')]/form")
 
