@@ -5,7 +5,7 @@ describe Crest do
     context Crest::Request do
       it "should be unsuccessful without credentials" do
         expect_raises Crest::RequestFailed, "HTTP status code 401" do
-          response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "root", password: "qwerty")
+          Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "root", password: "qwerty")
         end
       end
 
@@ -48,7 +48,7 @@ describe Crest do
 
       it "should be unsuccessful with invalid credentials" do
         expect_raises Crest::RequestFailed, "HTTP status code 401" do
-          response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "root", password: "qwerty")
+          Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "root", password: "qwerty")
         end
       end
     end

@@ -21,7 +21,7 @@ options "/" do |env|
   env.response.headers["Allow"] = "OPTIONS, GET"
 end
 
-get "/secret" do |env|
+get "/secret" do
   "Secret World!"
 end
 
@@ -30,7 +30,7 @@ get "/secret_redirect" do |env|
 end
 
 post "/upload" do |env|
-  file = env.params.files["image1"]
+  env.params.files["image1"]
   "Upload ok"
 end
 
@@ -95,7 +95,7 @@ end
 # TODO: JSON
 post "/post/:id/json" do |env|
   title = env.params.json["title"].as(String)
-  "Post with title `#{env.params.json["title"]}` created"
+  "Post with title `#{title}` created"
 end
 
 get "/404" do |env|
@@ -146,7 +146,7 @@ end
 # Returns cookies data
 get "/cookies" do |env|
   result = {} of String => String
-  env.request.cookies.to_h.each do |str, cookie|
+  env.request.cookies.to_h.each do |_, cookie|
     result[cookie.name] = cookie.value
   end
 
@@ -160,7 +160,7 @@ get "/cookies/set" do |env|
   end
 
   result = {} of String => String
-  env.response.cookies.to_h.each do |str, cookie|
+  env.response.cookies.to_h.each do |_, cookie|
     result[cookie.name] = cookie.value
   end
 

@@ -19,7 +19,7 @@ module Crest
     abstract def response(response : Crest::Response) : String
 
     def default_formatter
-      ::Logger::Formatter.new do |severity, datetime, progname, message, io|
+      ::Logger::Formatter.new do |_, datetime, progname, message, io|
         io << progname
         io << " | " << datetime.to_s("%F %T")
         io << " " << message

@@ -22,7 +22,6 @@ module KemalBasicAuth
         end
       end
 
-      headers = HTTP::Headers.new
       env.response.status_code = 401
       env.response.headers["WWW-Authenticate"] = HEADER_LOGIN_REQUIRED
       env.response.print(AUTH_MESSAGE)

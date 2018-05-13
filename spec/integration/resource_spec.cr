@@ -80,7 +80,7 @@ describe Crest::Response do
     resource.http_client.read_timeout = 1.second
 
     expect_raises IO::Timeout do
-      response = resource["/delay/2"].get
+      resource["/delay/2"].get
     end
   end
 
