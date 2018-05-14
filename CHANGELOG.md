@@ -1,5 +1,10 @@
 # ...
 
+# 0.10.1
+
+* Fix `Crest::Utils.flatten_params` method ([#85](https://github.com/mamantoha/crest/pull/85))
+* Reduce the false positiveness in code as much as possible ([#83](https://github.com/mamantoha/crest/pull/83), thanks @veelenga)
+
 # 0.10.0
 
 * Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
