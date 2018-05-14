@@ -17,19 +17,19 @@ module Crest
     #
     # ```crystal
     # flatten_params({:key1 => {:key2 => "123"}})
-    # # => {"key1[key2]" => "123"}
+    # # => [{"key1[key2]", "123"}]
     # ```
     def flatten_params(object : Hash, parent_key = nil)
-      object.reduce({} of String => (TextValue | File)) do |memo, item|
+      object.reduce([] of Tuple(String, TextValue | File)) do |memo, item|
         k, v = item
 
         processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
 
         case v
         when Hash, Array
-          memo.merge!(flatten_params(v, processed_key))
+          memo += flatten_params(v, processed_key)
         else
-          memo[processed_key] = v
+          memo << {processed_key, v}
         end
 
         memo
@@ -38,15 +38,15 @@ module Crest
 
     # ```crystal
     # flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
-    # # => {"key1[arr][]" => "1", "key1[arr][]" => "2", "key1[arr][]" => "3"}
+    # # => [{"key1[arr][]", "1"}, {"key1[arr][]", "2"}, {"key1[arr][]", "3"}]
     # ```
     def flatten_params(object : Array, parent_key = nil)
-      object.reduce({} of String => (TextValue | File)) do |memo, item|
+      object.reduce([] of Tuple(String, TextValue | File)) do |memo, item|
         k = :""
         v = item
 
         processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
-        memo[processed_key] = v
+        memo << {processed_key, v}
 
         memo
       end
