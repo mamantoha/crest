@@ -5,6 +5,7 @@
 /.idea/
 /tmp/
 /samples/
+/docs/
 /.vscode
 
 # Libraries don't need dependency lock
