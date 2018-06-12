@@ -1,5 +1,7 @@
 # ...
 
+* Tested with Crystal 0.25.0
+
 # 0.10.1
 
 * Fix `Crest::Utils.flatten_params` method ([#85](https://github.com/mamantoha/crest/pull/85))
