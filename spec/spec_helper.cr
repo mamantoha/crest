@@ -10,6 +10,7 @@ def with_proxy_server(host = "127.0.0.1", port = 8080)
   server = HTTP::Proxy::Server.new(host, port)
 
   spawn do
+    server.bind_tcp(port)
     server.listen
   end
 
