@@ -16,9 +16,9 @@ describe Crest do
       end
 
       it "should be successful in the initializer block" do
-        request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/secret") do |request|
-          request.user = "username"
-          request.password = "password"
+        request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/secret") do |req|
+          req.user = "username"
+          req.password = "password"
         end
 
         response = request.execute

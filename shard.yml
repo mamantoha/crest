@@ -7,16 +7,19 @@ authors:
 description: |
   Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
-crystal: 0.24.2
+crystal: 0.25.0
 
 development_dependencies:
   kemal:
     github: sdogruyol/kemal
     version: ~> 0.22.0
+    branch: crystal-next
   http_proxy:
     github: mamantoha/http_proxy
-    version: ~> 0.3.3
+    version: ~> 0.3.4
   ameba:
     github: veelenga/ameba
+    version: ~> 0.6.0
+    branch: master
 
 license: MIT
