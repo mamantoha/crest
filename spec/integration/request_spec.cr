@@ -51,8 +51,8 @@ describe Crest::Request do
   it "should accept block" do
     url = "#{TEST_SERVER_URL}/headers"
 
-    request = Crest::Request.new(:get, url) do |request|
-      request.headers.add("foo", "bar")
+    request = Crest::Request.new(:get, url) do |req|
+      req.headers.add("foo", "bar")
     end
 
     response = request.execute

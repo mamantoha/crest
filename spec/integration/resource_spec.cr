@@ -35,8 +35,8 @@ describe Crest::Response do
   end
 
   it "should accept block" do
-    resource = Crest::Resource.new(TEST_SERVER_URL) do |resource|
-      resource.headers.merge!({"foo" => "bar"})
+    resource = Crest::Resource.new(TEST_SERVER_URL) do |res|
+      res.headers.merge!({"foo" => "bar"})
     end
 
     response = resource["/headers"].get
