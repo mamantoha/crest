@@ -13,13 +13,12 @@ development_dependencies:
   kemal:
     github: sdogruyol/kemal
     version: ~> 0.22.0
-    branch: crystal-next
+    branch: master
   http_proxy:
     github: mamantoha/http_proxy
-    version: ~> 0.3.4
+    version: ~> 0.3.5
   ameba:
     github: veelenga/ameba
-    version: ~> 0.6.0
-    branch: master
+    version: ~> 0.7.0
 
 license: MIT
