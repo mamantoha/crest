@@ -36,6 +36,8 @@ module Crest
       end
     end
 
+    # Transform deeply nested param containers into a flat hash of `key => value`.
+    #
     # ```crystal
     # flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
     # # => [{"key1[arr][]", "1"}, {"key1[arr][]", "2"}, {"key1[arr][]", "3"}]
