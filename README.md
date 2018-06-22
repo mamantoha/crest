@@ -224,6 +224,9 @@ Crest.get(
 
 ### Logging
 
+> `Logger` class is completely taken from [halite](https://github.com/icyleaf/halite) shard.
+> Thanks [icyleaf](https://github.com/icyleaf)!
+
 By default, the `Crest` does not enable logging. You can enable it per request by setting `logging: true`:
 
 ```crystal
@@ -403,6 +406,7 @@ Then select the Workbook -> Requests from the menu.
 ## Contributors
 
 - [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+- [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
 
 ## License
 
