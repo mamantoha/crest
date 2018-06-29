@@ -60,7 +60,7 @@ module Crest
       Request.new(
         method: :get,
         url: url,
-        headers: @request_headers,
+        headers: request_headers,
         max_redirects: @request.max_redirects - 1,
         cookies: cookies,
         logging: @request.logging,
