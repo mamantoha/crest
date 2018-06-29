@@ -82,34 +82,7 @@ module Crest
       initialize(@url, **args) { }
     end
 
-    {% for method in %w{get delete options} %}
-      def {{method.id}}(
-        headers = {} of String => String,
-        params = {} of String => String
-      )
-        @headers = @headers.merge(headers)
-        @params = merge_params(params)
-
-        Request.execute(
-          method: :{{method.id}},
-          url: url,
-          params: @params,
-          headers: @headers,
-          user: user,
-          password: password,
-          p_addr: p_addr,
-          p_port: p_port,
-          p_user: p_user,
-          p_pass: p_pass,
-          logging: logging,
-          logger: logger,
-          handle_errors: handle_errors,
-          http_client: http_client,
-        )
-      end
-    {% end %}
-
-    {% for method in %w{post put patch} %}
+    {% for method in %w{get delete options post put patch} %}
       def {{method.id}}(
         payload = {} of String => String,
         headers = {} of String => String,
@@ -118,31 +91,35 @@ module Crest
         @headers = @headers.merge(headers)
         @params = merge_params(params)
 
-        Request.execute(
-          method: :{{method.id}},
-          url: url,
-          params: @params,
-          headers: @headers,
-          payload: payload,
-          user: user,
-          password: password,
-          p_addr: p_addr,
-          p_port: p_port,
-          p_user: p_user,
-          p_pass: p_pass,
-          logging: logging,
-          logger: logger,
-          handle_errors: handle_errors,
-          http_client: http_client,
-        )
+        execute_request(:{{method.id}}, payload)
       end
     {% end %}
 
     def [](suburl)
       self.class.new(
-        concat_urls(url, suburl),
+        url: concat_urls(url, suburl),
         params: @params,
         headers: @headers,
+        user: user,
+        password: password,
+        p_addr: p_addr,
+        p_port: p_port,
+        p_user: p_user,
+        p_pass: p_pass,
+        logging: logging,
+        logger: logger,
+        handle_errors: handle_errors,
+        http_client: http_client,
+      )
+    end
+
+    private def execute_request(method : Symbol, payload = {} of String => String)
+      Request.execute(
+        method: method,
+        url: url,
+        params: @params,
+        headers: @headers,
+        payload: payload,
         user: user,
         password: password,
         p_addr: p_addr,
