@@ -29,18 +29,8 @@ module Crest
         check_max_redirects
         follow_redirection
       else
-        raise exception_with_response if request.handle_errors
+        raise_exception! if request.handle_errors
         self
-      end
-    end
-
-    def exception_with_response
-      exception_class = EXCEPTIONS_MAP[status_code]?
-
-      if exception_class
-        raise exception_class.new(self)
-      else
-        raise RequestFailed.new(self)
       end
     end
 
@@ -106,6 +96,10 @@ module Crest
       @request.redirection_history || [] of self
     end
 
+    private def raise_exception!
+      raise RequestFailed.descendant_by_status_code(status_code).new(self)
+    end
+
     private def request_cookies
       cookies_to_h(@request.cookies)
     end
@@ -134,9 +128,7 @@ module Crest
     end
 
     private def check_max_redirects
-      if @request.max_redirects <= 0
-        raise exception_with_response
-      end
+      raise_exception! if @request.max_redirects <= 0
     end
   end
 end
