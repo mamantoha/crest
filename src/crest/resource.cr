@@ -96,29 +96,17 @@ module Crest
     {% end %}
 
     def [](suburl)
-      self.class.new(
-        url: concat_urls(url, suburl),
-        params: @params,
-        headers: @headers,
-        user: user,
-        password: password,
-        p_addr: p_addr,
-        p_port: p_port,
-        p_user: p_user,
-        p_pass: p_pass,
-        logging: logging,
-        logger: logger,
-        handle_errors: handle_errors,
-        http_client: http_client,
-      )
+      @url = concat_urls(url, suburl)
+
+      self
     end
 
     private def execute_request(method : Symbol, payload = {} of String => String)
       Request.execute(
         method: method,
         url: url,
-        params: @params,
-        headers: @headers,
+        params: params,
+        headers: headers,
         payload: payload,
         user: user,
         password: password,
