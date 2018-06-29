@@ -37,24 +37,31 @@ module Crest
     # Follow a redirection response by making a new HTTP request to the
     # redirection target.
     def follow_redirection
-      # parse location header and merge into existing URL
+      url = extract_url_from_headers
+
+      new_request = prepare_new_request(url)
+      new_request.redirection_history = history + [self]
+      new_request.execute
+    end
+
+    private def extract_url_from_headers
       url = @http_client_res.headers["Location"]
 
-      # handle relative redirects
-      unless url.starts_with?("http")
+      unless url.starts_with?(/http(s)?/)
         uri = URI.parse(@request.url)
         port = uri.port ? ":#{uri.port}" : ""
         url = "#{uri.scheme}://#{uri.host}#{port}#{url}"
       end
 
-      max_redirects = @request.max_redirects - 1
+      url
+    end
 
-      # prepare new request
-      new_request = Request.new(
+    private def prepare_new_request(url)
+      Request.new(
         method: :get,
         url: url,
-        headers: request_headers,
-        max_redirects: max_redirects,
+        headers: @request_headers,
+        max_redirects: @request.max_redirects - 1,
         cookies: cookies,
         logging: @request.logging,
         logger: @request.logger,
@@ -64,10 +71,6 @@ module Crest
         p_user: @request.p_user,
         p_pass: @request.p_pass
       )
-
-      new_request.redirection_history = history + [self]
-
-      new_request.execute
     end
 
     def url : String
@@ -93,7 +96,7 @@ module Crest
     end
 
     def history : Array
-      @request.redirection_history || [] of self
+      @request.redirection_history
     end
 
     private def raise_exception!

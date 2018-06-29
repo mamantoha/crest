@@ -106,10 +106,14 @@ get "/500" do |env|
   env.response.status_code = 500
 end
 
-# Redirect
+# Redirects
 #
-get "/redirect" do |env|
+get "/redirect/1" do |env|
   env.redirect("/")
+end
+
+get "/redirect/2" do |env|
+  env.redirect("/redirect/1")
 end
 
 get "/redirect/circle1" do |env|
