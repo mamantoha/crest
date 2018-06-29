@@ -82,7 +82,7 @@ module Crest
       initialize(@url, **args) { }
     end
 
-    {% for method in %w{get delete options post put patch} %}
+    {% for method in Crest::HTTP_METHODS %}
       def {{method.id}}(
         payload = {} of String => String,
         headers = {} of String => String,

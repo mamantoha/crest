@@ -1,7 +1,6 @@
 require "http"
 require "uri"
 require "base64"
-require "./crest/**"
 require "./http/proxy/client"
 
 # This module's static methods are the entry point for using the Crest client.
@@ -39,7 +38,9 @@ module Crest
                  Hash(Symbol, String) |
                  Hash(Symbol, Int32)
 
-  {% for method in %w{get delete post put patch options} %}
+  HTTP_METHODS = %w{get delete post put patch options}
+
+  {% for method in Crest::HTTP_METHODS %}
     # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
     #
     # ```crystal
@@ -71,3 +72,5 @@ module Crest
     request.execute
   end
 end
+
+require "./crest/**"

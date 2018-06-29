@@ -134,7 +134,7 @@ module Crest
       initialize(method, url, **args) { }
     end
 
-    {% for method in %w{get delete post put patch options} %}
+    {% for method in Crest::HTTP_METHODS %}
       # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
       #
       # ```crystal
