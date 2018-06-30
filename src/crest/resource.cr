@@ -56,14 +56,7 @@ module Crest
       @params : Params = {} of String => String,
       **options
     )
-      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
-      if http_client
-        @http_client = http_client
-      else
-        uri = URI.parse(@url)
-        @http_client = HTTP::Client.new(uri)
-      end
-
+      @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -99,6 +92,11 @@ module Crest
       @url = concat_urls(url, suburl)
 
       self
+    end
+
+    private def new_http_client : HTTP::Client
+      uri = URI.parse(@url)
+      HTTP::Client.new(uri)
     end
 
     private def execute_request(method : Symbol, payload = {} of String => String)
