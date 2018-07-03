@@ -104,14 +104,7 @@ module Crest
 
       @max_redirects = max_redirects
 
-      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
-      if http_client
-        @http_client = http_client
-      else
-        uri = URI.parse(@url)
-        @http_client = HTTP::Client.new(uri)
-      end
-
+      @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -168,6 +161,11 @@ module Crest
       @http_client.set_proxy(@proxy)
       response = @http_client.exec(method, url, body: payload, headers: headers)
       process_result(response)
+    end
+
+    private def new_http_client : HTTP::Client
+      uri = URI.parse(@url)
+      HTTP::Client.new(uri)
     end
 
     private def process_result(http_client_res)
