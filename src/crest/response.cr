@@ -100,7 +100,7 @@ module Crest
     end
 
     private def raise_exception!
-      raise RequestFailed.descendant_by_status_code(status_code).new(self)
+      raise RequestFailed.subclass_by_status_code(status_code).new(self)
     end
 
     private def request_cookies

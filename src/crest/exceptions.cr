@@ -96,7 +96,7 @@ module Crest
 
     @response : Crest::Response
 
-    def self.descendant_by_status_code(status_code)
+    def self.subclass_by_status_code(status_code)
       EXCEPTIONS_MAP.fetch(status_code, self)
     end
 
