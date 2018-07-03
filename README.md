@@ -98,12 +98,6 @@ end
 response = request.execute
 ```
 
-```crystal
-response = Crest::Request.get("http://httpbin.org/headers") do |request|
-  request.headers.add("foo", "bar")
-end
-```
-
 #### Access HTTP::Client
 
 You can access `HTTP::Client` via the `http_client` instance method.
@@ -322,10 +316,10 @@ response = site["/api/article"].post({:title => "Hello world", :body => "Crystal
 
 ### Exceptions
 
-- for result codes between `200` and `207`, a `Crest::Response` will be returned
-- for result codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
-- for other cases, a `Crest::RequestFailed` holding the Response will be raised
-- call `.response` on the exception to get the server's response
+* for result codes between `200` and `207`, a `Crest::Response` will be returned
+* for result codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
+* for other cases, a `Crest::RequestFailed` holding the Response will be raised
+* call `.response` on the exception to get the server's response
 
 ```crystal
 Crest.get("http://example.com/nonexistent")
@@ -362,31 +356,31 @@ The result of a `Crest::Request` is a `Crest::Response` object.
 
 Response objects have several useful methods.
 
-- `Response#body`: The response body as a string
-- `Response#status_code`: The HTTP response code
-- `Response#headers`: A hash of HTTP response headers
-- `Response#cookies`: A hash of HTTP cookies set by the server
-- `Response#request`: The `Crest::Request` object used to make the request
-- `Response#http_client_res`: The `HTTP::Client::Response` object
-- `Response#history`: A list of each response received in a redirection chain
+* `Response#body`: The response body as a string
+* `Response#status_code`: The HTTP response code
+* `Response#headers`: A hash of HTTP response headers
+* `Response#cookies`: A hash of HTTP cookies set by the server
+* `Response#request`: The `Crest::Request` object used to make the request
+* `Response#http_client_res`: The `HTTP::Client::Response` object
+* `Response#history`: A list of each response received in a redirection chain
 
 ## Development
 
 Install dependencies:
 
-```
+```console
 shards
 ```
 
 To run test:
 
-```
+```console
 make test
 ```
 
 ### Workbook
 
-```
+```console
 crystal play
 open http://localhost:8080
 ```
@@ -403,8 +397,8 @@ Then select the Workbook -> Requests from the menu.
 
 ## Contributors
 
-- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
-- [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
+* [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+* [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
 
 ## License
 
