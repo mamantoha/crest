@@ -45,15 +45,15 @@ module Crest
     end
 
     private def extract_url_from_headers
-      url = @http_client_res.headers["Location"]
+      location_url = @http_client_res.headers["Location"]
+      location_uri = URI.parse(location_url)
 
-      unless url.starts_with?(/http(s)?/)
-        uri = URI.parse(@request.url)
-        port = uri.port ? ":#{uri.port}" : ""
-        url = "#{uri.scheme}://#{uri.host}#{port}#{url}"
-      end
+      return location_url if location_uri.absolute?
 
-      url
+      uri = URI.parse(@request.url)
+      port = uri.port ? ":#{uri.port}" : ""
+
+      "#{uri.scheme}://#{uri.host}#{port}#{location_url}"
     end
 
     private def prepare_new_request(url)
