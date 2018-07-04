@@ -73,7 +73,6 @@ module Crest
 
     def self.execute(method, url, **args)
       request = new(method, url, **args)
-      request.logger.request(request) if request.logging
       request.execute
     end
 
@@ -159,6 +158,8 @@ module Crest
 
     def execute : Crest::Response
       @http_client.set_proxy(@proxy)
+      @logger.request(self) if @logging
+
       response = @http_client.exec(method, url, body: payload, headers: headers)
       process_result(response)
     end

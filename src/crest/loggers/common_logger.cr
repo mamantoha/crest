@@ -14,7 +14,7 @@ module Crest
         io << " | " << request.payload.to_s.inspect unless request.payload.nil?
       end.to_s
 
-      @logger.info(message)
+      info(message)
     end
 
     def response(response)
@@ -24,7 +24,7 @@ module Crest
         io << " | " << response.body.inspect
       end.to_s
 
-      @logger.info(message)
+      info(message)
     end
 
     private def colorful_method(method)

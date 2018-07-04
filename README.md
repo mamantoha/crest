@@ -225,6 +225,18 @@ By default, the `Crest` does not enable logging. You can enable it per request b
 Crest.get("http://example.com/resource", logging: true)
 ```
 
+#### Filter sensitive information from logs with a regex matcher
+
+```crystal
+resource = Crest::Request.get("http://example.com", params: {api_key => "secret"}, logging: true) do |request|
+  request.logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
+end
+
+# => crest | 2018-07-04 14:49:49 | GET | http://example.com?api_key=[REMOVED]
+```
+
+#### Customize logging
+
 You can create the custom logger by integration `Crest::Logger` abstract class.
 Here has two methods must be implement: `Crest::Logger.request` and `Crest::Logger.response`.
 

@@ -17,6 +17,7 @@ module Crest
       @logger.level = ::Logger::DEBUG
       @logger.progname = "crest"
       @logger.formatter = default_formatter
+      @filters = [] of Array(String | Regex)
     end
 
     abstract def request(request : Crest::Request) : String
@@ -28,6 +29,25 @@ module Crest
         io << " | " << datetime.to_s("%F %T")
         io << " " << message
       end
+    end
+
+    def info(message : String)
+      @logger.info(apply_filters(message))
+    end
+
+    def filter(patern : String | Regex, replacement : String)
+      @filters.push([patern, replacement])
+    end
+
+    private def apply_filters(output : String) : String
+      @filters.each do |f|
+        patern = f[0]
+        replacement = f[1]
+
+        output = output.gsub(patern, replacement)
+      end
+
+      output
     end
   end
 end
