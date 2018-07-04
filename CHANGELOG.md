@@ -2,6 +2,9 @@
 
 ## [...]
 
+* Add `Logger#filter` method to filter sensitive information from logs with a regex matcher
+* Bug fixes and other improvements
+
 ## 0.10.2
 
 * Tested with Crystal 0.25.0
