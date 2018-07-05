@@ -405,7 +405,7 @@ Then select the Workbook -> Requests from the menu.
 
 - [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
 - [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
-
+- [psikoz](https://github.com/psikoz) Logo design
 ## License
 
 Copyright: 2017-2018 Anton Maminov (anton.maminov@gmail.com)
