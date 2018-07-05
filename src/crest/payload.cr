@@ -1,22 +1,21 @@
 module Crest
-  class Payload
+  # A class that used to generate the *payload* for `Crest::Request`
+  class Payload(T)
     @form_data : String = ""
     @content_type : String = ""
 
-    getter form_data, content_type
+    getter params, form_data, content_type
 
     def self.generate(params : Hash)
-      new.generate(params)
+      new(params).generate
     end
 
-    # :nodoc:
-    def initialize
+    def initialize(@params : T)
     end
 
-    def generate(params : Hash)
+    def generate
       content_type_ch = Channel(String).new(1)
       io = IO::Memory.new
-      parsed_params = parse_params(params)
 
       HTTP::FormData.build(io) do |formdata|
         content_type_ch.send(formdata.content_type)
@@ -34,6 +33,10 @@ module Crest
       self
     end
 
+    def parsed_params
+      Crest::Utils.flatten_params(@params)
+    end
+
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : TextValue)
       formdata.field(name.to_s, value.to_s)
     end
@@ -41,10 +44,6 @@ module Crest
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : File)
       metadata = HTTP::FormData::FileMetadata.new(filename: value.path)
       formdata.file(name.to_s, value, metadata)
-    end
-
-    private def parse_params(params : Hash)
-      Crest::Utils.flatten_params(params)
     end
   end
 end
