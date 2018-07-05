@@ -65,8 +65,8 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter http_client, method, url, payload, headers, cookies, max_redirects,
-      logging, logger, handle_errors,
+    getter http_client, method, url, payload, headers, cookies,
+      max_redirects, logging, logger, handle_errors,
       proxy, p_addr, p_port, p_user, p_pass
 
     property redirection_history, user, password
@@ -182,7 +182,11 @@ module Crest
     private def set_payload!(payload : Hash) : String?
       return if payload.empty?
 
-      @payload, content_type = Payload.generate(payload)
+      payload = Payload.generate(payload)
+
+      @payload = payload.form_data
+      content_type = payload.content_type
+
       @headers.add("Content-Type", content_type)
 
       @payload
