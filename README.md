@@ -1,4 +1,4 @@
-![Crest Logo](https://raw.github.com/mamantoha/crest/master/crest.png)
+<p align="left"><img src="logo/logotype_horizontal.png" alt="crest" height="150px"></p>
 
 [![Build Status](http://img.shields.io/travis/mamantoha/crest.svg?style=flat)](https://travis-ci.org/mamantoha/crest)
 [![GitHub release](https://img.shields.io/github/release/mamantoha/crest.svg)](https://github.com/mamantoha/crest/releases)
@@ -405,7 +405,7 @@ Then select the Workbook -> Requests from the menu.
 
 - [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
 - [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
-
+- [psikoz](https://github.com/psikoz) Logo design
 ## License
 
 Copyright: 2017-2018 Anton Maminov (anton.maminov@gmail.com)
