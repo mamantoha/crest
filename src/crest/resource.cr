@@ -1,3 +1,5 @@
+require "../crest"
+
 module Crest
   # A class that can be instantiated for access to a RESTful resource,
   # including authentication, proxy and logging.
@@ -56,6 +58,7 @@ module Crest
       @params : Params = {} of String => String,
       **options
     )
+      @base_url = @url
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
@@ -76,6 +79,12 @@ module Crest
     end
 
     {% for method in Crest::HTTP_METHODS %}
+      def {{method.id}}(suburl : String, **options)
+        @url = concat_urls(@base_url, suburl)
+
+        {{method.id}}(**options)
+      end
+
       def {{method.id}}(
         payload = {} of String => String,
         headers = {} of String => String,
@@ -89,7 +98,7 @@ module Crest
     {% end %}
 
     def [](suburl)
-      @url = concat_urls(url, suburl)
+      @url = concat_urls(@base_url, suburl)
 
       self
     end
@@ -102,20 +111,20 @@ module Crest
     private def execute_request(method : Symbol, payload = {} of String => String)
       Request.execute(
         method: method,
-        url: url,
-        params: params,
-        headers: headers,
         payload: payload,
-        user: user,
-        password: password,
-        p_addr: p_addr,
-        p_port: p_port,
-        p_user: p_user,
-        p_pass: p_pass,
-        logging: logging,
-        logger: logger,
-        handle_errors: handle_errors,
-        http_client: http_client,
+        url: @url,
+        params: @params,
+        headers: @headers,
+        user: @user,
+        password: @password,
+        p_addr: @p_addr,
+        p_port: @p_port,
+        p_user: @p_user,
+        p_pass: @p_pass,
+        logging: @logging,
+        logger: @logger,
+        handle_errors: @handle_errors,
+        http_client: @http_client,
       )
     end
 
