@@ -28,14 +28,16 @@ Basic usage:
 
 ```crystal
 Crest.get(
-  "http://example.com/users",
+  "http://httpbin.org/get",
   params: {:lang => "en"}
 )
+# curl "http://httpbin.org/get?lang=en"
 
 Crest.post(
-  "http://example.com/users",
+  "http://httpbin.org/post",
   payload: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
 )
+# curl --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
 ```
 
 ### Passing advanced options
@@ -65,25 +67,28 @@ More detailed examples:
 
 ```crystal
 request = Crest::Request.new(:post,
-  "http://example.com/resource",
+  "http://httpbin.org/post",
   headers: {"Content-Type" => "application/json"},
   payload: {:width => 640, "height" => "480"}
 )
 request.execute
+# curl --data "width=640&height=480" --header "Content-Type: application/json" -X POST "http://httpbin.org/post"
 
 Crest::Request.execute(:get,
-  "https://example.com/resource",
+  "http://httpbin.org/get",
   params: {:width => 640, "height" => "480"},
   headers: {"Content-Type" => "application/json"})
 )
+# curl --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
 
 Crest::Request.get(
-  "http://example.com/resource",
+  "http://httpbin.org/get",
   p_addr: "127.0.0.1",
   p_port: 3128,
   p_user: "admin",
   p_pass: "1234"
 )
+# curl --proxy http://127.0.0.1:3128 --proxy-user admin:1234 "http://httpbin.org/get"
 ```
 
 A block can be passed to the `Crest::Request` instance.
@@ -95,7 +100,8 @@ request = Crest::Request.new(:get, "http://httpbin.org/headers") do |request|
   request.headers.add("foo", "bar")
 end
 
-response = request.execute
+request.execute
+# curl --header "foo: bar" http://httpbin.org/headers
 ```
 
 #### Access HTTP::Client
@@ -105,12 +111,12 @@ You can access `HTTP::Client` via the `http_client` instance method.
 This is usually used to set additional options (e.g. read timeout, authorization header etc.)
 
 ```crystal
-client = HTTP::Client.new("http://example.com")
+client = HTTP::Client.new("http://httpbin.org")
 client.read_timeout = 1.second
 
 begin
   Crest::Request.new(:get,
-    "http://example.com/delay",
+    "http://httpbin.org/delay/10",
     http_client: client
   )
 rescue IO::Timeout
@@ -124,13 +130,13 @@ Yeah, that's right! This does multipart sends for you!
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
-Crest.post("http://example.com/upload", payload: {:image => file})
+Crest.post("http://httpbin.org/post", payload: {:image => file})
 ```
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
-resource = Crest::Resource.new("https://example.com")
-response = resource["/upload"].post(payload: {:image => file})
+resource = Crest::Resource.new("https://httpbin.org")
+response = resource["/post"].post(payload: {:image => file})
 ```
 
 ### JSON payload
@@ -139,7 +145,7 @@ response = resource["/upload"].post(payload: {:image => file})
 
 ```crystal
 Crest.post(
-  "http://example.com/",
+  "http://httpbin.org/post",
   headers: {"Content-Type" => "application/json"},
   payload: {:foo => "bar"}.to_json
 )
@@ -151,7 +157,7 @@ Request headers can be set by passing a hash containing keys and values represen
 
 ```crystal
 response = Crest.get(
-  "http://httpbin.org/headers",
+  "http://httpbin.org/bearer",
   headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"}
 )
 response.headers
@@ -188,6 +194,7 @@ Crest.get(
   user: "user",
   password: "passwd"
 )
+# curl --user user:passwd http://httpbin.org/basic-auth/user/passwd
 ```
 
 ### Proxy
@@ -222,17 +229,17 @@ Crest.get(
 By default, the `Crest` does not enable logging. You can enable it per request by setting `logging: true`:
 
 ```crystal
-Crest.get("http://example.com/resource", logging: true)
+Crest.get("http://httpbin.org/get", logging: true)
 ```
 
 #### Filter sensitive information from logs with a regex matcher
 
 ```crystal
-resource = Crest::Request.get("http://example.com", params: {api_key => "secret"}, logging: true) do |request|
+resource = Crest::Request.get("http://httpbin.org/get", params: {api_key => "secret"}, logging: true) do |request|
   request.logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
 end
 
-# => crest | 2018-07-04 14:49:49 | GET | http://example.com?api_key=[REMOVED]
+# => crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?api_key=[REMOVED]
 ```
 
 #### Customize logging
@@ -251,7 +258,7 @@ class MyLogger < Crest::Logger
   end
 end
 
-Crest.get("http://example.com/resource", logging: true, logger: MyLogger.new)
+Crest.get("http://httpbin.org/get", logging: true, logger: MyLogger.new)
 ```
 
 ### Resource
@@ -272,16 +279,16 @@ call it in multiple locations.
 
 ```crystal
 resource = Crest::Resource.new(
-  "https://example.com",
+  "http://httpbin.org",
   params: {"key" => "value"},
   headers: {"Content-Type" => "application/json"}
 )
 
-response = response["/admin/users"].get(
+response["/get"].get(
   headers: {"Auth-Token" => "secret"}
 )
 
-response = response["/post"].post(
+response["/post"].post(
   payload: {:height => 100, "width" => "100"},
   params: {:secret => "secret"}
 )
@@ -296,16 +303,16 @@ resource = Crest::Resource.new("http://httpbin.org") do |resource|
   resource.headers.merge!({"foo" => "bar"})
 end
 
-response = resource["/headers"].get
+resource["/headers"].get
 ```
 
 With HTTP basic authentication:
 
 ```crystal
 resource = Crest::Resource.new(
-  "https://httpbin.org/get",
+  "http://httpbin.org/basic-auth/user/passwd",
   user: "user",
-  password: "password"
+  password: "passwd"
 )
 ```
 
@@ -313,7 +320,7 @@ With Proxy authentication:
 
 ```crystal
 resource = Crest::Resource.new(
-  "https://httpbin.org/get",
+  "http://httpbin.org/get",
   p_host: "localhost",
   p_port: 3128
 )
@@ -322,8 +329,22 @@ resource = Crest::Resource.new(
  Use the `[]` syntax to allocate subresources:
 
 ```crystal
-site = Crest::Resource.new("http://example.com")
-response = site["/api/article"].post({:title => "Hello world", :body => "Crystal is awesome!"})
+site = Crest::Resource.new("http://httpbin.org")
+
+site["/post"].post({:param1 => "value1", :param2 => "value2"})
+# curl --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+```
+
+You can pass suburl through `Request#http_verb` methods:
+
+```crystal
+site = Crest::Resource.new("http://httpbin.org")
+
+site.post("/post", payload: {:param1 => "value1", :param2 => "value2"})
+# curl --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+
+site.get("/get", params: {:status => "active"})
+# curl http://httpbin.org/get?status=active
 ```
 
 ### Exceptions
@@ -334,11 +355,11 @@ response = site["/api/article"].post({:title => "Hello world", :body => "Crystal
 * call `.response` on the exception to get the server's response
 
 ```crystal
-Crest.get("http://example.com/nonexistent")
+Crest.get("http://httpbin.org/status/404")
 # => HTTP status code 404: Not Found (Crest::NotFound)
 
 begin
-  Crest.get("http://example.com/nonexistent")
+  Crest.get("http://httpbin.org/status/404")
 rescue ex : Crest::NotFound
   puts ex.response
 end
@@ -347,7 +368,7 @@ end
 To not raise exceptions but return the `Crest::Response` you can set `:handle_errors => false`.
 
 ```crystal
-response = Crest.get("http://example.com/nonexistent", handle_errors: false)
+response = Crest.get("http://httpbin.org/status/404", handle_errors: false)
 response.status_code # => 404
 ```
 
