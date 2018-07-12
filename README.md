@@ -47,7 +47,7 @@ Crest.post(
 Mandatory parameters:
 
 * `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`,  `:delete`, `:options`)
-* `:url` - URL (e.g.: "http://httpbin.org/ip")
+* `:url` - URL (e.g.: `http://httpbin.org/ip`)
 
 Optional parameters:
 
@@ -430,9 +430,9 @@ Then select the Workbook -> Requests from the menu.
 
 ## Contributors
 
-- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
-- [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
-- [psikoz](https://github.com/psikoz) Logo design
+* [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+* [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
+* [psikoz](https://github.com/psikoz) Logo design
 
 ## License
 
