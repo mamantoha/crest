@@ -31,13 +31,13 @@ Crest.get(
   "http://httpbin.org/get",
   params: {:lang => "en"}
 )
-# curl "http://httpbin.org/get?lang=en"
+# curl -L "http://httpbin.org/get?lang=en"
 
 Crest.post(
   "http://httpbin.org/post",
   payload: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
 )
-# curl --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
+# curl -L --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
 ```
 
 ### Passing advanced options
@@ -72,14 +72,14 @@ request = Crest::Request.new(:post,
   payload: {:width => 640, "height" => "480"}
 )
 request.execute
-# curl --data "width=640&height=480" --header "Content-Type: application/json" -X POST "http://httpbin.org/post"
+# curl -L --data "width=640&height=480" --header "Content-Type: application/json" -X POST "http://httpbin.org/post"
 
 Crest::Request.execute(:get,
   "http://httpbin.org/get",
   params: {:width => 640, "height" => "480"},
   headers: {"Content-Type" => "application/json"})
 )
-# curl --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
+# curl -L --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
 
 Crest::Request.get(
   "http://httpbin.org/get",
@@ -88,7 +88,7 @@ Crest::Request.get(
   p_user: "admin",
   p_pass: "1234"
 )
-# curl --proxy http://127.0.0.1:3128 --proxy-user admin:1234 "http://httpbin.org/get"
+# curl -L --proxy http://127.0.0.1:3128 --proxy-user admin:1234 "http://httpbin.org/get"
 ```
 
 A block can be passed to the `Crest::Request` instance.
@@ -101,7 +101,7 @@ request = Crest::Request.new(:get, "http://httpbin.org/headers") do |request|
 end
 
 request.execute
-# curl --header "foo: bar" http://httpbin.org/headers
+# curl -L --header "foo: bar" http://httpbin.org/headers
 ```
 
 #### Access HTTP::Client
@@ -194,7 +194,7 @@ Crest.get(
   user: "user",
   password: "passwd"
 )
-# curl --user user:passwd http://httpbin.org/basic-auth/user/passwd
+# curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd
 ```
 
 ### Proxy
@@ -332,7 +332,7 @@ resource = Crest::Resource.new(
 site = Crest::Resource.new("http://httpbin.org")
 
 site["/post"].post({:param1 => "value1", :param2 => "value2"})
-# curl --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 ```
 
 You can pass suburl through `Request#http_verb` methods:
@@ -341,10 +341,10 @@ You can pass suburl through `Request#http_verb` methods:
 site = Crest::Resource.new("http://httpbin.org")
 
 site.post("/post", payload: {:param1 => "value1", :param2 => "value2"})
-# curl --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 
 site.get("/get", params: {:status => "active"})
-# curl http://httpbin.org/get?status=active
+# curl -L http://httpbin.org/get?status=active
 ```
 
 ### Exceptions
