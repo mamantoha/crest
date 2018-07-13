@@ -1,4 +1,4 @@
-![crest](https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal.png)
+<p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal.png" alt="crest" height="150px"></p>
 
 [![Build Status](http://img.shields.io/travis/mamantoha/crest.svg?style=flat)](https://travis-ci.org/mamantoha/crest)
 [![GitHub release](https://img.shields.io/github/release/mamantoha/crest.svg)](https://github.com/mamantoha/crest/releases)
