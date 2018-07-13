@@ -11,7 +11,7 @@ crystal: 0.25.0
 
 development_dependencies:
   kemal:
-    github: sdogruyol/kemal
+    github: kemalcr/kemal
     version: ~> 0.23.0
   http_proxy:
     github: mamantoha/http_proxy
