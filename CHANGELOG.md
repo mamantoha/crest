@@ -2,6 +2,8 @@
 
 ## [...]
 
+## 0.11.0
+
 * Add `Logger#filter` method to filter sensitive information from logs with a regex matcher
 * Allow to do request with `suburl` through `Request#http_verb(suburl)` method
 * Bug fixes and other improvements
