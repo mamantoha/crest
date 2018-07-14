@@ -52,7 +52,7 @@ module Crest
     @http_client : HTTP::Client
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
-    @payload : String?
+    @form_data : String?
     @max_redirects : Int32
     @user : String?
     @password : String?
@@ -65,7 +65,7 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter http_client, method, url, payload, headers, cookies,
+    getter http_client, method, url, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors,
       proxy, p_addr, p_port, p_user, p_pass
 
@@ -95,7 +95,7 @@ module Crest
 
       set_headers!(headers)
       set_cookies!(cookies) unless cookies.empty?
-      set_payload!(payload) if payload
+      generate_form_data!(payload) if payload
 
       unless params.empty?
         @url = url + process_url_params(params)
@@ -160,7 +160,7 @@ module Crest
       @http_client.set_proxy(@proxy)
       @logger.request(self) if @logging
 
-      response = @http_client.exec(method, url, body: payload, headers: headers)
+      response = @http_client.exec(method, @url, body: @form_data, headers: @headers)
       process_result(response)
     end
 
@@ -179,21 +179,21 @@ module Crest
       method.to_s.upcase
     end
 
-    private def set_payload!(payload : Hash) : String?
+    private def generate_form_data!(payload : Hash) : String?
       return if payload.empty?
 
-      payload = Payload.generate(payload)
+      payload = Crest::Payload.generate(payload)
 
-      @payload = payload.form_data
+      @form_data = payload.form_data
       content_type = payload.content_type
 
       @headers.add("Content-Type", content_type)
 
-      @payload
+      @form_data
     end
 
-    private def set_payload!(payload : String) : String?
-      @payload = payload
+    private def generate_form_data!(payload : String) : String?
+      @form_data = payload
     end
 
     private def set_headers!(params) : HTTP::Headers

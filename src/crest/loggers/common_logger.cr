@@ -11,7 +11,7 @@ module Crest
       message = String.build do |io|
         io << "| " << colorful_method(request.method)
         io << " | " << request.url
-        io << " | " << request.payload.to_s.inspect unless request.payload.nil?
+        io << " | " << request.form_data.to_s.inspect unless request.form_data.nil?
       end.to_s
 
       info(message)
