@@ -29,42 +29,39 @@ module Crest
         check_max_redirects
         follow_redirection
       else
-        raise exception_with_response if request.handle_errors
+        raise_exception! if request.handle_errors
         self
-      end
-    end
-
-    def exception_with_response
-      exception_class = EXCEPTIONS_MAP[status_code]?
-
-      if exception_class
-        raise exception_class.new(self)
-      else
-        raise RequestFailed.new(self)
       end
     end
 
     # Follow a redirection response by making a new HTTP request to the
     # redirection target.
     def follow_redirection
-      # parse location header and merge into existing URL
-      url = @http_client_res.headers["Location"]
+      url = extract_url_from_headers
 
-      # handle relative redirects
-      unless url.starts_with?("http")
-        uri = URI.parse(@request.url)
-        port = uri.port ? ":#{uri.port}" : ""
-        url = "#{uri.scheme}://#{uri.host}#{port}#{url}"
-      end
+      new_request = prepare_new_request(url)
+      new_request.redirection_history = history + [self]
+      new_request.execute
+    end
 
-      max_redirects = @request.max_redirects - 1
+    private def extract_url_from_headers
+      location_url = @http_client_res.headers["Location"]
+      location_uri = URI.parse(location_url)
 
-      # prepare new request
-      new_request = Request.new(
+      return location_url if location_uri.absolute?
+
+      uri = URI.parse(@request.url)
+      port = uri.port ? ":#{uri.port}" : ""
+
+      "#{uri.scheme}://#{uri.host}#{port}#{location_url}"
+    end
+
+    private def prepare_new_request(url)
+      Request.new(
         method: :get,
         url: url,
         headers: request_headers,
-        max_redirects: max_redirects,
+        max_redirects: @request.max_redirects - 1,
         cookies: cookies,
         logging: @request.logging,
         logger: @request.logger,
@@ -74,10 +71,6 @@ module Crest
         p_user: @request.p_user,
         p_pass: @request.p_pass
       )
-
-      new_request.redirection_history = history + [self]
-
-      new_request.execute
     end
 
     def url : String
@@ -103,7 +96,11 @@ module Crest
     end
 
     def history : Array
-      @request.redirection_history || [] of self
+      @request.redirection_history
+    end
+
+    private def raise_exception!
+      raise RequestFailed.subclass_by_status_code(status_code).new(self)
     end
 
     private def request_cookies
@@ -134,9 +131,7 @@ module Crest
     end
 
     private def check_max_redirects
-      if @request.max_redirects <= 0
-        raise exception_with_response
-      end
+      raise_exception! if @request.max_redirects <= 0
     end
   end
 end

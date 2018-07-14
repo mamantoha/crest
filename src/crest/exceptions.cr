@@ -96,6 +96,10 @@ module Crest
 
     @response : Crest::Response
 
+    def self.subclass_by_status_code(status_code)
+      EXCEPTIONS_MAP.fetch(status_code, self)
+    end
+
     def initialize(response)
       @response = response
     end

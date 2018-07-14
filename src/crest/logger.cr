@@ -1,24 +1,6 @@
-# The MIT License (MIT)
-#
 # Copyright (c) 2017 icyleaf
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Licensed under The MIT License (MIT)
+# http://opensource.org/licenses/MIT
 
 require "logger"
 
@@ -35,6 +17,7 @@ module Crest
       @logger.level = ::Logger::DEBUG
       @logger.progname = "crest"
       @logger.formatter = default_formatter
+      @filters = [] of Array(String | Regex)
     end
 
     abstract def request(request : Crest::Request) : String
@@ -46,6 +29,25 @@ module Crest
         io << " | " << datetime.to_s("%F %T")
         io << " " << message
       end
+    end
+
+    def info(message : String)
+      @logger.info(apply_filters(message))
+    end
+
+    def filter(patern : String | Regex, replacement : String)
+      @filters.push([patern, replacement])
+    end
+
+    private def apply_filters(output : String) : String
+      @filters.each do |f|
+        patern = f[0]
+        replacement = f[1]
+
+        output = output.gsub(patern, replacement)
+      end
+
+      output
     end
   end
 end

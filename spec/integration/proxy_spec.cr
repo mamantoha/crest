@@ -16,12 +16,12 @@ describe Crest do
 
     it "should redirect with proxy" do
       with_proxy_server do |_, _, wants_close|
-        response = Crest.get("#{TEST_SERVER_URL}/redirect", p_addr: "127.0.0.1", p_port: 8080)
+        response = Crest.get("#{TEST_SERVER_URL}/redirect/1", p_addr: "127.0.0.1", p_port: 8080)
         (response.status_code).should eq(200)
         (response.body).should contain("Hello World!")
         (response.url).should eq("#{TEST_SERVER_URL}/")
         (response.history.size).should eq(1)
-        (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect")
+        (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
         (response.history.first.status_code).should eq(302)
         (response.request.p_addr).should eq("127.0.0.1")
         (response.request.p_port).should eq(8080)

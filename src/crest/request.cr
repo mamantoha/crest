@@ -52,7 +52,7 @@ module Crest
     @http_client : HTTP::Client
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
-    @payload : String?
+    @form_data : String?
     @max_redirects : Int32
     @user : String?
     @password : String?
@@ -65,15 +65,14 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter http_client, method, url, payload, headers, cookies, max_redirects,
-      logging, logger, handle_errors,
+    getter http_client, method, url, form_data, headers, cookies,
+      max_redirects, logging, logger, handle_errors,
       proxy, p_addr, p_port, p_user, p_pass
 
     property redirection_history, user, password
 
     def self.execute(method, url, **args)
       request = new(method, url, **args)
-      request.logger.request(request) if request.logging
       request.execute
     end
 
@@ -96,7 +95,7 @@ module Crest
 
       set_headers!(headers)
       set_cookies!(cookies) unless cookies.empty?
-      set_payload!(payload) if payload
+      generate_form_data!(payload) if payload
 
       unless params.empty?
         @url = url + process_url_params(params)
@@ -104,14 +103,7 @@ module Crest
 
       @max_redirects = max_redirects
 
-      http_client = options.fetch(:http_client, nil).as(HTTP::Client | Nil)
-      if http_client
-        @http_client = http_client
-      else
-        uri = URI.parse(@url)
-        @http_client = HTTP::Client.new(uri)
-      end
-
+      @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -134,7 +126,7 @@ module Crest
       initialize(method, url, **args) { }
     end
 
-    {% for method in %w{get delete post put patch options} %}
+    {% for method in Crest::HTTP_METHODS %}
       # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
       #
       # ```crystal
@@ -166,8 +158,15 @@ module Crest
 
     def execute : Crest::Response
       @http_client.set_proxy(@proxy)
-      response = @http_client.exec(method, url, body: payload, headers: headers)
+      @logger.request(self) if @logging
+
+      response = @http_client.exec(method, @url, body: @form_data, headers: @headers)
       process_result(response)
+    end
+
+    private def new_http_client : HTTP::Client
+      uri = URI.parse(@url)
+      HTTP::Client.new(uri)
     end
 
     private def process_result(http_client_res)
@@ -180,17 +179,21 @@ module Crest
       method.to_s.upcase
     end
 
-    private def set_payload!(payload : Hash) : String?
+    private def generate_form_data!(payload : Hash) : String?
       return if payload.empty?
 
-      @payload, content_type = Payload.generate(payload)
+      payload = Crest::Payload.generate(payload)
+
+      @form_data = payload.form_data
+      content_type = payload.content_type
+
       @headers.add("Content-Type", content_type)
 
-      @payload
+      @form_data
     end
 
-    private def set_payload!(payload : String) : String?
-      @payload = payload
+    private def generate_form_data!(payload : String) : String?
+      @form_data = payload
     end
 
     private def set_headers!(params) : HTTP::Headers

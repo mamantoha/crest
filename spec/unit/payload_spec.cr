@@ -3,19 +3,15 @@ require "../spec_helper"
 describe Crest::Payload do
   describe "#generate" do
     it "generate payload" do
-      input = {"files[one]" => "one", "files[two]" => "two"}
-      output = "multipart/form-data"
+      input = {:file => {"one" => "one", "two" => "two"}}
+      parsed_input = [{"file[one]", "one"}, {"file[two]", "two"}]
+      content_type = "multipart/form-data"
 
-      Crest::Payload.generate(input).to_s.should contain(output)
-    end
-  end
+      payload = Crest::Payload.generate(input)
 
-  describe "#parse_params" do
-    it "parse simple params" do
-      input = {:key1 => "123"}
-      output = [{"key1", "123"}]
-
-      Crest::Payload.parse_params(input).should eq(output)
+      payload.content_type.should contain(content_type)
+      payload.params.should eq(input)
+      payload.parsed_params.should eq(parsed_input)
     end
   end
 end

@@ -13,6 +13,16 @@ describe Crest::Response do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "do multiple GET requests with []" do
+    site = Crest::Resource.new("#{TEST_SERVER_URL}")
+
+    response1 = site["/post/1/comments"].get
+    response2 = site["/post/2/comments"].get
+
+    (response1.body).should eq("Post 1: comments")
+    (response2.body).should eq("Post 2: comments")
+  end
+
   it "do GET request with params" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/resize")
     response = resource.get(params: {:width => "100", :height => 100})
@@ -25,12 +35,27 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "do GET request with suburl and params" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    response = resource.get("resize", params: {:width => 100, :height => 100})
+    (response.body).should eq("Width: 100, height: 100")
+  end
+
   it "do GET request with [] and default params" do
     resource = Crest::Resource.new(
       TEST_SERVER_URL,
       params: {:width => 100, :height => 100}
     )
     response = resource["/resize"].get
+    (response.body).should eq("Width: 100, height: 100")
+  end
+
+  it "do GET request with suburl and default params" do
+    resource = Crest::Resource.new(
+      TEST_SERVER_URL,
+      params: {:width => 100}
+    )
+    response = resource.get("/resize", params: {:height => 100})
     (response.body).should eq("Width: 100, height: 100")
   end
 
@@ -93,6 +118,12 @@ describe Crest::Response do
   it "do POST request with []" do
     site = Crest::Resource.new(TEST_SERVER_URL)
     response = site["/post/1/comments"].post({:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with suburl" do
+    site = Crest::Resource.new(TEST_SERVER_URL)
+    response = site.post("/post/1/comments", payload: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
