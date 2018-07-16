@@ -29,6 +29,8 @@ require "./uri"
 # end
 # ```
 module Crest
+  VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
+
   alias TextValue = String | Symbol | Int32 | Nil
 
   alias Params = Hash(Symbol | String, Int32 | String) |
