@@ -2,6 +2,8 @@
 
 ## [...]
 
+* **(breaking-change)** Rename `Request#payload` to `Request#form`
+
 ## 0.11.0
 
 * Add `Logger#filter` method to filter sensitive information from logs with a regex matcher
