@@ -30,7 +30,7 @@ module Crest
       headers.join(" ")
     end
 
-    private def convert_form_data
+    private def convert_form_data : String
       result = {} of String => String
 
       HTTP::FormData.parse(@request.http_request) do |part|
@@ -38,6 +38,8 @@ module Crest
       end
 
       result.reduce([] of String) { |memo, i| memo << "#{i[0]}=#{i[1]}" }.join("&")
+    rescue HTTP::FormData::Error
+      @request.http_request.body.to_s
     end
   end
 end

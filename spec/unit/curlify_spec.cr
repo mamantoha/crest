@@ -32,4 +32,11 @@ describe Crest::Curlify do
     result = "curl -X POST http://localhost -d 'param1=value1' -H 'user-agent: crest' -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
+
+  it "converts POST request with json" do
+    request = Crest::Request.new(:post, "http://localhost", payload: {:foo => "bar"}.to_json, headers: {"Content-Type" => "application/json"})
+
+    result = "curl -X POST http://localhost -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
+    curlify(request).should eq(result)
+  end
 end
