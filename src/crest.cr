@@ -20,7 +20,7 @@ require "./uri"
 # Crest.post(
 #   "http://httpbin.org/post",
 #   headers: {"Access-Token" => ["secret1", "secret2"]},
-#   payload: {:fizz => "buz"},
+#   form: {:fizz => "buz"},
 #   logging: true,
 # )
 #

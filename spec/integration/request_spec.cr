@@ -104,13 +104,13 @@ describe Crest::Request do
   end
 
   it "do POST request" do
-    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
 
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "call post method" do
-    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
+    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
 
     (response.body).should eq("Post with title `Title` created")
   end

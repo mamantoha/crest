@@ -9,12 +9,12 @@ module Crest
   # Simple example:
   #
   # ```crystal
-  # request = Crest::Request.new(method: :post, url: "http://example.com/user", payload: {:age => 27}, params: {:name => "Kurt"})
+  # request = Crest::Request.new(method: :post, url: "http://example.com/user", form: {:age => 27}, params: {:name => "Kurt"})
   # request.execute
   #
-  # Crest::Request.execute(method: :post, url: "http://example.com/user", payload: {:age => 27}.to_json)
+  # Crest::Request.execute(method: :post, url: "http://example.com/user", form: {:age => 27}.to_json)
   #
-  # Crest::Request.post(url: "http://example.com/user", payload: {:age => 27}.to_json)
+  # Crest::Request.post(url: "http://example.com/user", form: {:age => 27}.to_json)
   # ```
   #
   # Block style:
@@ -36,7 +36,7 @@ module Crest
   # Optional parameters:
   # * `headers` a hash containing the request headers
   # * `cookies` a hash containing the request cookies
-  # * `payload` a hash containing query params or a raw string
+  # * `form` a hash containing form params (or a raw string)
   # * `params` a hash that represent query-string separated from the preceding part by a question mark (?)
   #    a sequence of attribute–value pairs separated by a delimiter (&).
   # * `user` and `password` for basic auth
@@ -82,7 +82,7 @@ module Crest
       *,
       headers = {} of String => String,
       cookies = {} of String => String,
-      payload = {} of String => String,
+      form = {} of String => String,
       params = {} of String => String,
       max_redirects = 10,
       **options
@@ -95,7 +95,7 @@ module Crest
 
       set_headers!(headers)
       set_cookies!(cookies) unless cookies.empty?
-      generate_form_data!(payload) if payload
+      generate_form_data!(form) if form
 
       unless params.empty?
         @url = url + process_url_params(params)
@@ -179,21 +179,21 @@ module Crest
       method.to_s.upcase
     end
 
-    private def generate_form_data!(payload : Hash) : String?
-      return if payload.empty?
+    private def generate_form_data!(form : Hash) : String?
+      return if form.empty?
 
-      payload = Crest::Payload.generate(payload)
+      form = Crest::Form.generate(form)
 
-      @form_data = payload.form_data
-      content_type = payload.content_type
+      @form_data = form.form_data
+      content_type = form.content_type
 
       @headers.add("Content-Type", content_type)
 
       @form_data
     end
 
-    private def generate_form_data!(payload : String) : String?
-      @form_data = payload
+    private def generate_form_data!(form : String) : String?
+      @form_data = form
     end
 
     private def set_headers!(params) : HTTP::Headers

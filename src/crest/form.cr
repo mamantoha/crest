@@ -1,6 +1,8 @@
 module Crest
-  # A class that used to generate the *payload* for `Crest::Request`
-  class Payload(T)
+  # A class that used to generate a filled-in form for `Crest::Request`
+  # Form using the Content-Type multipart/form-data according to RFC 2388.
+  # This enables uploading of binary files etc.
+  class Form(T)
     @form_data : String = ""
     @content_type : String = ""
 
