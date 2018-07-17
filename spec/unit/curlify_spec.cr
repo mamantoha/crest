@@ -30,7 +30,7 @@ describe Crest::Curlify do
     file = File.open("#{__DIR__}/../support/fff.png")
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"param1" => "value1", "file" => file})
 
-    result = "curl -X POST http://httpbin.org/post -F 'param1=value1' -F 'file=#{"#{__DIR__}/../support/fff.png"}' -H 'Content-Type: multipart/form-data'"
+    result = "curl -X POST http://httpbin.org/post -F 'param1=value1' -F 'file=@#{"#{__DIR__}/../support/fff.png"}' -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
 

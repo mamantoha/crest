@@ -29,10 +29,9 @@ module Crest
       form_data = [] of String
 
       HTTP::FormData.parse(@request.http_request) do |part|
-        key = part.name
-        value = part.body.gets_to_end
+        value = part.filename ? "@#{part.filename}" : part.body.gets_to_end
 
-        form_data << "-F '#{key}=#{value}'"
+        form_data << "-F '#{part.name}=#{value}'"
       end
 
       form_data.join(" ")
