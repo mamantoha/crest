@@ -1,5 +1,5 @@
 require "http"
-require "./request"
+require "../crest"
 
 module Crest
   # Response objects have several useful methods:

@@ -56,9 +56,16 @@ describe Crest::Utils do
       Crest::Utils.encode_query_string(input).should eq(output)
     end
 
+    it "serialize hash as http url-encoded" do
+      input = {:email => "user@example.com", :title => "Hello world!"}
+      output = "email=user%40example.com&title=Hello+world%21"
+
+      Crest::Utils.encode_query_string(input).should eq(output)
+    end
+
     it "serialize hash with nil" do
       input = {:foo => nil, :bar => "456"}
-      output = "foo&bar=456"
+      output = "foo=&bar=456"
 
       Crest::Utils.encode_query_string(input).should eq(output)
     end
