@@ -62,6 +62,13 @@ describe Crest::Request do
       (request.form_data.to_s).should eq("{\"foo\":\"bar\"}")
     end
 
+    it "initialize the POST and encode string" do
+      request = Crest::Request.new(:post, "http://localhost", form: {:title => "New @Title"})
+      (request.method).should eq("POST")
+      (request.url).should eq("http://localhost")
+      (request.form_data).should eq("title=New+%40Title")
+    end
+
     it "initialize the POST request with multipart" do
       file = File.open("#{__DIR__}/../support/fff.png")
       request = Crest::Request.new(:post, "http://localhost", form: {:file => file})

@@ -109,6 +109,12 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  it "do POST request and encode form" do
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", form: {:title => "New @Title"})
+
+    (response.body).should eq("Post with title `New @Title` created")
+  end
+
   it "call post method" do
     response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
 
