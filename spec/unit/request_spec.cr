@@ -50,8 +50,8 @@ describe Crest::Request do
       request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:foo => "bar"})
       (request.method).should eq("POST")
       (request.url).should eq("http://localhost")
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("foo=bar")
     end
 
     it "initialize the POST request with form as a string" do
@@ -62,18 +62,27 @@ describe Crest::Request do
       (request.form_data.to_s).should eq("{\"foo\":\"bar\"}")
     end
 
+    it "initialize the POST request with multipart" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      request = Crest::Request.new(:post, "http://localhost", form: {:file => file})
+      (request.method).should eq("POST")
+      (request.url).should eq("http://localhost")
+      (request.headers["Content-Type"]).should contain("multipart/form-data; boundary=")
+      (request.form_data.to_s).should contain("form-data; name=\"file\"; filename=")
+    end
+
     it "POST request with nested hashes" do
       request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:params1 => "one", :nested => {:params2 => "two"}})
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("form-data; name=\"nested[params2]\"")
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("params1=one&nested%5Bparams2%5D=two")
     end
 
     it "initialize the PUT request with form" do
       request = Crest::Request.new(:put, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:foo => "bar"})
       (request.method).should eq("PUT")
       (request.url).should eq("http://localhost")
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("foo=bar")
     end
 
     it "initialize the OPTIONS request" do

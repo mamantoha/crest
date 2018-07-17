@@ -179,10 +179,15 @@ module Crest
       method.to_s.upcase
     end
 
+    private def multipart?(form : Hash) : Bool
+      form.any? { |_, v| v.is_a?(File) }
+    end
+
     private def generate_form_data!(form : Hash) : String?
       return if form.empty?
 
-      form = Crest::Form.generate(form)
+      form_class = multipart?(form) ? Crest::DataForm : Crest::UrlencodedForm
+      form = form_class.generate(form)
 
       @form_data = form.form_data
       content_type = form.content_type

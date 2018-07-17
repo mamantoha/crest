@@ -115,6 +115,12 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  it "upload file" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:image1 => file})
+    (response.body).should eq("Upload ok")
+  end
+
   it "do OPTIONS request" do
     response = Crest::Request.execute(:options, "#{TEST_SERVER_URL}")
 
