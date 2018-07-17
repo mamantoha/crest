@@ -1,6 +1,4 @@
-require "http"
-require "../http/proxy/client"
-require "./logger"
+require "../crest"
 
 module Crest
   # A class that used to make the requests
