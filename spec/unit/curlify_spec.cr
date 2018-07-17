@@ -20,17 +20,17 @@ describe Crest::Curlify do
   end
 
   it "converts POST request" do
-    request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"param1" => "value1", "param2" => "value2"})
+    request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "author" => "admin"})
 
-    result = "curl -X POST http://httpbin.org/post -d 'param1=value1&param2=value2' -H 'Content-Type: application/x-www-form-urlencoded'"
+    result = "curl -X POST http://httpbin.org/post -d 'title=New+Title&author=admin' -H 'Content-Type: application/x-www-form-urlencoded'"
     curlify(request).should eq(result)
   end
 
   it "converts POST request with multipart" do
     file = File.open("#{__DIR__}/../support/fff.png")
-    request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"param1" => "value1", "file" => file})
+    request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "file" => file})
 
-    result = "curl -X POST http://httpbin.org/post -F 'param1=value1' -F 'file=@#{"#{__DIR__}/../support/fff.png"}' -H 'Content-Type: multipart/form-data'"
+    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F 'file=@#{"#{__DIR__}/../support/fff.png"}' -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
 
