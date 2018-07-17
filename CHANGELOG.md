@@ -3,6 +3,7 @@
 ## [...]
 
 * **(breaking-change)** Rename `Request#payload` to `Request#form`
+* Fix serialize query to string representation as http url-encoded
 
 ## 0.11.0
 

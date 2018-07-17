@@ -21,9 +21,9 @@ describe Crest::Request do
     end
 
     it "initialize the GET request with params" do
-      request = Crest::Request.new(:get, "http://localhost", params: {:foo => "123", :bar => 456})
+      request = Crest::Request.new(:get, "http://localhost", params: {:foo => "hello world", :bar => 456})
       (request.method).should eq("GET")
-      (request.url).should eq("http://localhost?foo=123&bar=456")
+      (request.url).should eq("http://localhost?foo=hello+world&bar=456")
       (request.form_data).should eq(nil)
     end
 
@@ -37,7 +37,7 @@ describe Crest::Request do
     it "initialize the GET request with nil value in params" do
       request = Crest::Request.new(:get, "http://localhost", params: {:json => nil, :key => 123})
       (request.method).should eq("GET")
-      (request.url).should eq("http://localhost?json&key=123")
+      (request.url).should eq("http://localhost?json=&key=123")
       (request.form_data).should eq(nil)
     end
 

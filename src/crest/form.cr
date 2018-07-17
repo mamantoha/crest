@@ -1,6 +1,8 @@
 module Crest
-  # A class that used to generate a filled-in form for `Crest::Request`
-  # Form using the Content-Type multipart/form-data according to RFC 2388.
+  # This class lets `crest` emulate a filled-in form
+  # in which a user has pressed the submit button.
+  # This causes `crest` to POST data using the
+  # "Content-Type" `multipart/form-data according` to RFC 2388.
   # This enables uploading of binary files etc.
   class Form(T)
     @form_data : String = ""
