@@ -7,12 +7,12 @@ This workbook demonstrates how to make requests using `Crest`
 ```playground
 require "./src/crest"
 
-payload = {:fizz => "buz"}
+form = {:fizz => "buz"}
 
 Crest.post(
   "http://httpbin.org/post",
   headers: {"Access-Token" => ["secret1", "secret2"]},
-  payload: payload,
+  form: form,
   logging: true,
 )
 ```

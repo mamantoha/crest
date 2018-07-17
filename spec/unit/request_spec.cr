@@ -21,9 +21,9 @@ describe Crest::Request do
     end
 
     it "initialize the GET request with params" do
-      request = Crest::Request.new(:get, "http://localhost", params: {:foo => "123", :bar => 456})
+      request = Crest::Request.new(:get, "http://localhost", params: {:foo => "hello world", :bar => 456})
       (request.method).should eq("GET")
-      (request.url).should eq("http://localhost?foo=123&bar=456")
+      (request.url).should eq("http://localhost?foo=hello+world&bar=456")
       (request.form_data).should eq(nil)
     end
 
@@ -37,7 +37,7 @@ describe Crest::Request do
     it "initialize the GET request with nil value in params" do
       request = Crest::Request.new(:get, "http://localhost", params: {:json => nil, :key => 123})
       (request.method).should eq("GET")
-      (request.url).should eq("http://localhost?json&key=123")
+      (request.url).should eq("http://localhost?json=&key=123")
       (request.form_data).should eq(nil)
     end
 
@@ -46,34 +46,50 @@ describe Crest::Request do
       (request.headers).should eq(HTTP::Headers{"Cookie" => "foo=123; bar=456"})
     end
 
-    it "initialize the POST request with payload" do
-      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+    it "initialize the POST request with form" do
+      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:foo => "bar"})
       (request.method).should eq("POST")
       (request.url).should eq("http://localhost")
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("foo=bar")
     end
 
-    it "initialize the POST request with payload as a string" do
-      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"}.to_json)
+    it "initialize the POST request with form as a string" do
+      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:foo => "bar"}.to_json)
       (request.method).should eq("POST")
       (request.url).should eq("http://localhost")
       (request.headers["Content-Type"]).should eq("application/json")
       (request.form_data.to_s).should eq("{\"foo\":\"bar\"}")
     end
 
-    it "POST request with nested hashes" do
-      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:params1 => "one", :nested => {:params2 => "two"}})
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("form-data; name=\"nested[params2]\"")
+    it "initialize the POST and encode string" do
+      request = Crest::Request.new(:post, "http://localhost", form: {:title => "New @Title"})
+      (request.method).should eq("POST")
+      (request.url).should eq("http://localhost")
+      (request.form_data).should eq("title=New+%40Title")
     end
 
-    it "initialize the PUT request with payload" do
-      request = Crest::Request.new(:put, "http://localhost", headers: {"Content-Type" => "application/json"}, payload: {:foo => "bar"})
+    it "initialize the POST request with multipart" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      request = Crest::Request.new(:post, "http://localhost", form: {:file => file})
+      (request.method).should eq("POST")
+      (request.url).should eq("http://localhost")
+      (request.headers["Content-Type"]).should contain("multipart/form-data; boundary=")
+      (request.form_data.to_s).should contain("form-data; name=\"file\"; filename=")
+    end
+
+    it "POST request with nested hashes" do
+      request = Crest::Request.new(:post, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:params1 => "one", :nested => {:params2 => "two"}})
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("params1=one&nested%5Bparams2%5D=two")
+    end
+
+    it "initialize the PUT request with form" do
+      request = Crest::Request.new(:put, "http://localhost", headers: {"Content-Type" => "application/json"}, form: {:foo => "bar"})
       (request.method).should eq("PUT")
       (request.url).should eq("http://localhost")
-      (request.headers["Content-Type"]).should contain("application/json,multipart/form-data; boundary=")
-      (request.form_data.to_s).should contain("Content-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n")
+      (request.headers["Content-Type"]).should eq("application/json,application/x-www-form-urlencoded")
+      (request.form_data.to_s).should eq("foo=bar")
     end
 
     it "initialize the OPTIONS request" do

@@ -10,7 +10,11 @@ module Crest
     # # => "foo=123&bar=456"
     # ```
     def encode_query_string(object : Hash)
-      flatten_params(object).map { |k, v| v.nil? ? k : "#{k}=#{v}" }.join("&")
+      HTTP::Params.build do |form|
+        flatten_params(object).each do |name, value|
+          form.add(name.to_s, value.to_s)
+        end
+      end
     end
 
     # Transform deeply nested param containers into a flat hash of `key => value`.

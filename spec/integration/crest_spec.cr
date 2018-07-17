@@ -30,28 +30,28 @@ describe Crest do
   end
 
   it "do POST request" do
-    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", payload: {:title => "Title"})
+    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
-    response = Crest.post("#{TEST_SERVER_URL}/upload", payload: {:image1 => file})
+    response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:image1 => file})
     (response.body).should eq("Upload ok")
   end
 
   it "do POST nested params" do
-    response = Crest.post("#{TEST_SERVER_URL}/post_nested", payload: {:params1 => "one", :nested => {:params2 => "two"}})
+    response = Crest.post("#{TEST_SERVER_URL}/post_nested", form: {:params1 => "one", :nested => {:params2 => "two"}})
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
 
   it "do PUT request" do
-    response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", payload: {:title => "Put Update"})
+    response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Put Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
   end
 
   it "do PATCH request" do
-    response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", payload: {:title => "Patch Update"})
+    response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Patch Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
   end
 

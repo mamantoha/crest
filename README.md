@@ -35,7 +35,7 @@ Crest.get(
 
 Crest.post(
   "http://httpbin.org/post",
-  payload: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
+  form: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
 )
 # curl -L --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
 ```
@@ -53,7 +53,7 @@ Optional parameters:
 
 * `:headers` -  a hash containing the request headers
 * `:cookies` -  a hash containing the request cookies
-* `:payload` -  a hash containing query params
+* `:form` -  a hash containing form params
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `:user` and `:password` -  for Basic Authentication
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
@@ -69,7 +69,7 @@ More detailed examples:
 request = Crest::Request.new(:post,
   "http://httpbin.org/post",
   headers: {"Content-Type" => "application/json"},
-  payload: {:width => 640, "height" => "480"}
+  form: {:width => 640, "height" => "480"}
 )
 request.execute
 # curl -L --data "width=640&height=480" --header "Content-Type: application/json" -X POST "http://httpbin.org/post"
@@ -130,24 +130,24 @@ Yeah, that's right! This does multipart sends for you!
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
-Crest.post("http://httpbin.org/post", payload: {:image => file})
+Crest.post("http://httpbin.org/post", form: {:image => file})
 ```
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
 resource = Crest::Resource.new("https://httpbin.org")
-response = resource["/post"].post(payload: {:image => file})
+response = resource["/post"].post(form: {:image => file})
 ```
 
 ### JSON payload
 
-`crest` does not speak JSON natively, so serialize your payload to a string before passing it to `crest`.
+`crest` does not speak JSON natively, so serialize your *form* to a string before passing it to `crest`.
 
 ```crystal
 Crest.post(
   "http://httpbin.org/post",
   headers: {"Content-Type" => "application/json"},
-  payload: {:foo => "bar"}.to_json
+  form: {:foo => "bar"}.to_json
 )
 ```
 
@@ -289,7 +289,7 @@ response["/get"].get(
 )
 
 response["/post"].post(
-  payload: {:height => 100, "width" => "100"},
+  form: {:height => 100, "width" => "100"},
   params: {:secret => "secret"}
 )
 ```
@@ -340,7 +340,7 @@ You can pass suburl through `Request#http_verb` methods:
 ```crystal
 site = Crest::Resource.new("http://httpbin.org")
 
-site.post("/post", payload: {:param1 => "value1", :param2 => "value2"})
+site.post("/post", form: {:param1 => "value1", :param2 => "value2"})
 # curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 
 site.get("/get", params: {:status => "active"})

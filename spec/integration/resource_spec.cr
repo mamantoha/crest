@@ -123,14 +123,14 @@ describe Crest::Response do
 
   it "do POST request with suburl" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site.post("/post/1/comments", payload: {:title => "Title"})
+    response = site.post("/post/1/comments", form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "do POST request with [] and default params" do
     site = Crest::Resource.new(TEST_SERVER_URL, params: {"key" => "key"})
     response = site["/resize"].post(
-      payload: {:height => 100, "width" => "100"},
+      form: {:height => 100, "width" => "100"},
       params: {:secret => "secret"}
     )
     (response.body).should eq("Width: 100, height: 100. Key: key, secret: secret")
@@ -139,7 +139,7 @@ describe Crest::Response do
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/upload")
-    response = resource.post(payload: {:image1 => file})
+    response = resource.post(form: {:image1 => file})
 
     (response.body).should eq("Upload ok")
   end
@@ -147,7 +147,7 @@ describe Crest::Response do
   it "upload file with []" do
     file = File.open("#{__DIR__}/../support/fff.png")
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
-    response = resource["/upload"].post(payload: {:image1 => file})
+    response = resource["/upload"].post(form: {:image1 => file})
 
     (response.body).should eq("Upload ok")
   end

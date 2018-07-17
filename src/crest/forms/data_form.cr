@@ -1,18 +1,12 @@
+require "../form"
+
 module Crest
-  # A class that used to generate the *payload* for `Crest::Request`
-  class Payload(T)
-    @form_data : String = ""
-    @content_type : String = ""
-
-    getter params, form_data, content_type
-
-    def self.generate(params : Hash)
-      new(params).generate
-    end
-
-    def initialize(@params : T)
-    end
-
+  # This class lets `crest` emulate a filled-in form
+  # in which a user has pressed the submit button.
+  # This causes `crest` to POST data using the
+  # "Content-Type" `multipart/form-data according` to RFC 2388.
+  # This enables uploading of binary files etc.
+  class DataForm(T) < Crest::Form(T)
     def generate
       content_type_ch = Channel(String).new(1)
       io = IO::Memory.new

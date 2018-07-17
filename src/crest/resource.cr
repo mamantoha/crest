@@ -43,7 +43,7 @@ module Crest
   #   headers: {"Content-Type" => "application/json"}
   # )
   # response = response["/post"].post(
-  #   payload: {:height => 100, "width" => "100"},
+  #   form: {:height => 100, "width" => "100"},
   #   params: {:secret => "secret"}
   # )
   # ```
@@ -86,14 +86,14 @@ module Crest
       end
 
       def {{method.id}}(
-        payload = {} of String => String,
+        form = {} of String => String,
         headers = {} of String => String,
         params = {} of String => String
       )
         @headers = @headers.merge(headers)
         @params = merge_params(params)
 
-        execute_request(:{{method.id}}, payload)
+        execute_request(:{{method.id}}, form)
       end
     {% end %}
 
@@ -108,10 +108,10 @@ module Crest
       HTTP::Client.new(uri)
     end
 
-    private def execute_request(method : Symbol, payload = {} of String => String)
+    private def execute_request(method : Symbol, form = {} of String => String)
       Request.execute(
         method: method,
-        payload: payload,
+        form: form,
         url: @url,
         params: @params,
         headers: @headers,
