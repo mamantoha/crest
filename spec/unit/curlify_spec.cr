@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 def curlify(request : Crest::Request)
-  Crest::Curlify.new(request).call
+  Crest::Curlify.new(request).to_curl
 end
 
 describe Crest::Curlify do

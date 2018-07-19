@@ -1,9 +1,21 @@
 module Crest
+  # Class to convert `Crest::Request` object to curl command
+  #
+  # ```crystal
+  # request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title"})
+  # Crest::Curlify.to_curl(request)
+  # => "curl -X POST http://httpbin.org/post -d 'title=New+Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+  # ```
   class Curlify
+    # Returns string with curl command by provided `Crest::Request` object
+    def self.to_curl(request : Crest::Request)
+      new(request).to_curl
+    end
+
     def initialize(@request : Crest::Request)
     end
 
-    def call
+    def to_curl
       ["curl", method, url, basic_auth, form_data, headers].reject(&.empty?).join(" ")
     end
 

@@ -171,7 +171,7 @@ module Crest
 
     # Convert `Request` object to cURL command
     def to_curl
-      Crest::Curlify.new(self).call
+      Crest::Curlify.to_curl(self)
     end
 
     private def new_http_client : HTTP::Client
