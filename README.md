@@ -272,7 +272,7 @@ So can use `Crest::Resource` to share common `headers` and `params`.
 The final `headers` and `params` consist of:
 
 * default headers from initializer
-* headers provided in call method (`get`, `post` etc)
+* headers provided in call method (`get`, `post`, etc)
 
 This is especially useful if you wish to define your site in one place and
 call it in multiple locations.
@@ -292,6 +292,27 @@ response["/post"].post(
   form: {:height => 100, "width" => "100"},
   params: {:secret => "secret"}
 )
+```
+
+Use the `[]` syntax to allocate subresources:
+
+```crystal
+site = Crest::Resource.new("http://httpbin.org")
+
+site["/post"].post({:param1 => "value1", :param2 => "value2"})
+# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+```
+
+You can pass `suburl` through `Request#http_verb` methods:
+
+```crystal
+site = Crest::Resource.new("http://httpbin.org")
+
+site.post("/post", form: {:param1 => "value1", :param2 => "value2"})
+# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
+
+site.get("/get", params: {:status => "active"})
+# curl -L http://httpbin.org/get?status=active
 ```
 
 A block can be passed to the `Crest::Resource` instance.
@@ -324,27 +345,6 @@ resource = Crest::Resource.new(
   p_host: "localhost",
   p_port: 3128
 )
-```
-
- Use the `[]` syntax to allocate subresources:
-
-```crystal
-site = Crest::Resource.new("http://httpbin.org")
-
-site["/post"].post({:param1 => "value1", :param2 => "value2"})
-# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
-```
-
-You can pass suburl through `Request#http_verb` methods:
-
-```crystal
-site = Crest::Resource.new("http://httpbin.org")
-
-site.post("/post", form: {:param1 => "value1", :param2 => "value2"})
-# curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
-
-site.get("/get", params: {:status => "active"})
-# curl -L http://httpbin.org/get?status=active
 ```
 
 ### Exceptions
