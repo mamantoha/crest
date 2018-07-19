@@ -164,7 +164,6 @@ module Crest
       @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
 
       response = @http_client.exec(@http_request)
-      # response = @http_client.exec(method, @url, body: @form_data, headers: @headers)
 
       process_result(response)
     end
