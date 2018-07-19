@@ -19,6 +19,20 @@ describe Crest::Curlify do
     curlify(request).should eq(result)
   end
 
+  it "converts a request with basic auth as parameters" do
+    request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
+
+    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd --user user:passwd"
+    (request.to_curl).should eq(result)
+  end
+
+  it "converts a request with basic auth in headers" do
+    request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", headers: {"Authorization" => "Basic dXNlcjpwYXNzd2Q="})
+
+    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd -H 'Authorization: Basic dXNlcjpwYXNzd2Q='"
+    (request.to_curl).should eq(result)
+  end
+
   it "converts POST request" do
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "author" => "admin"})
 

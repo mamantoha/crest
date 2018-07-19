@@ -4,7 +4,7 @@ module Crest
     end
 
     def call
-      ["curl", method, url, form_data, headers].reject(&.empty?).join(" ")
+      ["curl", method, url, basic_auth, form_data, headers].reject(&.empty?).join(" ")
     end
 
     private def method
@@ -18,6 +18,8 @@ module Crest
     private def headers : String
       headers = [] of String
       @request.headers.each do |k, v|
+        next if k == "Authorization" && basic_auth? && @request.headers.includes_word?("Authorization", "Basic")
+
         value = v.is_a?(Array) ? v.first.split(";").first : v
         headers << "-H '#{k}: #{value}'"
       end
@@ -39,6 +41,18 @@ module Crest
       body = @request.http_request.body.to_s
 
       body.empty? ? "" : "-d '#{body}'"
+    end
+
+    private def basic_auth : String
+      if basic_auth?
+        "--user #{@request.user}:#{@request.password}"
+      else
+        ""
+      end
+    end
+
+    private def basic_auth? : Bool
+      @request.user && @request.password ? true : false
     end
   end
 end
