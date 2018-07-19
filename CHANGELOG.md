@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Add `Crest::Request#to_curl` to convert request to curl command
+
 ## 0.12.0
 
 * **(breaking-change)** Rename `Request#payload` to `Request#form`
