@@ -139,7 +139,7 @@ describe Crest::Response do
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/upload")
-    response = resource.post(form: {:image1 => file})
+    response = resource.post(form: {:file => file})
 
     (response.body).should eq("Upload ok")
   end
@@ -147,7 +147,7 @@ describe Crest::Response do
   it "upload file with []" do
     file = File.open("#{__DIR__}/../support/fff.png")
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
-    response = resource["/upload"].post(form: {:image1 => file})
+    response = resource["/upload"].post(form: {:file => file})
 
     (response.body).should eq("Upload ok")
   end

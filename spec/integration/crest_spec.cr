@@ -36,7 +36,7 @@ describe Crest do
 
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
-    response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:image1 => file})
+    response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
     (response.body).should eq("Upload ok")
   end
 

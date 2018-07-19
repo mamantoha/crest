@@ -30,7 +30,7 @@ get "/secret_redirect" do |env|
 end
 
 post "/upload" do |env|
-  env.params.files["image1"]
+  env.params.files["file"]
   "Upload ok"
 end
 
