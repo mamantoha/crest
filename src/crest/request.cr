@@ -48,6 +48,7 @@ module Crest
     @method : String
     @url : String
     @http_client : HTTP::Client
+    @http_request : HTTP::Request
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
     @form_data : String?
@@ -63,7 +64,7 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
 
-    getter http_client, method, url, form_data, headers, cookies,
+    getter http_client, http_request, method, url, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors,
       proxy, p_addr, p_port, p_user, p_pass
 
@@ -112,6 +113,8 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
 
+      @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
+
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
 
       yield self
@@ -158,8 +161,16 @@ module Crest
       @http_client.set_proxy(@proxy)
       @logger.request(self) if @logging
 
-      response = @http_client.exec(method, @url, body: @form_data, headers: @headers)
+      @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
+
+      response = @http_client.exec(@http_request)
+
       process_result(response)
+    end
+
+    # Convert `Request` object to cURL command
+    def to_curl
+      Crest::Curlify.to_curl(self)
     end
 
     private def new_http_client : HTTP::Client

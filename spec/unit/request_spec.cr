@@ -120,4 +120,11 @@ describe Crest::Request do
       (request.logger).should be_a(Crest::Logger)
     end
   end
+
+  describe "#to_curl" do
+    it "converts request to cURL command" do
+      request = Crest::Request.new(:get, "http://localhost")
+      (request.to_curl).should eq("curl -X GET http://localhost")
+    end
+  end
 end
