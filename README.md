@@ -419,6 +419,39 @@ rescue IO::Timeout
 end
 ```
 
+#### Convert Request object to cURL command
+
+Use `to_curl` method on instance of `Crest::Request` to convert request to cURL command.
+
+```crystal
+request = Crest::Request.new(
+  :post,
+  "http://httpbin.org/post",
+  form: {"title" => "New Title", "author" => "admin"}
+)
+request.to_curl
+# => curl -X POST http://httpbin.org/post -d 'title=New+Title&author=admin' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+```crystal
+request = Crest::Request.new(
+  :get,
+  "http://httpbin.org/basic-auth/user/passwd",
+  user: "user",
+  password: "passwd"
+)
+request.to_curl
+# => curl -X GET http://httpbin.org/basic-auth/user/passwd --user user:passwd
+```
+
+Also you can directly use `Crest::Curlify` which accept instance of `Crest::Request`
+
+```crystal
+request = Crest::Request.new(:get, "http://httpbin.org")
+Crest::Curlify.new(request).to_curl
+# => curl -X GET http://httpbin.org
+```
+
 ## Development
 
 Install dependencies:
