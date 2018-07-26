@@ -40,7 +40,7 @@ Crest.post(
 # curl -L --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
 ```
 
-### Passing advanced options
+### Request
 
 `Crest::Request` accept next parameters:
 
@@ -73,14 +73,18 @@ request = Crest::Request.new(:post,
 )
 request.execute
 # curl -L --data "width=640&height=480" --header "Content-Type: application/json" -X POST "http://httpbin.org/post"
+```
 
+```crystal
 Crest::Request.execute(:get,
   "http://httpbin.org/get",
   params: {:width => 640, "height" => "480"},
   headers: {"Content-Type" => "application/json"})
 )
 # curl -L --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
+```
 
+```crystal
 Crest::Request.get(
   "http://httpbin.org/get",
   p_addr: "127.0.0.1",
@@ -102,163 +106,6 @@ end
 
 request.execute
 # curl -L --header "foo: bar" http://httpbin.org/headers
-```
-
-#### Access HTTP::Client
-
-You can access `HTTP::Client` via the `http_client` instance method.
-
-This is usually used to set additional options (e.g. read timeout, authorization header etc.)
-
-```crystal
-client = HTTP::Client.new("http://httpbin.org")
-client.read_timeout = 1.second
-
-begin
-  Crest::Request.new(:get,
-    "http://httpbin.org/delay/10",
-    http_client: client
-  )
-rescue IO::Timeout
-  puts "Timeout!"
-end
-```
-
-### Multipart
-
-Yeah, that's right! This does multipart sends for you!
-
-```crystal
-file = File.open("#{__DIR__}/example.png")
-Crest.post("http://httpbin.org/post", form: {:image => file})
-```
-
-```crystal
-file = File.open("#{__DIR__}/example.png")
-resource = Crest::Resource.new("https://httpbin.org")
-response = resource["/post"].post(form: {:image => file})
-```
-
-### JSON payload
-
-`crest` does not speak JSON natively, so serialize your *form* to a string before passing it to `crest`.
-
-```crystal
-Crest.post(
-  "http://httpbin.org/post",
-  headers: {"Content-Type" => "application/json"},
-  form: {:foo => "bar"}.to_json
-)
-```
-
-### Headers
-
-Request headers can be set by passing a hash containing keys and values representing header names and values:
-
-```crystal
-response = Crest.get(
-  "http://httpbin.org/bearer",
-  headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"}
-)
-response.headers
-# => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
-```
-
-### Cookies
-
-`Request` and `Response` objects know about HTTP cookies, and will automatically extract and set headers for them as needed:
-
-```crystal
-response = Crest.get(
-  "http://httpbin.org/cookies/set",
-  params: {"k1" => "v1", "k2" => "v2"}
-)
-response.cookies
-# => {"k1" => "v1", "k2" => "v2"}
-
-response = Crest.get(
-  "http://httpbin.org/cookies",
-  cookies: {"k1" => "v1"}
-)
-response.cookies
-# => {"k1" => "v1"}
-```
-
-### Basic authentication
-
-For basic access authentication for an HTTP user agent you should to provide a `user` name and `password` when making a request.
-
-```crystal
-Crest.get(
-  "http://httpbin.org/basic-auth/user/passwd",
-  user: "user",
-  password: "passwd"
-)
-# curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd
-```
-
-### Proxy
-
-If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:
-
-```crystal
-Crest.get(
-  "http://httpbin.org/ip",
-  p_addr: "localhost",
-  p_port: 3128
-)
-```
-
-To use HTTP Basic Auth with your proxy, use next syntax:
-
-```crystal
-Crest.get(
-  "http://httpbin.org/ip",
-  p_addr: "localhost",
-  p_port: 3128,
-  p_user: "user",
-  p_pass: "qwerty"
-)
-```
-
-### Logging
-
-> `Logger` class is completely taken from [halite](https://github.com/icyleaf/halite) shard.
-> Thanks [icyleaf](https://github.com/icyleaf)!
-
-By default, the `Crest` does not enable logging. You can enable it per request by setting `logging: true`:
-
-```crystal
-Crest.get("http://httpbin.org/get", logging: true)
-```
-
-#### Filter sensitive information from logs with a regex matcher
-
-```crystal
-resource = Crest::Request.get("http://httpbin.org/get", params: {api_key => "secret"}, logging: true) do |request|
-  request.logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
-end
-
-# => crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?api_key=[REMOVED]
-```
-
-#### Customize logging
-
-You can create the custom logger by integration `Crest::Logger` abstract class.
-Here has two methods must be implement: `Crest::Logger.request` and `Crest::Logger.response`.
-
-```crystal
-class MyLogger < Crest::Logger
-  def request(request)
-    @logger.info ">> | %s | %s" % [request.method, request.url]
-  end
-
-  def response(response)
-    @logger.info "<< | %s | %s" % [response.status_code, response.url]
-  end
-end
-
-Crest.get("http://httpbin.org/get", logging: true, logger: MyLogger.new)
 ```
 
 ### Resource
@@ -347,6 +194,20 @@ resource = Crest::Resource.new(
 )
 ```
 
+### Result handling
+
+The result of a `Crest::Request` and `Crest::Resource` is a `Crest::Response` object.
+
+Response objects have several useful methods.
+
+* `Response#body`: The response body as a string
+* `Response#status_code`: The HTTP response code
+* `Response#headers`: A hash of HTTP response headers
+* `Response#cookies`: A hash of HTTP cookies set by the server
+* `Response#request`: The `Crest::Request` object used to make the request
+* `Response#http_client_res`: The `HTTP::Client::Response` object
+* `Response#history`: A list of each response received in a redirection chain
+
 ### Exceptions
 
 * for result codes between `200` and `207`, a `Crest::Response` will be returned
@@ -372,7 +233,150 @@ response = Crest.get("http://httpbin.org/status/404", handle_errors: false)
 response.status_code # => 404
 ```
 
-### Redirection
+### Advanced Usage
+
+This section covers some of `crest` more advanced features.
+
+#### Multipart
+
+Yeah, that's right! This does multipart sends for you!
+
+```crystal
+file = File.open("#{__DIR__}/example.png")
+Crest.post("http://httpbin.org/post", form: {:image => file})
+```
+
+```crystal
+file = File.open("#{__DIR__}/example.png")
+resource = Crest::Resource.new("https://httpbin.org")
+response = resource["/post"].post(form: {:image => file})
+```
+
+#### JSON payload
+
+`crest` does not speak JSON natively, so serialize your *form* to a string before passing it to `crest`.
+
+```crystal
+Crest.post(
+  "http://httpbin.org/post",
+  headers: {"Content-Type" => "application/json"},
+  form: {:foo => "bar"}.to_json
+)
+```
+
+#### Headers
+
+Request headers can be set by passing a hash containing keys and values representing header names and values:
+
+```crystal
+response = Crest.get(
+  "http://httpbin.org/bearer",
+  headers: {"Authorization" => "Bearer cT0febFoD5lxAlNAXHo6g"}
+)
+response.headers
+# => {"Authorization" => ["Bearer cT0febFoD5lxAlNAXHo6g"]}
+```
+
+#### Cookies
+
+`Request` and `Response` objects know about HTTP cookies, and will automatically extract and set headers for them as needed:
+
+```crystal
+response = Crest.get(
+  "http://httpbin.org/cookies/set",
+  params: {"k1" => "v1", "k2" => "v2"}
+)
+response.cookies
+# => {"k1" => "v1", "k2" => "v2"}
+```
+
+```crystal
+response = Crest.get(
+  "http://httpbin.org/cookies",
+  cookies: {"k1" => "v1"}
+)
+response.cookies
+# => {"k1" => "v1"}
+```
+
+#### Basic authentication
+
+For basic access authentication for an HTTP user agent you should to provide a `user` name and `password` when making a request.
+
+```crystal
+Crest.get(
+  "http://httpbin.org/basic-auth/user/passwd",
+  user: "user",
+  password: "passwd"
+)
+# curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd
+```
+
+#### Proxy
+
+If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:
+
+```crystal
+Crest.get(
+  "http://httpbin.org/ip",
+  p_addr: "localhost",
+  p_port: 3128
+)
+```
+
+To use HTTP Basic Auth with your proxy, use next syntax:
+
+```crystal
+Crest.get(
+  "http://httpbin.org/ip",
+  p_addr: "localhost",
+  p_port: 3128,
+  p_user: "user",
+  p_pass: "qwerty"
+)
+```
+
+#### Logging
+
+> `Logger` class is completely taken from [halite](https://github.com/icyleaf/halite) shard.
+> Thanks [icyleaf](https://github.com/icyleaf)!
+
+By default, the `Crest` does not enable logging. You can enable it per request by setting `logging: true`:
+
+```crystal
+Crest.get("http://httpbin.org/get", logging: true)
+```
+
+##### Filter sensitive information from logs with a regex matcher
+
+```crystal
+resource = Crest::Request.get("http://httpbin.org/get", params: {api_key => "secret"}, logging: true) do |request|
+  request.logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
+end
+
+# => crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?api_key=[REMOVED]
+```
+
+##### Customize logger
+
+You can create the custom logger by integration `Crest::Logger` abstract class.
+Here has two methods must be implement: `Crest::Logger.request` and `Crest::Logger.response`.
+
+```crystal
+class MyLogger < Crest::Logger
+  def request(request)
+    @logger.info ">> | %s | %s" % [request.method, request.url]
+  end
+
+  def response(response)
+    @logger.info "<< | %s | %s" % [response.status_code, response.url]
+  end
+end
+
+Crest.get("http://httpbin.org/get", logging: true, logger: MyLogger.new)
+```
+
+#### Redirection
 
 By default, `crest` will follow HTTP 30x redirection requests.
 
@@ -383,19 +387,37 @@ Crest::Request.execute(method: :get, url: "http://httpbin.org/redirect/1", max_r
 # => Crest::Found: 302 Found
 ```
 
-## Result handling
+#### Access HTTP::Client
 
-The result of a `Crest::Request` is a `Crest::Response` object.
+You can access `HTTP::Client` via the `http_client` instance method.
 
-Response objects have several useful methods.
+This is usually used to set additional options (e.g. read timeout, authorization header etc.)
 
-* `Response#body`: The response body as a string
-* `Response#status_code`: The HTTP response code
-* `Response#headers`: A hash of HTTP response headers
-* `Response#cookies`: A hash of HTTP cookies set by the server
-* `Response#request`: The `Crest::Request` object used to make the request
-* `Response#http_client_res`: The `HTTP::Client::Response` object
-* `Response#history`: A list of each response received in a redirection chain
+```crystal
+client = HTTP::Client.new("http://httpbin.org")
+client.read_timeout = 1.second
+
+begin
+  Crest::Request.new(:get,
+    "http://httpbin.org/delay/10",
+    http_client: client
+  )
+rescue IO::Timeout
+  puts "Timeout!"
+end
+```
+
+```crystal
+client = HTTP::Client.new("http://httpbin.org")
+client.read_timeout = 1.second
+
+begin
+  resource = Crest::Resource.new("http://httpbin.org", http_client: client)
+  resource.get("/delay/10")
+rescue IO::Timeout
+  puts "Timeout!"
+end
+```
 
 ## Development
 
