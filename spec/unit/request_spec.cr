@@ -2,14 +2,25 @@ require "../spec_helper"
 
 describe Crest::Request do
   describe "#initialize" do
-    it "new Request with default arguments" do
-      request = Crest::Request.new(:get, "http://localhost")
-      (request.url).should eq("http://localhost")
+    it "new HTTP request" do
+      request = Crest::Request.new(:get, "http://localhost/get")
+      (request.url).should eq("http://localhost/get")
       (request.max_redirects).should eq(10)
+      (request.host).should eq("localhost")
+      (request.port).should eq(80)
+      (request.tls?).should eq(nil)
       (request.user).should be_nil
       (request.password).should be_nil
       (request.proxy).should be_nil
       (request.logging).should be_false
+    end
+
+    it "new HTTPS request" do
+      request = Crest::Request.new(:get, "https://localhost/get")
+      (request.url).should eq("https://localhost/get")
+      (request.host).should eq("localhost")
+      (request.port).should eq(443)
+      (request.tls?).should be_a(OpenSSL::SSL::Context::Client)
     end
 
     it "initialize the GET request" do
