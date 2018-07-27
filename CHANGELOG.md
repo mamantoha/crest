@@ -3,6 +3,7 @@
 ## [...]
 
 * Add `Crest::Request#to_curl` to convert request to cURL command ([#95](https://github.com/mamantoha/crest/pull/95))
+* Bug fixes and other improvements
 
 ## 0.12.0
 
