@@ -23,17 +23,17 @@ Crest.get(
 Crest.post(
   "http://httpbin.org/post",
   headers: {"Access-Token" => ["secret1", "secret2"]},
-  payload: payload,
+  form: payload,
   logging: true,
 )
 
 begin
-  Crest.get("http://example.com/nonexistent")
+  Crest.get("http://httpbin.org/nonexistent")
 rescue ex : Crest::NotFound
   puts ex.response
 end
 
-response = Crest.get("http://example.com/nonexistent", handle_errors: false)
+response = Crest.get("http://httpbin.org/nonexistent", handle_errors: false)
 puts response.status_code
 
 request = Crest::Request.new(:get, "http://httpbin.org/headers") do |req|
