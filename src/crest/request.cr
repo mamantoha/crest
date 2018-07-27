@@ -163,7 +163,7 @@ module Crest
       @http_client.set_proxy(@proxy)
       @logger.request(self) if @logging
 
-      @http_request = new_request(@method, @url, @headers, @form_data)
+      @http_request = new_http_request(@method, @url, @headers, @form_data)
 
       response = @http_client.exec(@http_request)
 
@@ -180,7 +180,7 @@ module Crest
       HTTP::Client.new(uri)
     end
 
-    private def new_request(method, path, headers, body)
+    private def new_http_request(method, path, headers, body) : HTTP::Request
       HTTP::Request.new(method, path, headers, body).tap do |request|
         request.headers["Host"] ||= host_header
       end
