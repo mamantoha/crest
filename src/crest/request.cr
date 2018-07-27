@@ -70,6 +70,8 @@ module Crest
 
     property redirection_history, user, password
 
+    delegate host, port, tls?, to: @http_client
+
     def self.execute(method, url, **args)
       request = new(method, url, **args)
       request.execute
@@ -161,7 +163,7 @@ module Crest
       @http_client.set_proxy(@proxy)
       @logger.request(self) if @logging
 
-      @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
+      @http_request = new_request(@method, @url, @headers, @form_data)
 
       response = @http_client.exec(@http_request)
 
@@ -176,6 +178,20 @@ module Crest
     private def new_http_client : HTTP::Client
       uri = URI.parse(@url)
       HTTP::Client.new(uri)
+    end
+
+    private def new_request(method, path, headers, body)
+      HTTP::Request.new(method, path, headers, body).tap do |request|
+        request.headers["Host"] ||= host_header
+      end
+    end
+
+    private def host_header
+      if (tls? && port != 443) || (!tls? && port != 80)
+        "#{host}:#{port}"
+      else
+        host
+      end
     end
 
     private def process_result(http_client_res)

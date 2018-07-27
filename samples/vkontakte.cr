@@ -73,7 +73,7 @@ module Vk
       end
 
       form_params.merge!({"email" => email.not_nil!, "pass" => password.not_nil!})
-      response = Crest.post(login_url.to_s, payload: form_params, cookies: cookies)
+      response = Crest.post(login_url.to_s, form: form_params, cookies: cookies)
 
       cookies.merge!(response.cookies)
 
@@ -106,7 +106,7 @@ module Vk
 
         form_params.merge!({"email" => email.not_nil!, "pass" => password.not_nil!, "captcha_key" => captcha_key.to_s})
 
-        response = Crest.post(login_url.to_s, payload: form_params, cookies: cookies)
+        response = Crest.post(login_url.to_s, form: form_params, cookies: cookies)
         check_captcha(response)
       end
 
