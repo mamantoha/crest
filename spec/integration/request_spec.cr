@@ -124,7 +124,7 @@ describe Crest::Request do
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
-    (response.body).should eq("Upload ok")
+    (response.body).should match(/Upload OK/)
   end
 
   it "do OPTIONS request" do

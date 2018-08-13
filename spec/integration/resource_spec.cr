@@ -141,7 +141,7 @@ describe Crest::Response do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/upload")
     response = resource.post(form: {:file => file})
 
-    (response.body).should eq("Upload ok")
+    (response.body).should match(/Upload OK/)
   end
 
   it "upload file with []" do
@@ -149,7 +149,7 @@ describe Crest::Response do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
     response = resource["/upload"].post(form: {:file => file})
 
-    (response.body).should eq("Upload ok")
+    (response.body).should match(/Upload OK/)
   end
 
   it "do PUT request" do

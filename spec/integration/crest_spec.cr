@@ -37,7 +37,7 @@ describe Crest do
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
-    (response.body).should eq("Upload ok")
+    (response.body).should match(/Upload OK/)
   end
 
   it "do POST nested params" do

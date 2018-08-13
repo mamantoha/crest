@@ -30,8 +30,23 @@ get "/secret_redirect" do |env|
 end
 
 post "/upload" do |env|
-  env.params.files["file"]
-  "Upload ok"
+  file = nil
+  name = nil
+
+  HTTP::FormData.parse(env.request) do |part|
+    case part.name
+    when "name"
+      name = part.body.gets_to_end
+    when "file"
+      file = Tempfile.open("upload") do |f|
+        IO.copy(part.body, f)
+      end
+    end
+  end
+
+  if file
+    "Upload OK - #{file.path}"
+  end
 end
 
 post "/post_nested" do |env|
