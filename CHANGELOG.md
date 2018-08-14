@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Tested with Crystal 0.26.0
+
 ## 0.13.0
 
 * Add `Crest::Request#to_curl` to convert request to cURL command ([#95](https://github.com/mamantoha/crest/pull/95))
