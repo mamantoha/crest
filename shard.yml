@@ -18,6 +18,6 @@ development_dependencies:
     version: ~> 0.3.5
   ameba:
     github: veelenga/ameba
-    version: ~> 0.7.0
+    version: ~> 0.8.0
 
 license: MIT
