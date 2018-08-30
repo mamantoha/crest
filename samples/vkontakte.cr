@@ -145,7 +145,10 @@ module Vk
           "https://api.vk.com/method/",
           params: {"access_token" => access_token, "v" => API_VERSION},
           logging: true
-        )
+        ) do |request|
+          request.logger.filter(/(access_token=)(\w+)/, "\\1*****")
+        end
+
         resp = api[method_name].post(params: params)
         JSON.parse(resp.body)
       end
