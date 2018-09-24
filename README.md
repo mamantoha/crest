@@ -5,6 +5,7 @@
 [![Commits Since Last Release](https://img.shields.io/github/commits-since/mamantoha/crest/latest.svg)](https://github.com/mamantoha/crest/pulse)
 [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mamantoha.github.io/crest/)
 [![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmamantoha%2Fcrest.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmamantoha%2Fcrest?ref=badge_shield)
 
 Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
@@ -494,3 +495,6 @@ Then select the Workbook -> Requests from the menu.
 Copyright: 2017-2018 Anton Maminov (anton.maminov@gmail.com)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmamantoha%2Fcrest.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmamantoha%2Fcrest?ref=badge_large)
