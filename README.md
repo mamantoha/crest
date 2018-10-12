@@ -312,6 +312,14 @@ Crest.get(
 # curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd
 ```
 
+#### SSL/TLS support
+
+If `tls` is given it will be used:
+
+```crystal
+Crest.get("https://expired.badssl.com", tls: OpenSSL::SSL::Context::Client.insecure)
+```
+
 #### Proxy
 
 If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:
