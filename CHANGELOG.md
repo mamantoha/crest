@@ -2,6 +2,8 @@
 
 ## [...]
 
+## 0.15.0
+
 * SSL/TLS support ([#100](https://github.com/mamantoha/crest/pull/100))
 * Tested with Crystal 0.26.1
 
