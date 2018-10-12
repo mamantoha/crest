@@ -38,6 +38,7 @@ module Crest
   # * `params` a hash that represent query-string separated from the preceding part by a question mark (?)
   #    a sequence of attribute–value pairs separated by a delimiter (&).
   # * `user` and `password` for basic auth
+  # * `tls` configuring TLS settings
   # * `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
   # * `max_redirects` maximum number of redirections (default to `10`)
   # * `logging` enable logging (default to `false`)
@@ -47,6 +48,7 @@ module Crest
   class Request
     @method : String
     @url : String
+    @tls : OpenSSL::SSL::Context::Client?
     @http_client : HTTP::Client
     @http_request : HTTP::Request
     @headers : HTTP::Headers
@@ -104,6 +106,7 @@ module Crest
 
       @max_redirects = max_redirects
 
+      @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
@@ -177,7 +180,7 @@ module Crest
 
     private def new_http_client : HTTP::Client
       uri = URI.parse(@url)
-      HTTP::Client.new(uri)
+      HTTP::Client.new(uri, tls: @tls)
     end
 
     private def new_http_request(method, path, headers, body) : HTTP::Request

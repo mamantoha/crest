@@ -59,6 +59,7 @@ module Crest
       **options
     )
       @base_url = @url
+      @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
@@ -105,7 +106,7 @@ module Crest
 
     private def new_http_client : HTTP::Client
       uri = URI.parse(@url)
-      HTTP::Client.new(uri)
+      HTTP::Client.new(uri, tls: @tls)
     end
 
     private def execute_request(method : Symbol, form = {} of String => String)
@@ -115,6 +116,7 @@ module Crest
         url: @url,
         params: @params,
         headers: @headers,
+        tls: @tls,
         user: @user,
         password: @password,
         p_addr: @p_addr,
