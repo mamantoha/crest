@@ -56,6 +56,7 @@ Optional parameters:
 * `:form` -  a hash containing form params
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `:user` and `:password` -  for Basic Authentication
+* `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:max_redirects` -  maximum number of redirections (default to 10)
 * `:logging` -  enable logging (default to `false`)
