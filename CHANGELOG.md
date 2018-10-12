@@ -2,6 +2,9 @@
 
 ## [...]
 
+* SSL/TLS support
+* Tested with Crystal 0.26.1
+
 ## 0.14.0
 
 * Tested with Crystal 0.26.0
