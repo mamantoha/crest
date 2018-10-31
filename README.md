@@ -132,11 +132,11 @@ resource = Crest::Resource.new(
   headers: {"Content-Type" => "application/json"}
 )
 
-response["/get"].get(
+resource["/get"].get(
   headers: {"Auth-Token" => "secret"}
 )
 
-response["/post"].post(
+resource["/post"].post(
   form: {:height => 100, "width" => "100"},
   params: {:secret => "secret"}
 )
