@@ -1,3 +1,5 @@
+# <img src="https://stars.medv.io/mamantoha/crest.svg" align="right"/>
+
 <p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal.png" alt="crest" height="150px"></p>
 
 [![Build Status](https://travis-ci.org/mamantoha/crest.svg?branch=master)](https://travis-ci.org/mamantoha/crest)
