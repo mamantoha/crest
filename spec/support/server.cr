@@ -38,7 +38,7 @@ post "/upload" do |env|
     when "name"
       name = part.body.gets_to_end
     when "file"
-      file = Tempfile.open("upload") do |f|
+      file = File.tempfile("upload") do |f|
         IO.copy(part.body, f)
       end
     end
