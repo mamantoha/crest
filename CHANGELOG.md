@@ -2,6 +2,10 @@
 
 ## [...]
 
+## 0.16.1
+
+* Update to Kemal 0.25.1
+
 ## 0.16.0
 
 * Tested with Crystal 0.27.0
