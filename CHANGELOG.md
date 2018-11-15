@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Refactor proxy client
+
 ## 0.16.1
 
 * Update to Kemal 0.25.1
