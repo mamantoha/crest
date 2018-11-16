@@ -7,11 +7,13 @@ describe Crest do
   end
 
   it "do GET request with block" do
-    response = Crest.get("#{TEST_SERVER_URL}/headers") do |request|
-      request.headers.add("foo", "bar")
+    body = ""
+
+    response = Crest.get("#{TEST_SERVER_URL}/") do |resp|
+      body = resp.body
     end
 
-    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+    body.should eq("Hello World!")
   end
 
   it "do GET request with params" do
