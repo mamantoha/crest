@@ -14,8 +14,8 @@ module Crest
   # Block style:
   #
   # ```crystal
-  # resource = Crest::Resource.new("http://httpbin.org") do |resource|
-  #   resource.headers.merge!({"foo" => "bar"})
+  # resource = Crest::Resource.new("http://httpbin.org") do |res|
+  #   res.headers.merge!({"foo" => "bar"})
   # end
   #
   # response = resource["/headers"].get
