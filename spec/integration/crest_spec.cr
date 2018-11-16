@@ -13,6 +13,7 @@ describe Crest do
       body = resp.body
     end
 
+    (response.body).should eq("Hello World!")
     body.should eq("Hello World!")
   end
 
