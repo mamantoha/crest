@@ -10,9 +10,12 @@ describe Crest do
       end
 
       it "should set cookies in the block" do
-        response = Crest::Request.get(TEST_SERVER_URL, cookies: {"k1" => "v1"}) do |request|
-          request.cookies["k2"] = "v2"
+        request = Crest::Request.new(:get, TEST_SERVER_URL, cookies: {"k1" => "v1"}) do |req|
+          req.cookies["k2"] = "v2"
         end
+
+        response = request.execute
+
         (response.status_code).should eq(200)
         (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
       end

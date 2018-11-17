@@ -20,12 +20,14 @@ describe Crest::Request do
     (response.body).should eq("Post 1: comments")
   end
 
-  it "call get method with block" do
-    response = Crest::Request.get("#{TEST_SERVER_URL}/headers") do |request|
-      request.headers.add("foo", "bar")
+  it "call get method with response block" do
+    body = ""
+    response = Crest::Request.get("#{TEST_SERVER_URL}/") do |resp|
+      body = resp.body
     end
 
-    (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
+    body.should eq("Hello World!")
+    (response.body).should eq("Hello World!")
   end
 
   it "do GET request with params" do
@@ -48,7 +50,7 @@ describe Crest::Request do
     (response.body).should eq("JSON: key[123]")
   end
 
-  it "should accept block" do
+  it "should accept block on initialize as request" do
     url = "#{TEST_SERVER_URL}/headers"
 
     request = Crest::Request.new(:get, url) do |req|

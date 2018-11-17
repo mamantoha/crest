@@ -98,7 +98,7 @@ Crest::Request.get(
 # curl -L --proxy http://127.0.0.1:3128 --proxy-user admin:1234 "http://httpbin.org/get"
 ```
 
-A block can be passed to the `Crest::Request` instance.
+A block can be passed to the `Crest::Request` initializer.
 
 This block will then be called with the `Crest::Request`.
 
@@ -109,6 +109,16 @@ end
 
 request.execute
 # curl -L --header "foo: bar" http://httpbin.org/headers
+```
+
+A block can be passed to the `Crest::Request` instance.
+
+This block will then be called with the `Crest::Response`.
+
+```crystal
+Crest::Request.get("http://httpbin.org/get") do |resp|
+  File.write("file.html", resp.body)
+end
 ```
 
 ### Resource

@@ -133,23 +133,23 @@ module Crest
     end
 
     {% for method in Crest::HTTP_METHODS %}
-      # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+      # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
       #
       # ```crystal
-      # Crest::Request.{{method.id}}("http://www.example.com") do |request|
-      #   request.headers.add("Content-Type", "application/json")
-      #   request.user = "username"
-      #   request.password = "password"
+      # Crest::Request.{{method.id}}("http://www.example.com") do |resp|
+      #   File.write("file.html", resp.body)
       # end
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
         request = Request.new(:{{method.id}}, url, **args)
 
-        yield request
-
         request.basic_auth!(request.user, request.password)
 
-        request.execute
+        response = request.execute
+
+        yield response
+
+        response
       end
 
       # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.

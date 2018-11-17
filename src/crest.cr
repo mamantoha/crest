@@ -23,8 +23,8 @@ require "./http/proxy/client"
 #   logging: true,
 # )
 #
-# Crest.get("http://example.com/resource") do |request|
-#   request.headers.add("Content-Type", "image/jpg")
+# Crest.get("http://example.com/resource") do |response|
+#   File.write("file.html", response.body)
 # end
 # ```
 module Crest
@@ -43,19 +43,21 @@ module Crest
   HTTP_METHODS = %w{get delete post put patch options}
 
   {% for method in Crest::HTTP_METHODS %}
-    # Execute a {{method.id.upcase}} request and and yields the `Crest::Request` to the block.
+    # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
     #
     # ```crystal
-    # Crest.{{method.id}}("http://www.example.com") do |request|
-    #   request.headers.add("Content-Type", "application/json")
+    # Crest.{{method.id}}("http://www.example.com") do |response|
+    #   File.write("file.html", response.body)
     # end
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
       request = Request.new(:{{method.id}}, url, **args)
 
-      yield request
+      response = exec(request)
 
-      exec(request)
+      yield response
+
+      response
     end
 
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
