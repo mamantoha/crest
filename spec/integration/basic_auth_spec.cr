@@ -27,6 +27,18 @@ describe Crest do
         (response.body).should eq("Secret World!")
       end
 
+      it "should set basic auth in requets initiliazer block" do
+        request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/secret") do |req|
+          req.user = "username"
+          req.password = "password"
+        end
+
+        response = request.execute
+
+         (response.status_code).should eq(200)
+         (response.body).should eq("Secret World!")
+      end
+
       it "should be successful with valid credentials on redirect" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret_redirect", user: "username", password: "password")
         (response.status_code).should eq(200)
