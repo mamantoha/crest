@@ -2,6 +2,8 @@
 
 ## [...]
 
+## 0.17.0
+
 * **(breaking-change)** `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) yields the `Crest::Response` to the block
 * Refactor proxy client
 
