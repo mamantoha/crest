@@ -242,7 +242,35 @@ end
 To not raise exceptions but return the `Crest::Response` you can set `:handle_errors => false`.
 
 ```crystal
-response = Crest.get("http://httpbin.org/status/404", handle_errors: false)
+response = Crest.get("http://httpbin.org.status/404", handle_errors: false) do |resp|
+  case
+  when resp.successful?
+    body = resp.body
+  when resp.client_error?
+    puts "Client error"
+  when resp.server_error
+    puts "Server error"
+  end
+end
+# => Client error
+
+response.status_code # => 404
+```
+
+But note that it may be more straightforward to use exceptions to handle different HTTP error response cases:
+
+```crystal
+response = begin
+  Crest.get("http://httpbin.org.status/404")
+rescue ex : Crest::NotFound
+  puts "Not found"
+  ex.response
+rescue ex : Crest::InternalServerError
+  puts "Internal server error"
+  ex.response
+end
+# => Not found
+
 response.status_code # => 404
 ```
 

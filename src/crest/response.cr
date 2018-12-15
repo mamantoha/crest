@@ -22,10 +22,10 @@ module Crest
     end
 
     def return!
-      case status_code
-      when 200..207
+      case
+      when self.successful?
         self
-      when 301, 302, 303, 307
+      when self.redirect?
         check_max_redirects
         follow_redirection
       else
@@ -133,5 +133,37 @@ module Crest
     private def check_max_redirects
       raise_exception! if @request.max_redirects <= 0
     end
+
+    module Helpers
+      def invalid?
+        status_code < 100 || status_code >= 600
+      end
+
+      def informational?
+        (100..199).includes?(status_code)
+      end
+
+      def successful?
+        (200..299).includes?(status_code)
+      end
+
+      def redirection?
+        (300..399).includes?(status_code)
+      end
+
+      def redirect?
+        [301, 302, 303, 307, 308].includes?(status_code)
+      end
+
+      def client_error?
+        (400..499).includes?(status_code)
+      end
+
+      def server_error?
+        (500..599).includes?(status_code)
+      end
+    end
+
+    include Helpers
   end
 end

@@ -8,6 +8,18 @@ describe Crest do
       end
     end
 
+    it "request with rescue" do
+      response = begin
+        Crest.get("#{TEST_SERVER_URL}/500")
+      rescue ex : Crest::NotFound
+        ex.response
+      rescue ex : Crest::InternalServerError
+        ex.response
+      end
+
+      response.body.should eq("500 error")
+    end
+
     it "404 with Resource" do
       expect_raises Crest::RequestFailed, "HTTP status code 404: Not Found" do
         resource = Crest::Resource.new(TEST_SERVER_URL)

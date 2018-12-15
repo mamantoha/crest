@@ -35,8 +35,8 @@ describe Crest do
 
         response = request.execute
 
-         (response.status_code).should eq(200)
-         (response.body).should eq("Secret World!")
+        (response.status_code).should eq(200)
+        (response.body).should eq("Secret World!")
       end
 
       it "should be successful with valid credentials on redirect" do
