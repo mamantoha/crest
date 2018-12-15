@@ -23,9 +23,9 @@ module Crest
 
     def return!
       case
-      when self.successful?
+      when successful?
         self
-      when self.redirect?
+      when redirect?
         check_max_redirects
         follow_redirection
       else
