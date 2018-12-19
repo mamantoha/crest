@@ -14,7 +14,9 @@ module Crest
   class Response
     getter http_client_res, request
 
-    def self.create(http_client_res : HTTP::Client::Response, request : Crest::Request)
+    delegate body, to: http_client_res
+
+    def self.new(http_client_res : HTTP::Client::Response, request : Crest::Request)
       self.new(http_client_res, request)
     end
 
@@ -79,10 +81,6 @@ module Crest
 
     def status_code : Int32
       @http_client_res.status_code.to_i
-    end
-
-    def body
-      @http_client_res.body
     end
 
     def headers
