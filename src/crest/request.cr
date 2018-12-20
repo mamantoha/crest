@@ -198,7 +198,7 @@ module Crest
     end
 
     private def process_result(http_client_res)
-      response = Response.create(http_client_res, self)
+      response = Response.new(http_client_res, self)
       logger.response(response) if logging
       response.return!
     end
