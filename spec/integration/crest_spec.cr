@@ -62,4 +62,20 @@ describe Crest do
     response = Crest.delete("#{TEST_SERVER_URL}/post/1/comments/1")
     (response.body).should eq("Delete Comment `1` for Post `1`")
   end
+
+  it "do GET request with block without handle errors" do
+    body = ""
+
+    response = Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
+      case
+      when resp.successful?
+        body = resp.body
+      when resp.client_error?
+        body = "Not found."
+      end
+    end
+
+    puts response.status_code
+    body.should eq("Not found.")
+  end
 end

@@ -13,6 +13,14 @@ end
 
 add_handler BasicAuthHandler.new("username", "password")
 
+error 404 do
+  "404 error"
+end
+
+error 500 do
+  "500 error"
+end
+
 get "/" do
   "Hello World!"
 end
