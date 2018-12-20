@@ -1,5 +1,6 @@
 require "http"
 require "../crest"
+require "../crest/redirector"
 
 module Crest
   # Response objects have several useful methods:
@@ -23,56 +24,9 @@ module Crest
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
     end
 
-    def return!
-      case status_code
-      when 200..207
-        self
-      when 301, 302, 303, 307
-        check_max_redirects
-        follow_redirection
-      else
-        raise_exception! if request.handle_errors
-        self
-      end
-    end
-
-    # Follow a redirection response by making a new HTTP request to the
-    # redirection target.
-    def follow_redirection
-      url = extract_url_from_headers
-
-      new_request = prepare_new_request(url)
-      new_request.redirection_history = history + [self]
-      new_request.execute
-    end
-
-    private def extract_url_from_headers
-      location_url = @http_client_res.headers["Location"]
-      location_uri = URI.parse(location_url)
-
-      return location_url if location_uri.absolute?
-
-      uri = URI.parse(@request.url)
-      port = uri.port ? ":#{uri.port}" : ""
-
-      "#{uri.scheme}://#{uri.host}#{port}#{location_url}"
-    end
-
-    private def prepare_new_request(url)
-      Request.new(
-        method: :get,
-        url: url,
-        headers: request_headers,
-        max_redirects: @request.max_redirects - 1,
-        cookies: cookies,
-        logging: @request.logging,
-        logger: @request.logger,
-        handle_errors: @request.handle_errors,
-        p_addr: @request.p_addr,
-        p_port: @request.p_port,
-        p_user: @request.p_user,
-        p_pass: @request.p_pass
-      )
+    def return! : Crest::Response
+      redirector = Redirector.new(self, request)
+      redirector.follow
     end
 
     def url : String
@@ -84,9 +38,9 @@ module Crest
     end
 
     def headers
-      @request.headers.merge!(http_client_res.headers)
+      headers = @request.headers.dup.merge!(http_client_res.headers)
 
-      normalize_headers(@request.headers)
+      normalize_headers(headers)
     end
 
     def cookies
@@ -107,10 +61,6 @@ module Crest
 
     private def response_cookies
       cookies_to_h(@http_client_res.cookies)
-    end
-
-    private def request_headers
-      @request.headers.to_h
     end
 
     private def normalize_headers(headers : HTTP::Headers)
