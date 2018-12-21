@@ -12,4 +12,11 @@ describe Crest::Response do
     (response.client_error?).should be_false
     (response.server_error?).should be_false
   end
+
+  it "response instance should have filename if available" do
+    filename = "filename.jpg"
+    response = Crest.get("#{TEST_SERVER_URL}/download?filename=#{filename}")
+
+    (response.filename).should eq(filename)
+  end
 end

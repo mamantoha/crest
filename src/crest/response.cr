@@ -51,6 +51,15 @@ module Crest
       @request.redirection_history
     end
 
+    def filename : String?
+      headers["Content-Disposition"]?
+        .try(&.as(String))
+        .try(&.split)
+        .try(&.[1])
+        .try(&.split("filename="))
+        .try(&.[1])
+    end
+
     private def raise_exception!
       raise RequestFailed.subclass_by_status_code(status_code).new(self)
     end
