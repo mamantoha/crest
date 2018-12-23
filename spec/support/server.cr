@@ -88,7 +88,7 @@ get "/resize" do |env|
   "Width: #{width}, height: #{height}"
 end
 
-# Matches /resize?api_key=secter
+# Matches /resize?key=secter
 post "/resize" do |env|
   height = env.params.body.[]("height")
   width = env.params.body.[]("width")
@@ -199,6 +199,16 @@ get "/delay/:seconds" do |env|
   sleep seconds
 
   "Delay #{seconds} seconds"
+end
+
+# Matches /download?filename=foo.bar
+get "/download" do |env|
+  filename = env.params.query["filename"]? || "foo.bar"
+  env.response.headers.add("Content-Disposition", "attachment; filename=#{filename}")
+
+  file = File.open("#{__DIR__}/fff.png")
+
+  send_file env, file.path, mime_type: "Application/octet-stream"
 end
 
 Kemal.run
