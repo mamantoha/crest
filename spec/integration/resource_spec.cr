@@ -111,13 +111,13 @@ describe Crest::Response do
 
   it "do POST request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
-    response = resource.post({:title => "Title"})
+    response = resource.post(form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "do POST request with []" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site["/post/1/comments"].post({:title => "Title"})
+    response = site["/post/1/comments"].post(form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
@@ -154,13 +154,13 @@ describe Crest::Response do
 
   it "do PUT request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
-    response = resource.put({:title => "Put Update"})
+    response = resource.put(form: {:title => "Put Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
   end
 
   it "do PATCH request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
-    response = resource.patch({:title => "Patch Update"})
+    response = resource.patch(form: {:title => "Patch Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
   end
 

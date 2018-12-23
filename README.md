@@ -159,7 +159,7 @@ Use the `[]` syntax to allocate subresources:
 ```crystal
 site = Crest::Resource.new("http://httpbin.org")
 
-site["/post"].post({:param1 => "value1", :param2 => "value2"})
+site["/post"].post(form: {:param1 => "value1", :param2 => "value2"})
 # curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 ```
 
