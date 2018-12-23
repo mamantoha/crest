@@ -7,18 +7,18 @@ module Crest
   # Simple example:
   #
   # ```crystal
-  # request = Crest::Request.new(method: :post, url: "http://example.com/user", form: {:age => 27}, params: {:name => "Kurt"})
+  # request = Crest::Request.new(method: :post, url: "http://httpbin.org/post", form: {:age => 27}, params: {:name => "Kurt"})
   # request.execute
   #
-  # Crest::Request.execute(method: :post, url: "http://example.com/user", form: {:age => 27}.to_json)
+  # Crest::Request.execute(method: :post, url: "http://httpbin.org/post", form: {:age => 27}.to_json)
   #
-  # Crest::Request.post(url: "http://example.com/user", form: {:age => 27}.to_json)
+  # Crest::Request.post(url: http://httpbin.org/post", form: {:age => 27}.to_json)
   # ```
   #
   # Block style:
   #
   # ```crystal
-  # request = Crest::Request.new(:get, "http://example.com") do |request|
+  # request = Crest::Request.new(:get, http://httpbin.org/get") do |request|
   #   request.headers.add("foo", "bar")
   #   request.user = "username"
   #   request.password = "password"
@@ -141,7 +141,7 @@ module Crest
       # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
       #
       # ```crystal
-      # Crest::Request.{{method.id}}("http://www.example.com") do |resp|
+      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}") do |resp|
       #   while line = resp.body_io.gets
       #     puts line
       #   end
@@ -157,7 +157,7 @@ module Crest
       # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
       #
       # ```crystal
-      # Crest::Request.{{method.id}}("http://www.example.com")
+      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}")
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
         request = Request.new(:{{method.id}}, url, **args)

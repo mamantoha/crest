@@ -11,7 +11,7 @@ require "./http/proxy/client"
 #
 # ```crystal
 # Crest.get(
-#   "http://example.com/resource",
+#   "http://httpbin.org/get",
 #   headers: {"Content-Type" => "image/jpg"},
 #   params: {"lang" => "en"}
 # )
@@ -23,7 +23,7 @@ require "./http/proxy/client"
 #   logging: true,
 # )
 #
-# Crest.get("http://example.com/resource") do |response|
+# Crest.get("http://httpbin.org/stream/5") do |response|
 #   while line = response.body_io.gets
 #     puts line
 #   end
@@ -48,7 +48,7 @@ module Crest
     # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
     #
     # ```crystal
-    # Crest.{{method.id}}("http://www.example.com") do |response|
+    # Crest.{{method.id}}("http://httpbin.org/{{method.id}}") do |response|
     #   while line = response.body_io.gets
     #     puts line
     #   end
@@ -62,7 +62,7 @@ module Crest
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
     #
     # ```crystal
-    # Crest.{{method.id}}("http://www.example.com")
+    # Crest.{{method.id}}("http://httpbin.org/{{method.id}}")
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
       request = Request.new(:{{method.id}}, url, **args)

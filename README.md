@@ -242,7 +242,7 @@ end
 To not raise exceptions but return the `Crest::Response` you can set `:handle_errors => false`.
 
 ```crystal
-response = Crest.get("http://httpbin.org.status/404", handle_errors: false) do |resp|
+response = Crest.get("http://httpbin.org/status/404", handle_errors: false) do |resp|
   case
   when resp.successful?
     body = resp.body
@@ -261,7 +261,7 @@ But note that it may be more straightforward to use exceptions to handle differe
 
 ```crystal
 response = begin
-  Crest.get("http://httpbin.org.status/404")
+  Crest.get("http://httpbin.org/status/404")
 rescue ex : Crest::NotFound
   puts "Not found"
   ex.response
