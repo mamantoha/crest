@@ -87,6 +87,7 @@ module Crest
       end
 
       def {{method.id}}(
+        *,
         form = {} of String => String,
         headers = {} of String => String,
         params = {} of String => String
