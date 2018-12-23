@@ -6,17 +6,6 @@ describe Crest do
     (response.body).should eq("Hello World!")
   end
 
-  it "do GET request with block" do
-    body = ""
-
-    response = Crest.get("#{TEST_SERVER_URL}/") do |resp|
-      body = resp.body
-    end
-
-    (response.body).should eq("Hello World!")
-    body.should eq("Hello World!")
-  end
-
   it "do GET request with params" do
     response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
     (response.body).should eq("Width: 100, height: 100")
@@ -66,7 +55,7 @@ describe Crest do
   it "do GET request with block without handle errors" do
     body = ""
 
-    response = Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
+    Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
       case
       when resp.successful?
         body = resp.body
@@ -75,7 +64,6 @@ describe Crest do
       end
     end
 
-    puts response.status_code
     body.should eq("Not found.")
   end
 end

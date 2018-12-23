@@ -274,6 +274,28 @@ end
 response.status_code # => 404
 ```
 
+### Streaming responses
+
+Normally, when you use `Crest.get` or `Crest::Request.execute(method: :get)` to retrieve data, the entire response is buffered in memory and returned as the response to the call.
+
+However, if you are retrieving a large amount of data, for example an iso, or any other large file, you may want to stream the response directly to disk rather than loading it in memory. If you have a very large file, it may become impossible to load it into memory.
+
+If you want to stream the data from the response to a file as it comes, rather than entirely in memory, you can pass a block to which you pass a additional logic, which you can use to stream directly to a file as each chunk is received.
+
+With a block, an `Crest::Response` body is returned and the response's body is available as an `IO` by invoking `Crest::Response#body_io`.
+
+The following is an example:
+
+```crystal
+Crest.get("https://github.com/crystal-lang/crystal/archive/0.27.0.zip") do |resp|
+  filename = resp.filename || "crystal.zip"
+
+  File.open(filename, "w") do |file|
+    IO.copy(resp.body_io, file)
+  end
+end
+```
+
 ### Advanced Usage
 
 This section covers some of `crest` more advanced features.

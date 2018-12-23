@@ -24,7 +24,9 @@ require "./http/proxy/client"
 # )
 #
 # Crest.get("http://example.com/resource") do |response|
-#   File.write("file.html", response.body)
+#   while line = response.body_io.gets
+#     puts line
+#   end
 # end
 # ```
 module Crest
@@ -47,17 +49,14 @@ module Crest
     #
     # ```crystal
     # Crest.{{method.id}}("http://www.example.com") do |response|
-    #   File.write("file.html", response.body)
+    #   while line = response.body_io.gets
+    #     puts line
+    #   end
     # end
     # ```
-    def self.{{method.id}}(url : String, **args) : Crest::Response
+    def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
       request = Request.new(:{{method.id}}, url, **args)
-
-      response = exec(request)
-
-      yield response
-
-      response
+      request.execute(&block)
     end
 
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
@@ -66,15 +65,10 @@ module Crest
     # Crest.{{method.id}}("http://www.example.com")
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
-      {{method.id}}(url, **args) { }
+      request = Request.new(:{{method.id}}, url, **args)
+      request.execute
     end
-
   {% end %}
-
-  # Executes a `request`.
-  private def self.exec(request : Crest::Request) : Crest::Response
-    request.execute
-  end
 end
 
 require "./crest/**"
