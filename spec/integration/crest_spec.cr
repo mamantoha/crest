@@ -58,12 +58,14 @@ describe Crest do
     Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
       case
       when resp.successful?
-        body = resp.body
+        body = resp.body_io.gets_to_end
       when resp.client_error?
-        body = "Not found."
+        body = "Client error"
+      when resp.server_error?
+        body = "Server error"
       end
     end
 
-    body.should eq("Not found.")
+    body.should eq("Client error")
   end
 end

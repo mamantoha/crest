@@ -111,16 +111,6 @@ request.execute
 # curl -L --header "foo: bar" http://httpbin.org/headers
 ```
 
-A block can be passed to the `Crest::Request` instance.
-
-This block will then be called with the `Crest::Response`.
-
-```crystal
-Crest::Request.get("http://httpbin.org/get") do |resp|
-  File.write("file.html", resp.body)
-end
-```
-
 ### Resource
 
 A `Crest::Resource` class can be instantiated for access to a RESTful resource,
@@ -245,10 +235,10 @@ To not raise exceptions but return the `Crest::Response` you can set `:handle_er
 response = Crest.get("http://httpbin.org/status/404", handle_errors: false) do |resp|
   case
   when resp.successful?
-    body = resp.body
+    puts resp.body_io.gets_to_end
   when resp.client_error?
     puts "Client error"
-  when resp.server_error
+  when resp.server_error?
     puts "Server error"
   end
 end
