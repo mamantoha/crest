@@ -48,6 +48,30 @@ describe Crest do
       body.to_s.should eq("Hello World!")
     end
 
+    it "should stream Resource#get with []" do
+      body = String::Builder.new
+      resource = Crest::Resource.new(TEST_SERVER_URL)
+      resource["/"].get do |resp|
+        while line = resp.body_io.gets
+          body << line
+        end
+      end
+
+      body.to_s.should eq("Hello World!")
+    end
+
+    it "should stream Resource#get" do
+      body = String::Builder.new
+      resource = Crest::Resource.new(TEST_SERVER_URL)
+      resource.get("/") do |resp|
+        while line = resp.body_io.gets
+          body << line
+        end
+      end
+
+      body.to_s.should eq("Hello World!")
+    end
+
     it "should stream Crest#get with redirects" do
       body = String::Builder.new
 
@@ -65,6 +89,18 @@ describe Crest do
       request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/redirect/2")
 
       request.execute do |resp|
+        while line = resp.body_io.gets
+          body << line
+        end
+      end
+
+      body.to_s.should eq("Hello World!")
+    end
+
+    it "should stream Resource#get with redirects" do
+      body = String::Builder.new
+      resource = Crest::Resource.new(TEST_SERVER_URL)
+      resource["/redirect/2"].get do |resp|
         while line = resp.body_io.gets
           body << line
         end

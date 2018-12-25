@@ -266,7 +266,7 @@ response.status_code # => 404
 
 ### Streaming responses
 
-Normally, when you use `Crest.get` or `Crest::Request.execute(method: :get)` to retrieve data, the entire response is buffered in memory and returned as the response to the call.
+Normally, when you use `Crest`, `Crest::Request` or `Crest::Resource` methods to retrieve data, the entire response is buffered in memory and returned as the response to the call.
 
 However, if you are retrieving a large amount of data, for example an iso, or any other large file, you may want to stream the response directly to disk rather than loading it in memory. If you have a very large file, it may become impossible to load it into memory.
 

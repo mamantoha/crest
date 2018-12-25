@@ -47,6 +47,16 @@ module Crest
   #   params: {:secret => "secret"}
   # )
   # ```
+  # If you want to stream the data from the response you can pass a block:
+  #
+  # ```crystal
+  # resource = Crest::Resource.new("http://httpbin.org")
+  # resource["/stream/5"].get do |response|
+  #   while line = response.body_io.gets
+  #     puts line
+  #   end
+  # end
+  # ```
   class Resource
     getter http_client, url, user, password, headers, params,
       logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
@@ -80,22 +90,35 @@ module Crest
     end
 
     {% for method in Crest::HTTP_METHODS %}
-      def {{method.id}}(suburl : String, **options)
-        @url = concat_urls(@base_url, suburl)
-
-        {{method.id}}(**options)
-      end
-
+      # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
       def {{method.id}}(
+        suburl : String? = nil,
         *,
         form = {} of String => String,
         headers = {} of String => String,
         params = {} of String => String
-      )
+      ) : Crest::Response
+        @url = concat_urls(@base_url, suburl) if suburl
         @headers = @headers.merge(headers)
         @params = merge_params(params)
 
         execute_request(:{{method.id}}, form)
+      end
+
+      # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
+      def {{method.id}}(
+        suburl : String? = nil,
+        *,
+        form = {} of String => String,
+        headers = {} of String => String,
+        params = {} of String => String,
+        &block : Crest::Response ->
+      ) : Nil
+        @url = concat_urls(@base_url, suburl) if suburl
+        @headers = @headers.merge(headers)
+        @params = merge_params(params)
+
+        execute_request(:{{method.id}}, form, &block)
       end
     {% end %}
 
@@ -111,24 +134,32 @@ module Crest
     end
 
     private def execute_request(method : Symbol, form = {} of String => String)
-      Request.execute(
-        method: method,
-        form: form,
-        url: @url,
-        params: @params,
-        headers: @headers,
-        tls: @tls,
-        user: @user,
-        password: @password,
-        p_addr: @p_addr,
-        p_port: @p_port,
-        p_user: @p_user,
-        p_pass: @p_pass,
-        logging: @logging,
-        logger: @logger,
+      Request.execute(**request_params(method, form))
+    end
+
+    private def execute_request(method : Symbol, form = {} of String => String, &block : Crest::Response ->)
+      Request.execute(**request_params(method, form), &block)
+    end
+
+    private def request_params(method : Symbol, form = {} of String => String)
+      {
+        method:        method,
+        form:          form,
+        url:           @url,
+        params:        @params,
+        headers:       @headers,
+        tls:           @tls,
+        user:          @user,
+        password:      @password,
+        p_addr:        @p_addr,
+        p_port:        @p_port,
+        p_user:        @p_user,
+        p_pass:        @p_pass,
+        logging:       @logging,
+        logger:        @logger,
         handle_errors: @handle_errors,
-        http_client: @http_client,
-      )
+        http_client:   @http_client,
+      }
     end
 
     private def merge_params(other = {} of String => String)
