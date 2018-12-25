@@ -2,6 +2,11 @@
 
 ## [...]
 
+* **(breaking-change)** Needs to specify `form`, `headers` and `params` arguments for `Crest::Resource` methods ([#112](https://github.com/mamantoha/crest/pull/112))
+* Add `Crest::Response#filename` method ([#111](https://github.com/mamantoha/crest/pull/111))
+* Add response helper methods (`successful?`, `redirection?`, etc) ([#107](https://github.com/mamantoha/crest/pull/107))
+* Extract redirection logic into `Crest::Redirector` class ([#109](https://github.com/mamantoha/crest/pull/109))
+
 ## [0.17.0] (2018-11-17)
 
 * **(breaking-change)** `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) yields the `Crest::Response` to the block
