@@ -122,7 +122,7 @@ end
 get "/stream/:count" do |env|
   count = env.params.url["count"].to_i
 
-  count.times do |i|
+  count.times do
     env.response.puts("Hello World!")
     env.response.flush
   end
