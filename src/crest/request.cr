@@ -293,9 +293,9 @@ module Crest
       query_string = Crest::Utils.encode_query_string(url_params)
 
       if url.includes?("?")
-        return "&" + query_string
+        "&" + query_string
       else
-        return "?" + query_string
+        "?" + query_string
       end
     end
   end

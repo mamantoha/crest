@@ -166,7 +166,7 @@ module Crest
       @params.try do |params|
         other = params.merge(other)
       end
-      return other
+      other
     end
 
     private def concat_urls(url : String, suburl : String) : String

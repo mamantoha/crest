@@ -51,7 +51,7 @@ module Vk
       response = Crest.get(AUTH_URL, params: query)
       cookies.merge!(response.cookies)
 
-      return response
+      response
     end
 
     private def submit_login_form(response : Crest::Response) : Crest::Response
@@ -77,7 +77,7 @@ module Vk
 
       cookies.merge!(response.cookies)
 
-      return response
+      response
     end
 
     private def submit_form_with_captcha(response : Crest::Response) : Crest::Response
@@ -110,7 +110,7 @@ module Vk
         check_captcha(response)
       end
 
-      return response
+      response
     end
 
     private def check_captcha(response)
@@ -136,7 +136,7 @@ module Vk
       @access_token = params["access_token"]
       @user_id = params["user_id"]
 
-      return params
+      params
     end
 
     def api_request(method_name : String, params = {} of String => String)
