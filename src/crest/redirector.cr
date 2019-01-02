@@ -1,18 +1,28 @@
 module Crest
   class Redirector
-    def initialize(
-      @response : Crest::Response,
-      @request : Crest::Request
-    )
+    def initialize(@response : Crest::Response, @request : Crest::Request)
     end
 
     def follow : Crest::Response
-      case @response.status_code
-      when 200..207
+      case
+      when @response.successful?
         @response
-      when 301, 302, 303, 307
+      when @response.redirect?
         check_max_redirects
         follow_redirection
+      else
+        raise_exception! if @request.handle_errors
+        @response
+      end
+    end
+
+    def follow(&block : Crest::Response ->)
+      case
+      when @response.successful?
+        @response
+      when @response.redirect?
+        check_max_redirects
+        follow_redirection(&block)
       else
         raise_exception! if @request.handle_errors
         @response
@@ -31,6 +41,14 @@ module Crest
       new_request = prepare_new_request(url)
       new_request.redirection_history = @response.history + [@response]
       new_request.execute
+    end
+
+    private def follow_redirection(&block : Crest::Response ->)
+      url = extract_url_from_headers
+
+      new_request = prepare_new_request(url)
+      new_request.redirection_history = @response.history + [@response]
+      new_request.execute(&block)
     end
 
     private def extract_url_from_headers

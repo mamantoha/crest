@@ -119,6 +119,17 @@ get "/500" do |env|
   env.response.status_code = 500
 end
 
+get "/stream/:count" do |env|
+  count = env.params.url["count"].to_i
+
+  count.times do
+    env.response.puts("Hello World!")
+    env.response.flush
+  end
+
+  env
+end
+
 # Redirects
 #
 get "/redirect/1" do |env|
@@ -139,6 +150,12 @@ end
 
 get "/redirect/not_found" do |env|
   env.redirect("/404")
+end
+
+get "/redirect_stream/:count" do |env|
+  count = env.params.url["count"].to_i
+
+  env.redirect("/stream/#{count}")
 end
 
 # Return request headers

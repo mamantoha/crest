@@ -5,7 +5,8 @@ require "../crest/redirector"
 module Crest
   # Response objects have several useful methods:
   #
-  # * `body`: The response body as a string
+  # * `body`: The response body as a String
+  # * `body_io`: The response body as a IO
   # * `status_code`: The HTTP response code
   # * `headers`: A hash of HTTP response headers
   # * `cookies`: A hash of HTTP cookies set by the server
@@ -16,10 +17,7 @@ module Crest
     getter http_client_res, request
 
     delegate body, to: http_client_res
-
-    def self.new(http_client_res : HTTP::Client::Response, request : Crest::Request)
-      self.new(http_client_res, request)
-    end
+    delegate body_io, to: http_client_res
 
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
     end
@@ -27,6 +25,11 @@ module Crest
     def return! : Crest::Response
       redirector = Redirector.new(self, request)
       redirector.follow
+    end
+
+    def return!(&block : Crest::Response ->)
+      redirector = Redirector.new(self, request)
+      redirector.follow(&block)
     end
 
     def url : String

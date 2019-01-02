@@ -7,18 +7,18 @@ module Crest
   # Simple example:
   #
   # ```crystal
-  # request = Crest::Request.new(method: :post, url: "http://example.com/user", form: {:age => 27}, params: {:name => "Kurt"})
+  # request = Crest::Request.new(method: :post, url: "http://httpbin.org/post", form: {:age => 27}, params: {:name => "Kurt"})
   # request.execute
   #
-  # Crest::Request.execute(method: :post, url: "http://example.com/user", form: {:age => 27}.to_json)
+  # Crest::Request.execute(method: :post, url: "http://httpbin.org/post", form: {:age => 27}.to_json)
   #
-  # Crest::Request.post(url: "http://example.com/user", form: {:age => 27}.to_json)
+  # Crest::Request.post(url: http://httpbin.org/post", form: {:age => 27}.to_json)
   # ```
   #
   # Block style:
   #
   # ```crystal
-  # request = Crest::Request.new(:get, "http://example.com") do |request|
+  # request = Crest::Request.new(:get, http://httpbin.org/get") do |request|
   #   request.headers.add("foo", "bar")
   #   request.user = "username"
   #   request.password = "password"
@@ -74,9 +74,14 @@ module Crest
 
     delegate host, port, tls?, to: @http_client
 
-    def self.execute(method, url, **args)
+    def self.execute(method, url, **args) : Crest::Response
       request = new(method, url, **args)
       request.execute
+    end
+
+    def self.execute(method, url, **args, &block : Crest::Response ->) : Nil
+      request = new(method, url, **args)
+      request.execute(&block)
     end
 
     def initialize(
@@ -136,41 +141,70 @@ module Crest
       # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
       #
       # ```crystal
-      # Crest::Request.{{method.id}}("http://www.example.com") do |resp|
-      #   File.write("file.html", resp.body)
+      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}") do |resp|
+      #   while line = resp.body_io.gets
+      #     puts line
+      #   end
       # end
       # ```
-      def self.{{method.id}}(url : String, **args) : Crest::Response
+      def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
         request = Request.new(:{{method.id}}, url, **args)
-
         request.basic_auth!(request.user, request.password)
 
-        response = request.execute
-
-        yield response
-
-        response
+        response = request.execute(&block)
       end
 
       # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
       #
       # ```crystal
-      # Crest::Request.{{method.id}}("http://www.example.com")
+      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}")
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
-        {{method.id}}(url, **args) { }
+        request = Request.new(:{{method.id}}, url, **args)
+        request.basic_auth!(request.user, request.password)
+
+        request.execute
       end
     {% end %}
 
+    # Execute HTTP request
     def execute : Crest::Response
       @http_client.set_proxy(@proxy)
       @logger.request(self) if @logging
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
 
-      response = @http_client.exec(@http_request)
+      http_response = @http_client.exec(@http_request)
 
-      process_result(response)
+      process_result(http_response)
+    end
+
+    # Execute streaming HTTP request
+    def execute(&block : Crest::Response ->) : Nil
+      @http_client.set_proxy(@proxy)
+      @logger.request(self) if @logging
+
+      @http_request = new_http_request(@method, @url, @headers, @form_data)
+
+      @http_client.exec(@http_request) do |http_response|
+        response = process_result(http_response, &block)
+
+        if response
+          yield response
+        end
+      end
+    end
+
+    private def process_result(http_client_res) : Crest::Response
+      response = Response.new(http_client_res, self)
+      logger.response(response) if logging
+      response.return!
+    end
+
+    private def process_result(http_client_res, &block : Crest::Response ->)
+      response = Response.new(http_client_res, self)
+      logger.response(response) if logging
+      response.return!(&block)
     end
 
     # Convert `Request` object to cURL command
@@ -195,12 +229,6 @@ module Crest
       else
         host
       end
-    end
-
-    private def process_result(http_client_res)
-      response = Response.new(http_client_res, self)
-      logger.response(response) if logging
-      response.return!
     end
 
     private def parse_verb(method : String | Symbol) : String
