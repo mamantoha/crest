@@ -56,12 +56,12 @@ describe Crest do
     body = ""
 
     Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
-      case
-      when resp.successful?
+      case resp
+      when .successful?
         body = resp.body_io.gets_to_end
-      when resp.client_error?
+      when .client_error?
         body = "Client error"
-      when resp.server_error?
+      when .server_error?
         body = "Server error"
       end
     end

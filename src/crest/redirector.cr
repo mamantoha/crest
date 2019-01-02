@@ -4,10 +4,10 @@ module Crest
     end
 
     def follow : Crest::Response
-      case
-      when @response.successful?
+      case @response
+      when .successful?
         @response
-      when @response.redirect?
+      when .redirect?
         check_max_redirects
         follow_redirection
       else
@@ -17,10 +17,10 @@ module Crest
     end
 
     def follow(&block : Crest::Response ->)
-      case
-      when @response.successful?
+      case @response
+      when .successful?
         @response
-      when @response.redirect?
+      when .redirect?
         check_max_redirects
         follow_redirection(&block)
       else
