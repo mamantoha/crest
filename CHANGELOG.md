@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.18.0] (2019-01-06)
+
 * **(breaking-change)** Streaming support.  `Crest`, `Crest::Request` and `Crest::Resource` verb methods(`get`, `post`, etc.) yields the `Crest::Response` as stream to the block ([#110](https://github.com/mamantoha/crest/pull/110))
 * **(breaking-change)** Needs to specify `form`, `headers` and `params` arguments for `Crest::Resource` methods ([#112](https://github.com/mamantoha/crest/pull/112))
 * Add `Crest::Response#filename` method ([#111](https://github.com/mamantoha/crest/pull/111))
@@ -109,7 +111,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.17.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.18.0...HEAD
+[0.18.0]: https://github.com/mamantoha/crest/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/mamantoha/crest/compare/v0.16.1...v0.17.0
 [0.16.1]: https://github.com/mamantoha/crest/compare/v0.16.0...v0.16.1
 [0.16.0]: https://github.com/mamantoha/crest/compare/v0.15.0...v0.16.0
