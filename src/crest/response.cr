@@ -54,13 +54,13 @@ module Crest
       @request.redirection_history
     end
 
+    # Extracts filename from Content-Disposition header
     def filename : String?
-      headers["Content-Disposition"]?
-        .try(&.as(String))
-        .try(&.split)
-        .try(&.[1])
-        .try(&.split("filename="))
-        .try(&.[1])
+      filename_regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/xi
+
+      if match_data = headers.fetch("Content-Disposition", "").as(String).match(filename_regex)
+        return match_data[1]
+      end
     end
 
     private def raise_exception!

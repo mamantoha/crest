@@ -19,4 +19,10 @@ describe Crest::Response do
 
     (response.filename).should eq(filename)
   end
+
+  it "response instance should have filename nil unless available" do
+    response = Crest.get("#{TEST_SERVER_URL}")
+
+    (response.filename).should be_nil
+  end
 end

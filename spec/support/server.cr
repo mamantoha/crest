@@ -221,11 +221,9 @@ end
 # Matches /download?filename=foo.bar
 get "/download" do |env|
   filename = env.params.query["filename"]? || "foo.bar"
-  env.response.headers.add("Content-Disposition", "attachment; filename=#{filename}")
-
   file = File.open("#{__DIR__}/fff.png")
 
-  send_file env, file.path, mime_type: "Application/octet-stream"
+  send_file env, file.path, mime_type: "Application/octet-stream", filename: filename
 end
 
 Kemal.run
