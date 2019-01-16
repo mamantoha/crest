@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.18.1] (2019-01-16)
+
+* Fix extracting filename from Content-Disposition header
+
 ## [0.18.0] (2019-01-06)
 
 * **(breaking-change)** Streaming support.  `Crest`, `Crest::Request` and `Crest::Resource` verb methods(`get`, `post`, etc.) yields the `Crest::Response` as stream to the block ([#110](https://github.com/mamantoha/crest/pull/110))
@@ -111,7 +115,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.18.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.18.1...HEAD
+[0.18.1]: https://github.com/mamantoha/crest/compare/v0.18.0...v0.18.1
 [0.18.0]: https://github.com/mamantoha/crest/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/mamantoha/crest/compare/v0.16.1...v0.17.0
 [0.16.1]: https://github.com/mamantoha/crest/compare/v0.16.0...v0.16.1
