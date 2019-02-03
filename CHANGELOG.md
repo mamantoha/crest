@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.18.2] (2019-02-03)
+
+* Tested with Crystal 0.27.1
+
 ## [0.18.1] (2019-01-16)
 
 * Fix extracting filename from Content-Disposition header
@@ -115,7 +119,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.18.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.18.2...HEAD
+[0.18.2]: https://github.com/mamantoha/crest/compare/v0.18.1...v0.18.2
 [0.18.1]: https://github.com/mamantoha/crest/compare/v0.18.0...v0.18.1
 [0.18.0]: https://github.com/mamantoha/crest/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/mamantoha/crest/compare/v0.16.1...v0.17.0

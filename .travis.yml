@@ -1,4 +1,5 @@
 language: crystal
+dist: xenial
 crystal:
   - latest
 
