@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.18.3] (2019-02-06)
+
+* Tested with Crystal 0.27.2
+
 ## [0.18.2] (2019-02-03)
 
 * Tested with Crystal 0.27.1
@@ -119,7 +123,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.18.2...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.18.3...HEAD
+[0.18.3]: https://github.com/mamantoha/crest/compare/v0.18.2...v0.18.3
 [0.18.2]: https://github.com/mamantoha/crest/compare/v0.18.1...v0.18.2
 [0.18.1]: https://github.com/mamantoha/crest/compare/v0.18.0...v0.18.1
 [0.18.0]: https://github.com/mamantoha/crest/compare/v0.17.0...v0.18.0
