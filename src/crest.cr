@@ -5,7 +5,7 @@ require "./http/proxy/client"
 
 # This module's static methods are the entry point for using the Crest client.
 #
-# Suported HTTP methods: `get`, `put`, `post`, `patch` `delete`, `options`
+# Suported HTTP methods: `get`, `put`, `post`, `patch` `delete`, `options`, `head`
 #
 # Examples:
 #
@@ -42,7 +42,7 @@ module Crest
                  Hash(Symbol, String) |
                  Hash(Symbol, Int32)
 
-  HTTP_METHODS = %w{get delete post put patch options}
+  HTTP_METHODS = %w{get delete post put patch options head}
 
   {% for method in Crest::HTTP_METHODS %}
     # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.

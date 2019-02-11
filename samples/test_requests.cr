@@ -12,6 +12,10 @@ end
 
 payload = {:fizz => "buz"}
 
+resp = Crest.head("https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/images/create-download-dist-1.png", handle_errors: false)
+puts resp.status_code
+puts resp.headers["Last-Modified"]
+
 Crest.get(
   "http://httpbin.org/get",
   headers: {"Access-Token" => ["secret1", "secret2"]},

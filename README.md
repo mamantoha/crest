@@ -49,7 +49,7 @@ Crest.post(
 
 Mandatory parameters:
 
-* `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`,  `:delete`, `:options`)
+* `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`,  `:delete`, `:options`, `head`)
 * `:url` - URL (e.g.: `http://httpbin.org/ip`)
 
 Optional parameters:
