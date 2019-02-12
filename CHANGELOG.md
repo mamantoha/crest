@@ -2,19 +2,19 @@
 
 ## [...]
 
-## [0.18.3] (2019-02-06)
+## [0.18.3][] (2019-02-06)
 
 * Tested with Crystal 0.27.2
 
-## [0.18.2] (2019-02-03)
+## [0.18.2][] (2019-02-03)
 
 * Tested with Crystal 0.27.1
 
-## [0.18.1] (2019-01-16)
+## [0.18.1][] (2019-01-16)
 
 * Fix extracting filename from Content-Disposition header
 
-## [0.18.0] (2019-01-06)
+## [0.18.0][] (2019-01-06)
 
 * **(breaking-change)** Streaming support.  `Crest`, `Crest::Request` and `Crest::Resource` verb methods(`get`, `post`, etc.) yields the `Crest::Response` as stream to the block ([#110](https://github.com/mamantoha/crest/pull/110))
 * **(breaking-change)** Needs to specify `form`, `headers` and `params` arguments for `Crest::Resource` methods ([#112](https://github.com/mamantoha/crest/pull/112))
@@ -22,55 +22,55 @@
 * Add response helper methods (`successful?`, `redirection?`, etc) ([#107](https://github.com/mamantoha/crest/pull/107))
 * Extract redirection logic into `Crest::Redirector` class ([#109](https://github.com/mamantoha/crest/pull/109))
 
-## [0.17.0] (2018-11-17)
+## [0.17.0][] (2018-11-17)
 
 * **(breaking-change)** `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) yields the `Crest::Response` to the block
 * Refactor proxy client
 
-## [0.16.1] (2018-11-05)
+## [0.16.1][] (2018-11-05)
 
 * Update to Kemal 0.25.1
 
-## [0.16.0] (2018-11-03)
+## [0.16.0][] (2018-11-03)
 
 * Tested with Crystal 0.27.0
 
-## [0.15.0] (2018-10-12)
+## [0.15.0][] (2018-10-12)
 
 * SSL/TLS support ([#100](https://github.com/mamantoha/crest/pull/100))
 * Tested with Crystal 0.26.1
 
-## [0.14.0] (2018-08-14)
+## [0.14.0][] (2018-08-14)
 
 * Tested with Crystal 0.26.0
 
-## [0.13.0] (2018-08-13)
+## [0.13.0][] (2018-08-13)
 
 * Add `Crest::Request#to_curl` to convert request to cURL command ([#95](https://github.com/mamantoha/crest/pull/95))
 * Bug fixes and other improvements
 
-## [0.12.0] (2018-07-17)
+## [0.12.0][] (2018-07-17)
 
 * **(breaking-change)** Rename `Request#payload` to `Request#form`
 * Use `application/x-www-form-urlencoded` for forms by default. And `multipart/form-data` when a form includes any `<input type="file">` elements.
 * Fix serialize query to string representation as http url-encoded
 
-## [0.11.0] (2018-07-14)
+## [0.11.0][] (2018-07-14)
 
 * Add `Logger#filter` method to filter sensitive information from logs with a regex matcher
 * Allow to do request with `suburl` through `Request#http_verb(suburl)` method
 * Bug fixes and other improvements
 
-## [0.10.2] (2018-06-15)
+## [0.10.2][] (2018-06-15)
 
 * Tested with Crystal 0.25.0
 
-## [0.10.1] (2018-05-14)
+## [0.10.1][] (2018-05-14)
 
 * Fix `Crest::Utils.flatten_params` method ([#85](https://github.com/mamantoha/crest/pull/85))
 * Reduce the false positiveness in code as much as possible ([#83](https://github.com/mamantoha/crest/pull/83), thanks @veelenga)
 
-## [0.10.0] (2018-04-24)
+## [0.10.0][] (2018-04-24)
 
 * Add HTTP verb methods (`get`, `post`, etc) to `Crest::Request`
 * `Crest` and `Crest::Request` verb methods(`get`, `post`, etc.) can yields the `Crest::Request` to the block
@@ -80,46 +80,46 @@
 * `Crest::Request` and `Crest::Resource` initializer can accept `HTTP::Client` as `http_client`
 * Add method `options` to `HTTP::Resource`
 
-## [0.9.10] (2018-04-08)
+## [0.9.10][] (2018-04-08)
 
 * Add option `:handle_errors` to don't raise exceptions but return the `Response`
 * Add custom exceptions for each status code
 
-## [0.9.9] (2018-04-03)
+## [0.9.9][] (2018-04-03)
 
 * Add method `OPTIONS`
 * Fix `Crest::Response#headers` method to return response headers
 
-## [0.9.8] (2018-03-18)
+## [0.9.8][] (2018-03-18)
 
 * Tested with Crystal 0.24.2
 * Fix Basic Authentication
 
-## [0.9.7] (2018-03-05)
+## [0.9.7][] (2018-03-05)
 
 * Allow `Crest::Resource` to accept default `params` and `headers`
 * Allow `Crest::Resource` to accept more parameters(proxy authentication credentials, logging setup)
 * Refactor exceptions class
 * Setup GitHub Pages branch to host docs
 
-## [0.9.6] (2018-01-05)
+## [0.9.6][] (2018-01-05)
 
 * Proxy on redirects
 * Logger in redirects
 
-## [0.9.5] (2017-12-30)
+## [0.9.5][] (2017-12-30)
 
 * Bug fixes and performance improvements
 
-## [0.9.4] (2017-12-25)
+## [0.9.4][] (2017-12-25)
 
 * Tested with Crystal 0.24.1
 
-## [0.9.3] (2017-12-19)
+## [0.9.3][] (2017-12-19)
 
 * Add logging
 
-## 0.9.2 (2017-11-01)
+## 0.9.2[] (2017-11-01)
 
 * First release :tada:
 
