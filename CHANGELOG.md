@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Add method `head` to `HTTP::Resource` ([#116](https://github.com/mamantoha/crest/pull/116))
+
 ## [0.18.3][] (2019-02-06)
 
 * Tested with Crystal 0.27.2
