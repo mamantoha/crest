@@ -2,7 +2,10 @@
 
 ## [...]
 
+## [0.19.0][] (2019-04-18)
+
 * Add method `head` ([#116](https://github.com/mamantoha/crest/pull/116))
+* Tested with Crystal 0.28.0
 
 ## [0.18.3][] (2019-02-06)
 
@@ -125,7 +128,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.18.3...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.19.3...HEAD
+[0.19.0]: https://github.com/mamantoha/crest/compare/v0.18.3...v0.19.0
 [0.18.3]: https://github.com/mamantoha/crest/compare/v0.18.2...v0.18.3
 [0.18.2]: https://github.com/mamantoha/crest/compare/v0.18.1...v0.18.2
 [0.18.1]: https://github.com/mamantoha/crest/compare/v0.18.0...v0.18.1
