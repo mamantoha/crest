@@ -7,8 +7,26 @@ describe Crest::Response do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "do GET request when base url ends with /" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/")
+    response = resource.get("/post/1/comments")
+    (response.body).should eq("Post 1: comments")
+  end
+
+  it "do GET request when path does not start with /" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}")
+    response = resource.get("post/1/comments")
+    (response.body).should eq("Post 1: comments")
+  end
+
   it "do GET request with []" do
     site = Crest::Resource.new("#{TEST_SERVER_URL}")
+    response = site["/post/1/comments"].get
+    (response.body).should eq("Post 1: comments")
+  end
+
+  it "do GET request with [] when base url ends with /" do
+    site = Crest::Resource.new("#{TEST_SERVER_URL}/")
     response = site["/post/1/comments"].get
     (response.body).should eq("Post 1: comments")
   end
