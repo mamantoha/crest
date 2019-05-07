@@ -41,6 +41,12 @@ Crest.post(
   form: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
 )
 # curl -L --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
+
+Crest.post(
+  "http://httpbin.org/post",
+  form: {"file" => "avatar.png", "name" => "John"}
+)
+# curl -X POST http://httpbin.org/post -F 'file=@avatar.png' -F 'name=John' -H 'Content-Type: multipart/form-data'
 ```
 
 ### Request
