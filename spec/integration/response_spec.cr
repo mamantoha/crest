@@ -25,4 +25,10 @@ describe Crest::Response do
 
     (response.filename).should be_nil
   end
+
+  it "#to_curl" do
+    response = Crest.get("#{TEST_SERVER_URL}")
+
+    (response.to_curl).should eq("curl -X GET http://127.0.0.1:4567")
+  end
 end

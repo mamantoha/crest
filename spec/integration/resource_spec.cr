@@ -200,4 +200,11 @@ describe Crest::Response do
 
     (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
+
+  it "#to_curl" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}")
+    response = resource["/post/1/comments"].get
+
+    (response.to_curl).should eq("curl -X GET http://127.0.0.1:4567/post/1/comments")
+  end
 end

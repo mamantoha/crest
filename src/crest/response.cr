@@ -18,6 +18,7 @@ module Crest
 
     delegate body, to: http_client_res
     delegate body_io, to: http_client_res
+    delegate to_curl, to: request
 
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
     end
