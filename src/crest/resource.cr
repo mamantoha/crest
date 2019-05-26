@@ -170,10 +170,7 @@ module Crest
     end
 
     private def concat_urls(url : String, suburl : String) : String
-      url = url.gsub(/(.+?)(\/*?)$/, "\\1")
-      suburl = suburl.gsub(/^(\/*)(.+?)$/, "\\2")
-
-      "#{url}/#{suburl}"
+      File.join(url, suburl)
     end
   end
 end
