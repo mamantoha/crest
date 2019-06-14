@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.20.0][] (2019-06-14)
+
 * Tested with Crystal 0.29.0
 * Improve testing process ([#120](https://github.com/mamantoha/crest/pull/120))
 
@@ -136,7 +138,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.19.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.20.0...HEAD
+[0.20.0]: https://github.com/mamantoha/crest/compare/v0.19.1...v0.20.0
 [0.19.1]: https://github.com/mamantoha/crest/compare/v0.19.0...v0.19.1
 [0.19.0]: https://github.com/mamantoha/crest/compare/v0.18.3...v0.19.0
 [0.18.3]: https://github.com/mamantoha/crest/compare/v0.18.2...v0.18.3
