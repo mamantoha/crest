@@ -2,6 +2,9 @@
 
 ## [...]
 
+* Tested with Crystal 0.29.0
+* Improve testing process ([#120](https://github.com/mamantoha/crest/pull/120))
+
 ## [0.19.1][] (2019-05-09)
 
 * Delegate method `to_curl` to `Crest::Response` instance
