@@ -12,7 +12,7 @@ crystal: 0.29.0
 development_dependencies:
   kemal:
     github: kemalcr/kemal
-    branch: master
+    commit: c646aad482acd53920f9844e0fee30d544798bfb
   http_proxy:
     github: mamantoha/http_proxy
     version: ~> 0.3.5
