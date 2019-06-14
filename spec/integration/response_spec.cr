@@ -29,6 +29,6 @@ describe Crest::Response do
   it "#to_curl" do
     response = Crest.get("#{TEST_SERVER_URL}")
 
-    (response.to_curl).should eq("curl -X GET http://127.0.0.1:4567")
+    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}")
   end
 end
