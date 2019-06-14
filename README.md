@@ -11,6 +11,19 @@
 
 Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
+## Another Crystal HTTP library? Why should I care?
+
+Beloved features:
+
+* Redirects support.
+* HTTP(S) proxy support.
+* Elegant Key/Value headers, cookies, params, and payload.
+* Multipart file uploads.
+* Logging.
+
+Hopefully, someday I can remove this shard though. Ideally, Crystal's standard library would do all this already.
+
+
 ## Installation
 
 Add this to your application's `shard.yml`:
