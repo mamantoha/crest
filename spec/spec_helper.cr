@@ -2,8 +2,18 @@ require "spec"
 require "json"
 require "http_proxy"
 require "../src/crest"
+require "./support/server"
 
-TEST_SERVER_URL = "http://127.0.0.1:4567"
+TEST_SERVER_HOST = "0.0.0.0"
+TEST_SERVER_PORT = 4567
+TEST_SERVER_URL  = "http://#{TEST_SERVER_HOST}:#{TEST_SERVER_PORT}"
+
+spawn do
+  Kemal.run(port: TEST_SERVER_PORT)
+end
+
+# Wait server
+sleep 1.second
 
 def with_proxy_server(host = "127.0.0.1", port = 8080)
   wants_close = Channel(Nil).new

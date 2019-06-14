@@ -225,5 +225,3 @@ get "/download" do |env|
 
   send_file env, file.path, mime_type: "Application/octet-stream", filename: filename
 end
-
-Kemal.run

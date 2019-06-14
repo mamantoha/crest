@@ -1,11 +1,22 @@
-language: crystal
 dist: xenial
-crystal:
-  - latest
+sudo: required
+addons:
+  snaps:
+    - name: crystal
+      confinement: classic
+      channel: latest/edge
+
+before_install:
+  - sudo apt-get install gcc pkg-config git tzdata libpcre3-dev libevent-dev libyaml-dev libgmp-dev libssl-dev libxml2-dev
+
+before_script:
+  - crystal --version
+  - shards --version
+  - shards install
 
 script:
-  - make test
-  - crystal tool format src/ --check
+  - crystal spec
+  - crystal tool format --check
   - bin/ameba
   - crystal docs
 
