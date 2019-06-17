@@ -18,6 +18,9 @@ module Crest
 
     delegate body, to: http_client_res
     delegate body_io, to: http_client_res
+    delegate status, to: http_client_res
+    delegate status_code, to: http_client_res
+    delegate informational?, success?, redirection?, client_error?, server_error?, to: status
     delegate to_curl, to: request
 
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
@@ -35,10 +38,6 @@ module Crest
 
     def url : String
       @request.url
-    end
-
-    def status_code : Int32
-      @http_client_res.status_code.to_i
     end
 
     def headers
@@ -62,6 +61,14 @@ module Crest
       if match_data = headers.fetch("Content-Disposition", "").as(String).match(filename_regex)
         return match_data[1]
       end
+    end
+
+    def invalid?
+      status_code < 100 || status_code >= 600
+    end
+
+    def redirect?
+      [301, 302, 303, 307, 308].includes?(status_code)
     end
 
     private def raise_exception!
@@ -94,37 +101,5 @@ module Crest
     private def check_max_redirects
       raise_exception! if @request.max_redirects <= 0
     end
-
-    module Helpers
-      def invalid?
-        status_code < 100 || status_code >= 600
-      end
-
-      def informational?
-        (100..199).includes?(status_code)
-      end
-
-      def success?
-        (200..299).includes?(status_code)
-      end
-
-      def redirection?
-        (300..399).includes?(status_code)
-      end
-
-      def redirect?
-        [301, 302, 303, 307, 308].includes?(status_code)
-      end
-
-      def client_error?
-        (400..499).includes?(status_code)
-      end
-
-      def server_error?
-        (500..599).includes?(status_code)
-      end
-    end
-
-    include Helpers
   end
 end

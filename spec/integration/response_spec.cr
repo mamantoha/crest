@@ -13,6 +13,13 @@ describe Crest::Response do
     (response.server_error?).should be_false
   end
 
+  it "response instance should have status and status_code" do
+    response = Crest.get("#{TEST_SERVER_URL}")
+
+    (response.status).should be_a(HTTP::Status)
+    (response.status_code).should be_a(Int32)
+  end
+
   it "response instance should have filename if available" do
     filename = "filename.jpg"
     response = Crest.get("#{TEST_SERVER_URL}/download?filename=#{filename}")
