@@ -16,8 +16,9 @@ spawn do
   Kemal.run(port: TEST_SERVER_PORT)
 end
 
-# Wait server
-sleep 1.second
+until Kemal.config.running
+  sleep 1.millisecond
+end
 
 def with_proxy_server(host = "127.0.0.1", port = 8080)
   wants_close = Channel(Nil).new
