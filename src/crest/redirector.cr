@@ -5,7 +5,7 @@ module Crest
 
     def follow : Crest::Response
       case @response
-      when .successful?
+      when .success?
         @response
       when .redirect?
         check_max_redirects
@@ -18,7 +18,7 @@ module Crest
 
     def follow(&block : Crest::Response ->)
       case @response
-      when .successful?
+      when .success?
         @response
       when .redirect?
         check_max_redirects

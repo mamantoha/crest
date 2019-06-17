@@ -254,7 +254,7 @@ To not raise exceptions but return the `Crest::Response` you can set `:handle_er
 ```crystal
 response = Crest.get("http://httpbin.org/status/404", handle_errors: false) do |resp|
   case resp
-  when .successful?
+  when .success?
     puts resp.body_io.gets_to_end
   when .client_error?
     puts "Client error"

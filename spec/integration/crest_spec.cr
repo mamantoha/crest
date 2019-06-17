@@ -57,7 +57,7 @@ describe Crest do
 
     Crest.get("#{TEST_SERVER_URL}/404", handle_errors: false) do |resp|
       case resp
-      when .successful?
+      when .success?
         body = resp.body_io.gets_to_end
       when .client_error?
         body = "Client error"

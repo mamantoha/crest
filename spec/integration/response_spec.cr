@@ -6,7 +6,7 @@ describe Crest::Response do
     (response.body).should eq("Hello World!")
     (response.invalid?).should be_false
     (response.informational?).should be_false
-    (response.successful?).should be_true
+    (response.success?).should be_true
     (response.redirection?).should be_false
     (response.redirect?).should be_false
     (response.client_error?).should be_false

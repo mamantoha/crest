@@ -104,7 +104,7 @@ module Crest
         (100..199).includes?(status_code)
       end
 
-      def successful?
+      def success?
         (200..299).includes?(status_code)
       end
 
