@@ -5,8 +5,9 @@ require "../crest/redirector"
 module Crest
   # Response objects have several useful methods:
   #
-  # * `body`: The response body as a String
-  # * `body_io`: The response body as a IO
+  # * `body`: The response body as a `String`
+  # * `body_io`: The response body as a `IO`
+  # * `status`: The response status as a `HTTP::Status`
   # * `status_code`: The HTTP response code
   # * `headers`: A hash of HTTP response headers
   # * `cookies`: A hash of HTTP cookies set by the server

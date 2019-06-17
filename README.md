@@ -221,9 +221,11 @@ resource = Crest::Resource.new(
 
 The result of a `Crest::Request` and `Crest::Resource` is a `Crest::Response` object.
 
-Response objects have several useful methods.
+Response objects have several useful methods:
 
-* `Response#body`: The response body as a string
+* `Response#body`: The response body as a `String`
+* `Response#body_io`: The response body as a `IO`
+* `Response#status`: The response status as a `HTTP::Status`
 * `Response#status_code`: The HTTP response code
 * `Response#headers`: A hash of HTTP response headers
 * `Response#cookies`: A hash of HTTP cookies set by the server
