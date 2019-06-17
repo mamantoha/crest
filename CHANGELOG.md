@@ -2,6 +2,9 @@
 
 ## [...]
 
+* **(breaking-change)** Rename `Crest::Response#successful?` to `Crest::Response#succes?`
+* Add method `Crest::Response#status` as `HTTP::Status`
+
 ## [0.20.0][] (2019-06-14)
 
 * Tested with Crystal 0.29.0
