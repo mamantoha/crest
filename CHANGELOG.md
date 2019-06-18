@@ -2,6 +2,9 @@
 
 ## [...]
 
+* **(breaking-change)** Rename `Crest::Response#successful?` to `Crest::Response#succes?`
+* Add method `Crest::Response#status` as `HTTP::Status`
+
 ## [0.20.0][] (2019-06-14)
 
 * Tested with Crystal 0.29.0
@@ -31,7 +34,7 @@
 
 ## [0.18.0][] (2019-01-06)
 
-* **(breaking-change)** Streaming support.  `Crest`, `Crest::Request` and `Crest::Resource` verb methods(`get`, `post`, etc.) yields the `Crest::Response` as stream to the block ([#110](https://github.com/mamantoha/crest/pull/110))
+* **(breaking-change)** Streaming support. `Crest`, `Crest::Request` and `Crest::Resource` verb methods(`get`, `post`, etc.) yields the `Crest::Response` as stream to the block ([#110](https://github.com/mamantoha/crest/pull/110))
 * **(breaking-change)** Needs to specify `form`, `headers` and `params` arguments for `Crest::Resource` methods ([#112](https://github.com/mamantoha/crest/pull/112))
 * Add `Crest::Response#filename` method ([#111](https://github.com/mamantoha/crest/pull/111))
 * Add response helper methods (`successful?`, `redirection?`, etc) ([#107](https://github.com/mamantoha/crest/pull/107))

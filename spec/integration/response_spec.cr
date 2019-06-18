@@ -6,11 +6,18 @@ describe Crest::Response do
     (response.body).should eq("Hello World!")
     (response.invalid?).should be_false
     (response.informational?).should be_false
-    (response.successful?).should be_true
+    (response.success?).should be_true
     (response.redirection?).should be_false
     (response.redirect?).should be_false
     (response.client_error?).should be_false
     (response.server_error?).should be_false
+  end
+
+  it "response instance should have status and status_code" do
+    response = Crest.get("#{TEST_SERVER_URL}")
+
+    (response.status).should be_a(HTTP::Status)
+    (response.status_code).should be_a(Int32)
   end
 
   it "response instance should have filename if available" do
