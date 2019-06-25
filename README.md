@@ -477,7 +477,7 @@ You can access `HTTP::Client` via the `http_client` instance method.
 This is usually used to set additional options (e.g. read timeout, authorization header etc.)
 
 ```crystal
-client = HTTP::Client.new("http://httpbin.org")
+client = HTTP::Client.new("httpbin.org")
 client.read_timeout = 1.second
 
 begin
@@ -491,7 +491,7 @@ end
 ```
 
 ```crystal
-client = HTTP::Client.new("http://httpbin.org")
+client = HTTP::Client.new("httpbin.org")
 client.read_timeout = 1.second
 
 begin
