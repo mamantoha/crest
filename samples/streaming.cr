@@ -1,4 +1,4 @@
-require "../crest"
+require "../src/crest"
 require "json"
 
 response = Crest::Request.get("http://httpbin.org/stream/5") do |resp|
