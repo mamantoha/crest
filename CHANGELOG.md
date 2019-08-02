@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.21.0][] (2019-08-02)
+
 * **(breaking-change)** Require Crystal 0.30.0`
 * **(breaking-change)** Rename `Crest::Response#successful?` to `Crest::Response#success?`
 * Add method `Crest::Response#status` as `HTTP::Status`
@@ -142,7 +144,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.20.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.21.0...HEAD
+[0.21.0]: https://github.com/mamantoha/crest/compare/v0.20.0...v0.21.0
 [0.20.0]: https://github.com/mamantoha/crest/compare/v0.19.1...v0.20.0
 [0.19.1]: https://github.com/mamantoha/crest/compare/v0.19.0...v0.19.1
 [0.19.0]: https://github.com/mamantoha/crest/compare/v0.18.3...v0.19.0
