@@ -2,7 +2,8 @@
 
 ## [...]
 
-* **(breaking-change)** Rename `Crest::Response#successful?` to `Crest::Response#succes?`
+* **(breaking-change)** Require Crystal 0.30.0`
+* **(breaking-change)** Rename `Crest::Response#successful?` to `Crest::Response#success?`
 * Add method `Crest::Response#status` as `HTTP::Status`
 
 ## [0.20.0][] (2019-06-14)
