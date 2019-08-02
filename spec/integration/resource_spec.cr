@@ -198,7 +198,7 @@ describe Crest::Response do
     resource = Crest::Resource.new(TEST_SERVER_URL)
     response = resource.options
 
-    (response.headers["Allow"]).should eq("OPTIONS, GET")
+    (response.headers["allow"]).should eq("OPTIONS, GET")
   end
 
   it "#to_curl" do
