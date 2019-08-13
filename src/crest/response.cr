@@ -59,7 +59,7 @@ module Crest
     def filename : String?
       filename_regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/xi
 
-      if match_data = headers.fetch("content-disposition", "").as(String).match(filename_regex)
+      if match_data = headers.fetch("Content-Disposition", "").as(String).match(filename_regex)
         return match_data[1]
       end
     end

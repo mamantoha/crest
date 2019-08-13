@@ -122,12 +122,12 @@ describe Crest::Request do
   it "do OPTIONS request" do
     response = Crest::Request.execute(:options, "#{TEST_SERVER_URL}")
 
-    (response.headers["allow"]).should eq("OPTIONS, GET")
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
 
   it "call options method" do
     response = Crest::Request.options("#{TEST_SERVER_URL}")
 
-    (response.headers["allow"]).should eq("OPTIONS, GET")
+    (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
 end
