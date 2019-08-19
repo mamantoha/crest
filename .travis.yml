@@ -10,6 +10,10 @@ script:
   - bin/ameba
   - crystal docs
 
+matrix:
+  allow_failures:
+    - crystal: nightly
+
 deploy:
   provider: pages
   skip_cleanup: true
