@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Install Crystal
       run: |
@@ -18,3 +18,5 @@ jobs:
       run: shards install
     - name: Run tests
       run: crystal spec
+    - name: Check format
+      run: crystal tool format --check
