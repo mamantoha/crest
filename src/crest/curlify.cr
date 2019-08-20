@@ -16,7 +16,7 @@ module Crest
     end
 
     def to_curl
-      ["curl", method, url, basic_auth, form_data, headers].reject(&.empty?).join(" ")
+      ["curl", method, url, proxy, basic_auth, form_data, headers].reject(&.empty?).join(" ")
     end
 
     private def method
@@ -56,15 +56,26 @@ module Crest
     end
 
     private def basic_auth : String
-      if basic_auth?
-        "--user #{@request.user}:#{@request.password}"
-      else
-        ""
-      end
+      return "" unless basic_auth?
+
+      "--user #{@request.user}:#{@request.password}"
+    end
+
+    private def proxy : String
+      return "" unless @request.proxy
+
+      String::Builder.build do |io|
+        io << "--proxy #{@request.p_addr}:#{@request.p_port}"
+        io << " --proxy-user #{@request.p_user}:#{@request.p_pass}" if proxy_auth?
+      end.to_s
     end
 
     private def basic_auth? : Bool
       @request.user && @request.password ? true : false
+    end
+
+    private def proxy_auth? : Bool
+      @request.p_user && @request.p_pass ? true : false
     end
   end
 end
