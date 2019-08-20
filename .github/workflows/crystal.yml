@@ -1,0 +1,20 @@
+name: Crystal CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Install Crystal
+      run: |
+        sudo apt-get install gcc pkg-config git tzdata libpcre3-dev libevent-dev libyaml-dev libgmp-dev libssl-dev libxml2-dev
+        sudo snap install crystal --classic
+        sudo chown root:root /
+    - uses: actions/checkout@v1
+    - name: Install dependencies
+      run: shards install
+    - name: Run tests
+      run: crystal spec
