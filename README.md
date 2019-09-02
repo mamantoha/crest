@@ -9,9 +9,7 @@
 [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mamantoha.github.io/crest/)
 [![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
 
-Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
-
-## Another Crystal HTTP library? Why should I care?
+HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
 Beloved features:
 
