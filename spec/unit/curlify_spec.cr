@@ -26,6 +26,13 @@ describe Crest::Curlify do
     (request.to_curl).should eq(result)
   end
 
+  it "converts a request with digest auth as parameters" do
+    request = Crest::Request.new(:get, "http://httpbin.org/digest-auth/auth/user/passwd/MD5", auth: "digest", user: "user", password: "passwd")
+
+    result = "curl -X GET http://httpbin.org/digest-auth/auth/user/passwd/MD5 --digest --user user:passwd"
+    (request.to_curl).should eq(result)
+  end
+
   it "converts a request with basic auth in headers" do
     request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", headers: {"Authorization" => "Basic dXNlcjpwYXNzd2Q="})
 

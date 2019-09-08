@@ -37,7 +37,8 @@ module Crest
   # * `form` a hash containing form params (or a raw string)
   # * `params` a hash that represent query-string separated from the preceding part by a question mark (?)
   #    a sequence of attribute–value pairs separated by a delimiter (&).
-  # * `user` and `password` for basic auth
+  # * `auth` access authentication method `basic` or `digest` (default to `basic`)
+  # * `user` and `password` for authentication
   # * `tls` configuring TLS settings
   # * `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
   # * `max_redirects` maximum number of redirections (default to `10`)
@@ -55,6 +56,7 @@ module Crest
     @cookies : HTTP::Cookies
     @form_data : String?
     @max_redirects : Int32
+    @auth : String
     @user : String?
     @password : String?
     @proxy : HTTP::Proxy::Client?
@@ -67,7 +69,7 @@ module Crest
     @handle_errors : Bool
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
-      max_redirects, logging, logger, handle_errors,
+      max_redirects, logging, logger, handle_errors, auth,
       proxy, p_addr, p_port, p_user, p_pass
 
     property redirection_history, user, password
@@ -113,6 +115,7 @@ module Crest
 
       @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
+      @auth = options.fetch(:auth, "basic").as(String)
       @user = options.fetch(:user, nil).as(String | Nil)
       @password = options.fetch(:password, nil).as(String | Nil)
       @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
@@ -129,7 +132,7 @@ module Crest
 
       yield self
 
-      basic_auth!(@user, @password)
+      authenticate!
     end
 
     # When block is not given.
@@ -149,7 +152,7 @@ module Crest
       # ```
       def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
         request = Request.new(:{{method.id}}, url, **args)
-        request.basic_auth!(request.user, request.password)
+        request.authenticate!
 
         response = request.execute(&block)
       end
@@ -161,7 +164,7 @@ module Crest
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
         request = Request.new(:{{method.id}}, url, **args)
-        request.basic_auth!(request.user, request.password)
+        request.authenticate!
 
         request.execute
       end
@@ -274,12 +277,36 @@ module Crest
       @cookies.add_request_headers(@headers)
     end
 
-    # Make Basic authorization header
-    protected def basic_auth!(user, password)
-      return unless user && password
+    protected def authenticate!
+      return unless @user && @password
 
-      value = "Basic #{Base64.strict_encode("#{user}:#{password}")}"
-      @headers.add("Authorization", value)
+      case @auth
+      when "basic"
+        basic_auth!
+      when "digest"
+        digest_auth!
+      end
+    end
+
+    private def basic_auth!
+      auth = "Basic #{Base64.strict_encode("#{@user}:#{@password}")}"
+
+      @headers.add("Authorization", auth)
+    end
+
+    private def digest_auth!
+      uri = URI.parse(@url)
+      uri.user = @user
+      uri.password = @password
+
+      response = @http_client.exec(@method, uri.request_uri)
+
+      www_authenticate = response.headers["WWW-Authenticate"]
+
+      digest_auth = HTTP::Client::DigestAuth.new
+      auth = digest_auth.auth_header(uri, www_authenticate, @method)
+
+      @headers.add("Authorization", auth)
     end
 
     private def set_proxy!(p_addr, p_port, p_user, p_pass)

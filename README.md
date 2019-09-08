@@ -17,10 +17,10 @@ Beloved features:
 * HTTP(S) proxy support.
 * Elegant Key/Value headers, cookies, params, and payload.
 * Multipart file uploads.
+* Digest access authentication.
 * Logging.
 
 Hopefully, someday I can remove this shard though. Ideally, Crystal's standard library would do all this already.
-
 
 ## Installation
 
@@ -75,7 +75,8 @@ Optional parameters:
 * `:cookies` -  a hash containing the request cookies
 * `:form` -  a hash containing form params
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
-* `:user` and `:password` -  for Basic Authentication
+* `auth` - access authentication method `basic` or `digest` (default to `basic`)
+* `:user` and `:password` - for authentication
 * `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:max_redirects` -  maximum number of redirections (default to 10)
@@ -372,7 +373,7 @@ response.cookies
 # => {"k1" => "v1"}
 ```
 
-#### Basic authentication
+#### Basic access authentication
 
 For basic access authentication for an HTTP user agent you should to provide a `user` name and `password` when making a request.
 
@@ -383,6 +384,20 @@ Crest.get(
   password: "passwd"
 )
 # curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd
+```
+
+#### Digest access authentication
+
+For digest access authentication for an HTTP user agent you should to provide a `user` name and `password` when making a request.
+
+```crystal
+Crest.get(
+  "https://httpbin.org/digest-auth/auth/user/passwd/MD5",
+  auth: "digest",
+  user: "user",
+  password: "passwd"
+)
+# curl -L --digest --user user:passwd https://httpbin.org/digest-auth/auth/user/passwd/MD5
 ```
 
 #### SSL/TLS support
@@ -405,7 +420,7 @@ Crest.get(
 )
 ```
 
-To use HTTP Basic Auth with your proxy, use next syntax:
+To use authentication with your proxy, use next syntax:
 
 ```crystal
 Crest.get(

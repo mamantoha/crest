@@ -30,7 +30,7 @@ module Crest
     private def headers : String
       headers = [] of String
       @request.headers.each do |k, v|
-        next if k == "Authorization" && basic_auth? && @request.headers.includes_word?("Authorization", "Basic")
+        next if k == "Authorization" && basic_auth? && includes_authorization_header?
 
         value = v.is_a?(Array) ? v.first.split(";").first : v
         headers << "-H '#{k}: #{value}'"
@@ -58,16 +58,23 @@ module Crest
     private def basic_auth : String
       return "" unless basic_auth?
 
-      "--user #{@request.user}:#{@request.password}"
+      params = [] of String
+
+      params << "--digest" if @request.auth == "digest"
+      params << "--user #{@request.user}:#{@request.password}"
+
+      params.join(" ")
     end
 
     private def proxy : String
       return "" unless @request.proxy
 
-      String::Builder.build do |io|
-        io << "--proxy #{@request.p_addr}:#{@request.p_port}"
-        io << " --proxy-user #{@request.p_user}:#{@request.p_pass}" if proxy_auth?
-      end.to_s
+      params = [] of String
+
+      params << "--proxy #{@request.p_addr}:#{@request.p_port}"
+      params << "--proxy-user #{@request.p_user}:#{@request.p_pass}" if proxy_auth?
+
+      params.join(" ")
     end
 
     private def basic_auth? : Bool
@@ -76,6 +83,11 @@ module Crest
 
     private def proxy_auth? : Bool
       @request.p_user && @request.p_pass ? true : false
+    end
+
+    private def includes_authorization_header?
+      @request.headers.includes_word?("Authorization", "Basic") ||
+        @request.headers.includes_word?("Authorization", "Digest")
     end
   end
 end
