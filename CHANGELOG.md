@@ -2,6 +2,7 @@
 
 ## [...]
 
+* Digest access authentication support
 * Add proxy to `to_curl` method
 
 ## [0.21.1][] (2019-08-13)
