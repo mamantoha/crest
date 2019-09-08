@@ -2,7 +2,7 @@
 
 ## [...]
 
-* Digest access authentication support
+* Digest access authentication support ([#127](https://github.com/mamantoha/crest/pull/127))
 * Add proxy to `to_curl` method
 
 ## [0.21.1][] (2019-08-13)
