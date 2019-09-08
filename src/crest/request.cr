@@ -69,7 +69,7 @@ module Crest
     @handle_errors : Bool
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
-      max_redirects, logging, logger, handle_errors,
+      max_redirects, logging, logger, handle_errors, auth,
       proxy, p_addr, p_port, p_user, p_pass
 
     property redirection_history, user, password
