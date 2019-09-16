@@ -7,7 +7,7 @@ require "../logger"
 
 module Crest
   class CommonLogger < Logger
-    def request(request)
+    def request(request : Crest::Request) : String
       message = String.build do |io|
         io << "| " << colorful_method(request.method)
         io << " | " << request.url
@@ -15,9 +15,11 @@ module Crest
       end.to_s
 
       info(message)
+
+      message
     end
 
-    def response(response)
+    def response(response : Crest::Response) : String
       message = String.build do |io|
         io << "| " << colorful_status_code(response.status_code)
         io << " | " << response.url
@@ -25,6 +27,8 @@ module Crest
       end.to_s
 
       info(message)
+
+      message
     end
 
     private def colorful_method(method)

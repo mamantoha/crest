@@ -2,6 +2,7 @@
 
 ## [...]
 
+* **(breaking-change)** Require Crystal 0.31.0
 * Digest access authentication support ([#127](https://github.com/mamantoha/crest/pull/127))
 * Add proxy to `to_curl` method
 
