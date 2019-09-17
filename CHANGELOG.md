@@ -2,7 +2,9 @@
 
 ## [...]
 
-* **(breaking-change)** Require Crystal 0.31.0
+## [0.22.0][] (2019-09-17)
+
+* Support Crystal 0.31.0
 * Digest access authentication support ([#127](https://github.com/mamantoha/crest/pull/127))
 * Add proxy to `to_curl` method
 
@@ -152,7 +154,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.21.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.22.0...HEAD
+[0.22.0]: https://github.com/mamantoha/crest/compare/v0.21.1...v0.22.0
 [0.21.1]: https://github.com/mamantoha/crest/compare/v0.21.0...v0.21.1
 [0.21.0]: https://github.com/mamantoha/crest/compare/v0.20.0...v0.21.0
 [0.20.0]: https://github.com/mamantoha/crest/compare/v0.19.1...v0.20.0
