@@ -96,7 +96,7 @@ module Crest
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)
-      cookies.to_h.map { |e| [e[1].name.to_s, URI.escape(e[1].value)] }.to_h
+      cookies.to_h.map { |e| [e[1].name.to_s, URI.encode(e[1].value)] }.to_h
     end
 
     private def check_max_redirects
