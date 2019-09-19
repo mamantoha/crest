@@ -559,7 +559,7 @@ shards
 To run test:
 
 ```console
-make test
+crystal spec
 ```
 
 ### Workbook
