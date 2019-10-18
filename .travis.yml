@@ -10,9 +10,9 @@ script:
   - bin/ameba
   - crystal docs
 
-matrix:
+jobs:
   allow_failures:
-    - crystal: nightly
+  - crystal: nightly
 
 deploy:
   provider: pages
