@@ -72,6 +72,14 @@ module Crest
       [301, 302, 303, 307, 308].includes?(status_code)
     end
 
+    def to_s(io : IO) : Nil
+      io.write_utf8(body.to_slice)
+    end
+
+    def inspect
+      "<Crest::Response #{status_code.inspect} #{body_truncated(10).inspect}>"
+    end
+
     private def raise_exception!
       raise RequestFailed.subclass_by_status_code(status_code).new(self)
     end
@@ -101,6 +109,14 @@ module Crest
 
     private def check_max_redirects
       raise_exception! if @request.max_redirects <= 0
+    end
+
+    private def body_truncated(size)
+      if body.size > size
+        body[0..size] + "..."
+      else
+        body
+      end
     end
   end
 end

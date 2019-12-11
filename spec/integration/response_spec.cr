@@ -38,4 +38,20 @@ describe Crest::Response do
 
     (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}")
   end
+
+  describe "to_s" do
+    it "does to_s" do
+      response = Crest.get("#{TEST_SERVER_URL}")
+
+      response.to_s.should eq("Hello World!")
+    end
+  end
+
+  describe "inspect" do
+    it "does inspect" do
+      response = Crest.get("#{TEST_SERVER_URL}")
+
+      (response.inspect).should eq("<Crest::Response 200 \"Hello World...\">")
+    end
+  end
 end
