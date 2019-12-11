@@ -3,6 +3,7 @@
 ## [...]
 
 * Add methods `to_s` and `inspect` to `Crest::Response`
+* Support Crystal 0.32.0
 
 ## [0.22.0][] (2019-09-17)
 
