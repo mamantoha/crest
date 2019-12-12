@@ -130,4 +130,26 @@ describe Crest::Request do
 
     (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
+
+  describe "User-Agent" do
+    it "should have default user agent" do
+      url = "#{TEST_SERVER_URL}/headers"
+
+      request = Crest::Request.new(:get, url)
+
+      response = request.execute
+
+      (JSON.parse(response.body)["headers"]["User-Agent"]).should eq("Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})")
+    end
+
+    it "change user agent" do
+      url = "#{TEST_SERVER_URL}/headers"
+
+      request = Crest::Request.new(:get, url, headers: {"User-Agent" => "Crest"})
+
+      response = request.execute
+
+      (JSON.parse(response.body)["headers"]["User-Agent"]).should eq("Crest")
+    end
+  end
 end

@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Add a more descriptive crest user agent
+
 ## [0.23.0][] (2019-12-12)
 
 * Add methods `to_s` and `inspect` to `Crest::Response`

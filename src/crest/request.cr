@@ -223,6 +223,7 @@ module Crest
     private def new_http_request(method, path, headers, body) : HTTP::Request
       HTTP::Request.new(method, path, headers, body).tap do |request|
         request.headers["Host"] ||= host_header
+        request.headers["User-Agent"] ||= "Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})"
       end
     end
 
