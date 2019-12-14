@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.23.1][] (2019-12-14)
+
 * Add a more descriptive crest user agent
 
 ## [0.23.0][] (2019-12-12)
@@ -161,7 +163,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.23.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.23.1...HEAD
+[0.23.1]: https://github.com/mamantoha/crest/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/mamantoha/crest/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/mamantoha/crest/compare/v0.21.1...v0.22.0
 [0.21.1]: https://github.com/mamantoha/crest/compare/v0.21.0...v0.21.1
