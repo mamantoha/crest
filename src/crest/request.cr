@@ -252,7 +252,7 @@ module Crest
       @form_data = form.form_data
       content_type = form.content_type
 
-      @headers.add("Content-Type", content_type)
+      @headers["Content-Type"] = content_type
 
       @form_data
     end

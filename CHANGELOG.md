@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Fix an issue with wrong "Content-Type" header
+
 ## [0.23.1][] (2019-12-14)
 
 * Add a more descriptive crest user agent
@@ -35,7 +37,7 @@
 ## [0.19.1][] (2019-05-09)
 
 * Delegate method `to_curl` to `Crest::Response` instance
-* Fix and issue in `Resource` when base url ends with `/`
+* Fix an issue in `Resource` when base url ends with `/`
 
 ## [0.19.0][] (2019-04-18)
 

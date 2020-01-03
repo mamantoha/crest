@@ -141,6 +141,16 @@ describe Crest::Request do
     (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
 
+  it "should skip 'Content-Type' in headers for requests with form" do
+    response = Crest::Request.post(
+      "#{TEST_SERVER_URL}/post/1/comments",
+      headers: {"Content-Type" => "application/json"},
+      form: {:title => "Title"}
+    )
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
   describe "User-Agent" do
     it "should have default user agent" do
       url = "#{TEST_SERVER_URL}/headers"
