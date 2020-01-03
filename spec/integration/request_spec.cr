@@ -113,6 +113,16 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  it "call post method with json content type" do
+    response = Crest::Request.post(
+      "#{TEST_SERVER_URL}/post/1/json",
+      headers: {"Content-Type" => "application/json"},
+      form: {:title => "Title"}.to_json
+    )
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
