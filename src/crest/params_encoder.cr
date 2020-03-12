@@ -23,39 +23,39 @@ module Crest
         key = URI.decode(key)
         value = URI.decode(value)
 
-        decode_pair(key, value, params)
+        decode_pair(params, key, value)
       end
 
       params
     end
 
-    private def decode_pair(key, value, context)
+    private def decode_pair(context, key : String, value : String)
       subkeys = key.scan(SUBKEYS_REGEX)
 
       subkeys.each_with_index do |subkey, i|
-        last_subkey = i == subkeys.size - 1
-        subkey = subkey[0]
         is_array = false
+        is_last_subkey = (i == subkeys.size - 1)
+        subkey = subkey[0]
 
         if match = subkey.match(ARRAY_REGEX)
           is_array = true
           subkey = match.pre_match
         end
 
-        context = prepare_context(context, subkey, is_array, last_subkey)
-        add_to_context(context, value, subkey) if last_subkey
+        context = prepare_context(context, subkey, is_array, is_last_subkey)
+        add_to_context(context, value, subkey) if is_last_subkey
       end
     end
 
-    private def prepare_context(context, subkey : String, is_array, last_subkey : Bool)
-      if !last_subkey || is_array
-        context = new_context(subkey, is_array, context)
+    private def prepare_context(context, subkey : String, is_array : Bool, is_last_subkey : Bool)
+      if !is_last_subkey || is_array
+        context = new_context(context, subkey, is_array)
       end
 
       context
     end
 
-    private def new_context(subkey : String, is_array : Bool, context)
+    private def new_context(context, subkey : String, is_array : Bool)
       value_type = is_array ? Array(Type) : Hash(String, Type)
 
       if context.is_a?(Hash)
@@ -65,7 +65,7 @@ module Crest
 
     private def add_to_context(context, value : String, subkey : String)
       if context.is_a?(Hash)
-        context[subkey] = value.as(Type)
+        context[subkey] = value
       elsif context.is_a?(Array)
         context << value
       end
