@@ -318,7 +318,7 @@ module Crest
 
     # Extract the query parameters and append them to the url
     private def process_url_params(url_params) : String
-      query_string = Crest::Utils.encode_query_string(url_params)
+      query_string = Crest::ParamsEncoder.encode(url_params)
 
       if url.includes?("?")
         "&" + query_string

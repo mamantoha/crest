@@ -73,8 +73,8 @@ module Crest
 
     # Transform deeply nested param containers into a flat hash of `key => value`.
     #
-    # ```crystal
-    # Crest::Utils.flatten_params({:key1 => {:key2 => "123"}})
+    # ```
+    # Crest::ParamsEncoder.flatten_params({:key1 => {:key2 => "123"}})
     # # => [{"key1[key2]", "123"}]
     # ```
     def flatten_params(object : Hash, parent_key = nil)
@@ -96,8 +96,8 @@ module Crest
 
     # Transform deeply nested param containers into a flat hash of `key => value`.
     #
-    # ```crystal
-    # Crest::Utils.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
+    # ```
+    # Crest::ParamsEncoder.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
     # # => [{"key1[arr][]", "1"}, {"key1[arr][]", "2"}, {"key1[arr][]", "3"}]
     # ```
     def flatten_params(object : Array, parent_key = nil)

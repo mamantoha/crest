@@ -15,7 +15,7 @@ module Crest
     end
 
     def parsed_params
-      Crest::Utils.encode_query_string(@params)
+      Crest::ParamsEncoder.encode(@params)
     end
   end
 end

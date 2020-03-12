@@ -2,37 +2,39 @@ require "../spec_helper"
 
 describe Crest::ParamsEncoder do
   describe "#encode" do
-    it do
-      params = {"foo" => "1", "bar" => "2"}
-      query = "foo=1&bar=2"
-      Crest::ParamsEncoder.encode(params).should eq(query)
+    it "serialize hash" do
+      input = {:foo => "123", :bar => "456"}
+      output = "foo=123&bar=456"
+
+      Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it do
-      params = {"foo" => "bar", "baz" => ["quux", "quuz"]}
+    it "serialize hash as http url-encoded" do
+      input = {:email => "user@example.com", :title => "Hello world!"}
+      output = "email=user%40example.com&title=Hello+world%21"
 
-      # "foo=bar&baz[]=quux&baz[]=quuz"
-      query = "foo=bar&baz%5B%5D=quux&baz%5B%5D=quuz"
-
-      Crest::ParamsEncoder.encode(params).should eq(query)
+      Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it do
-      params = {"user" => {"login" => "admin"}}
+    it "serialize hash with nil" do
+      input = {:foo => nil, :bar => "456"}
+      output = "foo=&bar=456"
 
-      # "user[login]=admin"
-      query = "user%5Blogin%5D=admin"
-
-      Crest::ParamsEncoder.encode(params).should eq(query)
+      Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it do
-      params = {"key1" => {"arr" => ["1", "2", "3"]}, "key2" => "123"}
+    it "serialize hash with symbol" do
+      input = {:foo => :bar}
+      output = "foo=bar"
 
-      # "key1[arr][]=1&key1[arr][]=2&key1[arr][]=3&key2=123"
-      query = "key1%5Barr%5D%5B%5D=1&key1%5Barr%5D%5B%5D=2&key1%5Barr%5D%5B%5D=3&key2=123"
+      Crest::ParamsEncoder.encode(input).should eq(output)
+    end
 
-      Crest::ParamsEncoder.encode(params).should eq(query)
+    it "serialize hash with numeric values" do
+      input = {:foo => 123, :bar => 456}
+      output = "foo=123&bar=456"
+
+      Crest::ParamsEncoder.encode(input).should eq(output)
     end
   end
 
@@ -56,6 +58,53 @@ describe Crest::ParamsEncoder do
       params = {"user" => {"login" => "admin"}}
 
       Crest::ParamsEncoder.decode(query).should eq(params)
+    end
+  end
+
+  describe "#flatten_params" do
+    it "transform nested param" do
+      input = {:key1 => {:key2 => "123"}}
+      output = [{"key1[key2]", "123"}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "transform deeply nested param" do
+      input = {:key1 => {:key2 => {:key3 => "123"}}}
+      output = [{"key1[key2][key3]", "123"}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "transform deeply nested param with file" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      input = {:key1 => {:key2 => {:key3 => file}}}
+      output = [{"key1[key2][key3]", file}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "transform nested param with array" do
+      input = {:key1 => {:arr => ["1", "2", "3"]}, :key2 => "123"}
+      output = [{"key1[arr][]", "1"}, {"key1[arr][]", "2"}, {"key1[arr][]", "3"}, {"key2", "123"}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "parse nested params with files" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+
+      input = {:key1 => {:key2 => file}}
+      output = [{"key1[key2]", file}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "parse simple params with nil value" do
+      input = {:key1 => nil}
+      output = [{"key1", nil}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
     end
   end
 end
