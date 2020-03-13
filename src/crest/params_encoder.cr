@@ -7,7 +7,7 @@ module Crest
     SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
     ARRAY_REGEX   = /[\[\]]+\Z/
 
-    # Converts the given param into a URI querystring. Keys and values
+    # Converts the given params into a URI querystring. Keys and values
     # will converted to strings and appropriately escaped for the URI.
     #
     # ```
@@ -86,7 +86,7 @@ module Crest
       end
     end
 
-    # Transform deeply nested param containers into a flat hash of `key => value`.
+    # Transform deeply nested params containers into a flat hash of `key => value`.
     #
     # ```
     # Crest::ParamsEncoder.flatten_params({:key1 => {:key2 => "123"}})
@@ -109,7 +109,7 @@ module Crest
       end
     end
 
-    # Transform deeply nested param containers into a flat hash of `key => value`.
+    # Transform deeply nested params containers into a flat hash of `key => value`.
     #
     # ```
     # Crest::ParamsEncoder.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
