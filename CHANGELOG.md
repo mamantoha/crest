@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.24.0][] (2020-03-13)
+
 * Add `Crest#ParamsEncoder` module to encode/decode URI querystring
 * Replace `Crest::Utils#encode_query_string` `with Crest::ParamsEncoder#encode`
 * Allow `Boolean` in params
@@ -171,7 +173,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.23.2...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.24.0...HEAD
+[0.24.0]: https://github.com/mamantoha/crest/compare/v0.23.2...v0.24.0
 [0.23.2]: https://github.com/mamantoha/crest/compare/v0.23.1...v0.23.2
 [0.23.1]: https://github.com/mamantoha/crest/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/mamantoha/crest/compare/v0.22.0...v0.23.0
