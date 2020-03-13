@@ -5,9 +5,9 @@ authors:
   - Anton Maminov <anton.maminov@gmail.com>
 
 description: |
-  Simple HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
+  HTTP and REST client for Crystal
 
-crystal: 0.32.0
+crystal: 0.33.0
 
 dependencies:
   http-client-digest_auth:
