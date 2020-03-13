@@ -23,6 +23,13 @@ describe Crest::ParamsEncoder do
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
+    it "serialize hash with boolean" do
+      input = {:foo => true, :bar => "2"}
+      output = "foo=true&bar=2"
+
+      Crest::ParamsEncoder.encode(input).should eq(output)
+    end
+
     it "serialize hash with symbol" do
       input = {:foo => :bar}
       output = "foo=bar"

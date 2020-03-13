@@ -7,6 +7,13 @@ module Crest
     SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
     ARRAY_REGEX   = /[\[\]]+\Z/
 
+    # Converts the given param into a URI querystring. Keys and values
+    # will converted to strings and appropriately escaped for the URI.
+    #
+    # ```
+    # Crest::Params.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+    # # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+    # ```
     def encode(params : Hash) : String
       HTTP::Params.build do |form|
         flatten_params(params).each do |name, value|
@@ -15,6 +22,12 @@ module Crest
       end
     end
 
+    # Converts the given URI querystring into a hash.
+    #
+    # ```
+    # Crest::Params.decode("a=one&a=two&a=three&b=true&c=C&d=1")
+    # # => {"a" => "three", "b" => "true", "c" => "C", "d" => "1"}
+    # ```
     def decode(query : String) : Hash
       params = {} of String => Type
 
