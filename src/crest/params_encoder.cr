@@ -25,8 +25,8 @@ module Crest
     # Converts the given URI querystring into a hash.
     #
     # ```
-    # Crest::Params.decode("a=one&a=two&a=three&b=true&c=C&d=1")
-    # # => {"a" => "three", "b" => "true", "c" => "C", "d" => "1"}
+    # Crest::Params.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
+    # # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
     # ```
     def decode(query : String) : Hash
       params = {} of String => Type

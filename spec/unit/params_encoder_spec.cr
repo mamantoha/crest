@@ -61,13 +61,20 @@ describe Crest::ParamsEncoder do
     end
 
     it "decodes array " do
-      query = "foo=bar&baz%5B%5D=quux&baz%5B%5D=quuz"
-      params = {"foo" => "bar", "baz" => ["quux", "quuz"]}
+      query = "a[]=one&a[]=two&a[]=three"
+      params = {"a" => ["one", "two", "three"]}
 
       Crest::ParamsEncoder.decode(query).should eq(params)
     end
 
     it "decodes hashes" do
+      query = "user[login]=admin"
+      params = {"user" => {"login" => "admin"}}
+
+      Crest::ParamsEncoder.decode(query).should eq(params)
+    end
+
+    it "decodes escaped string" do
       query = "user%5Blogin%5D=admin"
       params = {"user" => {"login" => "admin"}}
 
