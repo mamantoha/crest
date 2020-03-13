@@ -2,6 +2,10 @@
 
 ## [...]
 
+* Add `Crest#ParamsEncoder` module to encode/decode URI querystring
+* Replace `Crest::Utils#encode_query_string` `with Crest::ParamsEncoder#encode`
+* Allow `Boolean` in params
+
 ## [0.23.2][] (2020-01-03)
 
 * Fix an issue with wrong "Content-Type" header

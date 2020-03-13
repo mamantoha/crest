@@ -28,7 +28,7 @@ module Crest
     end
 
     def parsed_params
-      Crest::Utils.flatten_params(@params)
+      Crest::ParamsEncoder.flatten_params(@params)
     end
 
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : TextValue)

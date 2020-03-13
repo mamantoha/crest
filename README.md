@@ -311,6 +311,28 @@ end
 
 This section covers some of `crest` more advanced features.
 
+#### Parameters serializer
+
+Under the hood `crest` uses `Crest::ParamsEncoder` module to encode param.
+
+The encoder affect both how `crest` processes query strings and how it serializes POST bodies.
+
+`Crest::ParamsEncoder` provides 2 methods:
+
+* `#encode` - converts the given param into a URI querystring
+
+    ```crystal
+    Crest::Params.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+    # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+   ```
+
+* `#decode` - converts the given URI querystring into a hash
+
+    ```crystal
+    Crest::Params.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
+    # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
+    ```
+
 #### Multipart
 
 Yeah, that's right! This does multipart sends for you!

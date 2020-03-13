@@ -33,7 +33,7 @@ require "./http/proxy/client"
 module Crest
   VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 
-  alias TextValue = String | Symbol | Int32 | Nil
+  alias TextValue = String | Symbol | Int32 | Bool | Nil
 
   alias Params = Hash(Symbol | String, Int32 | String) |
                  Hash(String, String | Int32) |
