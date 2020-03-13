@@ -17,8 +17,8 @@ describe Crest::ParamsEncoder do
     end
 
     it "serialize hash with nil" do
-      input = {:foo => nil, :bar => "456"}
-      output = "foo=&bar=456"
+      input = {:foo => nil, :bar => "2"}
+      output = "foo=&bar=2"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
@@ -31,29 +31,36 @@ describe Crest::ParamsEncoder do
     end
 
     it "serialize hash with numeric values" do
-      input = {:foo => 123, :bar => 456}
-      output = "foo=123&bar=456"
+      input = {:foo => 1, :bar => 2}
+      output = "foo=1&bar=2"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
   end
 
   describe "#decode" do
-    it do
+    it "decodes simple params" do
       query = "foo=1&bar=2"
       params = {"foo" => "1", "bar" => "2"}
 
       Crest::ParamsEncoder.decode(query).should eq(params)
     end
 
-    it do
+    it "decodes params with nil" do
+      query = "foo=&bar=2"
+      params = {"foo" => nil, "bar" => "2"}
+
+      Crest::ParamsEncoder.decode(query).should eq(params)
+    end
+
+    it "decodes array " do
       query = "foo=bar&baz%5B%5D=quux&baz%5B%5D=quuz"
       params = {"foo" => "bar", "baz" => ["quux", "quuz"]}
 
       Crest::ParamsEncoder.decode(query).should eq(params)
     end
 
-    it do
+    it "decodes hashes" do
       query = "user%5Blogin%5D=admin"
       params = {"user" => {"login" => "admin"}}
 

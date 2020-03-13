@@ -2,7 +2,7 @@ module Crest
   module ParamsEncoder
     extend self
 
-    alias Type = String | Array(Type) | Hash(String, Type)
+    alias Type = Nil | String | Array(Type) | Hash(String, Type)
 
     SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
     ARRAY_REGEX   = /[\[\]]+\Z/
@@ -64,6 +64,8 @@ module Crest
     end
 
     private def add_to_context(context, value : String, subkey : String)
+      value = value.empty? ? nil : value
+
       if context.is_a?(Hash)
         context[subkey] = value
       elsif context.is_a?(Array)
