@@ -2,44 +2,51 @@ require "../spec_helper"
 
 describe Crest::ParamsEncoder do
   describe "#encode" do
-    it "serialize hash" do
+    it "encodes hash" do
       input = {:foo => "123", :bar => "456"}
       output = "foo=123&bar=456"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it "serialize hash as http url-encoded" do
+    it "encodes hash as http url-encoded" do
       input = {:email => "user@example.com", :title => "Hello world!"}
       output = "email=user%40example.com&title=Hello+world%21"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it "serialize hash with nil" do
+    it "encodes hash with nil" do
       input = {:foo => nil, :bar => "2"}
       output = "foo=&bar=2"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it "serialize hash with boolean" do
+    it "encodes hash with boolean" do
       input = {:foo => true, :bar => "2"}
       output = "foo=true&bar=2"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it "serialize hash with symbol" do
+    it "encodes hash with symbol" do
       input = {:foo => :bar}
       output = "foo=bar"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
 
-    it "serialize hash with numeric values" do
+    it "encodes hash with numeric values" do
       input = {:foo => 1, :bar => 2}
       output = "foo=1&bar=2"
+
+      Crest::ParamsEncoder.encode(input).should eq(output)
+    end
+
+    it "encodes complex objects" do
+      input = {"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1}
+      output = "a%5B%5D=one&a%5B%5D=two&a%5B%5D=three&b=true&c=C&d=1"
 
       Crest::ParamsEncoder.encode(input).should eq(output)
     end
