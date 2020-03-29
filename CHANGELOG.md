@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [0.24.1][] (2020-03-29)
+
 * Fix handle_errors is ignored for redirect errors ([#132](https://github.com/mamantoha/crest/issues/132))
 
 ## [0.24.0][] (2020-03-13)
@@ -175,7 +177,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.24.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.24.1...HEAD
+[0.24.1]: https://github.com/mamantoha/crest/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/mamantoha/crest/compare/v0.23.2...v0.24.0
 [0.23.2]: https://github.com/mamantoha/crest/compare/v0.23.1...v0.23.2
 [0.23.1]: https://github.com/mamantoha/crest/compare/v0.23.0...v0.23.1
