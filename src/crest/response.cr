@@ -107,10 +107,6 @@ module Crest
       cookies.to_h.map { |e| [e[1].name.to_s, URI.encode(e[1].value)] }.to_h
     end
 
-    private def check_max_redirects
-      raise_exception! if @request.max_redirects <= 0
-    end
-
     private def body_truncated(size)
       if body.size > size
         body[0..size] + "..."
