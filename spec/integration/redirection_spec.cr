@@ -46,14 +46,32 @@ describe Crest do
 
     it "should not follow redirection when max_redirects is 0" do
       expect_raises Crest::RequestFailed, "HTTP status code 302" do
-        Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect/1", max_redirects: 0)
+        Crest.get("#{TEST_SERVER_URL}/redirect/1", max_redirects: 0)
       end
     end
 
     it "should not follow redirection when max_redirects is 0 and raise Crest::Found" do
       expect_raises Crest::Found, "HTTP status code 302" do
-        Crest::Request.execute(method: :get, url: "#{TEST_SERVER_URL}/redirect/1", max_redirects: 0)
+        Crest.get("#{TEST_SERVER_URL}/redirect/1", max_redirects: 0)
       end
+    end
+
+    it "should not raise exception when handle_errors is false" do
+      response = Crest.get("#{TEST_SERVER_URL}/redirect/1", max_redirects: 0, handle_errors: false)
+      (response.status_code).should eq(302)
+      (response.body).should eq("Redirecting to /")
+    end
+
+    it "should not raise exception in the block when handle_errors is false" do
+      body = status_code = nil
+
+      Crest.get("#{TEST_SERVER_URL}/redirect/1", max_redirects: 0, handle_errors: false) do |response|
+        status_code = response.status_code
+        body = response.body_io.gets_to_end
+      end
+
+      body.should eq("Redirecting to /")
+      status_code.should eq(302)
     end
   end
 end
