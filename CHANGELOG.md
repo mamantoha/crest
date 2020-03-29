@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Fix handle_errors is ignored for redirect errors ([#132](https://github.com/mamantoha/crest/issues/132))
+
 ## [0.24.0][] (2020-03-13)
 
 * Add `Crest#ParamsEncoder` module to encode/decode URI querystring
