@@ -90,7 +90,7 @@ describe Crest::Request do
 
     request.http_client.read_timeout = 1.second
 
-    expect_raises IO::Timeout do
+    expect_raises IO::TimeoutError do
       request.execute
     end
   end
