@@ -18,8 +18,8 @@ module Crest
       @filters = [] of Array(String | Regex)
     end
 
-    abstract def request(request : Crest::Request) : String
-    abstract def response(response : Crest::Response) : String
+    abstract def request(request : Crest::Request) : Nil
+    abstract def response(response : Crest::Response) : Nil
 
     def default_formatter : Log::Formatter
       Log::Formatter.new do |entry, io|
