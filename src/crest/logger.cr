@@ -1,8 +1,4 @@
-# Copyright (c) 2017 icyleaf
-# Licensed under The MIT License (MIT)
-# http://opensource.org/licenses/MIT
-
-require "logger"
+require "log"
 
 module Crest
   abstract class Logger
@@ -13,26 +9,28 @@ module Crest
     forward_missing_to @logger
 
     def initialize(@io : IO = STDOUT)
-      @logger = ::Logger.new(@io)
-      @logger.level = ::Logger::DEBUG
-      @logger.progname = "crest"
-      @logger.formatter = default_formatter
+      backend = Log::IOBackend.new
+      backend.io = @io
+
+      @logger = ::Log.new("crest", backend, Log::Severity::Info)
+      @logger.backend.as(Log::IOBackend).formatter = default_formatter
+
       @filters = [] of Array(String | Regex)
     end
 
     abstract def request(request : Crest::Request) : String
     abstract def response(response : Crest::Response) : String
 
-    def default_formatter
-      ::Logger::Formatter.new do |_, datetime, progname, message, io|
-        io << progname
-        io << " | " << datetime.to_s("%F %T")
-        io << " " << message
+    def default_formatter : Log::Formatter
+      Log::Formatter.new do |entry, io|
+        io << entry.source
+        io << " | " << entry.timestamp.to_s("%F %T")
+        io << " " << entry.message
       end
     end
 
     def info(message : String)
-      @logger.info(apply_filters(message))
+      @logger.info { apply_filters(message) }
     end
 
     def filter(patern : String | Regex, replacement : String)

@@ -281,10 +281,9 @@ module Crest
     protected def authenticate!
       return unless @user && @password
 
-      case @auth
-      when "basic"
+      if @auth == "basic"
         basic_auth!
-      when "digest"
+      else
         digest_auth!
       end
     end
