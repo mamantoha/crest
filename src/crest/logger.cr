@@ -12,7 +12,7 @@ module Crest
       backend = Log::IOBackend.new
       backend.io = @io
 
-      @logger = ::Log.new("crest", backend, Log::Severity::Info)
+      @logger = Log.new("crest", backend, Log::Severity::Info)
       @logger.backend.as(Log::IOBackend).formatter = default_formatter
 
       @filters = [] of Array(String | Regex)
