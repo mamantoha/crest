@@ -2,6 +2,10 @@
 
 ## [...]
 
+* Crystal 0.34.0 required
+* Rewrite `Crest::Logger` class
+* Fix redirects when "Location" header is downcased
+
 ## [0.24.1][] (2020-03-29)
 
 * Fix handle_errors is ignored for redirect errors ([#132](https://github.com/mamantoha/crest/issues/132))
