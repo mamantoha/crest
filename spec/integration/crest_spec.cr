@@ -63,6 +63,8 @@ describe Crest do
         body = "Client error"
       when .server_error?
         body = "Server error"
+      else
+        raise "Unknown response with code #{resp.status_code}"
       end
     end
 

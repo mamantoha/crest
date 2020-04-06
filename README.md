@@ -520,7 +520,7 @@ begin
     "http://httpbin.org/delay/10",
     http_client: client
   )
-rescue IO::Timeout
+rescue IO::TimeoutError
   puts "Timeout!"
 end
 ```
@@ -532,7 +532,7 @@ client.read_timeout = 1.second
 begin
   resource = Crest::Resource.new("http://httpbin.org", http_client: client)
   resource.get("/delay/10")
-rescue IO::Timeout
+rescue IO::TimeoutError
   puts "Timeout!"
 end
 ```

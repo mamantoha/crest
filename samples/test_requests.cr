@@ -1,12 +1,12 @@
 require "../src/crest"
 
 class MyLogger < Crest::Logger
-  def request(request)
-    @logger.info ">> | %s | %s" % [request.method, request.url]
+  def request(request) : Nil
+    @logger.info { ">> | %s | %s" % [request.method, request.url] }
   end
 
-  def response(response)
-    @logger.info "<< | %s | %s" % [response.status_code, response.url]
+  def response(response) : Nil
+    @logger.info { "<< | %s | %s" % [response.status_code, response.url] }
   end
 end
 

@@ -54,7 +54,7 @@ module Crest
     end
 
     private def extract_url_from_headers
-      location_url = @response.headers["Location"].to_s
+      location_url = @response.http_client_res.headers["location"]
       location_uri = URI.parse(location_url)
 
       return location_url if location_uri.absolute?

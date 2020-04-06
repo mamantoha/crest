@@ -1,4 +1,4 @@
-require "../crest"
+require "../src/crest"
 
 tls = OpenSSL::SSL::Context::Client.insecure
 
