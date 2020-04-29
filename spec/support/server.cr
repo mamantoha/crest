@@ -1,3 +1,6 @@
+require "flate"
+require "gzip"
+require "zlib"
 require "kemal"
 require "./kemal_basic_auth"
 require "./ext/kemal/ext/context"
@@ -124,7 +127,6 @@ get "/stream/:count" do |env|
 
   count.times do
     env.response.puts("Hello World!")
-    env.response.flush
   end
 
   env
