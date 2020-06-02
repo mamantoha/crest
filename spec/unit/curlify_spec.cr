@@ -33,6 +33,13 @@ describe Crest::Curlify do
     (request.to_curl).should eq(result)
   end
 
+  it "converts a request to invalid domain with digest auth" do
+    request = Crest::Request.new(:get, "https://domain.invalid", auth: "digest", user: "user", password: "passwd")
+
+    result = "curl -X GET https://domain.invalid --digest --user user:passwd"
+    (request.to_curl).should eq(result)
+  end
+
   it "converts a request with basic auth in headers" do
     request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", headers: {"Authorization" => "Basic dXNlcjpwYXNzd2Q="})
 

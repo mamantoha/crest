@@ -131,8 +131,6 @@ module Crest
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
 
       yield self
-
-      authenticate!
     end
 
     # When block is not given.
@@ -152,7 +150,6 @@ module Crest
       # ```
       def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
         request = Request.new(:{{method.id}}, url, **args)
-        request.authenticate!
 
         response = request.execute(&block)
       end
@@ -164,7 +161,6 @@ module Crest
       # ```
       def self.{{method.id}}(url : String, **args) : Crest::Response
         request = Request.new(:{{method.id}}, url, **args)
-        request.authenticate!
 
         request.execute
       end
@@ -173,6 +169,7 @@ module Crest
     # Execute HTTP request
     def execute : Crest::Response
       @http_client.set_proxy(@proxy)
+      authenticate!
       @logger.request(self) if @logging
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
@@ -185,6 +182,7 @@ module Crest
     # Execute streaming HTTP request
     def execute(&block : Crest::Response ->) : Nil
       @http_client.set_proxy(@proxy)
+      authenticate!
       @logger.request(self) if @logging
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
