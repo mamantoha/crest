@@ -20,7 +20,7 @@ development_dependencies:
     branch: master
   http_proxy:
     github: mamantoha/http_proxy
-    version: ~> 0.3.5
+    version: ~> 0.5.0
   ameba:
     github: crystal-ameba/ameba
 
