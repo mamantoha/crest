@@ -2,7 +2,7 @@ require "http"
 require "uri"
 require "base64"
 require "http-client-digest_auth"
-require "./http/proxy/client"
+require "http_proxy"
 
 # This module's static methods are the entry point for using the Crest client.
 #
