@@ -2,6 +2,11 @@
 
 ## [...]
 
+## [0.26.0][] (2020-06-18)
+
+* Crystal 0.35.0 required
+* Use [http_proxy](https://github.com/mamantoha/http_proxy) shard instead of build-in implementation
+
 ## [0.25.1][] (2020-06-02)
 
 * Bug fixes and other improvements
@@ -187,7 +192,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.25.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/mamantoha/crest/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/mamantoha/crest/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/mamantoha/crest/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/mamantoha/crest/compare/v0.24.0...v0.24.1

@@ -1,13 +1,11 @@
 name: crest
-version: 0.25.1
+version: 0.26.0
 
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
 
 description: |
   HTTP and REST client for Crystal
-
-crystal: 0.34.0
 
 dependencies:
   http-client-digest_auth:
