@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.26.1][] (2020-07-07)
+
+* Fixed compatibility with Crystal nightly
+
 ## [0.26.0][] (2020-06-18)
 
 * Crystal 0.35.0 required
@@ -192,7 +196,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.1...HEAD
+[0.26.1]: https://github.com/mamantoha/crest/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/mamantoha/crest/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/mamantoha/crest/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/mamantoha/crest/compare/v0.24.1...v0.25.0
