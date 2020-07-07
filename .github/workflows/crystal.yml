@@ -17,6 +17,16 @@ jobs:
         run: shards install --ignore-crystal-version
       - name: Check format
         run: crystal tool format --check
+  check_ameba:
+    runs-on: ubuntu-latest
+    container:
+      image: crystallang/crystal
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: shards install --ignore-crystal-version
+      - name: Check ameba
+        run: ./bin/ameba
   test_latest:
     runs-on: ubuntu-latest
     container:
