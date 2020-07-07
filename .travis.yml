@@ -4,9 +4,6 @@ crystal:
   - latest
   - nightly
 
-before_script:
-  - shards install --ignore-crystal-version
-
 script:
   - crystal spec
   - crystal tool format --check
