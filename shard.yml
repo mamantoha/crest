@@ -7,6 +7,8 @@ authors:
 description: |
   HTTP and REST client for Crystal
 
+crystal: ">= 0.35.1"
+
 dependencies:
   http-client-digest_auth:
     github: mamantoha/http-client-digest_auth
