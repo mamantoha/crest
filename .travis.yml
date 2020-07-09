@@ -1,3 +1,4 @@
+os: linux
 dist: xenial
 language: crystal
 crystal:
@@ -16,8 +17,9 @@ jobs:
 
 deploy:
   provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  strategy: git
+  cleanup: true
+  token: $GITHUB_TOKEN
   project_name: crest
   local_dir: docs
   on:
