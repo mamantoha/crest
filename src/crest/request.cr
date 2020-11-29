@@ -218,11 +218,26 @@ module Crest
       HTTP::Client.new(uri, tls: @tls)
     end
 
-    private def new_http_request(method, path, headers, body) : HTTP::Request
-      HTTP::Request.new(method, path, headers, body).tap do |request|
+    private def new_http_request(method, url, headers, body) : HTTP::Request
+      url = normalize_url(url)
+
+      HTTP::Request.new(method, url, headers, body).tap do |request|
         request.headers["Host"] ||= host_header
         request.headers["User-Agent"] ||= "Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})"
       end
+    end
+
+    # Normalizes a `url` using the Punycode algorithm as necessary.
+    # The result will be a ASCII-only string.
+    private def normalize_url(url : String) : String
+      uri = URI.parse(url)
+      hostname = uri.host.not_nil!
+
+      return url if hostname.ascii_only?
+
+      uri.host = URI::Punycode.to_ascii(hostname)
+
+      uri.to_s
     end
 
     private def host_header
