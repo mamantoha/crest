@@ -1,6 +1,6 @@
 # <img src="https://stars.medv.io/mamantoha/crest.svg" align="right"/>
 
-<p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal.png" alt="crest" height="150px"></p>
+<p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal_dark.png" alt="crest" height="150px"></p>
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/16e439ef2706472988306ef13da91a51)](https://app.codacy.com/app/mamantoha/crest?utm_source=github.com&utm_medium=referral&utm_content=mamantoha/crest&utm_campaign=Badge_Grade_Dashboard)
 ![Crystal CI](https://github.com/mamantoha/crest/workflows/Crystal%20CI/badge.svg)
