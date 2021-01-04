@@ -17,6 +17,8 @@ Beloved features:
 * HTTP(S) proxy support.
 * Elegant Key/Value headers, cookies, params, and payload.
 * Multipart file uploads.
+* Streaming requests.
+* International Domain Names.
 * Digest access authentication.
 * Logging.
 
