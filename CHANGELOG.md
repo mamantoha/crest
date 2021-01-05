@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Support for International Domain Names
+
 ## [0.26.1][] (2020-07-07)
 
 * Fixed compatibility with Crystal nightly
