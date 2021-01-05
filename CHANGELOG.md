@@ -4,7 +4,7 @@
 
 ## [0.26.2][] (2021-01-05)
 
-* Support for International Domain Names
+* Support for International Domain Names ([#143](https://github.com/mamantoha/crest/pull/143))
 
 ## [0.26.1][] (2020-07-07)
 
