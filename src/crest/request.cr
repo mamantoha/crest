@@ -6,7 +6,7 @@ module Crest
   #
   # Simple example:
   #
-  # ```crystal
+  # ```
   # request = Crest::Request.new(method: :post, url: "http://httpbin.org/post", form: {:age => 27}, params: {:name => "Kurt"})
   # request.execute
   #
@@ -17,7 +17,7 @@ module Crest
   #
   # Block style:
   #
-  # ```crystal
+  # ```
   # request = Crest::Request.new(:get, http://httpbin.org/get") do |request|
   #   request.headers.add("foo", "bar")
   #   request.user = "username"

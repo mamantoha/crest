@@ -10,7 +10,7 @@ require "http_proxy"
 #
 # Examples:
 #
-# ```crystal
+# ```
 # Crest.get(
 #   "http://httpbin.org/get",
 #   headers: {"Content-Type" => "image/jpg"},

@@ -6,14 +6,14 @@ module Crest
   #
   # Simple example:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new("https://httpbin.org/get")
   # response = resource.get
   # ```
   #
   # Block style:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new("http://httpbin.org") do |res|
   #   res.headers.merge!({"foo" => "bar"})
   # end
@@ -23,20 +23,20 @@ module Crest
   #
   # With HTTP basic authentication:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new("https://httpbin.org/get", user: "user", password: "password")
   # ```
   #
   # Use the `[]` syntax to allocate subresources:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new("https://httpbin.org")
   # resource["/get"].get
   # ```
   #
   # You can pass advanced parameters like default `params` or `headers`:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new(
   #   "https://httpbin.org",
   #   params: {"key" => "key"},
@@ -49,7 +49,7 @@ module Crest
   # ```
   # If you want to stream the data from the response you can pass a block:
   #
-  # ```crystal
+  # ```
   # resource = Crest::Resource.new("http://httpbin.org")
   # resource["/stream/5"].get do |response|
   #   while line = response.body_io.gets
