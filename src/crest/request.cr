@@ -312,11 +312,7 @@ module Crest
       uri.user = @user
       uri.password = @password
 
-      response = {% if compare_versions(Crystal::VERSION, "0.35.1") > 0 %}
-                   @http_client.exec(@method, uri.request_target)
-                 {% else %}
-                   @http_client.exec(@method, uri.full_path)
-                 {% end %}
+      response = digest_auth_response(uri)
 
       www_authenticate = response.headers["WWW-Authenticate"]
 
@@ -324,6 +320,14 @@ module Crest
       auth = digest_auth.auth_header(uri, www_authenticate, @method)
 
       @headers.add("Authorization", auth)
+    end
+
+    private def digest_auth_response(uri)
+      {% if compare_versions(Crystal::VERSION, "0.35.1") > 0 %}
+        @http_client.exec(@method, uri.request_target)
+      {% else %}
+        @http_client.exec(@method, uri.full_path)
+      {% end %}
     end
 
     private def set_proxy!(p_addr, p_port, p_user, p_pass)
