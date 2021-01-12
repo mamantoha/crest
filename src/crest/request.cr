@@ -312,7 +312,7 @@ module Crest
       uri.user = @user
       uri.password = @password
 
-      response = @http_client.exec(@method, uri.full_path)
+      response = @http_client.exec(@method, uri.request_target)
 
       www_authenticate = response.headers["WWW-Authenticate"]
 
