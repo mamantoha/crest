@@ -1,5 +1,5 @@
 name: crest
-version: 0.26.2
+version: 0.26.3
 
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
@@ -20,7 +20,7 @@ dependencies:
 development_dependencies:
   kemal:
     github: kemalcr/kemal
-    version: ~>0.27.0
+    version: ~> 0.27.0
   ameba:
     github: crystal-ameba/ameba
 

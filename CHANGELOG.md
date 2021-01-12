@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.26.3][] (2021-01-12)
+
+* Fix compatibility with Crystal nightly
+
 ## [0.26.2][] (2021-01-05)
 
 * Support for International Domain Names ([#143](https://github.com/mamantoha/crest/pull/143))
@@ -200,7 +204,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.2...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.3...HEAD
+[0.26.3]: https://github.com/mamantoha/crest/compare/v0.26.2...v0.26.3
 [0.26.2]: https://github.com/mamantoha/crest/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/mamantoha/crest/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/mamantoha/crest/compare/v0.25.1...v0.26.0
