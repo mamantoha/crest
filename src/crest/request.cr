@@ -312,7 +312,11 @@ module Crest
       uri.user = @user
       uri.password = @password
 
-      response = @http_client.exec(@method, uri.full_path)
+      response = {% if compare_versions(Crystal::VERSION, "0.35.1") > 0 %}
+                   @http_client.exec(@method, uri.request_target)
+                 {% else %}
+                   @http_client.exec(@method, uri.full_path)
+                 {% end %}
 
       www_authenticate = response.headers["WWW-Authenticate"]
 
