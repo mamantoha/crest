@@ -1,5 +1,5 @@
 name: crest
-version: 0.26.3
+version: 0.26.4
 
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
@@ -15,7 +15,7 @@ dependencies:
     version: ~> 0.5.0
   http_proxy:
     github: mamantoha/http_proxy
-    version: ~> 0.7.1
+    version: ~> 0.7.3
 
 development_dependencies:
   kemal:

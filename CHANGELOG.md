@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.26.4][] (2021-01-16)
+
+* Bump [http_proxy](https://github.com/mamantoha/http_proxy) shard
+
 ## [0.26.3][] (2021-01-12)
 
 * Fix compatibility with Crystal nightly
@@ -204,7 +208,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.3...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.4...HEAD
+[0.26.4]: https://github.com/mamantoha/crest/compare/v0.26.3...v0.26.4
 [0.26.3]: https://github.com/mamantoha/crest/compare/v0.26.2...v0.26.3
 [0.26.2]: https://github.com/mamantoha/crest/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/mamantoha/crest/compare/v0.26.0...v0.26.1
