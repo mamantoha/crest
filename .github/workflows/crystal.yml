@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Crystal
-      - uses: oprypin/install-crystal@v1
-      - uses: actions/checkout@v2
+        uses: oprypin/install-crystal@v1
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: shards install --ignore-crystal-version
       - name: Check format
@@ -23,7 +24,8 @@ jobs:
     steps:
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
-      - uses: actions/checkout@v2
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: shards install --ignore-crystal-version
       - name: Check ameba
@@ -41,7 +43,8 @@ jobs:
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - uses: actions/checkout@v2
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: shards install --ignore-crystal-version
       - name: Run tests
