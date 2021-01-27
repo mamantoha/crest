@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.26.6][] (2021-01-27)
+
+* Bump dependencies
+
 ## [0.26.5][] (2021-01-27)
 
 * Require Crystal >= 0.36.0
@@ -212,7 +216,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.5...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.6...HEAD
+[0.26.6]: https://github.com/mamantoha/crest/compare/v0.26.5...v0.26.6
 [0.26.5]: https://github.com/mamantoha/crest/compare/v0.26.4...v0.26.5
 [0.26.4]: https://github.com/mamantoha/crest/compare/v0.26.3...v0.26.4
 [0.26.3]: https://github.com/mamantoha/crest/compare/v0.26.2...v0.26.3
