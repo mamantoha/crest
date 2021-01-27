@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [0.26.5][] (2021-01-27)
+
+* Require Crystal >= 0.36.0
+
 ## [0.26.4][] (2021-01-16)
 
 * Bump [http_proxy](https://github.com/mamantoha/http_proxy) shard
@@ -208,7 +212,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.4...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.5...HEAD
+[0.26.5]: https://github.com/mamantoha/crest/compare/v0.26.4...v0.26.5
 [0.26.4]: https://github.com/mamantoha/crest/compare/v0.26.3...v0.26.4
 [0.26.3]: https://github.com/mamantoha/crest/compare/v0.26.2...v0.26.3
 [0.26.2]: https://github.com/mamantoha/crest/compare/v0.26.1...v0.26.2

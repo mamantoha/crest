@@ -1,5 +1,5 @@
 name: crest
-version: 0.26.4
+version: 0.26.5
 
 authors:
   - Anton Maminov <anton.maminov@gmail.com>
@@ -7,7 +7,7 @@ authors:
 description: |
   HTTP and REST client for Crystal
 
-crystal: ">= 0.35.1"
+crystal: ">= 0.36.0"
 
 dependencies:
   http-client-digest_auth:
@@ -23,6 +23,5 @@ development_dependencies:
     version: ~> 0.27.0
   ameba:
     github: crystal-ameba/ameba
-    branch: develop
 
 license: MIT
