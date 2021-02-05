@@ -40,17 +40,23 @@ describe Crest do
       end
 
       it "should be successful with valid credentials on redirect" do
-        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret_redirect", user: "username", password: "password")
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/redirect_to_secret", user: "username", password: "password")
         (response.status_code).should eq(200)
         (response.body).should eq("Secret World!")
         (response.history.size).should eq(1)
-        (response.history.first.url).should eq("#{TEST_SERVER_URL}/secret_redirect")
+        (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect_to_secret")
         (response.history.first.status_code).should eq(302)
       end
 
       it "should be unsuccessful with invalid credentials" do
         expect_raises Crest::RequestFailed, "HTTP status code 401" do
           Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "root", password: "qwerty")
+        end
+      end
+
+      it "should be unsuccessful with invalid credentials on redirect" do
+        expect_raises Crest::RequestFailed, "HTTP status code 401" do
+          Crest::Request.execute(:get, "#{TEST_SERVER_URL}/redirect_to_secret", user: "root", password: "qwerty")
         end
       end
     end
