@@ -2,6 +2,12 @@
 
 ## [...]
 
+* Close HTTP connection after `Request#execute` by default
+* Add `close_connection` (`true` by default) option for `Crest::Request` initializer
+* Add `close_connection` (`false` by default) option for `Crest::Resource` initializer
+* Add `close` method to `Crest::Request`
+* Add `close`, `closed?` methods to `Crest::Resource`
+
 ## [0.26.6][] (2021-01-27)
 
 * Bump dependencies
