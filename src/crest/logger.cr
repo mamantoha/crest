@@ -9,11 +9,10 @@ module Crest
     forward_missing_to @logger
 
     def initialize(@io : IO = STDOUT)
-      backend = Log::IOBackend.new
-      backend.io = @io
+      backend = ::Log::IOBackend.new(@io, dispatcher: ::Log::DispatchMode::Sync)
 
-      @logger = Log.new("crest", backend, Log::Severity::Info)
-      @logger.backend.as(Log::IOBackend).formatter = default_formatter
+      @logger = ::Log.new("crest", backend, ::Log::Severity::Info)
+      @logger.backend.as(::Log::IOBackend).formatter = default_formatter
 
       @filters = [] of Array(String | Regex)
     end
@@ -21,8 +20,8 @@ module Crest
     abstract def request(request : Crest::Request) : Nil
     abstract def response(response : Crest::Response) : Nil
 
-    def default_formatter : Log::Formatter
-      Log::Formatter.new do |entry, io|
+    def default_formatter : ::Log::Formatter
+      ::Log::Formatter.new do |entry, io|
         io << entry.source
         io << " | " << entry.timestamp.to_s("%F %T")
         io << " " << entry.message

@@ -8,6 +8,10 @@
 * Add `close` method to `Crest::Request`
 * Add `close`, `closed?` methods to `Crest::Resource`
 
+## [0.26.7][] (2021-02-08)
+
+* Temporary workaround for [memory leak](https://github.com/crystal-lang/crystal/issues/10373) in Crystal
+
 ## [0.26.6][] (2021-01-27)
 
 * Bump dependencies
@@ -222,7 +226,8 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.6...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.26.7...HEAD
+[0.26.7]: https://github.com/mamantoha/crest/compare/v0.26.6...v0.26.7
 [0.26.6]: https://github.com/mamantoha/crest/compare/v0.26.5...v0.26.6
 [0.26.5]: https://github.com/mamantoha/crest/compare/v0.26.4...v0.26.5
 [0.26.4]: https://github.com/mamantoha/crest/compare/v0.26.3...v0.26.4
