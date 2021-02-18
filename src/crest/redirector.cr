@@ -38,18 +38,10 @@ module Crest
     # Follow a redirection response by making a new HTTP request to the
     # redirection target.
     private def follow_redirection : Crest::Response
-      url = extract_url_from_headers
-
-      new_request = prepare_new_request(url)
-      new_request.redirection_history = @response.history + [@response]
       new_request.execute
     end
 
     private def follow_redirection(&block : Crest::Response ->)
-      url = extract_url_from_headers
-
-      new_request = prepare_new_request(url)
-      new_request.redirection_history = @response.history + [@response]
       new_request.execute(&block)
     end
 
@@ -65,6 +57,17 @@ module Crest
       "#{uri.scheme}://#{uri.host}#{port}#{location_url}"
     end
 
+    private def new_request
+      url = extract_url_from_headers
+
+      new_request = prepare_new_request(url)
+      new_request.redirection_history = @response.history + [@response]
+
+      @request.close
+
+      new_request
+    end
+
     private def prepare_new_request(url)
       Request.new(
         method: :get,
@@ -78,7 +81,8 @@ module Crest
         p_addr: @request.p_addr,
         p_port: @request.p_port,
         p_user: @request.p_user,
-        p_pass: @request.p_pass
+        p_pass: @request.p_pass,
+        close_connection: @request.close_connection
       )
     end
 

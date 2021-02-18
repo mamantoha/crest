@@ -6,7 +6,7 @@ require "./kemal_basic_auth"
 require "./ext/kemal/ext/context"
 
 class BasicAuthHandler < KemalBasicAuth::Handler
-  only ["/secret", "/secret_redirect"]
+  only ["/secret"]
 
   def call(env)
     return call_next(env) unless only_match?(env)
@@ -37,7 +37,7 @@ get "/secret" do
   "Secret World!"
 end
 
-get "/secret_redirect" do |env|
+get "/redirect_to_secret" do |env|
   env.redirect("/secret")
 end
 

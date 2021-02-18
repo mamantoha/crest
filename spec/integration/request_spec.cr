@@ -8,6 +8,20 @@ describe Crest::Request do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "should close connection after request by default" do
+    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/post/1/comments")
+    request.execute
+
+    (request.http_client.closed?).should be_truthy
+  end
+
+  it "should not close connection after request if close_connetion is false" do
+    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/post/1/comments", close_connection: false)
+    request.execute
+
+    (request.http_client.closed?).should be_falsey
+  end
+
   it "do GET request" do
     response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/post/1/comments")
 
