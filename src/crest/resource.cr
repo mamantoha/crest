@@ -59,7 +59,11 @@ module Crest
   # ```
   class Resource
     getter http_client, url, user, password, headers, params,
-      logging, logger, handle_errors, p_addr, p_port, p_user, p_pass
+      logging, logger, p_addr, p_port, p_user, p_pass,
+      handle_errors, close_connection
+
+    delegate close, to: http_client
+    delegate closed?, to: http_client
 
     def initialize(
       @url : String,
@@ -80,6 +84,7 @@ module Crest
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
+      @close_connection = options.fetch(:close_connection, false).as(Bool)
 
       yield self
     end
@@ -143,22 +148,23 @@ module Crest
 
     private def request_params(method : Symbol, form = {} of String => String)
       {
-        method:        method,
-        form:          form,
-        url:           @url,
-        params:        @params,
-        headers:       @headers,
-        tls:           @tls,
-        user:          @user,
-        password:      @password,
-        p_addr:        @p_addr,
-        p_port:        @p_port,
-        p_user:        @p_user,
-        p_pass:        @p_pass,
-        logging:       @logging,
-        logger:        @logger,
-        handle_errors: @handle_errors,
-        http_client:   @http_client,
+        method:           method,
+        form:             form,
+        url:              @url,
+        params:           @params,
+        headers:          @headers,
+        tls:              @tls,
+        user:             @user,
+        password:         @password,
+        p_addr:           @p_addr,
+        p_port:           @p_port,
+        p_user:           @p_user,
+        p_pass:           @p_pass,
+        logging:          @logging,
+        logger:           @logger,
+        handle_errors:    @handle_errors,
+        http_client:      @http_client,
+        close_connection: @close_connection,
       }
     end
 

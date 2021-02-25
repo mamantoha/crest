@@ -7,6 +7,12 @@ describe Crest::Response do
     (response.body).should eq("Post 1: comments")
   end
 
+  it "should not close connection after request" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    resource.get
+    (resource.closed?).should be_falsey
+  end
+
   it "do GET request when base url ends with /" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/")
     response = resource.get("/post/1/comments")

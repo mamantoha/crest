@@ -45,6 +45,7 @@ module Crest
   # * `logging` enable logging (default to `false`)
   # * `logger` set logger (default to `Crest::CommonLogger`)
   # * `handle_errors` error handling (default to `true`)
+  # * `close_connection` close the connection after request is completed (default to `true`)
   # * `http_client` instance of `HTTP::Client`
   class Request
     @method : String
@@ -67,14 +68,15 @@ module Crest
     @logger : Crest::Logger
     @logging : Bool
     @handle_errors : Bool
+    @close_connection : Bool
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
-      max_redirects, logging, logger, handle_errors, auth,
-      proxy, p_addr, p_port, p_user, p_pass
+      max_redirects, logging, logger, handle_errors, close_connection,
+      auth, proxy, p_addr, p_port, p_user, p_pass
 
     property redirection_history, user, password
 
-    delegate host, port, tls?, to: @http_client
+    delegate host, port, tls?, close, to: @http_client
 
     def self.execute(method, url, **args) : Crest::Response
       request = new(method, url, **args)
@@ -125,6 +127,7 @@ module Crest
       @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
+      @close_connection = options.fetch(:close_connection, true).as(Bool)
 
       @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
 
@@ -177,6 +180,8 @@ module Crest
       http_response = @http_client.exec(@http_request)
 
       process_result(http_response)
+    ensure
+      @http_client.close if @close_connection
     end
 
     # Execute streaming HTTP request
@@ -194,6 +199,8 @@ module Crest
           yield response
         end
       end
+    ensure
+      @http_client.close if @close_connection
     end
 
     private def process_result(http_client_res) : Crest::Response

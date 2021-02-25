@@ -85,6 +85,7 @@ Optional parameters:
 * `:logging` -  enable logging (default to `false`)
 * `:logger` -  set logger (default to `Crest::CommonLogger`)
 * `:handle_errors` - error handling (default to `true`)
+* `:close_connection` close the connection after request is completed (default to `true`)
 * `:http_client` - instance of `HTTP::Client`
 
 More detailed examples:

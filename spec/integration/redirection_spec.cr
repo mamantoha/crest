@@ -1,7 +1,7 @@
 require "../spec_helper"
 
-describe Crest do
-  describe "Redirects handling" do
+describe Crest::Redirector do
+  describe Crest do
     it "should redirect" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/1")
       (response.status_code).should eq(200)
@@ -72,6 +72,34 @@ describe Crest do
 
       body.should eq("Redirecting to /")
       status_code.should eq(302)
+    end
+  end
+
+  describe Crest::Request do
+    it "should redirect" do
+      request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/redirect/1")
+      response = request.execute
+
+      (response.status_code).should eq(200)
+      (response.url).should eq("#{TEST_SERVER_URL}/")
+      (response.body).should eq("Hello World!")
+      (response.history.size).should eq(1)
+      (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
+      (response.history.first.status_code).should eq(302)
+    end
+  end
+
+  describe Crest::Resource do
+    it "should redirect" do
+      resource = Crest::Resource.new("#{TEST_SERVER_URL}")
+      response = resource["/redirect/1"].get
+
+      (response.status_code).should eq(200)
+      (response.url).should eq("#{TEST_SERVER_URL}/")
+      (response.body).should eq("Hello World!")
+      (response.history.size).should eq(1)
+      (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
+      (response.history.first.status_code).should eq(302)
     end
   end
 end
