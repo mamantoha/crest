@@ -91,9 +91,7 @@ describe Crest::Response do
     uri = URI.parse(TEST_SERVER_URL)
 
     client = HTTP::Client.new(uri)
-    client.before_request do |request|
-      request.headers.add("foo", "bar")
-    end
+    client.before_request(&.headers.add("foo", "bar"))
 
     resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
     response = resource["/headers"].get
@@ -103,9 +101,7 @@ describe Crest::Response do
 
   it "access http_client in instance of Crest::Resource" do
     resource = Crest::Resource.new(TEST_SERVER_URL)
-    resource.http_client.before_request do |req|
-      req.headers.add("foo", "bar")
-    end
+    resource.http_client.before_request(&.headers.add("foo", "bar"))
 
     response = resource["/headers"].get
 

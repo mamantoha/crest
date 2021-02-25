@@ -253,7 +253,7 @@ module Crest
     end
 
     private def multipart?(form : Hash) : Bool
-      form.any? { |_, v| v.is_a?(File) }
+      form.values.any?(File)
     end
 
     private def generate_form_data!(form : Hash) : String?

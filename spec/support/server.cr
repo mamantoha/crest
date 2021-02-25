@@ -37,9 +37,7 @@ get "/secret" do
   "Secret World!"
 end
 
-get "/secret_redirect" do |env|
-  env.redirect("/secret")
-end
+get("/secret_redirect", &.redirect("/secret"))
 
 post "/upload" do |env|
   file = env.params.files["file"].tempfile
@@ -114,13 +112,9 @@ post "/post/:id/json" do |env|
   "Post with title `#{title}` created"
 end
 
-get "/404" do |env|
-  env.response.status_code = 404
-end
+get("/404", &.response.status_code=(404))
 
-get "/500" do |env|
-  env.response.status_code = 500
-end
+get("/500", &.response.status_code=(500))
 
 get "/stream/:count" do |env|
   count = env.params.url["count"].to_i
@@ -138,9 +132,7 @@ get "/redirect/1" do |env|
   env.redirect("/", body: "Redirecting to /")
 end
 
-get "/redirect/2" do |env|
-  env.redirect("/redirect/1")
-end
+get("/redirect/2", &.redirect("/redirect/1"))
 
 get "/redirect/circle1" do |env|
   env.redirect("/redirect/circle2")
@@ -150,9 +142,7 @@ get "/redirect/circle2" do |env|
   env.redirect("/redirect/circle1")
 end
 
-get "/redirect/not_found" do |env|
-  env.redirect("/404")
-end
+get("/redirect/not_found", &.redirect("/404"))
 
 get "/redirect_stream/:count" do |env|
   count = env.params.url["count"].to_i

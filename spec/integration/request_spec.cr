@@ -43,9 +43,7 @@ describe Crest::Request do
   it "should accept block on initialize as request" do
     url = "#{TEST_SERVER_URL}/headers"
 
-    request = Crest::Request.new(:get, url) do |req|
-      req.headers.add("foo", "bar")
-    end
+    request = Crest::Request.new(:get, url, &.headers.add("foo", "bar"))
 
     response = request.execute
 
@@ -57,9 +55,7 @@ describe Crest::Request do
     uri = URI.parse(TEST_SERVER_URL)
 
     client = HTTP::Client.new(uri)
-    client.before_request do |request|
-      request.headers.add("foo", "bar")
-    end
+    client.before_request(&.headers.add("foo", "bar"))
 
     response = Crest::Request.execute(:get, url, http_client: client)
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
@@ -70,9 +66,7 @@ describe Crest::Request do
 
     request = Crest::Request.new(:get, url)
 
-    request.http_client.before_request do |req|
-      req.headers.add("foo", "bar")
-    end
+    request.http_client.before_request(&.headers.add("foo", "bar"))
 
     response = request.execute
 
