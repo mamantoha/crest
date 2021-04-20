@@ -49,7 +49,7 @@ module Crest
   {% for method in Crest::HTTP_METHODS %}
     # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
     #
-    # ```crystal
+    # ```
     # Crest.{{method.id}}("http://httpbin.org/{{method.id}}") do |response|
     #   while line = response.body_io.gets
     #     puts line
@@ -63,7 +63,7 @@ module Crest
 
     # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
     #
-    # ```crystal
+    # ```
     # Crest.{{method.id}}("http://httpbin.org/{{method.id}}")
     # ```
     def self.{{method.id}}(url : String, **args) : Crest::Response
