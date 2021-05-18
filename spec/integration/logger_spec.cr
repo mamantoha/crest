@@ -10,8 +10,8 @@ describe Crest::Logger do
 
         Crest::Request.get("#{TEST_SERVER_URL}/resize", params: params, logger: logger, logging: true)
 
-        r.gets.should match(/[REMOVED]/)
-        r.gets.should match(/[REMOVED]/)
+        r.gets.should match(/crest \| \d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2} \|.* GET.* \| http\:\/\/0\.0\.0\.0\:4567\/resize\?width\=100&height\=100&api_key\=\[REMOVED\]/)
+        r.gets.should match(/crest \| \d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2} \|.* 200.* \| http\:\/\/0\.0\.0\.0\:4567\/resize\?width\=100&height\=100&api_key\=\[REMOVED\] \| "Width\: 100, height\: 100"/)
       end
     end
   end
