@@ -1,6 +1,22 @@
 require "../spec_helper"
 
 describe Crest::Logger do
+  it "logs request and response" do
+    IO.pipe do |r, w|
+      params = {:width => "100", :height => 100}
+      logger = Crest::CommonLogger.new(w)
+
+      Crest::Request.get("#{TEST_SERVER_URL}/resize", params: params, logger: logger, logging: true)
+
+      data_time = "\\d{4}-\\d{2}-\\d{2} d{2}:\\d{2}:\\d{2}"
+      url = "#{TEST_SERVER_URL}/resize?width=100&height=100"
+      response_body = "\"Width: 100, height: 100\""
+
+      r.gets.should match(Regex.new("crest | #{data_time} | .* GET.* | #{url}"))
+      r.gets.should match(Regex.new("crest | #{data_time} | .* 200.* | #{url} | #{response_body}"))
+    end
+  end
+
   describe "filters" do
     it "filter logs by regex" do
       IO.pipe do |r, w|
@@ -12,10 +28,10 @@ describe Crest::Logger do
 
         data_time = "\\d{4}-\\d{2}-\\d{2} d{2}:\\d{2}:\\d{2}"
         url = "#{TEST_SERVER_URL}/resize?width=100&height=100&api_key=[REMOVED]"
-        params = "\"Width: 100, height: 100\""
+        response_body = "\"Width: 100, height: 100\""
 
         r.gets.should match(Regex.new("crest | #{data_time} | .* GET.* | #{url}"))
-        r.gets.should match(Regex.new("crest | #{data_time} | .* 200.* | #{url} | #{params}"))
+        r.gets.should match(Regex.new("crest | #{data_time} | .* 200.* | #{url} | #{response_body}"))
       end
     end
   end
