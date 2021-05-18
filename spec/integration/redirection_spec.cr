@@ -20,9 +20,19 @@ describe Crest::Redirector do
     end
 
     it "should redirect with logger" do
-      response = Crest.get("#{TEST_SERVER_URL}/redirect/1", logging: true)
-      (response.request.logging).should eq(true)
-      (response.request.logger).should be_a(Crest::Logger)
+      IO.pipe do |r, w|
+        logger = Crest::CommonLogger.new(w)
+
+        response = Crest.get("#{TEST_SERVER_URL}/redirect/1", logger: logger, logging: true)
+
+        r.gets.should match(/GET/)
+        r.gets.should match(/302/)
+        r.gets.should match(/GET/)
+        r.gets.should match(/200/)
+
+        (response.request.logging).should eq(true)
+        (response.request.logger).should be_a(Crest::Logger)
+      end
     end
 
     it "should raise error when too many redirects" do

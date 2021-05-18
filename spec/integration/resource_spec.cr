@@ -191,9 +191,16 @@ describe Crest::Response do
   end
 
   it "do GET request with logging" do
-    resource = Crest::Resource.new(TEST_SERVER_URL, logging: true)
-    response = resource["/post/1/comments"].get
-    (response.body).should eq("Post 1: comments")
+    IO.pipe do |r, w|
+      logger = Crest::CommonLogger.new(w)
+
+      resource = Crest::Resource.new(TEST_SERVER_URL, logger: logger, logging: true)
+      response = resource["/post/1/comments"].get
+      (response.body).should eq("Post 1: comments")
+
+      r.gets.should match(/GET/)
+      r.gets.should match(/200/)
+    end
   end
 
   it "do OPTIONS request" do
