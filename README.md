@@ -117,7 +117,7 @@ Crest::Request.get(
   p_user: "admin",
   p_pass: "1234"
 )
-# curl -L --proxy http://127.0.0.1:3128 --proxy-user admin:1234 "http://httpbin.org/get"
+# curl -L --proxy admin:1234@127.0.0.1:3128 "http://httpbin.org/get"
 ```
 
 A block can be passed to the `Crest::Request` initializer.

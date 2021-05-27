@@ -66,15 +66,17 @@ module Crest
       params.join(" ")
     end
 
+    # --proxy <[protocol://][user:password@]proxyhost[:port]> url
     private def proxy : String
       return "" unless @request.proxy
 
       params = [] of String
 
-      params << "--proxy #{@request.p_addr}:#{@request.p_port}"
-      params << "--proxy-user #{@request.p_user}:#{@request.p_pass}" if proxy_auth?
+      params << "--proxy "
+      params << "#{@request.p_user}:#{@request.p_pass}@" if proxy_auth?
+      params << "#{@request.p_addr}:#{@request.p_port}"
 
-      params.join(" ")
+      params.join
     end
 
     private def basic_auth? : Bool

@@ -57,7 +57,7 @@ describe Crest::Curlify do
   it "converts a request with proxy with authentication" do
     request = Crest::Request.new(:get, "http://httpbin.org", p_addr: "127.0.0.1", p_port: 8080, p_user: "user", p_pass: "pass")
 
-    result = "curl -X GET http://httpbin.org --proxy 127.0.0.1:8080 --proxy-user user:pass"
+    result = "curl -X GET http://httpbin.org --proxy user:pass@127.0.0.1:8080"
     (request.to_curl).should eq(result)
   end
 
