@@ -15,7 +15,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: shards install --ignore-crystal-version
+        run: shards install
       - name: Check format
         run: crystal tool format --check
 
@@ -27,7 +27,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: shards install --ignore-crystal-version
+        run: shards install
       - name: Check ameba
         run: ./bin/ameba
 
@@ -46,6 +46,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: shards install --ignore-crystal-version
+        run: shards install
       - name: Run tests
         run: crystal spec
