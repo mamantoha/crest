@@ -29,10 +29,21 @@ module Crest
 
     private def headers : String
       headers = [] of String
+
       @request.headers.each do |k, v|
         next if k == "Authorization" && basic_auth? && includes_authorization_header?
 
-        value = v.is_a?(Array) ? v.first.split(";").first : v
+        value =
+          if v.is_a?(Array)
+            if k == "Content-Type"
+              v.first.split(";").first
+            else
+              v.first
+            end
+          else
+            v
+          end
+
         headers << "-H '#{k}: #{value}'"
       end
 

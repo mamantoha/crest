@@ -61,6 +61,13 @@ describe Crest::Curlify do
     (request.to_curl).should eq(result)
   end
 
+  it "converts a request with cookies" do
+    request = Crest::Request.new(:get, "http://httpbin.org/get", cookies: {"k1" => "v1", "k2" => {"kk2" => "vv2"}})
+
+    result = "curl -X GET http://httpbin.org/get -H 'Cookie: k1=v1; k2[kk2]=vv2'"
+    (request.to_curl).should eq(result)
+  end
+
   it "converts POST request" do
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "author" => "admin"})
 
