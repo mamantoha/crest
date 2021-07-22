@@ -291,6 +291,8 @@ module Crest
 
     # Adds "Cookie" headers for the cookies in this collection to the @header instance and returns it
     private def set_cookies!(cookies) : HTTP::Headers
+      cookies = Crest::ParamsEncoder.flatten_params(cookies)
+
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
