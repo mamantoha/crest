@@ -9,6 +9,12 @@ describe Crest do
         (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
       end
 
+      it "should set cookies with nested params" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}", cookies: {"k1" => {"kk1" => "v1"}})
+        (response.status_code).should eq(200)
+        (response.cookies).should eq({"k1[kk1]" => "v1"})
+      end
+
       it "should set cookies in the block" do
         request = Crest::Request.new(:get, TEST_SERVER_URL, cookies: {"k1" => "v1"}) do |req|
           req.cookies["k2"] = "v2"
