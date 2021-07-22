@@ -2,6 +2,13 @@
 
 ## [...]
 
+## [0.27.1][] (2021-07-22)
+
+* Allow nested params in cookies ([#149](https://github.com/mamantoha/crest/pull/149))
+* Fix proxy in `Curlify`
+
+## [0.27.0][] (2021-03-23)
+
 * Close HTTP connection after `Request#execute` by default
 * Add `close_connection` (`true` by default) option for `Crest::Request` initializer
 * Add `close_connection` (`false` by default) option for `Crest::Resource` initializer
@@ -226,7 +233,9 @@
 
 * First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.26.7...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v0.27.1...HEAD
+[0.27.1]: https://github.com/mamantoha/crest/compare/v0.27.0...v0.27.1
+[0.27.0]: https://github.com/mamantoha/crest/compare/v0.26.7...v0.27.0
 [0.26.7]: https://github.com/mamantoha/crest/compare/v0.26.6...v0.26.7
 [0.26.6]: https://github.com/mamantoha/crest/compare/v0.26.5...v0.26.6
 [0.26.5]: https://github.com/mamantoha/crest/compare/v0.26.4...v0.26.5
