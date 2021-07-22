@@ -392,10 +392,10 @@ response.cookies
 ```crystal
 response = Crest.get(
   "http://httpbin.org/cookies",
-  cookies: {"k1" => "v1"}
+  cookies: {"k1" => "v1", "k2" => {"kk2" => "vv2"}}
 )
 response.cookies
-# => {"k1" => "v1"}
+# => {"k1" => "v1", "k2[kk2]" => "vv2"}
 ```
 
 #### Basic access authentication
