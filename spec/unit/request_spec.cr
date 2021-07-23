@@ -89,7 +89,7 @@ describe Crest::Request do
       (request.form_data.to_s).should contain("form-data; name=\"file\"; filename=")
     end
 
-    it "POST request with nested hashes" do
+    it "do the POST request with nested form" do
       request = Crest::Request.new(:post, "http://localhost", form: {:params1 => "one", :nested => {:params2 => "two"}})
       (request.headers["Content-Type"]).should eq("application/x-www-form-urlencoded")
       (request.form_data.to_s).should eq("params1=one&nested%5Bparams2%5D=two")

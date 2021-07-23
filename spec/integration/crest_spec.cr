@@ -32,7 +32,7 @@ describe Crest do
     (response.body).should match(/Upload OK/)
   end
 
-  it "do POST nested params" do
+  it "do POST with nested form" do
     response = Crest.post("#{TEST_SERVER_URL}/post_nested", form: {:params1 => "one", :nested => {:params2 => "two"}})
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
