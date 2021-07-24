@@ -181,17 +181,35 @@ describe Crest::Response do
 
   it "do POST request" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    response = resource.post({:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with form" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
     response = resource.post(form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "do POST request with []" do
     site = Crest::Resource.new(TEST_SERVER_URL)
+    response = site["/post/1/comments"].post({:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with [] and form" do
+    site = Crest::Resource.new(TEST_SERVER_URL)
     response = site["/post/1/comments"].post(form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "do POST request with suburl" do
+    site = Crest::Resource.new(TEST_SERVER_URL)
+    response = site.post("/post/1/comments", {:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with suburl and form" do
     site = Crest::Resource.new(TEST_SERVER_URL)
     response = site.post("/post/1/comments", form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")

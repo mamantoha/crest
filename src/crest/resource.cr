@@ -109,8 +109,8 @@ module Crest
       # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
       def {{method.id}}(
         suburl : String? = nil,
-        *,
         form = {} of String => String,
+        *,
         headers = {} of String => String,
         params = {} of String => String,
         cookies = {} of String => String
@@ -123,11 +123,16 @@ module Crest
         execute_request(:{{method.id}}, form)
       end
 
+      # :ditto:
+      def {{method.id}}(form = {} of String => String, **args) : Crest::Response
+        {{method.id}}(nil, form, **args)
+      end
+
       # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
       def {{method.id}}(
         suburl : String? = nil,
-        *,
         form = {} of String => String,
+        *,
         headers = {} of String => String,
         params = {} of String => String,
         cookies = {} of String => String,
@@ -139,6 +144,11 @@ module Crest
         @cookies = merge_cookies(cookies)
 
         execute_request(:{{method.id}}, form, &block)
+      end
+
+      # :ditto:
+      def {{method.id}}(form = {} of String => String, **args, &block : Crest::Response ->) : Nil
+        {{method.id}}(nil, form, **args, &block)
       end
     {% end %}
 
