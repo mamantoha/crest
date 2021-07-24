@@ -2,7 +2,7 @@
 
 ## [...]
 
-* Make `form` argument optional for `Crest` methods
+* Added the ability to not explicitly specify `form` argument for `Crest` methods
 
   It is now possible to use
 
@@ -16,7 +16,7 @@
   Crest.post("http://httpbin.org/post", form: {"token" => "my-secret-token"})
   ```
 
-* Make `form` argument optional for `Crest::Request#execule`, `Crest::Request#post`, etc
+* Added the ability to not explicitly specify `form` argument for for `Crest::Request#execule`, `Crest::Request#post`, etc
 
   ```crystal
   Crest::Request.post(
@@ -26,7 +26,7 @@
   )
   ```
 
-* Make `form` argument oprional for `Crest::Resourse` verb method
+* Added the ability to not explicitly specify `form` argument for `Crest::Resourse` verb method
 
   ```crystal
   resource = Crest::Resource.new("http://httpbin.org")
@@ -45,7 +45,7 @@
 
 ## [0.27.1][] (2021-07-22)
 
-* Allow user nested `Hash` as `cookies` ([#149](https://github.com/mamantoha/crest/pull/149))
+* Allow to use nested `Hash` as `cookies` ([#149](https://github.com/mamantoha/crest/pull/149))
 * Fix proxy in `Curlify`
 
 ## [0.27.0][] (2021-03-23)
