@@ -33,6 +33,13 @@
   resourse["post"].post({"token" => "my-secret-token"})
   ```
 
+* Add `json` argument to make request with JSON payload and the appropriate HTTP headers
+
+  ```crystal
+  Crest.post("http://httpbin.org/post", {:foo => "bar"}, json: true)
+  # curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
+  ```
+
 * Allow to set `cookies` for `Crest::Resource` initializer
 * Allow to set `cookies` for `Crest::Resource` verb methods
 

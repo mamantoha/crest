@@ -233,6 +233,13 @@ describe Crest::Response do
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
 
+  it "do POST request with [] and json" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}", json: true)
+    response = resource["/json"].post({"user" => {"name" => "John"}})
+
+    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/upload")

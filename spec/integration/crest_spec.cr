@@ -36,6 +36,12 @@ describe Crest do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  it "do POST request with json" do
+    response = Crest.post("#{TEST_SERVER_URL}/json", {"user" => {"name" => "John"}}, json: true)
+
+    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", {:file => file})

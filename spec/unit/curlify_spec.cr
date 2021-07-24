@@ -99,4 +99,12 @@ describe Crest::Curlify do
 
     curlify(request).should eq(result)
   end
+
+  it "converts POST request with json" do
+    request = Crest::Request.new(:post, "http://httpbin.org/post", {:foo => "bar"}, json: true)
+
+    result = "curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
+
+    curlify(request).should eq(result)
+  end
 end

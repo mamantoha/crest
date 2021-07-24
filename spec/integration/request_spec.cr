@@ -143,6 +143,13 @@ describe Crest::Request do
   end
 
   it "call .post method with form and json" do
+    request = Crest::Request.new(:post, "#{TEST_SERVER_URL}/json", {"user" => {"name" => "John"}}, json: true)
+    response = request.execute
+
+    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+  end
+
+  it "call .post method with form and json string" do
     response = Crest::Request.post(
       "#{TEST_SERVER_URL}/post/1/json",
       {:title => "Title"}.to_json,

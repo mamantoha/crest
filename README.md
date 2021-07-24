@@ -17,6 +17,7 @@ Beloved features:
 * HTTP(S) proxy support.
 * Elegant Key/Value headers, cookies, params, and payload.
 * Multipart file uploads.
+* JSON request with the appropriate HTTP headers.
 * Streaming requests.
 * International Domain Names.
 * Digest access authentication.
@@ -81,6 +82,7 @@ Optional parameters:
 * `:user` and `:password` - for authentication
 * `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
+* `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
 * `:max_redirects` -  maximum number of redirections (default to 10)
 * `:logging` -  enable logging (default to `false`)
 * `:logger` -  set logger (default to `Crest::CommonLogger`)
@@ -107,6 +109,12 @@ Crest::Request.execute(:get,
   headers: {"Content-Type" => "application/json"})
 )
 # curl -L --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
+```
+
+```crystal
+Crest::Request.new(:post, "http://httpbin.org/post", {:foo => "bar"}, json: true)
+
+# curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
 ```
 
 ```crystal
@@ -353,7 +361,13 @@ response = resource["/post"].post({:image => file})
 
 #### JSON payload
 
-`crest` does not speak JSON natively, so serialize your *form* to a string before passing it to `crest`.
+`crest` speaks JSON natively by passing `json: true` argement to `crest`.
+
+```crystal
+Crest.post("http://httpbin.org/post", {:foo => "bar"}, json: true)
+```
+
+As well you can serialize your *form* to a string by itself before passing it to `crest`.
 
 ```crystal
 Crest.post(
