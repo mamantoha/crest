@@ -35,15 +35,7 @@ require "./ext/http/cookie"
 module Crest
   VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 
-  alias TextValue = String | Symbol | Int32 | Bool | Nil
-
-  alias Params = Hash(Symbol | String, Int32 | String) |
-                 Hash(String, String | Int32) |
-                 Hash(Symbol, String | Int32) |
-                 Hash(String, String) |
-                 Hash(String, Int32) |
-                 Hash(Symbol, String) |
-                 Hash(Symbol, Int32)
+  alias ParamsValue = Bool | Int32 | String | Symbol | Nil | File?
 
   HTTP_METHODS = %w{get delete post put patch options head}
 

@@ -83,6 +83,56 @@ describe Crest::Response do
     (response.body).should eq("Width: 100, height: 100")
   end
 
+  it "do GET request with suburl and default nested params" do
+    resource = Crest::Resource.new(
+      TEST_SERVER_URL,
+      params: {"image" => {"type" => "jpeg"}}
+    )
+    response = resource.get("/resize", params: {"width" => "100", "height" => "100"})
+    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+  end
+
+  it "do GET request with [] and nested params" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    params = {"width" => "100", "height" => "100", "image" => {"type" => "jpeg"}}
+
+    response = resource["/resize"].get(params: params)
+
+    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+  end
+
+  it "do GET request with default cookies" do
+    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => "v1", "k2" => "v2"})
+    response = resource["/"].get
+
+    (response.status_code).should eq(200)
+    (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
+  end
+
+  it "do GET request with default nested cookies" do
+    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => {"kk1" => "v1"}})
+    response = resource["/"].get
+
+    (response.status_code).should eq(200)
+    (response.cookies).should eq({"k1[kk1]" => "v1"})
+  end
+
+  it "do GET request with cookies" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+    response = resource["/"].get(cookies: {"k1" => "v1"})
+
+    (response.status_code).should eq(200)
+    (response.cookies).should eq({"k1" => "v1"})
+  end
+
+  it "do GET request with cookies and default cookies" do
+    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => "v1", "k2" => "v2"})
+    response = resource["/"].get(cookies: {"k2" => "vv2"})
+
+    (response.status_code).should eq(200)
+    (response.cookies).should eq({"k1" => "v1", "k2" => "vv2"})
+  end
+
   it "should accept block" do
     resource = Crest::Resource.new(TEST_SERVER_URL) do |res|
       res.headers.merge!({"foo" => "bar"})
@@ -154,6 +204,15 @@ describe Crest::Response do
       params: {:secret => "secret"}
     )
     (response.body).should eq("Width: 100, height: 100. Key: key, secret: secret")
+  end
+
+  it "do POST request with [] and nested form" do
+    site = Crest::Resource.new(TEST_SERVER_URL)
+    response = site["/post_nested"].post(
+      form: {:params1 => "one", :nested => {:params2 => "two"}}
+    )
+
+    (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
 
   it "upload file" do
