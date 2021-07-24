@@ -61,6 +61,13 @@ Crest.post(
   {"file" => File.open("avatar.png"), "name" => "John"}
 )
 # curl -X POST http://httpbin.org/post -F 'file=@avatar.png' -F 'name=John' -H 'Content-Type: multipart/form-data'
+
+response = Crest.post(
+  "http://httpbin.org/post",
+  {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}},
+  json: true
+)
+# curl -X POST http://httpbin.org/post -d '{"age":27,"name":{"first":"Kurt","last":"Cobain"}}' -H 'Content-Type: application/json'
 ```
 
 ### Request

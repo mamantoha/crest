@@ -1,3 +1,4 @@
+require "json"
 require "http"
 require "uri"
 require "base64"
