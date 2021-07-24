@@ -41,6 +41,7 @@ module Crest
   # * `user` and `password` for authentication
   # * `tls` configuring TLS settings
   # * `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
+  # * `json` make a JSON request with the appropriate HTTP headers (default to `false`)
   # * `max_redirects` maximum number of redirections (default to `10`)
   # * `logging` enable logging (default to `false`)
   # * `logger` set logger (default to `Crest::CommonLogger`)
@@ -65,6 +66,7 @@ module Crest
     @p_port : Int32?
     @p_user : String?
     @p_pass : String?
+    @json : Bool
     @logger : Crest::Logger
     @logging : Bool
     @handle_errors : Bool
@@ -72,7 +74,7 @@ module Crest
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
-      auth, proxy, p_addr, p_port, p_user, p_pass
+      auth, proxy, p_addr, p_port, p_user, p_pass, json
 
     property redirection_history, user, password
 
@@ -103,6 +105,7 @@ module Crest
       @url = url
       @headers = HTTP::Headers.new
       @cookies = HTTP::Cookies.new
+      @json = options.fetch(:json, false).as(Bool)
       @redirection_history = [] of Crest::Response
 
       set_headers!(headers)
@@ -266,7 +269,13 @@ module Crest
     private def generate_form_data!(form : Hash) : String?
       return if form.empty?
 
-      form_class = multipart?(form) ? Crest::DataForm : Crest::UrlencodedForm
+      form_class =
+        if @json
+          Crest::JSONForm
+        else
+          multipart?(form) ? Crest::DataForm : Crest::UrlencodedForm
+        end
+
       form = form_class.generate(form)
 
       @form_data = form.form_data

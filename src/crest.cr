@@ -3,6 +3,7 @@ require "uri"
 require "base64"
 require "http-client-digest_auth"
 require "http_proxy"
+require "./ext/file"
 require "./ext/http/client"
 require "./ext/http/cookie"
 

@@ -115,6 +115,10 @@ get "/add_key" do |env|
   "JSON: key[#{key}]"
 end
 
+post "/json" do |env|
+  env.params.json.to_json
+end
+
 post "/post/:id/json" do |env|
   title = env.params.json["title"].as(String)
   "Post with title `#{title}` created"

@@ -72,8 +72,8 @@ module Crest
       Request.new(
         method: :get,
         url: url,
-        headers: @request.headers.to_h,
         max_redirects: @request.max_redirects - 1,
+        headers: @request.headers.to_h,
         cookies: @response.cookies,
         logging: @request.logging,
         logger: @request.logger,
@@ -82,7 +82,8 @@ module Crest
         p_port: @request.p_port,
         p_user: @request.p_user,
         p_pass: @request.p_pass,
-        close_connection: @request.close_connection
+        json: @request.json,
+        close_connection: @request.close_connection,
       )
     end
 
