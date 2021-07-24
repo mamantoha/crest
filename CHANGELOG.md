@@ -6,19 +6,19 @@
 
   It is now possible to use
 
-  ```
+  ```crystal
   Crest.post("http://httpbin.org/post", {"token" => "my-secret-token"})
   ```
 
   just as well as
 
-  ```
+  ```crystal
   Crest.post("http://httpbin.org/post", form: {"token" => "my-secret-token"})
   ```
 
 * Make `form` argument optional for `Crest::Request#execule`, `Crest::Request#post`, etc
 
-  ```
+  ```crystal
   Crest::Request.post(
     "http://httpbin.org/post",
     {"token" => "my-secret-token"},
@@ -28,7 +28,7 @@
 
 * Make `form` argument oprional for `Crest::Resourse` verb method
 
-  ```
+  ```crystal
   resource = Crest::Resource.new("http://httpbin.org")
   resourse["post"].post({"token" => "my-secret-token"})
   ```

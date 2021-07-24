@@ -51,13 +51,13 @@ Crest.get(
 
 Crest.post(
   "http://httpbin.org/post",
-  form: {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
+  {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}}
 )
 # curl -L --data "age=27&name[first]=Kurt&name[last]=Cobain" -X POST "http://httpbin.org/post"
 
 Crest.post(
   "http://httpbin.org/post",
-  form: {"file" => File.open("avatar.png"), "name" => "John"}
+  {"file" => File.open("avatar.png"), "name" => "John"}
 )
 # curl -X POST http://httpbin.org/post -F 'file=@avatar.png' -F 'name=John' -H 'Content-Type: multipart/form-data'
 ```
@@ -73,9 +73,9 @@ Mandatory parameters:
 
 Optional parameters:
 
+* `:form` -  a hash containing form params
 * `:headers` -  a hash containing the request headers
 * `:cookies` -  a hash containing the request cookies
-* `:form` -  a hash containing form params
 * `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `auth` - access authentication method `basic` or `digest` (default to `basic`)
 * `:user` and `:password` - for authentication
@@ -161,7 +161,7 @@ resource["/get"].get(
 )
 
 resource["/post"].post(
-  form: {:height => 100, "width" => "100"},
+  {:height => 100, "width" => "100"},
   params: {:secret => "secret"}
 )
 ```
@@ -171,7 +171,7 @@ Use the `[]` syntax to allocate subresources:
 ```crystal
 site = Crest::Resource.new("http://httpbin.org")
 
-site["/post"].post(form: {:param1 => "value1", :param2 => "value2"})
+site["/post"].post({:param1 => "value1", :param2 => "value2"})
 # curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 ```
 
@@ -180,7 +180,7 @@ You can pass `suburl` through `Request#http_verb` methods:
 ```crystal
 site = Crest::Resource.new("http://httpbin.org")
 
-site.post("/post", form: {:param1 => "value1", :param2 => "value2"})
+site.post("/post", {:param1 => "value1", :param2 => "value2"})
 # curl -L --data "param1=value1&param2=value2" -X POST http://httpbin.org/post
 
 site.get("/get", params: {:status => "active"})
@@ -342,13 +342,13 @@ Yeah, that's right! This does multipart sends for you!
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
-Crest.post("http://httpbin.org/post", form: {:image => file})
+Crest.post("http://httpbin.org/post", {:image => file})
 ```
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
 resource = Crest::Resource.new("https://httpbin.org")
-response = resource["/post"].post(form: {:image => file})
+response = resource["/post"].post({:image => file})
 ```
 
 #### JSON payload
@@ -358,8 +358,8 @@ response = resource["/post"].post(form: {:image => file})
 ```crystal
 Crest.post(
   "http://httpbin.org/post",
-  headers: {"Content-Type" => "application/json"},
-  form: {:foo => "bar"}.to_json
+  {:foo => "bar"}.to_json
+  headers: {"Accept" => "application/json"},
 )
 ```
 
@@ -548,7 +548,7 @@ Use `to_curl` method on instance of `Crest::Request` to convert request to cURL 
 request = Crest::Request.new(
   :post,
   "http://httpbin.org/post",
-  form: {"title" => "New Title", "author" => "admin"}
+  {"title" => "New Title", "author" => "admin"}
 )
 request.to_curl
 # => curl -X POST http://httpbin.org/post -d 'title=New+Title&author=admin' -H 'Content-Type: application/x-www-form-urlencoded'
