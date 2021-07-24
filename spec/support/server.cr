@@ -82,12 +82,20 @@ delete "/post/:post_id/comments/:id" do |env|
 end
 ###
 
-# Matches /resize?width=200&height=200
+# Matches:
+#
+# - `/resize?width=200&height=200`
+# - `/resize?width=200&height=200&image[type]=jpeg`
 get "/resize" do |env|
   width = env.params.query["width"]
   height = env.params.query["height"]
+  image_type = env.params.query["image[type]"]?
 
-  "Width: #{width}, height: #{height}"
+  if image_type
+    "Width: #{width}, height: #{height}, type: #{image_type}"
+  else
+    "Width: #{width}, height: #{height}"
+  end
 end
 
 # Matches /resize?key=secter

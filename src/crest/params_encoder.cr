@@ -92,8 +92,8 @@ module Crest
     # Crest::ParamsEncoder.flatten_params({:key1 => {:key2 => "123"}})
     # # => [{"key1[key2]", "123"}]
     # ```
-    def flatten_params(object : Hash, parent_key = nil)
-      object.reduce([] of Tuple(String, TextValue | File)) do |memo, item|
+    def flatten_params(object : Hash, parent_key = nil) : Array(Tuple(String, ParamsValue))
+      object.reduce([] of Tuple(String, ParamsValue)) do |memo, item|
         k, v = item
 
         processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
@@ -115,8 +115,8 @@ module Crest
     # Crest::ParamsEncoder.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
     # # => [{"key1[arr][]", "1"}, {"key1[arr][]", "2"}, {"key1[arr][]", "3"}]
     # ```
-    def flatten_params(object : Array, parent_key = nil)
-      object.reduce([] of Tuple(String, TextValue | File)) do |memo, item|
+    def flatten_params(object : Array, parent_key = nil) : Array(Tuple(String, ParamsValue))
+      object.reduce([] of Tuple(String, ParamsValue)) do |memo, item|
         k = :""
         v = item
 

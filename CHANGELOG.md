@@ -2,9 +2,12 @@
 
 ## [...]
 
+* Allow to set `cookies` for `Crest::Resource` initializer
+* Allow to set `cookies` for `Crest::Resource` verb methods
+
 ## [0.27.1][] (2021-07-22)
 
-* Allow nested params in cookies ([#149](https://github.com/mamantoha/crest/pull/149))
+* Allow user nested `Hash` as `cookies` ([#149](https://github.com/mamantoha/crest/pull/149))
 * Fix proxy in `Curlify`
 
 ## [0.27.0][] (2021-03-23)

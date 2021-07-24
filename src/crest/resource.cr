@@ -34,17 +34,19 @@ module Crest
   # resource["/get"].get
   # ```
   #
-  # You can pass advanced parameters like default `params` or `headers`:
+  # You can pass advanced parameters like default `params`, `headers`, or `cookies`:
   #
   # ```
   # resource = Crest::Resource.new(
   #   "https://httpbin.org",
   #   params: {"key" => "key"},
-  #   headers: {"Content-Type" => "application/json"}
+  #   headers: {"Content-Type" => "application/json"},
+  #   cookies: {"lang"=> "ua"}
   # )
   # response = response["/post"].post(
   #   form: {:height => 100, "width" => "100"},
-  #   params: {:secret => "secret"}
+  #   params: {:secret => "secret"},
+  #   cookies: {"locale"=> "en_US"}
   # )
   # ```
   # If you want to stream the data from the response you can pass a block:
@@ -58,21 +60,30 @@ module Crest
   # end
   # ```
   class Resource
-    getter http_client, url, user, password, headers, params,
-      logging, logger, p_addr, p_port, p_user, p_pass,
+    getter http_client, url,
+      headers, params, cookies,
+      user, password,
+      logging, logger,
+      p_addr, p_port, p_user, p_pass,
       handle_errors, close_connection
 
     delegate close, to: http_client
     delegate closed?, to: http_client
 
+    @params = {} of String => ParamsValue
+    @cookies = {} of String => ParamsValue
+
     def initialize(
       @url : String,
       *,
       @headers = {} of String => String,
-      @params : Params = {} of String => String,
+      params = {} of String => String,
+      cookies = {} of String => String,
       **options
     )
       @base_url = @url
+      @params = Crest::ParamsEncoder.flatten_params(params).to_h
+      @cookies = Crest::ParamsEncoder.flatten_params(cookies).to_h
       @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
@@ -101,11 +112,13 @@ module Crest
         *,
         form = {} of String => String,
         headers = {} of String => String,
-        params = {} of String => String
+        params = {} of String => String,
+        cookies = {} of String => String
       ) : Crest::Response
         @url = concat_urls(@base_url, suburl) if suburl
         @headers = @headers.merge(headers)
         @params = merge_params(params)
+        @cookies = merge_cookies(cookies)
 
         execute_request(:{{method.id}}, form)
       end
@@ -117,11 +130,13 @@ module Crest
         form = {} of String => String,
         headers = {} of String => String,
         params = {} of String => String,
+        cookies = {} of String => String,
         &block : Crest::Response ->
       ) : Nil
         @url = concat_urls(@base_url, suburl) if suburl
         @headers = @headers.merge(headers)
         @params = merge_params(params)
+        @cookies = merge_cookies(cookies)
 
         execute_request(:{{method.id}}, form, &block)
       end
@@ -152,6 +167,7 @@ module Crest
         form:             form,
         url:              @url,
         params:           @params,
+        cookies:          @cookies,
         headers:          @headers,
         tls:              @tls,
         user:             @user,
@@ -168,10 +184,23 @@ module Crest
       }
     end
 
-    private def merge_params(other = {} of String => String)
+    private def merge_params(other : Hash)
+      other = Crest::ParamsEncoder.flatten_params(other).to_h
+
       @params.try do |params|
         other = params.merge(other)
       end
+
+      other
+    end
+
+    private def merge_cookies(other : Hash)
+      other = Crest::ParamsEncoder.flatten_params(other).to_h
+
+      @cookies.try do |params|
+        other = params.merge(other)
+      end
+
       other
     end
 
