@@ -2,6 +2,37 @@
 
 ## [...]
 
+* Make `form` argument optional for `Crest` methods
+
+  It is now possible to use
+
+  ```
+  Crest.post("http://httpbin.org/post", {"token" => "my-secret-token"})
+  ```
+
+  just as well as
+
+  ```
+  Crest.post("http://httpbin.org/post", form: {"token" => "my-secret-token"})
+  ```
+
+* Make `form` argument optional for `Crest::Request#execule`, `Crest::Request#post`, etc
+
+  ```
+  Crest::Request.post(
+    "http://httpbin.org/post",
+    {"token" => "my-secret-token"},
+    headers: {"Accept" => "application/json"}
+  )
+  ```
+
+* Make `form` argument oprional for `Crest::Resourse` verb method
+
+  ```
+  resource = Crest::Resource.new("http://httpbin.org")
+  resourse["post"].post({"token" => "my-secret-token"})
+  ```
+
 * Allow to set `cookies` for `Crest::Resource` initializer
 * Allow to set `cookies` for `Crest::Resource` verb methods
 

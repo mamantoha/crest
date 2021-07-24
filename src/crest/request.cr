@@ -78,23 +78,23 @@ module Crest
 
     delegate host, port, tls?, close, to: @http_client
 
-    def self.execute(method, url, **args) : Crest::Response
-      request = new(method, url, **args)
+    def self.execute(method, url, form = {} of String => String, **args) : Crest::Response
+      request = new(method, url, form, **args)
       request.execute
     end
 
-    def self.execute(method, url, **args, &block : Crest::Response ->) : Nil
-      request = new(method, url, **args)
+    def self.execute(method, url, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
+      request = new(method, url, form, **args)
       request.execute(&block)
     end
 
     def initialize(
       method : Symbol,
       url : String,
+      form = {} of String => String,
       *,
       headers = {} of String => String,
       cookies = {} of String => String,
-      form = {} of String => String,
       params = {} of String => String,
       max_redirects = 10,
       **options
@@ -137,8 +137,8 @@ module Crest
     end
 
     # When block is not given.
-    def initialize(method : Symbol, url : String, **args)
-      initialize(method, url, **args) { }
+    def initialize(method : Symbol, url : String, form = {} of String => String, **args)
+      initialize(method, url, form, **args) { }
     end
 
     {% for method in Crest::HTTP_METHODS %}
@@ -151,8 +151,8 @@ module Crest
       #   end
       # end
       # ```
-      def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
-        request = Request.new(:{{method.id}}, url, **args)
+      def self.{{method.id}}(url : String, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
+        request = Request.new(:{{method.id}}, url, form, **args)
 
         response = request.execute(&block)
       end
@@ -162,8 +162,8 @@ module Crest
       # ```
       # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}")
       # ```
-      def self.{{method.id}}(url : String, **args) : Crest::Response
-        request = Request.new(:{{method.id}}, url, **args)
+      def self.{{method.id}}(url : String, form = {} of String => String, **args) : Crest::Response
+        request = Request.new(:{{method.id}}, url, form, **args)
 
         request.execute
       end

@@ -113,6 +113,12 @@ describe Crest::Request do
   end
 
   it "do POST request" do
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with form" do
     response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
 
     (response.body).should eq("Post with title `Title` created")
@@ -124,13 +130,29 @@ describe Crest::Request do
     (response.body).should eq("Post with title `New @Title` created")
   end
 
-  it "call post method" do
+  it "call .post method" do
+    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "call .post method with form" do
     response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
 
     (response.body).should eq("Post with title `Title` created")
   end
 
-  it "call post method with json content type" do
+  it "call .post method with form and json" do
+    response = Crest::Request.post(
+      "#{TEST_SERVER_URL}/post/1/json",
+      {:title => "Title"}.to_json,
+      headers: {"Content-Type" => "application/json"}
+    )
+
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "call .post method with form and json" do
     response = Crest::Request.post(
       "#{TEST_SERVER_URL}/post/1/json",
       headers: {"Content-Type" => "application/json"},
@@ -140,7 +162,7 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
-  it "upload file" do
+  it "upload file with form" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
     (response.body).should match(/Upload OK/)

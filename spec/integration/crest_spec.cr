@@ -26,12 +26,23 @@ describe Crest do
     (response.body).should eq("JSON: key[123]")
   end
 
-  it "do POST request" do
+  it "do POST request with form" do
+    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+    (response.body).should eq("Post with title `Title` created")
+  end
+
+  it "do POST request with form" do
     response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
     (response.body).should eq("Post with title `Title` created")
   end
 
   it "upload file" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    response = Crest.post("#{TEST_SERVER_URL}/upload", {:file => file})
+    (response.body).should match(/Upload OK/)
+  end
+
+  it "upload file with form" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
     (response.body).should match(/Upload OK/)
@@ -42,12 +53,12 @@ describe Crest do
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
   end
 
-  it "do PUT request" do
+  it "do PUT request with form" do
     response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Put Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
   end
 
-  it "do PATCH request" do
+  it "do PATCH request with form" do
     response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Patch Update"})
     (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
   end

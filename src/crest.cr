@@ -49,8 +49,8 @@ module Crest
     #   end
     # end
     # ```
-    def self.{{method.id}}(url : String, **args, &block : Crest::Response ->) : Nil
-      request = Request.new(:{{method.id}}, url, **args)
+    def self.{{method.id}}(url : String, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
+      request = Request.new(:{{method.id}}, url, form, **args)
       request.execute(&block)
     end
 
@@ -59,8 +59,8 @@ module Crest
     # ```
     # Crest.{{method.id}}("http://httpbin.org/{{method.id}}")
     # ```
-    def self.{{method.id}}(url : String, **args) : Crest::Response
-      request = Request.new(:{{method.id}}, url, **args)
+    def self.{{method.id}}(url : String, form = {} of String => String, **args) : Crest::Response
+      request = Request.new(:{{method.id}}, url, form, **args)
       request.execute
     end
   {% end %}
