@@ -51,9 +51,15 @@ module Crest
     end
 
     private def form_data : String
+      raise HTTP::FormData::Error.new "Cannot extract form-data from HTTP request: body is empty" unless @request.form_data
+      body = IO::Memory.new(@request.form_data.to_s)
+
+      boundary = @request.headers["Content-Type"]?.try { |header| MIME::Multipart.parse_boundary(header) }
+      raise HTTP::FormData::Error.new "Cannot extract form-data from HTTP request: could not find boundary in Content-Type" unless boundary
+
       form_data = [] of String
 
-      HTTP::FormData.parse(@request.http_request) do |part|
+      HTTP::FormData.parse(body, boundary) do |part|
         value = part.filename ? "@#{part.filename}" : part.body.gets_to_end
 
         form_data << "-F '#{part.name}=#{value}'"
@@ -61,7 +67,7 @@ module Crest
 
       form_data.join(" ")
     rescue HTTP::FormData::Error
-      body = @request.http_request.body.to_s
+      body = @request.form_data.to_s
 
       body.empty? ? "" : "-d '#{body}'"
     end
