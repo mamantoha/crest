@@ -92,4 +92,43 @@ describe Crest do
 
     body.should eq("Client error")
   end
+
+  context ".to_curl" do
+    it "curlify GET request with params" do
+      response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
+      (response.body).should eq("Width: 100, height: 100")
+      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/resize?width=100&height=100")
+    end
+
+    it "curlify POST request with form" do
+      response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+      (response.body).should eq("Post with title `Title` created")
+      (response.to_curl).should eq(
+        "curl -X POST #{TEST_SERVER_URL}/post/1/comments -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+      )
+    end
+
+    it "curlify POST request with file" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
+
+      (response.body).should match(/Upload OK/)
+      (response.to_curl).should eq(
+        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{file.path}' -H 'Content-Type: multipart/form-data'"
+      )
+    end
+
+    it "curlify POST request with json" do
+      response = Crest.post(
+        "#{TEST_SERVER_URL}/json",
+        {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}},
+        json: true
+      )
+
+      (response.body).should eq("{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}")
+      (response.to_curl).should eq(
+        "curl -X POST #{TEST_SERVER_URL}/json -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
+      )
+    end
+  end
 end
