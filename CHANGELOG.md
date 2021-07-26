@@ -42,7 +42,7 @@
 
 * Allow to set `cookies` for `Crest::Resource` initializer
 * Allow to set `cookies` for `Crest::Resource` verb methods
-* Fix `Crest::Response#to_curl` for requests with "multipart/form-data"
+* Fix `Crest::Response#to_curl` for requests with "multipart/form-data" ([#153](https://github.com/mamantoha/crest/pull/153))
 
 ## [0.27.1][] (2021-07-22)
 
