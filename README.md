@@ -153,13 +153,13 @@ request.execute
 A `Crest::Resource` class can be instantiated for access to a RESTful resource,
 including authentication, proxy and logging.
 
-Additionally, you can set default `params` and `headers` separately.
-So can use `Crest::Resource` to share common `headers` and `params`.
+Additionally, you can set default `params`, `headers`, and `cookies` separately.
+So you can use `Crest::Resource` to share common `params`, `headers`, and `cookies`.
 
-The final `headers` and `params` consist of:
+The final parameters consist of:
 
-* default headers from initializer
-* headers provided in call method (`get`, `post`, etc)
+* default parameters from initializer
+* parameters provided in call method (`get`, `post`, etc)
 
 This is especially useful if you wish to define your site in one place and
 call it in multiple locations.
@@ -168,7 +168,8 @@ call it in multiple locations.
 resource = Crest::Resource.new(
   "http://httpbin.org",
   params: {"key" => "value"},
-  headers: {"Content-Type" => "application/json"}
+  headers: {"Content-Type" => "application/json"},
+  cookies: {"lang" => "uk"}
 )
 
 resource["/get"].get(
@@ -224,7 +225,7 @@ resource = Crest::Resource.new(
 )
 ```
 
-With Proxy authentication:
+With Proxy:
 
 ```crystal
 resource = Crest::Resource.new(
@@ -252,9 +253,9 @@ Response objects have several useful methods:
 
 ### Exceptions
 
-* for result codes between `200` and `207`, a `Crest::Response` will be returned
-* for result codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
-* for other cases, a `Crest::RequestFailed` holding the Response will be raised
+* for status codes between `200` and `207`, a `Crest::Response` will be returned
+* for status codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
+* for other cases, a `Crest::RequestFailed` holding the `Crest::Response` will be raised
 * call `.response` on the exception to get the server's response
 
 ```crystal
@@ -268,7 +269,7 @@ rescue ex : Crest::NotFound
 end
 ```
 
-To not raise exceptions but return the `Crest::Response` you can set `:handle_errors => false`.
+To not raise exceptions but return the `Crest::Response` you can set `handle_errors` to `false`.
 
 ```crystal
 response = Crest.get("http://httpbin.org/status/404", handle_errors: false) do |resp|
@@ -307,7 +308,7 @@ response.status_code # => 404
 
 Normally, when you use `Crest`, `Crest::Request` or `Crest::Resource` methods to retrieve data, the entire response is buffered in memory and returned as the response to the call.
 
-However, if you are retrieving a large amount of data, for example an iso, or any other large file, you may want to stream the response directly to disk rather than loading it in memory. If you have a very large file, it may become impossible to load it into memory.
+However, if you are retrieving a large amount of data, for example, an iso, or any other large file, you may want to stream the response directly to disk rather than loading it into memory. If you have a very large file, it may become impossible to load it into memory.
 
 If you want to stream the data from the response to a file as it comes, rather than entirely in memory, you can pass a block to which you pass a additional logic, which you can use to stream directly to a file as each chunk is received.
 
@@ -316,7 +317,7 @@ With a block, an `Crest::Response` body is returned and the response's body is a
 The following is an example:
 
 ```crystal
-Crest.get("https://github.com/crystal-lang/crystal/archive/0.27.0.zip") do |resp|
+Crest.get("https://github.com/crystal-lang/crystal/archive/1.0.0.zip") do |resp|
   filename = resp.filename || "crystal.zip"
 
   File.open(filename, "w") do |file|
@@ -368,7 +369,7 @@ response = resource["/post"].post({:image => file})
 
 #### JSON payload
 
-`crest` speaks JSON natively by passing `json: true` argement to `crest`.
+`crest` speaks JSON natively by passing `json: true` argument to `crest`.
 
 ```crystal
 Crest.post("http://httpbin.org/post", {:foo => "bar"}, json: true)
