@@ -60,7 +60,12 @@ module Crest
       form_data = [] of String
 
       HTTP::FormData.parse(body, boundary) do |part|
-        value = part.filename ? "@#{part.filename}" : part.body.gets_to_end
+        value =
+          if filename = part.filename
+            "@#{File.expand_path(filename)}"
+          else
+            part.body.gets_to_end
+          end
 
         form_data << "-F '#{part.name}=#{value}'"
       end

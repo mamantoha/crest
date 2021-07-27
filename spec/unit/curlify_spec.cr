@@ -76,12 +76,11 @@ describe Crest::Curlify do
   end
 
   it "converts POST request with multipart" do
-    current_dir = __DIR__
-    file = File.open("#{current_dir}/../support/fff.png")
+    file = File.open("#{__DIR__}/../support/fff.png")
 
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "file" => file})
 
-    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F 'file=@#{"#{current_dir}/../support/fff.png"}' -H 'Content-Type: multipart/form-data'"
+    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F 'file=@#{"#{File.expand_path(file.path)}"}' -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
 

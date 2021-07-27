@@ -60,7 +60,7 @@ Crest.post(
   "http://httpbin.org/post",
   {"file" => File.open("avatar.png"), "name" => "John"}
 )
-# curl -X POST http://httpbin.org/post -F 'file=@avatar.png' -F 'name=John' -H 'Content-Type: multipart/form-data'
+# curl -X POST http://httpbin.org/post -F 'file=@/path/to/avatar.png' -F 'name=John' -H 'Content-Type: multipart/form-data'
 
 response = Crest.post(
   "http://httpbin.org/post",

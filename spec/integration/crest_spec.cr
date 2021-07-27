@@ -114,7 +114,7 @@ describe Crest do
 
       (response.body).should match(/Upload OK/)
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{file.path}' -H 'Content-Type: multipart/form-data'"
+        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{File.expand_path(file.path)}' -H 'Content-Type: multipart/form-data'"
       )
     end
 
