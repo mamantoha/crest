@@ -46,9 +46,10 @@ Basic usage:
 ```crystal
 Crest.get(
   "http://httpbin.org/get",
-  params: {:lang => "en"}
+  params: {:lang => "en"},
+  user_agent: "Mozilla/5.0"
 )
-# curl -L "http://httpbin.org/get?lang=en"
+# curl -L http://httpbin.org/get?lang=en -H 'User-Agent: Crest'
 
 Crest.post(
   "http://httpbin.org/post",
