@@ -65,7 +65,8 @@ module Crest
       user, password,
       logging, logger,
       p_addr, p_port, p_user, p_pass,
-      handle_errors, close_connection, json
+      handle_errors, close_connection,
+      json, user_agent
 
     delegate close, to: http_client
     delegate closed?, to: http_client
@@ -97,6 +98,7 @@ module Crest
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
       @close_connection = options.fetch(:close_connection, false).as(Bool)
       @json = options.fetch(:json, false).as(Bool)
+      @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
 
       yield self
     end
@@ -193,6 +195,7 @@ module Crest
         http_client:      @http_client,
         close_connection: @close_connection,
         json:             @json,
+        user_agent:       @user_agent,
       }
     end
 

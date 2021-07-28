@@ -300,4 +300,13 @@ describe Crest::Response do
 
     (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/post/1/comments")
   end
+
+  context "user_agent" do
+    it "set user agent" do
+      resource = Crest::Resource.new(TEST_SERVER_URL, user_agent: "Crest")
+      response = resource["/user-agent"].get
+
+      (response.body).should eq("Crest")
+    end
+  end
 end
