@@ -15,7 +15,7 @@ Beloved features:
 
 * Redirects support.
 * HTTP(S) proxy support.
-* Elegant Key/Value headers, cookies, params, and payload.
+* Elegant Key/Value headers, cookies, query params, and form data.
 * Multipart file uploads.
 * JSON request with the appropriate HTTP headers.
 * Streaming requests.
@@ -82,10 +82,10 @@ Mandatory parameters:
 
 Optional parameters:
 
-* `:form` -  a hash containing form params
+* `:form` -  a hash containing form data (or a raw string)
 * `:headers` -  a hash containing the request headers
 * `:cookies` -  a hash containing the request cookies
-* `:params` -  a hash that represent query-string separated from the preceding part by a question mark (`?`) a sequence of attribute–value pairs separated by a delimiter (`&`)
+* `:params` -  a hash that represent query params - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
 * `auth` - access authentication method `basic` or `digest` (default to `basic`)
 * `:user` and `:password` - for authentication
 * `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
@@ -340,7 +340,7 @@ The encoder affect both how `crest` processes query strings and how it serialize
 
 `Crest::ParamsEncoder` provides 2 methods:
 
-* `#encode` - converts the given param into a URI querystring
+* `#encode` - converts the given params into a URI querystring
 
     ```crystal
     Crest::ParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})

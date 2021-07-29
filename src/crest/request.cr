@@ -34,9 +34,9 @@ module Crest
   # Optional parameters:
   # * `headers` a hash containing the request headers
   # * `cookies` a hash containing the request cookies
-  # * `form` a hash containing form params (or a raw string)
-  # * `params` a hash that represent query-string separated from the preceding part by a question mark (?)
-  #    a sequence of attribute–value pairs separated by a delimiter (&).
+  # * `form` a hash containing form data (or a raw string)
+  # * `params` a hash that represent query params - a string separated from the preceding part by a question mark (?)
+  #    and a sequence of attribute–value pairs separated by a delimiter (&).
   # * `auth` access authentication method `basic` or `digest` (default to `basic`)
   # * `user` and `password` for authentication
   # * `tls` configuring TLS settings
