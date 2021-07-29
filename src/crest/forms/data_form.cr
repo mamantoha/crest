@@ -36,8 +36,10 @@ module Crest
     end
 
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : File)
+      mime = MIME.from_filename(value.path)
       metadata = HTTP::FormData::FileMetadata.new(filename: value.path)
-      formdata.file(name.to_s, value, metadata)
+      headers = HTTP::Headers{"Content-Type" => mime}
+      formdata.file(name.to_s, value, metadata, headers)
     end
   end
 end
