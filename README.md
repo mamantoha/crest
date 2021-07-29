@@ -49,7 +49,7 @@ Crest.get(
   params: {:lang => "en"},
   user_agent: "Mozilla/5.0"
 )
-# curl -L http://httpbin.org/get?lang=en -H 'User-Agent: Crest'
+# curl -L http://httpbin.org/get?lang=en -H 'User-Agent: Mozilla/5.0'
 
 Crest.post(
   "http://httpbin.org/post",
