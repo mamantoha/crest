@@ -46,9 +46,10 @@ Basic usage:
 ```crystal
 Crest.get(
   "http://httpbin.org/get",
-  params: {:lang => "en"}
+  params: {:lang => "en"},
+  user_agent: "Mozilla/5.0"
 )
-# curl -L "http://httpbin.org/get?lang=en"
+# curl -L http://httpbin.org/get?lang=en -H 'User-Agent: Crest'
 
 Crest.post(
   "http://httpbin.org/post",
@@ -90,6 +91,7 @@ Optional parameters:
 * `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 * `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 * `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
+* `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
 * `:max_redirects` -  maximum number of redirections (default to 10)
 * `:logging` -  enable logging (default to `false`)
 * `:logger` -  set logger (default to `Crest::CommonLogger`)

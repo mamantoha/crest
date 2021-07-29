@@ -43,6 +43,7 @@
 * Allow to set `cookies` for `Crest::Resource` initializer
 * Allow to set `cookies` for `Crest::Resource` verb methods
 * Fix `Crest::Response#to_curl` for requests with "multipart/form-data" ([#153](https://github.com/mamantoha/crest/pull/153))
+* Allow to set "User-Agent" header with `user_agent` argument ([#154](https://github.com/mamantoha/crest/pull/154))
 
 ## [0.27.1][] (2021-07-22)
 

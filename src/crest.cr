@@ -35,7 +35,8 @@ require "./ext/http/cookie"
 # end
 # ```
 module Crest
-  VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
+  VERSION    = {{ `shards version #{__DIR__}`.chomp.stringify }}
+  USER_AGENT = "Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})"
 
   alias ParamsValue = Bool | Int32 | String | Symbol | Nil | File?
 

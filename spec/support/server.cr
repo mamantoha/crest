@@ -119,6 +119,10 @@ post "/json" do |env|
   env.params.json.to_json
 end
 
+get "/user-agent" do |env|
+  env.request.headers["User-Agent"]
+end
+
 post "/post/:id/json" do |env|
   title = env.params.json["title"].as(String)
   "Post with title `#{title}` created"

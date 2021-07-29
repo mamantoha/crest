@@ -131,4 +131,26 @@ describe Crest do
       )
     end
   end
+
+  context "user_agent" do
+    it "set default user agent" do
+      response = Crest.get("#{TEST_SERVER_URL}/user-agent")
+      (response.body).should eq(Crest::USER_AGENT)
+    end
+
+    it "set user agent form headers" do
+      response = Crest.get("#{TEST_SERVER_URL}/user-agent", headers: {"User-Agent" => "Crest"})
+      (response.body).should eq("Crest")
+    end
+
+    it "set custom user agent" do
+      response = Crest.get("#{TEST_SERVER_URL}/user-agent", user_agent: "Crest")
+      (response.body).should eq("Crest")
+    end
+
+    it "set custom user agent even if headers" do
+      response = Crest.get("#{TEST_SERVER_URL}/user-agent", user_agent: "Crest", headers: {"User-Agent" => "Crest-headers"})
+      (response.body).should eq("Crest")
+    end
+  end
 end

@@ -106,4 +106,12 @@ describe Crest::Curlify do
 
     curlify(request).should eq(result)
   end
+
+  it "converts request with user_agent" do
+    request = Crest::Request.new(:get, "http://httpbin.org/get", user_agent: "Crest")
+
+    result = "curl -X GET http://httpbin.org/get -H 'User-Agent: Crest'"
+
+    curlify(request).should eq(result)
+  end
 end
