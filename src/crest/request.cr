@@ -28,27 +28,27 @@ module Crest
   # ```
   #
   # Mandatory parameters:
-  # * `method`
-  # * `url`
+  # - `method`
+  # - `url`
   #
   # Optional parameters:
-  # * `headers` a hash containing the request headers
-  # * `cookies` a hash containing the request cookies
-  # * `form` a hash containing form data (or a raw string)
-  # * `params` a hash that represent query params - a string separated from the preceding part by a question mark (?)
+  # - `headers` a hash containing the request headers
+  # - `cookies` a hash containing the request cookies
+  # - `form` a hash containing form data (or a raw string)
+  # - `params` a hash that represent query params - a string separated from the preceding part by a question mark (?)
   #    and a sequence of attribute–value pairs separated by a delimiter (&).
-  # * `auth` access authentication method `basic` or `digest` (default to `basic`)
-  # * `user` and `password` for authentication
-  # * `tls` configuring TLS settings
-  # * `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
-  # * `json` make a JSON request with the appropriate HTTP headers (default to `false`)
-  # * `user_agent` set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
-  # * `max_redirects` maximum number of redirections (default to `10`)
-  # * `logging` enable logging (default to `false`)
-  # * `logger` set logger (default to `Crest::CommonLogger`)
-  # * `handle_errors` error handling (default to `true`)
-  # * `close_connection` close the connection after request is completed (default to `true`)
-  # * `http_client` instance of `HTTP::Client`
+  # - `auth` access authentication method `basic` or `digest` (default to `basic`)
+  # - `user` and `password` for authentication
+  # - `tls` configuring TLS settings
+  # - `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
+  # - `json` make a JSON request with the appropriate HTTP headers (default to `false`)
+  # - `user_agent` set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
+  # - `max_redirects` maximum number of redirections (default to `10`)
+  # - `logging` enable logging (default to `false`)
+  # - `logger` set logger (default to `Crest::CommonLogger`)
+  # - `handle_errors` error handling (default to `true`)
+  # - `close_connection` close the connection after request is completed (default to `true`)
+  # - `http_client` instance of `HTTP::Client`
   class Request
     @method : String
     @url : String

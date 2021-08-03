@@ -5,15 +5,15 @@ require "../crest/redirector"
 module Crest
   # Response objects have several useful methods:
   #
-  # * `body`: The response body as a `String`
-  # * `body_io`: The response body as a `IO`
-  # * `status`: The response status as a `HTTP::Status`
-  # * `status_code`: The HTTP response code
-  # * `headers`: A hash of HTTP response headers
-  # * `cookies`: A hash of HTTP cookies set by the server
-  # * `request`: The `Crest::Request` object used to make the request
-  # * `http_client_res`: The `HTTP::Client::Response` object
-  # * `history`: A list of each response received in a redirection chain
+  # - `body`: The response body as a `String`
+  # - `body_io`: The response body as a `IO`
+  # - `status`: The response status as a `HTTP::Status`
+  # - `status_code`: The HTTP response code
+  # - `headers`: A hash of HTTP response headers
+  # - `cookies`: A hash of HTTP cookies set by the server
+  # - `request`: The `Crest::Request` object used to make the request
+  # - `http_client_res`: The `HTTP::Client::Response` object
+  # - `history`: A list of each response received in a redirection chain
   class Response
     getter http_client_res, request
 

@@ -13,15 +13,15 @@ HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
 
 Beloved features:
 
-* Redirects support.
-* HTTP(S) proxy support.
-* Elegant Key/Value headers, cookies, query params, and form data.
-* Multipart file uploads.
-* JSON request with the appropriate HTTP headers.
-* Streaming requests.
-* International Domain Names.
-* Digest access authentication.
-* Logging.
+- Redirects support.
+- HTTP(S) proxy support.
+- Elegant Key/Value headers, cookies, query params, and form data.
+- Multipart file uploads.
+- JSON request with the appropriate HTTP headers.
+- Streaming requests.
+- International Domain Names.
+- Digest access authentication.
+- Logging.
 
 Hopefully, someday I can remove this shard though. Ideally, Crystal's standard library would do all this already.
 
@@ -77,27 +77,27 @@ response = Crest.post(
 
 Mandatory parameters:
 
-* `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`,  `:delete`, `:options`, `head`)
-* `:url` - URL (e.g.: `http://httpbin.org/ip`)
+- `:method` - HTTP method (`:get`. `:post`, `:put`, `:patch`, `:delete`, `:options`, `head`)
+- `:url` - URL (e.g.: `http://httpbin.org/ip`)
 
 Optional parameters:
 
-* `:form` -  a hash containing form data (or a raw string)
-* `:headers` -  a hash containing the request headers
-* `:cookies` -  a hash containing the request cookies
-* `:params` -  a hash that represent query params - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
-* `auth` - access authentication method `basic` or `digest` (default to `basic`)
-* `:user` and `:password` - for authentication
-* `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
-* `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
-* `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
-* `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
-* `:max_redirects` -  maximum number of redirections (default to 10)
-* `:logging` -  enable logging (default to `false`)
-* `:logger` -  set logger (default to `Crest::CommonLogger`)
-* `:handle_errors` - error handling (default to `true`)
-* `:close_connection` close the connection after request is completed (default to `true`)
-* `:http_client` - instance of `HTTP::Client`
+- `:form` - a hash containing form data (or a raw string)
+- `:headers` - a hash containing the request headers
+- `:cookies` - a hash containing the request cookies
+- `:params` - a hash that represent query params - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
+- `auth` - access authentication method `basic` or `digest` (default to `basic`)
+- `:user` and `:password` - for authentication
+- `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
+- `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
+- `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
+- `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
+- `:max_redirects` - maximum number of redirections (default to 10)
+- `:logging` - enable logging (default to `false`)
+- `:logger` - set logger (default to `Crest::CommonLogger`)
+- `:handle_errors` - error handling (default to `true`)
+- `:close_connection` close the connection after request is completed (default to `true`)
+- `:http_client` - instance of `HTTP::Client`
 
 More detailed examples:
 
@@ -160,8 +160,8 @@ So you can use `Crest::Resource` to share common `params`, `headers`, and `cooki
 
 The final parameters consist of:
 
-* default parameters from initializer
-* parameters provided in call method (`get`, `post`, etc)
+- default parameters from initializer
+- parameters provided in call method (`get`, `post`, etc)
 
 This is especially useful if you wish to define your site in one place and
 call it in multiple locations.
@@ -243,22 +243,22 @@ The result of a `Crest::Request` and `Crest::Resource` is a `Crest::Response` ob
 
 Response objects have several useful methods:
 
-* `Response#body`: The response body as a `String`
-* `Response#body_io`: The response body as a `IO`
-* `Response#status`: The response status as a `HTTP::Status`
-* `Response#status_code`: The HTTP response code
-* `Response#headers`: A hash of HTTP response headers
-* `Response#cookies`: A hash of HTTP cookies set by the server
-* `Response#request`: The `Crest::Request` object used to make the request
-* `Response#http_client_res`: The `HTTP::Client::Response` object
-* `Response#history`: A list of each response received in a redirection chain
+- `Response#body`: The response body as a `String`
+- `Response#body_io`: The response body as a `IO`
+- `Response#status`: The response status as a `HTTP::Status`
+- `Response#status_code`: The HTTP response code
+- `Response#headers`: A hash of HTTP response headers
+- `Response#cookies`: A hash of HTTP cookies set by the server
+- `Response#request`: The `Crest::Request` object used to make the request
+- `Response#http_client_res`: The `HTTP::Client::Response` object
+- `Response#history`: A list of each response received in a redirection chain
 
 ### Exceptions
 
-* for status codes between `200` and `207`, a `Crest::Response` will be returned
-* for status codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
-* for other cases, a `Crest::RequestFailed` holding the `Crest::Response` will be raised
-* call `.response` on the exception to get the server's response
+- for status codes between `200` and `207`, a `Crest::Response` will be returned
+- for status codes `301`, `302`, `303` or `307`, the redirection will be followed and the request transformed into a `GET`
+- for other cases, a `Crest::RequestFailed` holding the `Crest::Response` will be raised
+- call `.response` on the exception to get the server's response
 
 ```crystal
 Crest.get("http://httpbin.org/status/404")
@@ -340,19 +340,19 @@ The encoder affect both how `crest` processes query strings and how it serialize
 
 `Crest::ParamsEncoder` provides 2 methods:
 
-* `#encode` - converts the given params into a URI querystring
+- `#encode` - converts the given params into a URI querystring
 
-    ```crystal
-    Crest::ParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
-    # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
-   ```
+  ```crystal
+  Crest::ParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+  # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+  ```
 
-* `#decode` - converts the given URI querystring into a hash
+- `#decode` - converts the given URI querystring into a hash
 
-    ```crystal
-    Crest::ParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
-    # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
-    ```
+  ```crystal
+  Crest::ParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
+  # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
+  ```
 
 #### Multipart
 
@@ -377,7 +377,7 @@ response = resource["/post"].post({:image => file})
 Crest.post("http://httpbin.org/post", {:foo => "bar"}, json: true)
 ```
 
-As well you can serialize your *form* to a string by itself before passing it to `crest`.
+As well you can serialize your _form_ to a string by itself before passing it to `crest`.
 
 ```crystal
 Crest.post(
@@ -630,9 +630,9 @@ Then select the Workbook -> Requests from the menu.
 
 ## Contributors
 
-* [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
-* [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
-* [psikoz](https://github.com/psikoz) Logo design
+- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+- [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
+- [psikoz](https://github.com/psikoz) Logo design
 
 ## License
 
