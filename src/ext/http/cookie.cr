@@ -1,3 +1,4 @@
+# :nodoc:
 # https://github.com/crystal-lang/crystal/issues/10983
 module HTTP
   class Cookie
