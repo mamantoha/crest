@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: nightly
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install dependencies
