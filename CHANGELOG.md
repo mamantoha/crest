@@ -7,13 +7,13 @@
   It is now possible to use
 
   ```crystal
-  Crest.post("http://httpbin.org/post", {"token" => "my-secret-token"})
+  Crest.post("http://httpbin.org/post", {"token" => "my-secret-token"}, headers: {"Accept" => "application/json"})
   ```
 
   just as well as
 
   ```crystal
-  Crest.post("http://httpbin.org/post", form: {"token" => "my-secret-token"})
+  Crest.post("http://httpbin.org/post", headers: {"Accept" => "application/json"}, form: {"token" => "my-secret-token"})
   ```
 
 * Added the ability to not explicitly specify `form` argument for for `Crest::Request#execule`, `Crest::Request#post`, etc
