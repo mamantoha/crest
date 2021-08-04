@@ -54,6 +54,12 @@ describe Crest do
     (response.body).should match(/Upload OK/)
   end
 
+  it "upload file with nested form" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    response = Crest.post("#{TEST_SERVER_URL}/upload_nested", form: {:user => {:file => file}})
+    (response.body).should match(/Upload OK/)
+  end
+
   it "do POST with nested form" do
     response = Crest.post("#{TEST_SERVER_URL}/post_nested", form: {:params1 => "one", :nested => {:params2 => "two"}})
     (response.body).should eq("params1=one&nested%5Bparams2%5D=two")

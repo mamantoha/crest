@@ -266,7 +266,7 @@ module Crest
     end
 
     private def multipart?(form : Hash) : Bool
-      form.values.any?(File)
+      Crest::ParamsEncoder.flatten_params(form).any?(&.[1].is_a?(File))
     end
 
     private def generate_form_data!(form : Hash) : String?

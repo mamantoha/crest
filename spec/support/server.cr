@@ -49,6 +49,16 @@ post "/upload" do |env|
   "Upload OK - #{file.path}"
 end
 
+post "/upload_nested" do |env|
+  file = env.params.files["user[file]"].tempfile
+
+  File.open(file.path, "w") do |f|
+    IO.copy(file, f)
+  end
+
+  "Upload OK - #{file.path}"
+end
+
 post "/post_nested" do |env|
   params = env.params
   params.body.to_s

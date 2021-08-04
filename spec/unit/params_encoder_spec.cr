@@ -104,6 +104,14 @@ describe Crest::ParamsEncoder do
       Crest::ParamsEncoder.flatten_params(input).should eq(output)
     end
 
+    it "transform nested param with text value and file" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      input = {"user" => {"name" => "Tom", "file" => file}}
+      output = [{"user[name]", "Tom"}, {"user[file]", file}]
+
+      Crest::ParamsEncoder.flatten_params(input).should eq(output)
+    end
+
     it "transform deeply nested param with file" do
       file = File.open("#{__DIR__}/../support/fff.png")
       input = {:key1 => {:key2 => {:key3 => file}}}
