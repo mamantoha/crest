@@ -1,9 +1,5 @@
-require "compress/deflate"
-require "compress/gzip"
-require "compress/zlib"
 require "kemal"
 require "./kemal_basic_auth"
-require "./ext/kemal/ext/context"
 
 class BasicAuthHandler < KemalBasicAuth::Handler
   only ["/secret"]
