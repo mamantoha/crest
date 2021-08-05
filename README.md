@@ -383,7 +383,7 @@ As well you can serialize your _form_ to a string by itself before passing it to
 Crest.post(
   "http://httpbin.org/post",
   {:foo => "bar"}.to_json
-  headers: {"Accept" => "application/json"},
+  headers: {"Accept" => "application/json", "Content-Type" => "application/json"},
 )
 ```
 

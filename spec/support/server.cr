@@ -186,6 +186,15 @@ get "/headers" do |env|
   {"headers" => result}.to_json
 end
 
+post "/headers" do |env|
+  result = {} of String => String
+  env.request.headers.each do |key, value|
+    result[key] = value.join(";")
+  end
+
+  {"headers" => result}.to_json
+end
+
 # Set response headers
 get "/headers/set" do |env|
   env.params.query.each do |param|

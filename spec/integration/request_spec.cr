@@ -197,6 +197,45 @@ describe Crest::Request do
     (response.body).should eq("Post with title `Title` created")
   end
 
+  describe "request headers" do
+    it "POST request with form" do
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"user" => {"name" => "John"}})
+
+      json = JSON.parse(response.body)
+
+      (json["headers"]["Accept"]).should eq("*/*")
+      (json["headers"]["Content-Type"]).should eq("application/x-www-form-urlencoded")
+    end
+
+    it "POST request with multipart form" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"file" => file})
+
+      json = JSON.parse(response.body)
+
+      (json["headers"]["Accept"]).should eq("*/*")
+      (json["headers"]["Content-Type"].to_s).should match(/multipart\/form-data; boundary/)
+    end
+
+    it "POST request with json" do
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"user" => {"name" => "John"}}, json: true)
+
+      json = JSON.parse(response.body)
+
+      (json["headers"]["Accept"]).should eq("application/json")
+      (json["headers"]["Content-Type"]).should eq("application/json")
+    end
+
+    it "POST request with Accept header" do
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"foo" => "bar"}, headers: {"Accept" => "application/pdf"})
+
+      json = JSON.parse(response.body)
+
+      (json["headers"]["Accept"]).should eq("application/pdf")
+    end
+  end
+
   describe "User-Agent" do
     it "should have default user agent" do
       url = "#{TEST_SERVER_URL}/headers"

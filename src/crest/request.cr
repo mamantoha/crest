@@ -235,6 +235,8 @@ module Crest
       url = normalize_url(url)
 
       HTTP::Request.new(method, url, headers, body).tap do |request|
+        # Set default headers
+        request.headers["Accept"] ||= @json ? "application/json" : "*/*"
         request.headers["Host"] ||= host_header
         request.headers["User-Agent"] ||= Crest::USER_AGENT
       end

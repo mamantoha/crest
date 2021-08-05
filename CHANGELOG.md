@@ -2,6 +2,7 @@
 
 ## [...]
 
+- **(breaking-change)** Default request headers: Crest sets `Accept: */*`
 - Added the ability to not explicitly specify `form` argument for `Crest` methods
 
   It is now possible to use
