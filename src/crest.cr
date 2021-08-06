@@ -24,7 +24,7 @@ require "./ext/http/cookie"
 # Crest.post(
 #   "http://httpbin.org/post",
 #   headers: {"Access-Token" => ["secret1", "secret2"]},
-#   form: {:fizz => "buz"},
+#   form: {"fizz" => "buz"},
 #   logging: true,
 # )
 #

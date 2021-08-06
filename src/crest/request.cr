@@ -7,18 +7,18 @@ module Crest
   # Simple example:
   #
   # ```
-  # request = Crest::Request.new(method: :post, url: "http://httpbin.org/post", form: {:age => 27}, params: {:name => "Kurt"})
+  # request = Crest::Request.new(:post, "http://httpbin.org/post", {"age" => 27}, params: {:name => "Kurt"})
   # request.execute
   #
-  # Crest::Request.execute(method: :post, url: "http://httpbin.org/post", form: {:age => 27}.to_json)
+  # Crest::Request.execute(:post, "http://httpbin.org/post", {"age" => 27}, json: true)
   #
-  # Crest::Request.post(url: http://httpbin.org/post", form: {:age => 27}.to_json)
+  # Crest::Request.post("http://httpbin.org/post", {"age" => 27}, json: true)
   # ```
   #
   # Block style:
   #
   # ```
-  # request = Crest::Request.new(:get, http://httpbin.org/get") do |request|
+  # request = Crest::Request.new(:get, "http://httpbin.org/get") do |request|
   #   request.headers.add("foo", "bar")
   #   request.user = "username"
   #   request.password = "password"
@@ -357,7 +357,7 @@ module Crest
       @proxy = HTTP::Proxy::Client.new(p_addr, p_port, username: p_user, password: p_pass)
     end
 
-    # Extract the query parameters and append them to the url
+    # Extract the query parameters and append them to the `url`
     private def process_url_params(params) : String
       query_string = Crest::ParamsEncoder.encode(params)
 
