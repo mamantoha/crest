@@ -115,7 +115,7 @@ request.execute
 Crest::Request.execute(:get,
   "http://httpbin.org/get",
   params: {:width => 640, "height" => "480"},
-  headers: {"Content-Type" => "application/json"})
+  headers: {"Content-Type" => "application/json"}
 )
 # curl -L --header "Content-Type: application/json" "http://httpbin.org/get?width=640&height=480"
 ```
