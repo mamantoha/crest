@@ -17,7 +17,7 @@
   Crest.post("http://httpbin.org/post", headers: {"Accept" => "application/json"}, form: {"token" => "my-secret-token"})
   ```
 
-- Added the ability to not explicitly specify `form` argument for for `Crest::Request#execule`, `Crest::Request#post`, etc
+- Added the ability to not explicitly specify `form` argument for `Crest::Request#execute`, `Crest::Request#post`, etc
 
   ```crystal
   Crest::Request.post(
@@ -27,11 +27,11 @@
   )
   ```
 
-- Added the ability to not explicitly specify `form` argument for `Crest::Resourse` verb method
+- Added the ability to not explicitly specify `form` argument for `Crest::Resource` verb method
 
   ```crystal
   resource = Crest::Resource.new("http://httpbin.org")
-  resourse["post"].post({"token" => "my-secret-token"})
+  resource["post"].post({"token" => "my-secret-token"})
   ```
 
 - Add `json` argument to make request with JSON payload and the appropriate HTTP headers
@@ -108,7 +108,7 @@
 
 ## [0.24.0][] (2020-03-13)
 
-- Add `Crest#ParamsEncoder` module to encode/decode URI querystring
+- Add `Crest#ParamsEncoder` module to encode/decode URI query string
 - Replace `Crest::Utils#encode_query_string` `with Crest::ParamsEncoder#encode`
 - Allow `Boolean` in params
 

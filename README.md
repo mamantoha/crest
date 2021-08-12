@@ -340,14 +340,14 @@ The encoder affect both how `crest` processes query strings and how it serialize
 
 `Crest::ParamsEncoder` provides 2 methods:
 
-- `#encode` - converts the given params into a URI querystring
+- `#encode` - converts the given params into a URI query string
 
   ```crystal
   Crest::ParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
   # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
   ```
 
-- `#decode` - converts the given URI querystring into a hash
+- `#decode` - converts the given URI query string into a hash
 
   ```crystal
   Crest::ParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
