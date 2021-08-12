@@ -10,7 +10,7 @@ require "./ext/http/cookie"
 
 # This module's static methods are the entry point for using the Crest client.
 #
-# Suported HTTP methods: `get`, `put`, `post`, `patch` `delete`, `options`, `head`
+# Supported HTTP methods: `get`, `put`, `post`, `patch` `delete`, `options`, `head`
 #
 # Examples:
 #

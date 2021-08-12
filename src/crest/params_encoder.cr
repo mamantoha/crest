@@ -7,7 +7,7 @@ module Crest
     SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
     ARRAY_REGEX   = /[\[\]]+\Z/
 
-    # Converts the given params into a URI querystring. Keys and values
+    # Converts the given params into a URI query string. Keys and values
     # will converted to strings and appropriately escaped for the URI.
     #
     # ```
@@ -22,7 +22,7 @@ module Crest
       end
     end
 
-    # Converts the given URI querystring into a hash.
+    # Converts the given URI query string into a hash.
     #
     # ```
     # Crest::ParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")

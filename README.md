@@ -92,7 +92,7 @@ Optional parameters:
 - `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 - `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
 - `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
-- `:max_redirects` - maximum number of redirections (default to 10)
+- `:max_redirects` - maximum number of redirects (default to 10)
 - `:logging` - enable logging (default to `false`)
 - `:logger` - set logger (default to `Crest::CommonLogger`)
 - `:handle_errors` - error handling (default to `true`)
