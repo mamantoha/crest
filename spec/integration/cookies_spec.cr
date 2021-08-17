@@ -37,6 +37,7 @@ describe Crest do
       it "should set cookies from server with redirect" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_redirect", params: {"k1" => "v1", "k2" => "v2"})
 
+        (response.url).should eq("#{TEST_SERVER_URL}/cookies")
         (response.status_code).should eq(200)
         (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
         (response.headers.[]("Cookie")).should eq("k1=v1; k2=v2")

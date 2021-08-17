@@ -4,6 +4,7 @@ describe Crest::Redirector do
   describe Crest do
     it "should redirect" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/1")
+
       (response.status_code).should eq(200)
       (response.url).should eq("#{TEST_SERVER_URL}/")
       (response.body).should eq("Hello World!")
@@ -14,6 +15,8 @@ describe Crest::Redirector do
 
     it "should redirect and save history" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/2")
+
+      (response.url).should eq("#{TEST_SERVER_URL}/")
       (response.status_code).should eq(200)
       (response.history.size).should eq(2)
       (response.history.first.status_code).should eq(302)
@@ -50,6 +53,7 @@ describe Crest::Redirector do
     it "should not raise last error if handle_errors is false" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/not_found", handle_errors: false)
 
+      (response.url).should eq("#{TEST_SERVER_URL}/404")
       (response.status_code).should eq(404)
       (response.history.first.status_code).should eq(302)
     end
@@ -68,6 +72,8 @@ describe Crest::Redirector do
 
     it "should not raise exception when handle_errors is false" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/1", max_redirects: 0, handle_errors: false)
+
+      (response.url).should eq("#{TEST_SERVER_URL}/redirect/1")
       (response.status_code).should eq(302)
       (response.body).should eq("Redirecting to /")
     end
