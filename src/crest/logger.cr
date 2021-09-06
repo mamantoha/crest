@@ -32,16 +32,16 @@ module Crest
       @logger.info { apply_filters(message) }
     end
 
-    def filter(patern : String | Regex, replacement : String)
-      @filters.push([patern, replacement])
+    def filter(pattern : String | Regex, replacement : String)
+      @filters.push([pattern, replacement])
     end
 
     private def apply_filters(output : String) : String
       @filters.each do |f|
-        patern = f[0]
+        pattern = f[0]
         replacement = f[1]
 
-        output = output.gsub(patern, replacement)
+        output = output.gsub(pattern, replacement)
       end
 
       output

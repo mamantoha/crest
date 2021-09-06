@@ -90,7 +90,7 @@
 ## [0.26.0][] (2020-06-18)
 
 - Crystal 0.35.0 required
-- Use [http_proxy](https://github.com/mamantoha/http_proxy) shard instead of build-in implementation
+- Use [http_proxy](https://github.com/mamantoha/http_proxy) shard instead of built-in implementation
 
 ## [0.25.1][] (2020-06-02)
 
