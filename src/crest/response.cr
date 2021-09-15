@@ -73,7 +73,11 @@ module Crest
     end
 
     def to_s(io : IO) : Nil
-      io.write_utf8(body.to_slice)
+      {% if compare_versions(Crystal::VERSION, "1.1.1") > 0 %}
+        io.write_string(body.to_slice)
+      {% else %}
+        io.write_utf8(body.to_slice)
+      {% end %}
     end
 
     def inspect
