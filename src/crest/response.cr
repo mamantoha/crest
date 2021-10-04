@@ -108,7 +108,11 @@ module Crest
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)
-      cookies.to_h.map { |e| [e[1].name.to_s, URI.encode(e[1].value)] }.to_h
+      {% if compare_versions(Crystal::VERSION, "1.1.1") > 0 %}
+        cookies.to_h.map { |e| [e[1].name.to_s, URI.encode_path(e[1].value)] }.to_h
+      {% else %}
+        cookies.to_h.map { |e| [e[1].name.to_s, URI.encode(e[1].value)] }.to_h
+      {% end %}
     end
 
     private def body_truncated(size)
