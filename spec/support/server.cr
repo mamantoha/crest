@@ -1,7 +1,7 @@
 require "kemal"
-require "./kemal_basic_auth"
+require "kemal-basic-auth"
 
-class BasicAuthHandler < KemalBasicAuth::Handler
+class BasicAuthHandler < Kemal::BasicAuth::Handler
   only ["/secret"]
 
   def call(env)
