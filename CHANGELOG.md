@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.0.0][] (2021-10-14)
+
 - **(breaking-change)** Default request headers: Crest sets `Accept: */*`
 - Added the ability to not explicitly specify `form` argument for `Crest` methods
 
@@ -277,7 +279,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v0.27.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/mamantoha/crest/compare/v0.27.1...v1.0.0
 [0.27.1]: https://github.com/mamantoha/crest/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/mamantoha/crest/compare/v0.26.7...v0.27.0
 [0.26.7]: https://github.com/mamantoha/crest/compare/v0.26.6...v0.26.7
