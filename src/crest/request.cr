@@ -35,7 +35,7 @@ module Crest
   # - `headers` a hash containing the request headers
   # - `cookies` a hash containing the request cookies
   # - `form` a hash containing form data (or a raw string)
-  # - `params` a hash that represent query params - a string separated from the preceding part by a question mark (?)
+  # - `params` a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (?)
   #    and a sequence of attribute–value pairs separated by a delimiter (&).
   # - `auth` access authentication method `basic` or `digest` (default to `basic`)
   # - `user` and `password` for authentication
@@ -358,8 +358,8 @@ module Crest
     end
 
     # Extract the query parameters and append them to the `url`
-    private def process_url_params(params) : String
-      query_string = Crest::ParamsEncoder.encode(params)
+    private def process_url_params(params : Hash | String) : String
+      query_string = params.is_a?(String) ? params : Crest::ParamsEncoder.encode(params)
 
       if url.includes?("?")
         "&" + query_string

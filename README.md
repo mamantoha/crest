@@ -85,7 +85,7 @@ Optional parameters:
 - `:form` - a hash containing form data (or a raw string)
 - `:headers` - a hash containing the request headers
 - `:cookies` - a hash containing the request cookies
-- `:params` - a hash that represent query params - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
+- `:params` - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
 - `auth` - access authentication method `basic` or `digest` (default to `basic`)
 - `:user` and `:password` - for authentication
 - `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
