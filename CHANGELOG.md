@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
+
 ## [1.0.0][] (2021-10-14)
 
 - **(breaking-change)** Default request headers: Crest sets `Accept: */*`
