@@ -31,10 +31,24 @@ describe Crest::Request do
       (request.form_data).should eq(nil)
     end
 
+    it "initialize the GET request with string params" do
+      request = Crest::Request.new(:get, "http://localhost", params: "foo=hello+world&bar=456")
+      (request.method).should eq("GET")
+      (request.url).should eq("http://localhost?foo=hello+world&bar=456")
+      (request.form_data).should eq(nil)
+    end
+
     it "initialize the GET request with params" do
       request = Crest::Request.new(:get, "http://localhost", params: {:foo => "hello world", :bar => 456})
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?foo=hello+world&bar=456")
+      (request.form_data).should eq(nil)
+    end
+
+    it "initialize the GET request with string params and existing params in url" do
+      request = Crest::Request.new(:get, "http://localhost?json", params: "key=123")
+      (request.method).should eq("GET")
+      (request.url).should eq("http://localhost?json&key=123")
       (request.form_data).should eq(nil)
     end
 
