@@ -174,22 +174,22 @@ describe Crest::Request do
 
   it "call .post method with form and json string" do
     response = Crest::Request.post(
-      "#{TEST_SERVER_URL}/post/1/json",
+      "#{TEST_SERVER_URL}/json",
       {:title => "Title"}.to_json,
       headers: {"Content-Type" => "application/json"}
     )
 
-    (response.body).should eq("Post with title `Title` created")
+    (response.body).should eq("{\"title\":\"Title\"}")
   end
 
   it "call .post method with form and json" do
     response = Crest::Request.post(
-      "#{TEST_SERVER_URL}/post/1/json",
+      "#{TEST_SERVER_URL}/json",
       headers: {"Content-Type" => "application/json"},
       form: {:title => "Title"}.to_json
     )
 
-    (response.body).should eq("Post with title `Title` created")
+    (response.body).should eq("{\"title\":\"Title\"}")
   end
 
   it "upload file with form" do

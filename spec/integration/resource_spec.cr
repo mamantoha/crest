@@ -226,11 +226,11 @@ describe Crest::Response do
 
   it "do POST request with [] and nested form" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site["/post_nested"].post(
+    response = site["/post"].post(
       form: {:params1 => "one", :nested => {:params2 => "two"}}
     )
 
-    (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
+    (response.body).should eq("{\"params1\":\"one\",\"nested[params2]\":\"two\"}")
   end
 
   it "do POST request with [] and json" do

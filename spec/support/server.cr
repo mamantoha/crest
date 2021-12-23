@@ -25,6 +25,15 @@ get "/" do
   "Hello World!"
 end
 
+# Returns request data. Allows only POST requests.
+post "/post" do |env|
+  env.params.body.to_h.to_json
+end
+
+post "/json" do |env|
+  env.params.json.to_json
+end
+
 options "/" do |env|
   env.response.headers["Allow"] = "OPTIONS, GET"
 end
@@ -55,12 +64,7 @@ post "/upload_nested" do |env|
   "Upload OK - #{file.path}"
 end
 
-post "/post_nested" do |env|
-  params = env.params
-  params.body.to_s
-end
-
-# Comments
+# CRUD
 #
 # index
 get "/post/:id/comments" do |env|
@@ -121,27 +125,18 @@ get "/add_key" do |env|
   "JSON: key[#{key}]"
 end
 
-post "/post" do |env|
-  env.params.body.to_h.to_json
-end
-
-post "/json" do |env|
-  env.params.json.to_json
-end
-
 get "/user-agent" do |env|
   env.request.headers["User-Agent"]
 end
 
-post "/post/:id/json" do |env|
-  title = env.params.json["title"].as(String)
-  "Post with title `#{title}` created"
-end
-
+# Errors
+#
 get("/404", &.response.status_code=(404))
 
 get("/500", &.response.status_code=(500))
 
+# Stream
+#
 get "/stream/:count" do |env|
   count = env.params.url["count"].to_i
 
