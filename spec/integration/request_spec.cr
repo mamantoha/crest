@@ -71,8 +71,11 @@ describe Crest::Request do
   end
 
   it "do GET request with params with nil" do
-    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/add_key", params: {:json => nil, :key => 123})
-    (response.body).should eq("JSON: key[123]")
+    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/get", params: {:json => nil, :key => 123})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"json" => "", "key" => "123"})
   end
 
   it "should accept block on initialize as request" do

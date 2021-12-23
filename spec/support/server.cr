@@ -95,13 +95,6 @@ post "/upload_nested" do |env|
   "Upload OK - #{file.path}"
 end
 
-# Matches /add_key?json&key=123
-get "/add_key" do |env|
-  key = env.params.query["key"]
-
-  "JSON: key[#{key}]"
-end
-
 get "/user-agent" do |env|
   env.request.headers["User-Agent"]
 end
