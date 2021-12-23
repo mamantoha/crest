@@ -36,13 +36,19 @@ describe Crest do
   end
 
   it "do POST request with form" do
-    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with form" do
-    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = Crest.post("#{TEST_SERVER_URL}/post", form: {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with json" do
@@ -80,18 +86,32 @@ describe Crest do
   end
 
   it "do PUT request with form" do
-    response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Put Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
+    response = Crest.put("#{TEST_SERVER_URL}/put", params: {"id" => 1}, form: {:title => "Put Update"})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("PUT")
+    body["path"].should eq("/put?id=1")
+    body["form"].should eq({"title" => "Put Update"})
   end
 
   it "do PATCH request with form" do
-    response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Patch Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
+    response = Crest.patch("#{TEST_SERVER_URL}/patch", params: {"id" => 1}, form: {:title => "Patch Update"})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("PATCH")
+    body["path"].should eq("/patch?id=1")
+    body["form"].should eq({"title" => "Patch Update"})
   end
 
   it "do DELETE request" do
-    response = Crest.delete("#{TEST_SERVER_URL}/post/1/comments/1")
-    (response.body).should eq("Delete Comment `1` for Post `1`")
+    response = Crest.delete("#{TEST_SERVER_URL}/delete", params: {"id" => 1})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("DELETE")
+    body["path"].should eq("/delete?id=1")
   end
 
   it "do GET request with block without handle errors" do
@@ -120,10 +140,9 @@ describe Crest do
     end
 
     it "curlify POST request with form" do
-      response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
-      (response.body).should eq("Post with title `Title` created")
+      response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post/1/comments -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
 

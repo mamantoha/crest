@@ -2,36 +2,42 @@ require "../spec_helper"
 
 describe Crest::Request do
   it "initialize and do request" do
-    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/post/1/comments")
+    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get")
     response = request.execute
 
-    (response.body).should eq("Post 1: comments")
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "should close connection after request by default" do
-    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/post/1/comments")
+    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get")
     request.execute
 
     (request.http_client.closed?).should be_truthy
   end
 
   it "should not close connection after request if close_connetion is false" do
-    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/post/1/comments", close_connection: false)
+    request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get", close_connection: false)
     request.execute
 
     (request.http_client.closed?).should be_falsey
   end
 
   it "do GET request" do
-    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/post/1/comments")
+    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/get")
 
-    (response.body).should eq("Post 1: comments")
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "call get method" do
-    response = Crest::Request.get("#{TEST_SERVER_URL}/post/1/comments")
+    response = Crest::Request.get("#{TEST_SERVER_URL}/get")
 
-    (response.body).should eq("Post 1: comments")
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "do GET request with params" do
@@ -119,21 +125,27 @@ describe Crest::Request do
   end
 
   it "do POST request" do
-    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {:title => "Title"})
 
-    (response.body).should eq("Post with title `Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with form" do
-    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", form: {:title => "Title"})
 
-    (response.body).should eq("Post with title `Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request and encode form" do
-    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post/1/comments", form: {:title => "New @Title"})
+    response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", form: {:title => "New @Title"})
 
-    (response.body).should eq("Post with title `New @Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "New @Title"})
   end
 
   it "do POST request with form with Int64" do
@@ -150,15 +162,19 @@ describe Crest::Request do
   end
 
   it "call .post method" do
-    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
+    response = Crest::Request.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
 
-    (response.body).should eq("Post with title `Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "call .post method with form" do
-    response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
+    response = Crest::Request.post("#{TEST_SERVER_URL}/post", form: {:title => "Title"})
 
-    (response.body).should eq("Post with title `Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "call .post method with form and json" do
@@ -228,12 +244,14 @@ describe Crest::Request do
 
   it "should skip 'Content-Type' in headers for requests with form" do
     response = Crest::Request.post(
-      "#{TEST_SERVER_URL}/post/1/comments",
+      "#{TEST_SERVER_URL}/post",
       headers: {"Content-Type" => "application/json"},
       form: {:title => "Title"}
     )
 
-    (response.body).should eq("Post with title `Title` created")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   describe "request headers" do

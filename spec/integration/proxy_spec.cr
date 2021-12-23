@@ -49,10 +49,9 @@ describe Crest do
     it "should make suburl request" do
       with_proxy_server do |host, port, wants_close|
         resource = Crest::Resource.new("#{TEST_SERVER_URL}", p_addr: host, p_port: port)
-        response = resource["/post/1/comments"].get
+        response = resource["/get"].get
 
         (response.status_code).should eq(200)
-        (response.body).should contain("Post 1: comments")
       ensure
         wants_close.send(nil)
       end

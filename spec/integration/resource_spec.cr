@@ -2,49 +2,67 @@ require "../spec_helper"
 
 describe Crest::Response do
   it "do GET request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/get")
     response = resource.get
-    (response.body).should eq("Post 1: comments")
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "should not close connection after request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/get")
     resource.get
     (resource.closed?).should be_falsey
   end
 
   it "do GET request when base url ends with /" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}/")
-    response = resource.get("/post/1/comments")
-    (response.body).should eq("Post 1: comments")
+    response = resource.get("/get")
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "do GET request when path does not start with /" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
-    response = resource.get("post/1/comments")
-    (response.body).should eq("Post 1: comments")
+    response = resource.get("get")
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "do GET request with []" do
     site = Crest::Resource.new("#{TEST_SERVER_URL}")
-    response = site["/post/1/comments"].get
-    (response.body).should eq("Post 1: comments")
+    response = site["/get"].get
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "do GET request with [] when base url ends with /" do
     site = Crest::Resource.new("#{TEST_SERVER_URL}/")
-    response = site["/post/1/comments"].get
-    (response.body).should eq("Post 1: comments")
+    response = site["/get"].get
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/get")
   end
 
   it "do multiple GET requests with []" do
     site = Crest::Resource.new("#{TEST_SERVER_URL}")
 
-    response1 = site["/post/1/comments"].get
-    response2 = site["/post/2/comments"].get
+    response1 = site["/get?id=1"].get
+    response2 = site["/get?id=2"].get
 
-    (response1.body).should eq("Post 1: comments")
-    (response2.body).should eq("Post 2: comments")
+    body1 = JSON.parse(response1.body)
+    body2 = JSON.parse(response2.body)
+
+    body1["path"].should eq("/get?id=1")
+    body2["path"].should eq("/get?id=2")
   end
 
   it "do GET request with params" do
@@ -200,39 +218,57 @@ describe Crest::Response do
   end
 
   it "do POST request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post")
     response = resource.post({:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with form" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post")
     response = resource.post(form: {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with []" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site["/post/1/comments"].post({:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = site["/post"].post({:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with [] and form" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site["/post/1/comments"].post(form: {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = site["/post"].post(form: {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with suburl" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site.post("/post/1/comments", {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = site.post("/post", {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with suburl and form" do
     site = Crest::Resource.new(TEST_SERVER_URL)
-    response = site.post("/post/1/comments", form: {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = site.post("/post", form: {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with [] and default params" do
@@ -286,21 +322,30 @@ describe Crest::Response do
   end
 
   it "do PUT request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/put")
     response = resource.put(form: {:title => "Put Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Put Update"})
   end
 
   it "do PATCH request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/patch")
     response = resource.patch(form: {:title => "Patch Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Patch Update"})
   end
 
   it "do DELETE request" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/post/1/comments/1")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/delete")
     response = resource.delete
-    (response.body).should eq("Delete Comment `1` for Post `1`")
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("DELETE")
   end
 
   it "do GET request with logging" do
@@ -308,8 +353,7 @@ describe Crest::Response do
       logger = Crest::CommonLogger.new(w)
 
       resource = Crest::Resource.new(TEST_SERVER_URL, logger: logger, logging: true)
-      response = resource["/post/1/comments"].get
-      (response.body).should eq("Post 1: comments")
+      response = resource["/get"].get
 
       r.gets.should match(/GET/)
       r.gets.should match(/200/)
@@ -325,9 +369,9 @@ describe Crest::Response do
 
   it "#to_curl" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
-    response = resource["/post/1/comments"].get
+    response = resource["/get"].get
 
-    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/post/1/comments")
+    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get")
   end
 
   context "user_agent" do

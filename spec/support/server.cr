@@ -15,11 +15,14 @@ def render_response(env)
   args = env.params.query.to_h
   form = env.params.body.to_h
   json = env.params.json
+  method = env.request.method
 
   {
-    "args" => args,
-    "form" => form,
-    "json" => json,
+    "args"   => args,
+    "form"   => form,
+    "json"   => json,
+    "method" => method,
+    "path"   => env.request.resource,
   }.to_json
 end
 
@@ -44,6 +47,21 @@ end
 
 # Returns request data. Allows only POST requests.
 post "/post" do |env|
+  render_response(env)
+end
+
+# Returns request data. Allows only PUT requests.
+put "/put" do |env|
+  render_response(env)
+end
+
+# Returns request data. Allows only PATCH requests.
+patch "/patch" do |env|
+  render_response(env)
+end
+
+# Returns request data. Allows only DELETE requests.
+delete "/delete" do |env|
   render_response(env)
 end
 
@@ -75,33 +93,6 @@ post "/upload_nested" do |env|
   end
 
   "Upload OK - #{file.path}"
-end
-
-# CRUD
-#
-# index
-get "/post/:id/comments" do |env|
-  "Post #{env.params.url["id"]}: comments"
-end
-
-# create
-post "/post/:id/comments" do |env|
-  "Post with title `#{env.params.body["title"]}` created"
-end
-
-# update
-put "/post/:post_id/comments/:id" do |env|
-  "Update Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}` with title `#{env.params.body["title"]}`"
-end
-
-# update
-patch "/post/:post_id/comments/:id" do |env|
-  "Update Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}` with title `#{env.params.body["title"]}`"
-end
-
-# delete
-delete "/post/:post_id/comments/:id" do |env|
-  "Delete Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}`"
 end
 
 # Matches /add_key?json&key=123
