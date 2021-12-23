@@ -121,6 +121,10 @@ get "/add_key" do |env|
   "JSON: key[#{key}]"
 end
 
+post "/post" do |env|
+  env.params.body.to_h.to_json
+end
+
 post "/json" do |env|
   env.params.json.to_json
 end

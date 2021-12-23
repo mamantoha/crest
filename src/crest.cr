@@ -38,7 +38,7 @@ module Crest
   VERSION    = {{ `shards version #{__DIR__}`.chomp.stringify }}
   USER_AGENT = "Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})"
 
-  alias ParamsValue = Bool | Int32 | String | Symbol | Nil | File?
+  alias ParamsValue = Bool | Int32 | Int64 | String | Symbol | Nil | File?
 
   HTTP_METHODS = %w{get delete post put patch options head}
 
