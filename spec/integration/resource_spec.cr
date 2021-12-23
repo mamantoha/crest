@@ -353,7 +353,7 @@ describe Crest::Response do
       logger = Crest::CommonLogger.new(w)
 
       resource = Crest::Resource.new(TEST_SERVER_URL, logger: logger, logging: true)
-      response = resource["/get"].get
+      resource["/get"].get
 
       r.gets.should match(/GET/)
       r.gets.should match(/200/)
