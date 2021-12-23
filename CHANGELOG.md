@@ -285,7 +285,7 @@
 - First release :tada:
 
 [...]: https://github.com/mamantoha/crest/compare/v1.0.1...HEAD
-[1.0.0]: https://github.com/mamantoha/crest/compare/v1.0.0...v1.0.1
+[1.0.1]: https://github.com/mamantoha/crest/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mamantoha/crest/compare/v0.27.1...v1.0.0
 [0.27.1]: https://github.com/mamantoha/crest/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/mamantoha/crest/compare/v0.26.7...v0.27.0
