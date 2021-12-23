@@ -17,12 +17,18 @@ def render_response(env)
   json = env.params.json
   method = env.request.method
 
+  headers = {} of String => String
+  env.request.headers.each do |key, value|
+    headers[key] = value.join(";")
+  end
+
   {
-    "args"   => args,
-    "form"   => form,
-    "json"   => json,
-    "method" => method,
-    "path"   => env.request.resource,
+    "args"    => args,
+    "form"    => form,
+    "json"    => json,
+    "headers" => headers,
+    "method"  => method,
+    "path"    => env.request.resource,
   }.to_json
 end
 
@@ -141,26 +147,8 @@ get "/redirect_stream/:count" do |env|
   env.redirect("/stream/#{count}")
 end
 
-# Return request headers
-get "/headers" do |env|
-  result = {} of String => String
-  env.request.headers.each do |key, value|
-    result[key] = value.join(";")
-  end
-
-  {"headers" => result}.to_json
-end
-
-post "/headers" do |env|
-  result = {} of String => String
-  env.request.headers.each do |key, value|
-    result[key] = value.join(";")
-  end
-
-  {"headers" => result}.to_json
-end
-
-# Set response headers
+# Set response headers.
+# /headers/set?name=value
 get "/headers/set" do |env|
   env.params.query.each do |param|
     env.response.headers[param[0]] = param[1]
@@ -179,7 +167,8 @@ get "/cookies" do |env|
   {"cookies" => result}.to_json
 end
 
-# /cookies/set?name=value Sets one or more simple cookies.
+# Sets one or more simple cookies.
+# /cookies/set?name=value
 get "/cookies/set" do |env|
   env.params.query.each do |param|
     env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])

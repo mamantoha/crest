@@ -176,7 +176,7 @@ describe Crest::Response do
       res.headers.merge!({"foo" => "bar"})
     end
 
-    response = resource["/headers"].get
+    response = resource["/get"].get
 
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
   end
@@ -188,7 +188,7 @@ describe Crest::Response do
     client.before_request(&.headers.add("foo", "bar"))
 
     resource = Crest::Resource.new(TEST_SERVER_URL, http_client: client)
-    response = resource["/headers"].get
+    response = resource["/get"].get
 
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
   end
@@ -197,7 +197,7 @@ describe Crest::Response do
     resource = Crest::Resource.new(TEST_SERVER_URL)
     resource.http_client.before_request(&.headers.add("foo", "bar"))
 
-    response = resource["/headers"].get
+    response = resource["/get"].get
 
     (JSON.parse(response.body)["headers"]["foo"]).should eq("bar")
   end

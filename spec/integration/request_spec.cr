@@ -79,7 +79,7 @@ describe Crest::Request do
   end
 
   it "should accept block on initialize as request" do
-    url = "#{TEST_SERVER_URL}/headers"
+    url = "#{TEST_SERVER_URL}/get"
 
     request = Crest::Request.new(:get, url, &.headers.add("foo", "bar"))
 
@@ -89,7 +89,7 @@ describe Crest::Request do
   end
 
   it "initializer can accept HTTP::Client as http_client" do
-    url = "#{TEST_SERVER_URL}/headers"
+    url = "#{TEST_SERVER_URL}/get"
     uri = URI.parse(TEST_SERVER_URL)
 
     client = HTTP::Client.new(uri)
@@ -100,7 +100,7 @@ describe Crest::Request do
   end
 
   it "access http_client in instance of Crest::Request" do
-    url = "#{TEST_SERVER_URL}/headers"
+    url = "#{TEST_SERVER_URL}/get"
 
     request = Crest::Request.new(:get, url)
 
@@ -259,7 +259,7 @@ describe Crest::Request do
 
   describe "request headers" do
     it "POST request with form" do
-      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"user" => {"name" => "John"}})
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {"user" => {"name" => "John"}})
 
       json = JSON.parse(response.body)
 
@@ -270,7 +270,7 @@ describe Crest::Request do
     it "POST request with multipart form" do
       file = File.open("#{__DIR__}/../support/fff.png")
 
-      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"file" => file})
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {"file" => file})
 
       json = JSON.parse(response.body)
 
@@ -279,7 +279,7 @@ describe Crest::Request do
     end
 
     it "POST request with json" do
-      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"user" => {"name" => "John"}}, json: true)
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {"user" => {"name" => "John"}}, json: true)
 
       json = JSON.parse(response.body)
 
@@ -288,7 +288,7 @@ describe Crest::Request do
     end
 
     it "POST request with Accept header" do
-      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/headers", {"foo" => "bar"}, headers: {"Accept" => "application/pdf"})
+      response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {"foo" => "bar"}, headers: {"Accept" => "application/pdf"})
 
       json = JSON.parse(response.body)
 
@@ -298,7 +298,7 @@ describe Crest::Request do
 
   describe "User-Agent" do
     it "should have default user agent" do
-      url = "#{TEST_SERVER_URL}/headers"
+      url = "#{TEST_SERVER_URL}/get"
 
       request = Crest::Request.new(:get, url)
 
@@ -308,7 +308,7 @@ describe Crest::Request do
     end
 
     it "change user agent" do
-      url = "#{TEST_SERVER_URL}/headers"
+      url = "#{TEST_SERVER_URL}/get"
 
       request = Crest::Request.new(:get, url, headers: {"User-Agent" => "Crest"})
 
