@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.0.1][] (2021-12-21)
+
 * Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
 * Accept `Int64` as params value
 
@@ -282,7 +284,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.0.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.0.1...HEAD
+[1.0.0]: https://github.com/mamantoha/crest/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mamantoha/crest/compare/v0.27.1...v1.0.0
 [0.27.1]: https://github.com/mamantoha/crest/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/mamantoha/crest/compare/v0.26.7...v0.27.0
