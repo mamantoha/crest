@@ -37,10 +37,10 @@ describe Crest::Request do
   it "do GET request with params" do
     response = Crest::Request.execute(:get,
       "#{TEST_SERVER_URL}/resize",
-      params: {:width => 100, :height => 100}
+      params: {:width => 100, :height => 1455494400}
     )
 
-    (response.body).should eq("Width: 100, height: 100")
+    (response.body).should eq("Width: 100, height: 1455494400")
   end
 
   it "do GET request with nested params" do
@@ -130,6 +130,17 @@ describe Crest::Request do
     (response.body).should eq("Post with title `New @Title` created")
   end
 
+  it "do POST request with form with Int64" do
+    request = Crest::Request.new(
+      :post,
+      "#{TEST_SERVER_URL}/post",
+      {"user" => {"name" => "John", "time" => Time.utc(2016, 2, 15).to_unix}}
+    )
+    response = request.execute
+
+    (response.body).should eq("{\"user[name]\":\"John\",\"user[time]\":\"1455494400\"}")
+  end
+
   it "call .post method" do
     response = Crest::Request.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
 
@@ -147,6 +158,18 @@ describe Crest::Request do
     response = request.execute
 
     (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+  end
+
+  it "call .post method with form and json with Int64" do
+    request = Crest::Request.new(
+      :post,
+      "#{TEST_SERVER_URL}/json",
+      {"user" => {"name" => "John", "time" => Time.utc(2016, 2, 15).to_unix}},
+      json: true
+    )
+    response = request.execute
+
+    (response.body).should eq("{\"user\":{\"name\":\"John\",\"time\":1455494400}}")
   end
 
   it "call .post method with form and json string" do
