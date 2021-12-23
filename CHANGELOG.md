@@ -3,6 +3,7 @@
 ## [...]
 
 * Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
+* Accept `Int64` as params value
 
 ## [1.0.0][] (2021-10-14)
 
