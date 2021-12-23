@@ -37,7 +37,7 @@ error 500 do
 end
 
 get "/" do
-  "Hello World!"
+  "200 OK"
 end
 
 # Returns GET data.
@@ -70,7 +70,7 @@ options "/" do |env|
 end
 
 get "/secret" do
-  "Secret World!"
+  "Authorized"
 end
 
 get("/redirect_to_secret", &.redirect("/secret"))
@@ -118,7 +118,7 @@ get "/stream/:count" do |env|
   count = env.params.url["count"].to_i
 
   count.times do
-    env.response.puts("Hello World!")
+    env.response.puts("200 OK")
   end
 
   env

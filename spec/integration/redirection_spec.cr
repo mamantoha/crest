@@ -7,7 +7,7 @@ describe Crest::Redirector do
 
       (response.status_code).should eq(200)
       (response.url).should eq("#{TEST_SERVER_URL}/")
-      (response.body).should eq("Hello World!")
+      (response.body).should eq("200 OK")
       (response.history.size).should eq(1)
       (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
       (response.history.first.status_code).should eq(302)
@@ -98,7 +98,7 @@ describe Crest::Redirector do
 
       (response.status_code).should eq(200)
       (response.url).should eq("#{TEST_SERVER_URL}/")
-      (response.body).should eq("Hello World!")
+      (response.body).should eq("200 OK")
       (response.history.size).should eq(1)
       (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
       (response.history.first.status_code).should eq(302)
@@ -112,7 +112,7 @@ describe Crest::Redirector do
 
       (response.status_code).should eq(200)
       (response.url).should eq("#{TEST_SERVER_URL}/")
-      (response.body).should eq("Hello World!")
+      (response.body).should eq("200 OK")
       (response.history.size).should eq(1)
       (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
       (response.history.first.status_code).should eq(302)
