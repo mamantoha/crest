@@ -13,7 +13,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Request.execute" do
@@ -25,7 +25,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Request.get" do
@@ -37,7 +37,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Crest#get" do
@@ -49,7 +49,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Resource#get with []" do
@@ -62,7 +62,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Resource#get" do
@@ -75,7 +75,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
 
     it "should stream Crest#get with redirects" do
@@ -87,7 +87,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!")
+      body.to_s.should eq("200 OK")
     end
 
     it "should stream Response#execute with redirects" do
@@ -101,7 +101,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * 5)
+      body.to_s.should eq("200 OK" * 5)
     end
 
     it "should stream Resource#get with redirects" do
@@ -114,7 +114,7 @@ describe Crest do
         end
       end
 
-      body.to_s.should eq("Hello World!" * count)
+      body.to_s.should eq("200 OK" * count)
     end
   end
 end

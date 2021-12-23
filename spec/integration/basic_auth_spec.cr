@@ -12,7 +12,7 @@ describe Crest do
       it "should be successful with valid credentials" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/secret", user: "username", password: "password")
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
       end
 
       it "should be successful in the initializer block" do
@@ -24,7 +24,7 @@ describe Crest do
         response = request.execute
 
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
       end
 
       it "should set basic auth in requets initiliazer block" do
@@ -36,13 +36,13 @@ describe Crest do
         response = request.execute
 
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
       end
 
       it "should be successful with valid credentials on redirect" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/redirect_to_secret", user: "username", password: "password")
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
         (response.history.size).should eq(1)
         (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect_to_secret")
         (response.history.first.status_code).should eq(302)
@@ -65,7 +65,7 @@ describe Crest do
       it "should be successful with valid credentials" do
         response = Crest.get("#{TEST_SERVER_URL}/secret", user: "username", password: "password")
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
       end
     end
 
@@ -74,7 +74,7 @@ describe Crest do
         resource = Crest::Resource.new("#{TEST_SERVER_URL}/secret", user: "username", password: "password")
         response = resource.get
         (response.status_code).should eq(200)
-        (response.body).should eq("Secret World!")
+        (response.body).should eq("Authorized")
       end
     end
   end

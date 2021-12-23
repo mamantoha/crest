@@ -3,43 +3,63 @@ require "../spec_helper"
 describe Crest do
   it "do GET request" do
     response = Crest.get("#{TEST_SERVER_URL}")
-    (response.body).should eq("Hello World!")
+    (response.body).should eq("200 OK")
   end
 
   it "do GET request with params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with different params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {"width" => 100, :height => "100"})
-    (response.body).should eq("Width: 100, height: 100")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {"width" => 100, :height => "100"})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with nested params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {"width" => 100, "height" => 100, "image" => {"type" => "jpeg"}})
-    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {"width" => 100, "height" => 100, "image" => {"type" => "jpeg"}})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100", "image[type]" => "jpeg"})
   end
 
   it "do GET request with params with nil" do
-    response = Crest.get("#{TEST_SERVER_URL}/add_key", params: {:json => nil, :key => 123})
-    (response.body).should eq("JSON: key[123]")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {:json => nil, :key => 123})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"json" => "", "key" => "123"})
   end
 
   it "do POST request with form" do
-    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with form" do
-    response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", form: {:title => "Title"})
-    (response.body).should eq("Post with title `Title` created")
+    response = Crest.post("#{TEST_SERVER_URL}/post", form: {:title => "Title"})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"title" => "Title"})
   end
 
   it "do POST request with json" do
-    response = Crest.post("#{TEST_SERVER_URL}/json", {"user" => {"name" => "John"}}, json: true)
+    response = Crest.post("#{TEST_SERVER_URL}/post", {"user" => {"name" => "John"}}, json: true)
 
-    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"user" => {"name" => "John"}})
   end
 
   it "upload file" do
@@ -61,23 +81,40 @@ describe Crest do
   end
 
   it "do POST with nested form" do
-    response = Crest.post("#{TEST_SERVER_URL}/post_nested", form: {:params1 => "one", :nested => {:params2 => "two"}})
-    (response.body).should eq("params1=one&nested%5Bparams2%5D=two")
+    response = Crest.post("#{TEST_SERVER_URL}/post", form: {:params1 => "one", :nested => {:params2 => "two"}})
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"params1" => "one", "nested[params2]" => "two"})
   end
 
   it "do PUT request with form" do
-    response = Crest.put("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Put Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Put Update`")
+    response = Crest.put("#{TEST_SERVER_URL}/put", params: {"id" => 1}, form: {:title => "Put Update"})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("PUT")
+    body["path"].should eq("/put?id=1")
+    body["form"].should eq({"title" => "Put Update"})
   end
 
   it "do PATCH request with form" do
-    response = Crest.patch("#{TEST_SERVER_URL}/post/1/comments/1", form: {:title => "Patch Update"})
-    (response.body).should eq("Update Comment `1` for Post `1` with title `Patch Update`")
+    response = Crest.patch("#{TEST_SERVER_URL}/patch", params: {"id" => 1}, form: {:title => "Patch Update"})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("PATCH")
+    body["path"].should eq("/patch?id=1")
+    body["form"].should eq({"title" => "Patch Update"})
   end
 
   it "do DELETE request" do
-    response = Crest.delete("#{TEST_SERVER_URL}/post/1/comments/1")
-    (response.body).should eq("Delete Comment `1` for Post `1`")
+    response = Crest.delete("#{TEST_SERVER_URL}/delete", params: {"id" => 1})
+
+    body = JSON.parse(response.body)
+
+    body["method"].should eq("DELETE")
+    body["path"].should eq("/delete?id=1")
   end
 
   it "do GET request with block without handle errors" do
@@ -101,16 +138,14 @@ describe Crest do
 
   context ".to_curl" do
     it "curlify GET request with params" do
-      response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
-      (response.body).should eq("Width: 100, height: 100")
-      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/resize?width=100&height=100")
+      response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
+      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get?width=100&height=100")
     end
 
     it "curlify POST request with form" do
-      response = Crest.post("#{TEST_SERVER_URL}/post/1/comments", {:title => "Title"})
-      (response.body).should eq("Post with title `Title` created")
+      response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post/1/comments -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
 
@@ -126,14 +161,17 @@ describe Crest do
 
     it "curlify POST request with json" do
       response = Crest.post(
-        "#{TEST_SERVER_URL}/json",
+        "#{TEST_SERVER_URL}/post",
         {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}},
         json: true
       )
 
-      (response.body).should eq("{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}")
+      body = JSON.parse(response.body)
+
+      body["json"].should eq({"age" => 27, "name" => {"first" => "Kurt", "last" => "Cobain"}})
+
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/json -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
       )
     end
   end

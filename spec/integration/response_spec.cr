@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Crest::Response do
   it "response instance should respond to helper methods" do
     response = Crest.get("#{TEST_SERVER_URL}")
-    (response.body).should eq("Hello World!")
+    (response.body).should eq("200 OK")
     (response.invalid?).should be_false
     (response.informational?).should be_false
     (response.success?).should be_true
@@ -43,7 +43,7 @@ describe Crest::Response do
     it "does to_s" do
       response = Crest.get("#{TEST_SERVER_URL}")
 
-      response.to_s.should eq("Hello World!")
+      response.to_s.should eq("200 OK")
     end
   end
 
@@ -51,7 +51,7 @@ describe Crest::Response do
     it "does inspect" do
       response = Crest.get("#{TEST_SERVER_URL}")
 
-      (response.inspect).should eq("<Crest::Response 200 \"Hello World...\">")
+      (response.inspect).should eq("<Crest::Response 200 \"200 OK\">")
     end
   end
 end
