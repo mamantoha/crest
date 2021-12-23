@@ -22,11 +22,17 @@ def render_response(env)
     headers[key] = value.join(";")
   end
 
+  cookies = {} of String => String
+  env.request.cookies.to_h.each do |_, cookie|
+    cookies[cookie.name] = cookie.value
+  end
+
   {
     "args"    => args,
     "form"    => form,
     "json"    => json,
     "headers" => headers,
+    "cookies" => cookies,
     "method"  => method,
     "path"    => env.request.resource,
   }.to_json
@@ -157,16 +163,6 @@ get "/headers/set" do |env|
   ""
 end
 
-# Returns cookies data
-get "/cookies" do |env|
-  result = {} of String => String
-  env.request.cookies.to_h.each do |_, cookie|
-    result[cookie.name] = cookie.value
-  end
-
-  {"cookies" => result}.to_json
-end
-
 # Sets one or more simple cookies.
 # /cookies/set?name=value
 get "/cookies/set" do |env|
@@ -182,13 +178,14 @@ get "/cookies/set" do |env|
   {"cookies" => result}.to_json
 end
 
-# /cookies/set_redirect?name=value Sets one or more simple cookies and redirect.
+# Sets one or more simple cookies and redirect.
+# /cookies/set_redirect?name=value
 get "/cookies/set_redirect" do |env|
   env.params.query.each do |param|
     env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
   end
 
-  env.redirect("/cookies")
+  env.redirect("/get")
 end
 
 # Delays responding for `:seconds` seconds.
