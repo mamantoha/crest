@@ -48,21 +48,30 @@ describe Crest::Response do
   end
 
   it "do GET request with params" do
-    resource = Crest::Resource.new("#{TEST_SERVER_URL}/resize")
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/get")
     response = resource.get(params: {:width => "100", :height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with [] and params" do
     resource = Crest::Resource.new(TEST_SERVER_URL)
-    response = resource["/resize"].get(params: {:width => 100, :height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+    response = resource["/get"].get(params: {:width => 100, :height => 100})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with suburl and params" do
     resource = Crest::Resource.new(TEST_SERVER_URL)
-    response = resource.get("resize", params: {:width => 100, :height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+    response = resource.get("get", params: {:width => 100, :height => 100})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with [] and default params" do
@@ -70,8 +79,11 @@ describe Crest::Response do
       TEST_SERVER_URL,
       params: {:width => 100, :height => 100}
     )
-    response = resource["/resize"].get
-    (response.body).should eq("Width: 100, height: 100")
+    response = resource["/get"].get
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with suburl and default params" do
@@ -79,8 +91,11 @@ describe Crest::Response do
       TEST_SERVER_URL,
       params: {:width => 100}
     )
-    response = resource.get("/resize", params: {:height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+    response = resource.get("/get", params: {:height => 100})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with suburl and default nested params" do
@@ -88,17 +103,22 @@ describe Crest::Response do
       TEST_SERVER_URL,
       params: {"image" => {"type" => "jpeg"}}
     )
-    response = resource.get("/resize", params: {"width" => "100", "height" => "100"})
-    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+    response = resource.get("/get", params: {"width" => "100", "height" => "100"})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"image[type]" => "jpeg", "width" => "100", "height" => "100"})
   end
 
   it "do GET request with [] and nested params" do
     resource = Crest::Resource.new(TEST_SERVER_URL)
     params = {"width" => "100", "height" => "100", "image" => {"type" => "jpeg"}}
 
-    response = resource["/resize"].get(params: params)
+    response = resource["/get"].get(params: params)
 
-    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"image[type]" => "jpeg", "width" => "100", "height" => "100"})
   end
 
   it "do GET request with default cookies" do
@@ -217,11 +237,15 @@ describe Crest::Response do
 
   it "do POST request with [] and default params" do
     site = Crest::Resource.new(TEST_SERVER_URL, params: {"key" => "key"})
-    response = site["/resize"].post(
+    response = site["/post"].post(
       form: {:height => 100, "width" => "100"},
       params: {:secret => "secret"}
     )
-    (response.body).should eq("Width: 100, height: 100. Key: key, secret: secret")
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"key" => "key", "secret" => "secret"})
+    body["form"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do POST request with [] and nested form" do

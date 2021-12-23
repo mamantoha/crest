@@ -36,26 +36,32 @@ describe Crest::Request do
 
   it "do GET request with params" do
     response = Crest::Request.execute(:get,
-      "#{TEST_SERVER_URL}/resize",
+      "#{TEST_SERVER_URL}/get",
       params: {:width => 100, :height => 1455494400}
     )
 
-    (response.body).should eq("Width: 100, height: 1455494400")
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "1455494400"})
   end
 
   it "do GET request with nested params" do
     response = Crest::Request.execute(:get,
-      "#{TEST_SERVER_URL}/resize",
+      "#{TEST_SERVER_URL}/get",
       params: {:width => 100, :height => 100, :image => {:type => "jpeg"}}
     )
 
-    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100", "image[type]" => "jpeg"})
   end
 
   it "do GET request with different params" do
-    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/resize", params: {"width" => 100, :height => "100"})
+    response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/get", params: {"width" => 100, :height => "100"})
 
-    (response.body).should eq("Width: 100, height: 100")
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with params with nil" do

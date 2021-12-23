@@ -12,10 +12,12 @@ class BasicAuthHandler < Kemal::BasicAuth::Handler
 end
 
 def render_response(env)
+  args = env.params.query.to_h
   form = env.params.body.to_h
   json = env.params.json
 
   {
+    "args" => args,
     "form" => form,
     "json" => json,
   }.to_json
@@ -33,6 +35,11 @@ end
 
 get "/" do
   "Hello World!"
+end
+
+# Returns GET data.
+get "/get" do |env|
+  render_response(env)
 end
 
 # Returns request data. Allows only POST requests.
@@ -95,33 +102,6 @@ end
 # delete
 delete "/post/:post_id/comments/:id" do |env|
   "Delete Comment `#{env.params.url["id"]}` for Post `#{env.params.url["post_id"]}`"
-end
-###
-
-# Matches:
-#
-# - `/resize?width=200&height=200`
-# - `/resize?width=200&height=200&image[type]=jpeg`
-get "/resize" do |env|
-  width = env.params.query["width"]
-  height = env.params.query["height"]
-  image_type = env.params.query["image[type]"]?
-
-  if image_type
-    "Width: #{width}, height: #{height}, type: #{image_type}"
-  else
-    "Width: #{width}, height: #{height}"
-  end
-end
-
-# Matches /resize?key=secter
-post "/resize" do |env|
-  height = env.params.body.[]("height")
-  width = env.params.body.[]("width")
-  key = env.params.query["key"]
-  secret = env.params.query["secret"]
-
-  "Width: #{width}, height: #{height}. Key: #{key}, secret: #{secret}"
 end
 
 # Matches /add_key?json&key=123

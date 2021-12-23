@@ -7,18 +7,27 @@ describe Crest do
   end
 
   it "do GET request with params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
-    (response.body).should eq("Width: 100, height: 100")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with different params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {"width" => 100, :height => "100"})
-    (response.body).should eq("Width: 100, height: 100")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {"width" => 100, :height => "100"})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
   it "do GET request with nested params" do
-    response = Crest.get("#{TEST_SERVER_URL}/resize", params: {"width" => 100, "height" => 100, "image" => {"type" => "jpeg"}})
-    (response.body).should eq("Width: 100, height: 100, type: jpeg")
+    response = Crest.get("#{TEST_SERVER_URL}/get", params: {"width" => 100, "height" => 100, "image" => {"type" => "jpeg"}})
+
+    body = JSON.parse(response.body)
+
+    body["args"].should eq({"width" => "100", "height" => "100", "image[type]" => "jpeg"})
   end
 
   it "do GET request with params with nil" do
@@ -106,9 +115,8 @@ describe Crest do
 
   context ".to_curl" do
     it "curlify GET request with params" do
-      response = Crest.get("#{TEST_SERVER_URL}/resize", params: {:width => 100, :height => 100})
-      (response.body).should eq("Width: 100, height: 100")
-      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/resize?width=100&height=100")
+      response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
+      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get?width=100&height=100")
     end
 
     it "curlify POST request with form" do
