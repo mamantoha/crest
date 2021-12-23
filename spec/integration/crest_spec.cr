@@ -37,9 +37,11 @@ describe Crest do
   end
 
   it "do POST request with json" do
-    response = Crest.post("#{TEST_SERVER_URL}/json", {"user" => {"name" => "John"}}, json: true)
+    response = Crest.post("#{TEST_SERVER_URL}/post", {"user" => {"name" => "John"}}, json: true)
 
-    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"user" => {"name" => "John"}})
   end
 
   it "upload file" do
@@ -62,7 +64,10 @@ describe Crest do
 
   it "do POST with nested form" do
     response = Crest.post("#{TEST_SERVER_URL}/post", form: {:params1 => "one", :nested => {:params2 => "two"}})
-    (response.body).should eq("{\"params1\":\"one\",\"nested[params2]\":\"two\"}")
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"params1" => "one", "nested[params2]" => "two"})
   end
 
   it "do PUT request with form" do
@@ -126,14 +131,17 @@ describe Crest do
 
     it "curlify POST request with json" do
       response = Crest.post(
-        "#{TEST_SERVER_URL}/json",
+        "#{TEST_SERVER_URL}/post",
         {:age => 27, :name => {:first => "Kurt", :last => "Cobain"}},
         json: true
       )
 
-      (response.body).should eq("{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}")
+      body = JSON.parse(response.body)
+
+      body["json"].should eq({"age" => 27, "name" => {"first" => "Kurt", "last" => "Cobain"}})
+
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/json -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
       )
     end
   end

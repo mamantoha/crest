@@ -230,14 +230,19 @@ describe Crest::Response do
       form: {:params1 => "one", :nested => {:params2 => "two"}}
     )
 
-    (response.body).should eq("{\"params1\":\"one\",\"nested[params2]\":\"two\"}")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"params1" => "one", "nested[params2]" => "two"})
+    body["json"].should eq({} of JSON::Any => JSON::Any)
   end
 
   it "do POST request with [] and json" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}", json: true)
-    response = resource["/json"].post({"user" => {"name" => "John"}})
+    response = resource["/post"].post({"user" => {"name" => "John"}})
 
-    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"user" => {"name" => "John"}})
   end
 
   it "upload file" do

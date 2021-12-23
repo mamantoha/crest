@@ -11,6 +11,16 @@ class BasicAuthHandler < Kemal::BasicAuth::Handler
   end
 end
 
+def render_response(env)
+  form = env.params.body.to_h
+  json = env.params.json
+
+  {
+    "form" => form,
+    "json" => json,
+  }.to_json
+end
+
 add_handler BasicAuthHandler.new("username", "password")
 
 error 404 do
@@ -27,11 +37,7 @@ end
 
 # Returns request data. Allows only POST requests.
 post "/post" do |env|
-  env.params.body.to_h.to_json
-end
-
-post "/json" do |env|
-  env.params.json.to_json
+  render_response(env)
 end
 
 options "/" do |env|

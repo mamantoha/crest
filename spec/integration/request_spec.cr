@@ -138,7 +138,9 @@ describe Crest::Request do
     )
     response = request.execute
 
-    (response.body).should eq("{\"user[name]\":\"John\",\"user[time]\":\"1455494400\"}")
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"user[name]" => "John", "user[time]" => "1455494400"})
   end
 
   it "call .post method" do
@@ -154,42 +156,50 @@ describe Crest::Request do
   end
 
   it "call .post method with form and json" do
-    request = Crest::Request.new(:post, "#{TEST_SERVER_URL}/json", {"user" => {"name" => "John"}}, json: true)
+    request = Crest::Request.new(:post, "#{TEST_SERVER_URL}/post", {"user" => {"name" => "John"}}, json: true)
     response = request.execute
 
-    (response.body).should eq("{\"user\":{\"name\":\"John\"}}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"user" => {"name" => "John"}})
   end
 
   it "call .post method with form and json with Int64" do
     request = Crest::Request.new(
       :post,
-      "#{TEST_SERVER_URL}/json",
+      "#{TEST_SERVER_URL}/post",
       {"user" => {"name" => "John", "time" => Time.utc(2016, 2, 15).to_unix}},
       json: true
     )
     response = request.execute
 
-    (response.body).should eq("{\"user\":{\"name\":\"John\",\"time\":1455494400}}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"user" => {"name" => "John", "time" => 1455494400}})
   end
 
   it "call .post method with form and json string" do
     response = Crest::Request.post(
-      "#{TEST_SERVER_URL}/json",
+      "#{TEST_SERVER_URL}/post",
       {:title => "Title"}.to_json,
       headers: {"Content-Type" => "application/json"}
     )
 
-    (response.body).should eq("{\"title\":\"Title\"}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"title" => "Title"})
   end
 
   it "call .post method with form and json" do
     response = Crest::Request.post(
-      "#{TEST_SERVER_URL}/json",
+      "#{TEST_SERVER_URL}/post",
       headers: {"Content-Type" => "application/json"},
       form: {:title => "Title"}.to_json
     )
 
-    (response.body).should eq("{\"title\":\"Title\"}")
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"title" => "Title"})
   end
 
   it "upload file with form" do
