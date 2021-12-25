@@ -2,6 +2,8 @@
 
 ## [...]
 
+* Accept `Float32` and `Float64` as params value
+
 ## [1.0.1][] (2021-12-21)
 
 * Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
