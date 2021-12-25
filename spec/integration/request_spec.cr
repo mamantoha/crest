@@ -164,6 +164,19 @@ describe Crest::Request do
     body["form"].should eq({"user[name]" => "John", "user[time]" => "1455494400"})
   end
 
+  it "do POST request with form with Float" do
+    request = Crest::Request.new(
+      :post,
+      "#{TEST_SERVER_URL}/post",
+      {"latitude" => 49.553516, "longitude" => 25.594767}
+    )
+    response = request.execute
+
+    body = JSON.parse(response.body)
+
+    body["form"].should eq({"latitude" => "49.553516", "longitude" => "25.594767"})
+  end
+
   it "call .post method" do
     response = Crest::Request.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
 
@@ -201,6 +214,20 @@ describe Crest::Request do
     body = JSON.parse(response.body)
 
     body["json"].should eq({"user" => {"name" => "John", "time" => 1455494400}})
+  end
+
+  it "call .post method with form and json with Float" do
+    request = Crest::Request.new(
+      :post,
+      "#{TEST_SERVER_URL}/post",
+      {"latitude" => 49.553516, "longitude" => 25.594767},
+      json: true
+    )
+    response = request.execute
+
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"latitude" => 49.553516, "longitude" => 25.594767})
   end
 
   it "call .post method with form and json string" do
