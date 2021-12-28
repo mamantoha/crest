@@ -37,6 +37,7 @@ module Crest
   # - `form` a hash containing form data (or a raw string)
   # - `params` a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (?)
   #    and a sequence of attribute–value pairs separated by a delimiter (&).
+  # - `params_encoder` params encoder (default to `Crest::FlatParamsEncoder`)
   # - `auth` access authentication method `basic` or `digest` (default to `basic`)
   # - `user` and `password` for authentication
   # - `tls` configuring TLS settings
@@ -108,6 +109,7 @@ module Crest
       @headers = HTTP::Headers.new
       @cookies = HTTP::Cookies.new
       @json = options.fetch(:json, false).as(Bool)
+      @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
       @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
       @redirection_history = [] of Crest::Response
 
@@ -268,7 +270,7 @@ module Crest
     end
 
     private def multipart?(form : Hash) : Bool
-      Crest::ParamsEncoder.flatten_params(form).any?(&.[1].is_a?(File))
+      @params_encoder.flatten_params(form).any?(&.[1].is_a?(File))
     end
 
     private def generate_form_data!(form : Hash) : String?
@@ -281,7 +283,7 @@ module Crest
           multipart?(form) ? Crest::DataForm : Crest::UrlencodedForm
         end
 
-      form = form_class.generate(form)
+      form = form_class.generate(form, @params_encoder)
 
       @form_data = form.form_data
       content_type = form.content_type
@@ -307,7 +309,7 @@ module Crest
 
     # Adds "Cookie" headers for the cookies in this collection to the @header instance and returns it
     private def set_cookies!(cookies) : HTTP::Headers
-      cookies = Crest::ParamsEncoder.flatten_params(cookies)
+      cookies = @params_encoder.flatten_params(cookies)
 
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
@@ -359,7 +361,7 @@ module Crest
 
     # Extract the query parameters and append them to the `url`
     private def process_url_params(params : Hash | String) : String
-      query_string = params.is_a?(String) ? params : Crest::ParamsEncoder.encode(params)
+      query_string = params.is_a?(String) ? params : @params_encoder.encode(params)
 
       if url.includes?("?")
         "&" + query_string

@@ -83,8 +83,9 @@ module Crest
       **options
     )
       @base_url = @url
-      @params = Crest::ParamsEncoder.flatten_params(params).to_h
-      @cookies = Crest::ParamsEncoder.flatten_params(cookies).to_h
+      @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
+      @params = @params_encoder.flatten_params(params).to_h
+      @cookies = @params_encoder.flatten_params(cookies).to_h
       @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
       @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
       @user = options.fetch(:user, nil).as(String | Nil)
@@ -195,12 +196,13 @@ module Crest
         http_client:      @http_client,
         close_connection: @close_connection,
         json:             @json,
+        params_encoder:   @params_encoder,
         user_agent:       @user_agent,
       }
     end
 
     private def merge_params(other : Hash)
-      other = Crest::ParamsEncoder.flatten_params(other).to_h
+      other = @params_encoder.flatten_params(other).to_h
 
       @params.try do |params|
         other = params.merge(other)
@@ -210,7 +212,7 @@ module Crest
     end
 
     private def merge_cookies(other : Hash)
-      other = Crest::ParamsEncoder.flatten_params(other).to_h
+      other = @params_encoder.flatten_params(other).to_h
 
       @cookies.try do |params|
         other = params.merge(other)

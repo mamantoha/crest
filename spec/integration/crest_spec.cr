@@ -136,6 +136,71 @@ describe Crest do
     body.should eq("Client error")
   end
 
+  context "params_encoder" do
+    it "do POST request by default with Crest::FlatParamsEncoder encoder" do
+      response = Crest.post(
+        "#{TEST_SERVER_URL}/post",
+        form: {"size" => "small", "topping" => ["bacon", "onion"]}
+      )
+
+      body = JSON.parse(response.body)
+
+      body["form"].should eq({"size" => "small", "topping[]" => ["bacon", "onion"]})
+    end
+
+    describe Crest::FlatParamsEncoder do
+      it "do GET request" do
+        response = Crest.get(
+          "#{TEST_SERVER_URL}/get",
+          params: {"roll" => ["california", "philadelphia"]},
+          params_encoder: Crest::FlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["path"].should eq("/get?roll%5B%5D=california&roll%5B%5D=philadelphia")
+      end
+
+      it "do POST request" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => ["bacon", "onion"]},
+          params_encoder: Crest::FlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq({"size" => "small", "topping[]" => ["bacon", "onion"]})
+      end
+    end
+
+    describe Crest::NestedParamsEncoder do
+      it "do GET request" do
+        response = Crest.get(
+          "#{TEST_SERVER_URL}/get",
+          params: {"roll" => ["california", "philadelphia"]},
+          params_encoder: Crest::NestedParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["path"].should eq("/get?roll=california&roll=philadelphia")
+      end
+
+      it "do POST request" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => ["bacon", "onion"]},
+          params_encoder: Crest::NestedParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq({"size" => "small", "topping" => ["bacon", "onion"]})
+      end
+    end
+  end
+
   context ".to_curl" do
     it "curlify GET request with params" do
       response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
@@ -172,6 +237,29 @@ describe Crest do
 
       (response.to_curl).should eq(
         "curl -X POST #{TEST_SERVER_URL}/post -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
+      )
+    end
+
+    it "curlify POST request with complex form" do
+      response = Crest.post(
+        "#{TEST_SERVER_URL}/post",
+        form: {"size" => "small", "topping" => ["bacon", "onion"]}
+      )
+
+      (response.to_curl).should eq(
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping%5B%5D=bacon&topping%5B%5D=onion' -H 'Content-Type: application/x-www-form-urlencoded'"
+      )
+    end
+
+    it "curlify POST request with params encoder" do
+      response = Crest.post(
+        "#{TEST_SERVER_URL}/post",
+        form: {"size" => "small", "topping" => ["bacon", "onion"]},
+        params_encoder: Crest::NestedParamsEncoder
+      )
+
+      (response.to_curl).should eq(
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
   end

@@ -15,7 +15,7 @@ module Crest
     end
 
     def parsed_params
-      Crest::ParamsEncoder.encode(@params)
+      @params_encoder.encode(@params)
     end
   end
 end

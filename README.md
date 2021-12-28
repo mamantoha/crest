@@ -306,6 +306,37 @@ end
 response.status_code # => 404
 ```
 
+### Custom serializers
+
+You can build a custom params encoder.
+
+The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder` that implement these methods:
+
+* `#encode(Hash) #=> String`
+* `#decode(String) #=> Hash`
+
+The encoder will affect both how Crest processes query strings and how it serializes POST bodies.
+
+The default encoder is `Crest::FlatParamsEncoder`.
+
+```crystal
+response = Crest.post("http://httpbin.org/post", {"size" => "small", "topping" => ["bacon", "onion"]})
+
+# => curl -X POST http://httpbin.org/post -d 'size=small&topping[]=bacon&topping[]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+Also Crest include `Crest::NestedParamsEncoder` encoder:
+
+```crystal
+response = Crest.post(
+  "http://httpbin.org/post",
+  {"size" => "small", "topping" => ["bacon", "onion"]},
+  params_encoder: Crest::NestedParamsEncoder
+)
+
+# => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
 ### Streaming responses
 
 Normally, when you use `Crest`, `Crest::Request` or `Crest::Resource` methods to retrieve data, the entire response is buffered in memory and returned as the response to the call.
