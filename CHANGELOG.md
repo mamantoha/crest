@@ -14,6 +14,7 @@
     params_encoder: Crest::NestedParamsEncoder
   )
   # => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+  ```
 
 ## [1.0.1][] (2021-12-21)
 

@@ -312,8 +312,8 @@ You can build a custom params encoder.
 
 The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder` that implement these methods:
 
-* `#encode(Hash) #=> String`
-* `#decode(String) #=> Hash`
+- `#encode(Hash) #=> String`
+- `#decode(String) #=> Hash`
 
 The encoder will affect both how Crest processes query strings and how it serializes POST bodies.
 
