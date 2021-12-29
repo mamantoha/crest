@@ -306,7 +306,31 @@ end
 response.status_code # => 404
 ```
 
-### Custom serializers
+### Parameters serializer
+
+`Crest::ParamsEncoder` class is used to encode parameters.
+
+The encoder affect both how `crest` processes query strings and how it serializes POST bodies.
+
+The default encoder is `Crest::FlatParamsEncoder`.
+
+It provides 2 methods:
+
+- `#encode` - converts the given params into a URI query string
+
+  ```crystal
+  Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+  # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+  ```
+
+- `#decode` - converts the given URI query string into a hash
+
+  ```crystal
+  Crest::FlatParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
+  # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
+  ```
+
+#### Custom serializer
 
 You can build a custom params encoder.
 
@@ -314,16 +338,6 @@ The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder
 
 - `#encode(Hash) #=> String`
 - `#decode(String) #=> Hash`
-
-The encoder will affect both how Crest processes query strings and how it serializes POST bodies.
-
-The default encoder is `Crest::FlatParamsEncoder`.
-
-```crystal
-response = Crest.post("http://httpbin.org/post", {"size" => "small", "topping" => ["bacon", "onion"]})
-
-# => curl -X POST http://httpbin.org/post -d 'size=small&topping[]=bacon&topping[]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
-```
 
 Also Crest include `Crest::NestedParamsEncoder` encoder:
 
@@ -362,28 +376,6 @@ end
 ### Advanced Usage
 
 This section covers some of `crest` more advanced features.
-
-#### Parameters serializer
-
-Under the hood `crest` uses `Crest::ParamsEncoder` module to encode param.
-
-The encoder affect both how `crest` processes query strings and how it serializes POST bodies.
-
-`Crest::ParamsEncoder` provides 2 methods:
-
-- `#encode` - converts the given params into a URI query string
-
-  ```crystal
-  Crest::ParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
-  # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
-  ```
-
-- `#decode` - converts the given URI query string into a hash
-
-  ```crystal
-  Crest::ParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
-  # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
-  ```
 
 #### Multipart
 
