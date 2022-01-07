@@ -13,9 +13,29 @@ end
 
 def render_response(env)
   args = env.params.query.to_h
-  form = env.params.body.to_h
+  data = env.params.body.to_s
   json = env.params.json
   method = env.request.method
+
+  raw_params = {} of String => Array(String)
+
+  env.params.body.each do |key, value|
+    if raw_params.has_key?(key)
+      raw_params[key] << value
+    else
+      raw_params[key] = [value]
+    end
+  end
+
+  form = {} of String => String | Array(String)
+
+  raw_params.each do |key, value|
+    if value.size == 1
+      form[key] = value.first
+    else
+      form[key] = value
+    end
+  end
 
   headers = {} of String => String
   env.request.headers.each do |key, value|
@@ -27,8 +47,11 @@ def render_response(env)
     cookies[cookie.name] = cookie.value
   end
 
+  env.response.content_type = "application/json"
+
   {
     "args"    => args,
+    "data"    => data,
     "form"    => form,
     "json"    => json,
     "headers" => headers,
@@ -75,6 +98,11 @@ end
 # Returns request data. Allows only DELETE requests.
 delete "/delete" do |env|
   render_response(env)
+end
+
+# HTML form that submits to /post
+get "/forms/post" do |_env|
+  render "#{__DIR__}/views/forms/post.ecr"
 end
 
 options "/" do |env|

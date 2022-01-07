@@ -367,6 +367,19 @@ describe Crest::Response do
     (response.headers["Allow"]).should eq("OPTIONS, GET")
   end
 
+  context "params_encoder" do
+    describe Crest::NestedParamsEncoder do
+      it "do POST request" do
+        resource = Crest::Resource.new("#{TEST_SERVER_URL}", params_encoder: Crest::NestedParamsEncoder)
+        response = resource["/post"].post({"size" => "small", "topping" => ["bacon", "onion"]})
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq({"size" => "small", "topping" => ["bacon", "onion"]})
+      end
+    end
+  end
+
   it "#to_curl" do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
     response = resource["/get"].get

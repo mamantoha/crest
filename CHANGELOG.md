@@ -2,12 +2,24 @@
 
 ## [...]
 
-* Accept `Float32` and `Float64` as params value
+- Accept `Float32` and `Float64` as params value
+- Add custom params encoders
+
+  It is now possible to use a custom params encoder
+
+  ```crystal
+  response = Crest.post(
+    "http://httpbin.org/post",
+    {"size" => "small", "topping" => ["bacon", "onion"]},
+    params_encoder: Crest::NestedParamsEncoder
+  )
+  # => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+  ```
 
 ## [1.0.1][] (2021-12-21)
 
-* Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
-* Accept `Int64` as params value
+- Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
+- Accept `Int64` as params value
 
 ## [1.0.0][] (2021-10-14)
 
