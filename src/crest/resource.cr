@@ -71,8 +71,8 @@ module Crest
     delegate close, to: http_client
     delegate closed?, to: http_client
 
-    @params = {} of String => ParamsValue
-    @cookies = {} of String => ParamsValue
+    @params = {} of String => Crest::ParamsValue
+    @cookies = {} of String => Crest::ParamsValue
 
     def initialize(
       @url : String,

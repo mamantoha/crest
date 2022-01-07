@@ -31,7 +31,7 @@ module Crest
       Crest::FlatParamsEncoder.flatten_params(@params)
     end
 
-    private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : ParamsValue)
+    private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : Crest::ParamsValue)
       formdata.field(name.to_s, value.to_s)
     end
 
