@@ -86,6 +86,7 @@ Optional parameters:
 - `:headers` - a hash containing the request headers
 - `:cookies` - a hash containing the request cookies
 - `:params` - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
+- `params_encoder` params encoder (default to `Crest::FlatParamsEncoder`)
 - `auth` - access authentication method `basic` or `digest` (default to `basic`)
 - `:user` and `:password` - for authentication
 - `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
