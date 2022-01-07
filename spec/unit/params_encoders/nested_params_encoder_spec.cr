@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "../../spec_helper"
 
 describe Crest::NestedParamsEncoder do
   describe "#encode" do

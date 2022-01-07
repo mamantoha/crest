@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "../../spec_helper"
 
 describe Crest::FlatParamsEncoder do
   describe "#encode" do
@@ -119,7 +119,7 @@ describe Crest::FlatParamsEncoder do
     end
 
     it "transform deeply nested param with file" do
-      file = File.open("#{__DIR__}/../support/fff.png")
+      file = File.open("#{__DIR__}/../../support/fff.png")
       input = {:key1 => {:key2 => {:key3 => file}}}
       output = [{"key1[key2][key3]", file}]
 
@@ -134,7 +134,7 @@ describe Crest::FlatParamsEncoder do
     end
 
     it "transform nested params with files" do
-      file = File.open("#{__DIR__}/../support/fff.png")
+      file = File.open("#{__DIR__}/../../support/fff.png")
 
       input = {:key1 => {:key2 => file}}
       output = [{"key1[key2]", file}]
@@ -143,7 +143,7 @@ describe Crest::FlatParamsEncoder do
     end
 
     it "transform nested param with text value and file" do
-      file = File.open("#{__DIR__}/../support/fff.png")
+      file = File.open("#{__DIR__}/../../support/fff.png")
       input = {"user" => {"name" => "Tom", "file" => file}}
       output = [{"user[name]", "Tom"}, {"user[file]", file}]
 
