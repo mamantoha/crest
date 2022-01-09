@@ -2,10 +2,12 @@
 
 ## [...]
 
-- Accept `Float32` and `Float64` as params value
-- Add custom params encoders
+- Tested with Crystal 1.3.0
+- Accept `Float32` and `Float64` as params value by @mamantoha in https://github.com/mamantoha/crest/pull/166
+- Add custom params encoders by @mamantoha in https://github.com/mamantoha/crest/pull/167
+  (thanks @cyangle for the idea in https://github.com/mamantoha/crest/pull/162)
 
-  It is now possible to use a custom params encoder
+  It is now possible to use a custom params encoder. For example `Crest::NestedParamsEncoder`:
 
   ```crystal
   response = Crest.post(
@@ -16,10 +18,20 @@
   # => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
   ```
 
+  By defaulf `Crest::NestedParamsEncoder` is used:
+
+  ```crystal
+  response = Crest.post(
+    "http://httpbin.org/post",
+    {"size" => "small", "topping" => ["bacon", "onion"]}
+  )
+  # => curl -X POST http://httpbin.org/post -d 'size=small&topping[]=bacon&topping[]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+  ```
+
 ## [1.0.1][] (2021-12-21)
 
 - Support raw string query params by @cyangle in https://github.com/mamantoha/crest/pull/162
-- Accept `Int64` as params value
+- Accept `Int64` as params value by @mamantoha in https://github.com/mamantoha/crest/pull/164
 
 ## [1.0.0][] (2021-10-14)
 
