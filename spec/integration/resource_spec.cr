@@ -395,4 +395,14 @@ describe Crest::Response do
       (response.body).should eq("Crest")
     end
   end
+
+  context "read_timeout" do
+    it "sets read timeout" do
+      resource = Crest::Resource.new(TEST_SERVER_URL, read_timeout: 1)
+
+      expect_raises IO::TimeoutError do
+        resource["/delay/2"].get
+      end
+    end
+  end
 end

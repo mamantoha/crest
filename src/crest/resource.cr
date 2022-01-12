@@ -66,7 +66,7 @@ module Crest
       logging, logger,
       p_addr, p_port, p_user, p_pass,
       handle_errors, close_connection,
-      json, user_agent
+      json, user_agent, read_timeout
 
     delegate close, to: http_client
     delegate closed?, to: http_client
@@ -100,6 +100,7 @@ module Crest
       @close_connection = options.fetch(:close_connection, false).as(Bool)
       @json = options.fetch(:json, false).as(Bool)
       @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
+      @read_timeout = options.fetch(:read_timeout, nil).as(Int32 | Nil)
 
       yield self
     end
@@ -198,6 +199,7 @@ module Crest
         json:             @json,
         params_encoder:   @params_encoder,
         user_agent:       @user_agent,
+        read_timeout:     @read_timeout,
       }
     end
 
