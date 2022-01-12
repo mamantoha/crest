@@ -127,6 +127,15 @@ describe Crest::Request do
     end
   end
 
+  it "sets read_timeout for HTTP::Client" do
+    url = "#{TEST_SERVER_URL}/delay/2"
+    request = Crest::Request.new(:get, url, read_timeout: 1)
+
+    expect_raises IO::TimeoutError do
+      request.execute
+    end
+  end
+
   it "do POST request" do
     response = Crest::Request.execute(:post, "#{TEST_SERVER_URL}/post", {:title => "Title"})
 

@@ -50,6 +50,7 @@ module Crest
   # - `handle_errors` error handling (default to `true`)
   # - `close_connection` close the connection after request is completed (default to `true`)
   # - `http_client` instance of `HTTP::Client`
+  # - `read_timeout` timeout in seconds
   class Request
     @method : String
     @url : String
@@ -74,10 +75,11 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
     @close_connection : Bool
+    @read_timeout : Int32?
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
-      auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent
+      auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent, read_timeout
 
     property redirection_history, user, password
 
@@ -136,6 +138,7 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
       @close_connection = options.fetch(:close_connection, true).as(Bool)
+      @read_timeout = options.fetch(:read_timeout, nil).as(Int32 | Nil)
 
       @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
 
@@ -185,6 +188,8 @@ module Crest
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
 
+      @http_client.read_timeout = @read_timeout.as(Int32).seconds unless @read_timeout.nil?
+
       http_response = @http_client.exec(@http_request)
 
       process_result(http_response)
@@ -199,6 +204,8 @@ module Crest
       @logger.request(self) if @logging
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
+
+      @http_client.read_timeout = @read_timeout.as(Int32).seconds unless @read_timeout.nil?
 
       @http_client.exec(@http_request) do |http_response|
         response = process_result(http_response, &block)
