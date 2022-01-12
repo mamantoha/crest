@@ -4,6 +4,7 @@
 
 - Tested with Crystal 1.3.0
 - Accept `Float32` and `Float64` as params value by @mamantoha in https://github.com/mamantoha/crest/pull/166
+- Add `read_timeout` support by @kates in https://github.com/mamantoha/crest/pull/169
 - Add custom params encoders by @mamantoha in https://github.com/mamantoha/crest/pull/167
   (thanks @cyangle for the idea in https://github.com/mamantoha/crest/pull/162)
 
