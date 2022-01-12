@@ -40,12 +40,9 @@ class CustomParamsEncoder < Crest::ParamsEncoder
     subkeys.each_with_index do |subkey, i|
       is_last_subkey = (i == subkeys.size - 1)
       subkey = subkey[0]
-      p! subkey
 
       if match = subkey.match(ARRAY_REGEX)
-        p! match
         subkey = match.pre_match
-        p! subkey
       end
 
       context = new_context(context, subkey) unless is_last_subkey
