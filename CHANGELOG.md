@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.1.0][] (2022-01-23)
+
 - Tested with Crystal 1.3.0
 - Accept `Float32` and `Float64` as params value by @mamantoha in https://github.com/mamantoha/crest/pull/166
 - Add `read_timeout` support by @kates in https://github.com/mamantoha/crest/pull/169
@@ -311,7 +313,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.0.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/mamantoha/crest/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/mamantoha/crest/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mamantoha/crest/compare/v0.27.1...v1.0.0
 [0.27.1]: https://github.com/mamantoha/crest/compare/v0.27.0...v0.27.1
