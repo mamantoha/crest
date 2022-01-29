@@ -29,6 +29,13 @@ describe Crest::ParamsDecoder do
     Crest::ParamsDecoder.decode(query).should eq(params)
   end
 
+  it "decodes array with numeric keys" do
+    query = "a[1]=one&a[2]=two&a[3]=three"
+    params = {"a" => ["one", "two", "three"]}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
   it "decodes hashes" do
     query = "user[login]=admin"
     params = {"user" => {"login" => "admin"}}
@@ -53,27 +60,6 @@ describe Crest::ParamsDecoder do
   it "decodes params with nil" do
     query = "foo=&bar=2"
     params = {"foo" => nil, "bar" => "2"}
-
-    Crest::ParamsDecoder.decode(query).should eq(params)
-  end
-
-  it "decodes array" do
-    query = "a[]=one&a[]=two&a[]=three"
-    params = {"a" => ["one", "two", "three"]}
-
-    Crest::ParamsDecoder.decode(query).should eq(params)
-  end
-
-  it "decodes array with numeric keys" do
-    query = "a[1]=one&a[2]=two&a[3]=three"
-    params = {"a" => ["one", "two", "three"]}
-
-    Crest::ParamsDecoder.decode(query).should eq(params)
-  end
-
-  it "decodes array without []" do
-    query = "a=1&a=2&a=3"
-    params = {"a" => ["1", "2", "3"]}
 
     Crest::ParamsDecoder.decode(query).should eq(params)
   end
