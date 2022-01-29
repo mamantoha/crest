@@ -1,7 +1,7 @@
 module Crest
-  class EnumeratedNestedParamsEncoder < Crest::ParamsEncoder
+  class EnumeratedFlatParamsEncoder < Crest::ParamsEncoder
     # ```
-    # Crest::EnumeratedNestedParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+    # Crest::EnumeratedFlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
     # # => 'a[1]=one&a[2]=two&a[3]=three&b=true&c=C&d=1'
     # ```
     def encode(params : Hash) : String
@@ -13,7 +13,7 @@ module Crest
     end
 
     # ```
-    # Crest::EnumeratedNestedParamsEncoder.flatten_params({:key1 => {:key2 => "123"}})
+    # Crest::EnumeratedFlatParamsEncoder.flatten_params({:key1 => {:key2 => "123"}})
     # # => [{"key1[key2]", "123"}]
     # ```
     def self.flatten_params(object : Hash, parent_key : String? = nil) : Array(Tuple(String, Crest::ParamsValue))
@@ -32,7 +32,7 @@ module Crest
     end
 
     # ```
-    # Crest::EnumeratedNestedParamsEncoder.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
+    # Crest::EnumeratedFlatParamsEncoder.flatten_params({:key1 => {:arr => ["1", "2", "3"]}})
     # # => [{"key1[arr][1]", "1"}, {"key1[arr][2]", "2"}, {"key1[arr][3]", "3"}]
     # ```
     def self.flatten_params(object : Array, parent_key : String? = nil) : Array(Tuple(String, Crest::ParamsValue))
