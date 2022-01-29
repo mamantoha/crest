@@ -1,10 +1,11 @@
 require "../../spec_helper"
 
+# EnumeratedFlatParamsEncoder
 class CustomParamsEncoder < Crest::ParamsEncoder
   alias Type = Nil | String | Array(Type) | Hash(String, Type)
 
-  SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\d+\])?/
-  ARRAY_REGEX   = /[\[\d+\]]+\Z/
+  SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
+  ARRAY_REGEX   = /[\[\]]+\Z/
 
   # ```
   # CustomParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
@@ -23,51 +24,76 @@ class CustomParamsEncoder < Crest::ParamsEncoder
   # # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
   # ```
   def decode(query : String) : Hash
-    query.split("&").reduce({} of String => Type) do |params, pair|
-      key, value = pair.split("=", 2)
+    params = {} of String => Type
+
+    query.split('&').each do |pair|
+      next if pair.empty?
+
+      key, value = pair.split('=', 2)
       key = URI.decode(key)
       value = URI.decode(value)
-
-      decode_pair!(params, key, value)
-
-      params
+      decode_pair(key, value, params)
     end
+
+    dehash(params).as(Hash)
   end
 
-  private def decode_pair!(context : Hash(String, Type), key : String, value : String)
+  private def decode_pair(key : String, value : String, context : Hash(String, Type))
     subkeys = key.scan(SUBKEYS_REGEX)
 
     subkeys.each_with_index do |subkey, i|
-      is_last_subkey = (i == subkeys.size - 1)
+      is_array = false
+
+      last_subkey = (i == subkeys.size - 1)
       subkey = subkey[0]
 
-      if match = subkey.match(ARRAY_REGEX)
+      if (match = subkey.match(ARRAY_REGEX))
+        is_array = true
         subkey = match.pre_match
       end
 
-      context = new_context(context, subkey) unless is_last_subkey
-
-      add_to_context(context, value, subkey) if is_last_subkey
+      context = prepare_context(context, subkey, is_array, last_subkey)
+      add_to_context(is_array, context, value, subkey) if last_subkey
     end
   end
 
-  private def new_context(context, subkey : String)
-    context[subkey] ||= {} of String => Type if context.is_a?(Hash)
+  private def prepare_context(context, subkey : String, is_array : Bool, last_subkey : Bool)
+    if !last_subkey || is_array
+      context = new_context(subkey, is_array, context) if context.is_a?(Hash)
+    end
+
+    if context.is_a?(Array) && !is_array
+      context = match_context(context, subkey)
+    end
+
+    context
   end
 
-  private def add_to_context(context, value : String, subkey : String)
-    value = value.empty? ? nil : value
+  private def new_context(subkey, is_array : Bool, context)
+    value_type = is_array ? Array(Type) : Hash(String, Type)
 
-    if context.is_a?(Hash)
-      if context.has_key?(subkey)
-        if context[subkey].is_a?(Array)
-          context[subkey].as(Array) << value
-        else
-          context[subkey] = [context[subkey].as(Type), value.as(Type)]
-        end
-      else
-        context[subkey] = value
-      end
+    context[subkey] ||= value_type.new
+  end
+
+  def match_context(context, subkey)
+    context << {} of String => Type if !context.last?.is_a?(Hash) || context.last.as(Hash).has_key?(subkey)
+    context.last?
+  end
+
+  private def add_to_context(is_array : Bool, context, value : String, subkey : String)
+    is_array ? (context.as(Array) << value) : (context.as(Hash)[subkey] = value)
+  end
+
+  # Converts a nested hash with purely numeric keys into an array.
+  private def dehash(hash, depth = 0) : Array(Type) | Hash(String, Type)
+    hash.each do |key, value|
+      hash[key] = dehash(value, depth + 1) if value.is_a?(Hash)
+    end
+
+    if depth.positive? && !hash.empty? && hash.keys.all? { |k| k =~ /^\d+$/ }
+      hash.map(&.last)
+    else
+      hash
     end
   end
 
@@ -98,16 +124,35 @@ class CustomParamsEncoder < Crest::ParamsEncoder
     object.each_with_index(1).reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, (item, index)|
       processed_key = parent_key ? "#{parent_key}[#{index}]" : ""
 
-      memo << {processed_key, item}
+      case item
+      when Hash
+        memo += flatten_params(item, processed_key)
+      else
+        memo << {processed_key, item}
+      end
     end
   end
 end
 
 describe "Custom params encoder spec" do
   describe ".flatten_params" do
+    it "transform hash param" do
+      input = {"first_name" => "Thomas", "last_name" => "Anders"}
+      output = [{"first_name", "Thomas"}, {"last_name", "Anders"}]
+
+      CustomParamsEncoder.flatten_params(input).should eq(output)
+    end
+
     it "transform nested param with array" do
       input = {:key1 => {:arr => ["1", "2", "3"]}, :key2 => "123"}
       output = [{"key1[arr][1]", "1"}, {"key1[arr][2]", "2"}, {"key1[arr][3]", "3"}, {"key2", "123"}]
+
+      CustomParamsEncoder.flatten_params(input).should eq(output)
+    end
+
+    it "transform nested param with array of hashes" do
+      input = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => 1, "to" => 2}]}
+      output = [{"routes[1][from]", "A"}, {"routes[1][to]", "B"}, {"routes[2][from]", 1}, {"routes[2][to]", 2}]
 
       CustomParamsEncoder.flatten_params(input).should eq(output)
     end
@@ -121,13 +166,31 @@ describe "Custom params encoder spec" do
 
       CustomParamsEncoder.encode(input).should eq(output)
     end
+
+    it "encodes array with hashes" do
+      input = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => 1, "to" => 2}]}
+      # "routes[1][from]=A&routes[1][to]=B&routes[2][from]=1&routes[2][to]=2"
+      output = "routes%5B1%5D%5Bfrom%5D=A&routes%5B1%5D%5Bto%5D=B&routes%5B2%5D%5Bfrom%5D=1&routes%5B2%5D%5Bto%5D=2"
+
+      CustomParamsEncoder.encode(input).should eq(output)
+    end
   end
 
   describe "#decode" do
-    it "decodes array" do
-      query = "a[1]=one&a[2]=two&a[3]=three"
+    it "decodes array", focus: false do
+      # query = "a[1]=one&a[2]=two&a[3]=three"
+      query = "a[]=one&a[]=two&a[]=three"
       params = {"a" => ["one", "two", "three"]}
 
+      CustomParamsEncoder.decode(query).should eq(params)
+    end
+
+    it "decodes array with hashes", focus: false do
+      query = "routes[1][from]=A&routes[1][to]=B&routes[2][from]=X&routes[2][to]=Y"
+      # query = "routes[][from]=A&routes[][to]=B&routes[][from]=X&routes[][to]=Y"
+      params = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => "X", "to" => "Y"}]}
+
+      # CustomParamsEncoder.decode(query)
       CustomParamsEncoder.decode(query).should eq(params)
     end
   end
