@@ -178,19 +178,30 @@ describe "Custom params encoder spec" do
 
   describe "#decode" do
     it "decodes array" do
-      # query = "a[1]=one&a[2]=two&a[3]=three"
       query = "a[]=one&a[]=two&a[]=three"
       params = {"a" => ["one", "two", "three"]}
 
       CustomParamsEncoder.decode(query).should eq(params)
     end
 
+    it "decodes array with numeric keys" do
+      query = "a[1]=one&a[2]=two&a[3]=three"
+      params = {"a" => ["one", "two", "three"]}
+
+      CustomParamsEncoder.decode(query).should eq(params)
+    end
+
     it "decodes array with hashes" do
-      query = "routes[1][from]=A&routes[1][to]=B&routes[2][from]=X&routes[2][to]=Y"
-      # query = "routes[][from]=A&routes[][to]=B&routes[][from]=X&routes[][to]=Y"
+      query = "routes[][from]=A&routes[][to]=B&routes[][from]=X&routes[][to]=Y"
       params = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => "X", "to" => "Y"}]}
 
-      # CustomParamsEncoder.decode(query)
+      CustomParamsEncoder.decode(query).should eq(params)
+    end
+
+    it "decodes array wuth numeric keys and hashes" do
+      query = "routes[1][from]=A&routes[1][to]=B&routes[2][from]=X&routes[2][to]=Y"
+      params = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => "X", "to" => "Y"}]}
+
       CustomParamsEncoder.decode(query).should eq(params)
     end
   end
