@@ -316,21 +316,12 @@ The encoder affect both how `crest` processes query strings and how it serialize
 
 The default encoder is `Crest::FlatParamsEncoder`.
 
-It provides 2 methods:
+It provides `#encode` method, which converts the given params into a URI query string:
 
-- `#encode` - converts the given params into a URI query string
-
-  ```crystal
-  Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
-  # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
-  ```
-
-- `#decode` - converts the given URI query string into a hash
-
-  ```crystal
-  Crest::FlatParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
-  # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
-  ```
+```crystal
+Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+# => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+```
 
 #### Custom serializer
 
