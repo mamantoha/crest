@@ -2,6 +2,26 @@
 
 ## [...]
 
+- **(breaking-change)** `#decode` method extracted from `Crest::ParamsEncoder` to `Crest::ParamsDecoder` by @mamantoha in https://github.com/mamantoha/crest/pull/170
+
+  ```crystal
+  query = "size=small&topping[1]=bacon&topping[2]=onion"
+  Crest::ParamsDecoder.decode(query)
+  # => {"size" => "small", "topping" => ["bacon", "onion"]}
+
+  ```
+
+- Add `Crest::EnumeratedFlatParamsEncoder` by @mamantoha in https://github.com/mamantoha/crest/pull/170
+
+  ```crystal
+  response = Crest.post(
+    "http://httpbin.org/post",
+    {"size" => "small", "topping" => ["bacon", "onion"]},
+    params_encoder: Crest::EnumeratedFlatParamsEncoder
+  )
+  # => curl -X POST http://httpbin.org/post -d 'size=small&topping[1]=bacon&topping[2]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+  ```
+
 ## [1.1.0][] (2022-01-23)
 
 - Tested with Crystal 1.3.0
