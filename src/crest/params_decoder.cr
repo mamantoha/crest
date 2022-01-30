@@ -1,4 +1,5 @@
 module Crest
+  # Module for decoding query-string into parameters.
   module ParamsDecoder
     extend self
 

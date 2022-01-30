@@ -624,6 +624,16 @@ Crest::Curlify.new(request).to_curl
 # => curl -X GET http://httpbin.org
 ```
 
+#### Params decoder
+
+`Crest::ParamsDecoder` is a module for decoding query-string into parameters.
+
+```crystal
+query = "size=small&topping[1]=bacon&topping[2]=onion"
+Crest::ParamsDecoder.decode(query)
+# => {"size" => "small", "topping" => ["bacon", "onion"]}
+```
+
 ## Development
 
 Install dependencies:
