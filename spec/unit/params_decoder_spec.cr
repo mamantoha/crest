@@ -37,8 +37,8 @@ describe Crest::ParamsDecoder do
   end
 
   it "decodes hashes" do
-    query = "user[login]=admin"
-    params = {"user" => {"login" => "admin"}}
+    query = "a[b1]=one&a[b2]=two&a[b][c]=foo"
+    params = {"a" => {"b1" => "one", "b2" => "two", "b" => {"c" => "foo"}}}
 
     Crest::ParamsDecoder.decode(query).should eq(params)
   end
@@ -74,6 +74,27 @@ describe Crest::ParamsDecoder do
   it "decodes array wuth numeric keys and hashes" do
     query = "routes[1][from]=A&routes[1][to]=B&routes[2][from]=X&routes[2][to]=Y"
     params = {"routes" => [{"from" => "A", "to" => "B"}, {"from" => "X", "to" => "Y"}]}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
+  it "decodes nested ignores malformed keys" do
+    query = "=1&[]=2"
+    params = {} of String => Crest::ParamsDecoder::Type
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
+  it "decodes nested subkeys dont have to be in brackets" do
+    query = "a[b]c[d]e=1"
+    params = {"a" => {"b" => {"c" => {"d" => {"e" => "1"}}}}}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
+  it "decodes nested final value overrides any type" do
+    query = "a[b][c]=1&a[b]=2"
+    params = {"a" => {"b" => [{"c" => "1"}, "2"]}}
 
     Crest::ParamsDecoder.decode(query).should eq(params)
   end

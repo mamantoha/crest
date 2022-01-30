@@ -17,7 +17,7 @@ module Crest
     # Crest::ParamsDecoder.decode("a=one&a=two&a=three&b=true&c=C&d=1")
     # # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
     # ```
-    def decode(query : String) : Hash
+    def decode(query : String) : Hash(String, Type)
       params = {} of String => Type
 
       query.split('&').each do |pair|
@@ -32,7 +32,7 @@ module Crest
       dehash(params).as(Hash)
     end
 
-    private def decode_pair(key : String, value : String, context : Hash(String, Type))
+    private def decode_pair(key : String, value : String, context : Hash(String, Type)) : Nil
       subkeys = key.scan(SUBKEYS_REGEX)
 
       subkeys.each_with_index do |subkey, i|
@@ -51,7 +51,7 @@ module Crest
       end
     end
 
-    private def prepare_context(context, subkey : String, is_array : Bool, last_subkey : Bool)
+    private def prepare_context(context, subkey : String, is_array : Bool, last_subkey : Bool) : Hash(String, Type) | Array(Type) | String | Nil
       if !last_subkey || is_array
         context = new_context(subkey, is_array, context) if context.is_a?(Hash)
       end
@@ -63,18 +63,18 @@ module Crest
       context
     end
 
-    private def new_context(subkey, is_array : Bool, context)
+    private def new_context(subkey, is_array : Bool, context) : Hash(String, Type) | Array(Type) | String
       value_type = is_array ? Array(Type) : Hash(String, Type)
 
       context[subkey] ||= value_type.new
     end
 
-    def match_context(context, subkey)
+    def match_context(context, subkey) : Type | Nil
       context << {} of String => Type if !context.last?.is_a?(Hash) || context.last.as(Hash).has_key?(subkey)
       context.last?
     end
 
-    private def add_to_context(is_array : Bool, context, value : String, subkey : String)
+    private def add_to_context(is_array : Bool, context, value : String, subkey : String) : Nil
       value = value.empty? ? nil : value
 
       if is_array
@@ -83,7 +83,7 @@ module Crest
         if context.is_a?(Hash)
           if context.has_key?(subkey)
             if context[subkey].is_a?(Array)
-              context[subkey].as(Array) << value
+              context[subkey].as(Array) << value.as(Type)
             else
               context[subkey] = [context[subkey].as(Type), value.as(Type)]
             end
@@ -92,10 +92,12 @@ module Crest
           end
         end
       end
+
+      nil
     end
 
     # Converts a nested hash with purely numeric keys into an array.
-    private def dehash(hash, depth = 0) : Array(Type) | Hash(String, Type)
+    private def dehash(hash, depth = 0) : Hash(String, Type) | Array(Type)
       hash.each do |key, value|
         hash[key] = dehash(value, depth + 1) if value.is_a?(Hash)
       end
