@@ -316,32 +316,22 @@ The encoder affect both how `crest` processes query strings and how it serialize
 
 The default encoder is `Crest::FlatParamsEncoder`.
 
-It provides 2 methods:
+It provides `#encode` method, which converts the given params into a URI query string:
 
-- `#encode` - converts the given params into a URI query string
-
-  ```crystal
-  Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
-  # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
-  ```
-
-- `#decode` - converts the given URI query string into a hash
-
-  ```crystal
-  Crest::FlatParamsEncoder.decode("a[]=one&a[]=two&a[]=three&b=true&c=C&d=1")
-  # => {"a" => ["one", "two", "three"], "b" => "true", "c" => "C", "d" => "1"}
-  ```
+```crystal
+Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
+# => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
+```
 
 #### Custom serializer
 
 You can build a custom params encoder.
 
-The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder` that implement these methods:
+The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder` that implement `#encode(Hash) #=> String`
 
-- `#encode(Hash) #=> String`
-- `#decode(String) #=> Hash`
+Also Crest include other encoders.
 
-Also Crest include `Crest::NestedParamsEncoder` encoder:
+`Crest::NestedParamsEncoder`
 
 ```crystal
 response = Crest.post(
@@ -351,6 +341,18 @@ response = Crest.post(
 )
 
 # => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+`Crest::EnumeratedFlatParamsEncoder`
+
+```crystal
+response = Crest.post(
+  "http://httpbin.org/post",
+  {"size" => "small", "topping" => ["bacon", "onion"]},
+  params_encoder: Crest::EnumeratedFlatParamsEncoder
+)
+
+# => curl -X POST http://httpbin.org/post -d 'size=small&topping[1]=bacon&topping[2]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
 ```
 
 ### Streaming responses
@@ -620,6 +622,16 @@ Also you can directly use `Crest::Curlify` which accept instance of `Crest::Requ
 request = Crest::Request.new(:get, "http://httpbin.org")
 Crest::Curlify.new(request).to_curl
 # => curl -X GET http://httpbin.org
+```
+
+#### Params decoder
+
+`Crest::ParamsDecoder` is a module for decoding query-string into parameters.
+
+```crystal
+query = "size=small&topping[1]=bacon&topping[2]=onion"
+Crest::ParamsDecoder.decode(query)
+# => {"size" => "small", "topping" => ["bacon", "onion"]}
 ```
 
 ## Development

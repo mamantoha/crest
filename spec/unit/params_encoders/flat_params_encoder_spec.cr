@@ -52,57 +52,6 @@ describe Crest::FlatParamsEncoder do
     end
   end
 
-  describe "#decode" do
-    it "decodes simple params" do
-      query = "foo=1&bar=2"
-      params = {"foo" => "1", "bar" => "2"}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes params with nil" do
-      query = "foo=&bar=2"
-      params = {"foo" => nil, "bar" => "2"}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes array" do
-      query = "a[]=one&a[]=two&a[]=three"
-      params = {"a" => ["one", "two", "three"]}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes array without []" do
-      query = "a=1&a=2&a=3"
-      params = {"a" => ["1", "2", "3"]}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes hashes" do
-      query = "user[login]=admin"
-      params = {"user" => {"login" => "admin"}}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes hashes with nested array" do
-      query = "user[a]=1&user[a]=2&user[a]=3"
-      params = {"user" => {"a" => ["1", "2", "3"]}}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-
-    it "decodes escaped string" do
-      query = "user%5Blogin%5D=admin"
-      params = {"user" => {"login" => "admin"}}
-
-      Crest::FlatParamsEncoder.decode(query).should eq(params)
-    end
-  end
-
   describe "#flatten_params" do
     it "transform nested param" do
       input = {:key1 => {:key2 => "123"}}
