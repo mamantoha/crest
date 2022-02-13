@@ -22,6 +22,8 @@
   # => curl -X POST http://httpbin.org/post -d 'size=small&topping[1]=bacon&topping[2]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
   ```
 
+- Expose timeout options by @mamantoha in https://github.com/mamantoha/crest/pull/171
+
 ## [1.1.0][] (2022-01-23)
 
 - Tested with Crystal 1.3.0
