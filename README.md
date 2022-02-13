@@ -99,7 +99,9 @@ Optional parameters:
 - `:handle_errors` - error handling (default to `true`)
 - `:close_connection` close the connection after request is completed (default to `true`)
 - `:http_client` - instance of `HTTP::Client`
-- `read_timeout` timeout in seconds (default to `nil`)
+- `read_timeout` read timeout (default to `nil`)
+- `write_timeout` write timeout (default to `nil`)
+- `connect_timeout` connect timeout (default to `nil`)
 
 More detailed examples:
 
