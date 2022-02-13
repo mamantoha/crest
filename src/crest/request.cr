@@ -50,7 +50,9 @@ module Crest
   # - `handle_errors` error handling (default to `true`)
   # - `close_connection` close the connection after request is completed (default to `true`)
   # - `http_client` instance of `HTTP::Client`
-  # - `read_timeout` timeout in seconds (default to `nil`)
+  # - `read_timeout` read timeout (default to `nil`)
+  # - `write_timeout` write timeout (default to `nil`)
+  # - `connect_timeout` connect timeout (default to `nil`)
   class Request
     @method : String
     @url : String
@@ -75,11 +77,14 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
     @close_connection : Bool
-    @read_timeout : Int32?
+    @read_timeout : Crest::TimeoutValue?
+    @write_timeout : Crest::TimeoutValue?
+    @connect_timeout : Crest::TimeoutValue?
 
     getter http_client, http_request, method, url, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
-      auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent, read_timeout
+      auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent,
+      read_timeout, write_timeout, connect_timeout
 
     property redirection_history, user, password
 
@@ -138,11 +143,14 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
       @close_connection = options.fetch(:close_connection, true).as(Bool)
-      @read_timeout = options.fetch(:read_timeout, nil).as(Int32 | Nil)
+      @read_timeout = options.fetch(:read_timeout, nil).as(Crest::TimeoutValue?)
+      @write_timeout = options.fetch(:write_timeout, nil).as(TimeoutValue?)
+      @connect_timeout = options.fetch(:connect_timeout, nil).as(TimeoutValue?)
 
       @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
 
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
+      set_timeouts!
 
       yield self
     end
@@ -188,8 +196,6 @@ module Crest
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
 
-      @http_client.read_timeout = @read_timeout.as(Int32).seconds unless @read_timeout.nil?
-
       http_response = @http_client.exec(@http_request)
 
       process_result(http_response)
@@ -204,8 +210,6 @@ module Crest
       @logger.request(self) if @logging
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
-
-      @http_client.read_timeout = @read_timeout.as(Int32).seconds unless @read_timeout.nil?
 
       @http_client.exec(@http_request) do |http_response|
         response = process_result(http_response, &block)
@@ -364,6 +368,12 @@ module Crest
       return unless p_addr && p_port
 
       @proxy = HTTP::Proxy::Client.new(p_addr, p_port, username: p_user, password: p_pass)
+    end
+
+    private def set_timeouts!
+      @read_timeout.try { |timeout| @http_client.read_timeout = timeout }
+      @write_timeout.try { |timeout| @http_client.write_timeout = timeout }
+      @connect_timeout.try { |timeout| @http_client.connect_timeout = timeout }
     end
 
     # Extract the query parameters and append them to the `url`
