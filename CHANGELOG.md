@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.2.0][] (2022-02-14)
+
 - **(breaking-change)** `#decode` method extracted from `Crest::ParamsEncoder` to `Crest::ParamsDecoder` by @mamantoha in https://github.com/mamantoha/crest/pull/170
 
   ```crystal
@@ -335,7 +337,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.1.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.2.0...HEAD
+[1.1.0]: https://github.com/mamantoha/crest/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/mamantoha/crest/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/mamantoha/crest/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mamantoha/crest/compare/v0.27.1...v1.0.0
