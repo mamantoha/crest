@@ -86,8 +86,8 @@ Optional parameters:
 - `:headers` - a hash containing the request headers
 - `:cookies` - a hash containing the request cookies
 - `:params` - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
-- `params_encoder` params encoder (default to `Crest::FlatParamsEncoder`)
-- `auth` - access authentication method `basic` or `digest` (default to `basic`)
+- `:params_encoder` params encoder (default to `Crest::FlatParamsEncoder`)
+- `:auth` - access authentication method `basic` or `digest` (default to `basic`)
 - `:user` and `:password` - for authentication
 - `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 - `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
@@ -97,11 +97,11 @@ Optional parameters:
 - `:logging` - enable logging (default to `false`)
 - `:logger` - set logger (default to `Crest::CommonLogger`)
 - `:handle_errors` - error handling (default to `true`)
-- `:close_connection` close the connection after request is completed (default to `true`)
+- `:close_connection` - close the connection after request is completed (default to `true`)
 - `:http_client` - instance of `HTTP::Client`
-- `read_timeout` read timeout (default to `nil`)
-- `write_timeout` write timeout (default to `nil`)
-- `connect_timeout` connect timeout (default to `nil`)
+- `:read_timeout` - read timeout (default to `nil`)
+- `:write_timeout` - write timeout (default to `nil`)
+- `:connect_timeout` - connect timeout (default to `nil`)
 
 More detailed examples:
 
