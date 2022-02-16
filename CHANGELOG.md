@@ -2,6 +2,10 @@
 
 ## [...]
 
+- Bug fixes and stability improvements for `Crest::Requests`
+- Pass `tsl` parameter in redirects
+- Set `HTTP::Client#tsl` only for https requests
+
 ## [1.2.0][] (2022-02-14)
 
 - **(breaking-change)** `#decode` method extracted from `Crest::ParamsEncoder` to `Crest::ParamsDecoder` by @mamantoha in https://github.com/mamantoha/crest/pull/170
