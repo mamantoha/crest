@@ -81,7 +81,7 @@ module Crest
     @write_timeout : Crest::TimeoutValue?
     @connect_timeout : Crest::TimeoutValue?
 
-    getter http_client, http_request, method, url, form_data, headers, cookies,
+    getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
       auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent,
       read_timeout, write_timeout, connect_timeout
@@ -241,13 +241,19 @@ module Crest
 
     private def new_http_client : HTTP::Client
       uri = URI.parse(@url)
-      HTTP::Client.new(uri, tls: @tls)
+      uri = normalize_uri(uri)
+
+      if uri.scheme == "https"
+        HTTP::Client.new(uri, tls: @tls)
+      else
+        HTTP::Client.new(uri)
+      end
     end
 
     private def new_http_request(method, url, headers, body) : HTTP::Request
-      url = normalize_url(url)
+      request_target = URI.parse(url).request_target
 
-      HTTP::Request.new(method, url, headers, body).tap do |request|
+      HTTP::Request.new(method, request_target, headers, body).tap do |request|
         # Set default headers
         request.headers["Accept"] ||= @json ? "application/json" : "*/*"
         request.headers["Host"] ||= host_header
@@ -255,17 +261,17 @@ module Crest
       end
     end
 
-    # Normalizes a `url` using the Punycode algorithm as necessary.
-    # The result will be a ASCII-only string.
-    private def normalize_url(url : String) : String
-      uri = URI.parse(url)
+    # Normalizes a `uri` using the Punycode algorithm as necessary.
+    # To support IDN (https://en.wikipedia.org/wiki/Internationalized_domain_name)
+    # The result will be `uri` with a ASCII-only host.
+    private def normalize_uri(uri : URI) : URI
       hostname = uri.host.not_nil!
 
-      return url if hostname.ascii_only?
+      return uri if hostname.ascii_only?
 
       uri.host = URI::Punycode.to_ascii(hostname)
 
-      uri.to_s
+      uri
     end
 
     private def host_header

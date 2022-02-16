@@ -84,6 +84,7 @@ module Crest
         p_pass: @request.p_pass,
         json: @request.json,
         close_connection: @request.close_connection,
+        tls: @request.tls,
       )
     end
 
