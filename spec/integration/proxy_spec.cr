@@ -4,27 +4,40 @@ describe Crest do
   describe "With proxy server" do
     it "should make request" do
       with_proxy_server do |host, port, wants_close|
-        response = Crest.get("#{TEST_SERVER_URL}/", p_addr: host, p_port: port)
-        (response.status_code).should eq(200)
-        (response.body).should contain("200 OK")
-        (response.request.p_addr).should eq("127.0.0.1")
-        (response.request.p_port).should eq(8080)
+        load_cassette("httpbingo.org_get") do
+          response = Crest.get("https://httpbingo.org/get", p_addr: host, p_port: port)
+          (response.status_code).should eq(200)
+        end
       ensure
         wants_close.send(nil)
       end
     end
 
     it "should redirect with proxy" do
-      with_proxy_server do |_, _, wants_close|
-        response = Crest.get("#{TEST_SERVER_URL}/redirect/1", p_addr: "127.0.0.1", p_port: 8080)
-        (response.status_code).should eq(200)
-        (response.body).should contain("200 OK")
-        (response.url).should eq("#{TEST_SERVER_URL}/")
-        (response.history.size).should eq(1)
-        (response.history.first.url).should eq("#{TEST_SERVER_URL}/redirect/1")
-        (response.history.first.status_code).should eq(302)
-        (response.request.p_addr).should eq("127.0.0.1")
-        (response.request.p_port).should eq(8080)
+      with_proxy_server do |host, port, wants_close|
+        load_cassette("httpbingo.org_redirect") do
+          response = Crest.get("https://httpbingo.org/redirect/1", p_addr: host, p_port: port)
+          (response.status_code).should eq(200)
+          (response.url).should eq("https://httpbingo.org/get")
+          (response.history.size).should eq(1)
+          (response.history.first.url).should eq("https://httpbingo.org/redirect/1")
+          (response.history.first.status_code).should eq(302)
+        end
+      ensure
+        wants_close.send(nil)
+      end
+    end
+  end
+
+  describe Crest::Request do
+    it "should make request" do
+      with_proxy_server do |host, port, wants_close|
+        load_cassette("httpbingo.org_get") do
+          request = Crest::Request.new(:get, "https://httpbingo.org/get", p_addr: host, p_port: port)
+          response = request.execute
+
+          (response.status_code).should eq(200)
+        end
       ensure
         wants_close.send(nil)
       end
@@ -34,13 +47,12 @@ describe Crest do
   describe Crest::Resource do
     it "should make request" do
       with_proxy_server do |host, port, wants_close|
-        resource = Crest::Resource.new("#{TEST_SERVER_URL}", p_addr: host, p_port: port)
-        response = resource.get
+        load_cassette("httpbingo.org_get") do
+          resource = Crest::Resource.new("https://httpbingo.org/get", p_addr: host, p_port: port)
+          response = resource.get
 
-        (response.status_code).should eq(200)
-        (response.body).should contain("200 OK")
-        (response.request.p_addr).should eq("127.0.0.1")
-        (response.request.p_port).should eq(8080)
+          (response.status_code).should eq(200)
+        end
       ensure
         wants_close.send(nil)
       end
@@ -48,10 +60,12 @@ describe Crest do
 
     it "should make suburl request" do
       with_proxy_server do |host, port, wants_close|
-        resource = Crest::Resource.new("#{TEST_SERVER_URL}", p_addr: host, p_port: port)
-        response = resource["/get"].get
+        load_cassette("httpbingo.org_get") do
+          resource = Crest::Resource.new("https://httpbingo.org/", p_addr: host, p_port: port)
+          response = resource["/get"].get
 
-        (response.status_code).should eq(200)
+          (response.status_code).should eq(200)
+        end
       ensure
         wants_close.send(nil)
       end
