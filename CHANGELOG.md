@@ -2,7 +2,7 @@
 
 ## [...]
 
-- Bug fixes and stability improvements for `Crest::Requests`
+- Bug fixes and stability improvements for `Crest::Requests` [#172](https://github.com/mamantoha/crest/pull/172)
 - Pass `tsl` parameter in redirects
 - Set `HTTP::Client#tsl` only for https requests
 
