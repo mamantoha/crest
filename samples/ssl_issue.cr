@@ -22,4 +22,4 @@ site.get("/")
 url = "http://booking.uz.gov.ua/en/train_search/station/?term=Ter"
 request = Crest::Request.new(:get, url, logging: true, tls: tls, handle_errors: false)
 response = request.execute
-p response.status_code
+puts response.status_code
