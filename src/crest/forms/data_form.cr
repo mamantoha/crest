@@ -7,6 +7,8 @@ module Crest
   # "Content-Type" `multipart/form-data according` to RFC 2388.
   # This enables uploading of binary files etc.
   class DataForm(T) < Crest::Form(T)
+    DEFAULT_MIME_TYPE = "application/octet-stream"
+
     def generate
       content_type_ch = Channel(String).new(1)
       io = IO::Memory.new
@@ -36,7 +38,7 @@ module Crest
     end
 
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, file : File)
-      mime = MIME.from_filename(file.path)
+      mime = MIME.from_filename(file.path, DEFAULT_MIME_TYPE)
       metadata = HTTP::FormData::FileMetadata.new(filename: file.path)
       headers = HTTP::Headers{"Content-Type" => mime}
 

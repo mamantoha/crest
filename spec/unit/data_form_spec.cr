@@ -27,5 +27,19 @@ describe Crest::DataForm do
       form.params.should eq(input)
       form.parsed_params.should eq(parsed_input)
     end
+
+    it "generate form with file without extension" do
+      file = File.open("#{__DIR__}/../support/file_without_extension")
+      input = {:file => file}
+
+      parsed_input = [{"file", file}]
+      content_type = "multipart/form-data"
+
+      form = Crest::DataForm.generate(input)
+
+      form.content_type.should contain(content_type)
+      form.params.should eq(input)
+      form.parsed_params.should eq(parsed_input)
+    end
   end
 end
