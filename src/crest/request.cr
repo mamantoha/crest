@@ -61,7 +61,7 @@ module Crest
     @http_request : HTTP::Request
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
-    @form_data : String?
+    @form_data : IO | String?
     @max_redirects : Int32
     @auth : String
     @user : String?
@@ -290,7 +290,7 @@ module Crest
       @params_encoder.flatten_params(form).any?(&.[1].is_a?(File))
     end
 
-    private def generate_form_data!(form : Hash) : String?
+    private def generate_form_data!(form : Hash) : IO | String?
       return if form.empty?
 
       form_class =
@@ -310,7 +310,7 @@ module Crest
       @form_data
     end
 
-    private def generate_form_data!(form : String) : String?
+    private def generate_form_data!(form : IO | String) : IO | String?
       @form_data = form
     end
 
