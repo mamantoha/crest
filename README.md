@@ -82,7 +82,7 @@ Mandatory parameters:
 
 Optional parameters:
 
-- `:form` - a hash containing form data (or a raw string)
+- `:form` - a hash containing form data (or a raw string or IO or Bytes)
 - `:headers` - a hash containing the request headers
 - `:cookies` - a hash containing the request cookies
 - `:params` - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
