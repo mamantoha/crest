@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.3.0][] (2022-05-28)
+
 - Set default MIME type to application/octet-stream by @cyangle in [#174](https://github.com/mamantoha/crest/pull/174)
 - Support IO and Bytes as form data by @cyangle in [#175](https://github.com/mamantoha/crest/pull/176). This allow direct file upload.
 
@@ -351,7 +353,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.2.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/mamantoha/crest/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/mamantoha/crest/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/mamantoha/crest/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/mamantoha/crest/compare/v1.0.1...v1.1.0
