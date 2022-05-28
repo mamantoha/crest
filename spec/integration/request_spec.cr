@@ -266,7 +266,42 @@ describe Crest::Request do
   it "upload file with form" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
-    (response.body).should match(/Upload OK/)
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (File.read(file_path)).should eq(File.read(file.path))
+  end
+
+  it "upload file directly" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: file, headers: {"Content-Type" => "image/png"})
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (file_path.ends_with?(".png")).should be_true
+    (File.read(file_path)).should eq(File.read(file.path))
+  end
+
+  it "upload IO::Memory directly" do
+    file_content = "id,name\n1,test"
+    file = IO::Memory.new(file_content)
+    response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: file, headers: {"Content-Type" => "text/csv"})
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (file_path.ends_with?(".csv")).should be_true
+    (File.read(file_path)).should eq(file_content)
+  end
+
+  it "upload Bytes directly" do
+    file_content = "id,name\n1,test"
+    file = file_content.to_slice
+    response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: file, headers: {"Content-Type" => "text/csv"})
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (file_path.ends_with?(".csv")).should be_true
+    (File.read(file_path)).should eq(file_content)
   end
 
   it "do OPTIONS request" do
