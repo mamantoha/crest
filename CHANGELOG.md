@@ -3,7 +3,12 @@
 ## [...]
 
 - Set default MIME type to application/octet-stream by @cyangle in [#174](https://github.com/mamantoha/crest/pull/174)
-- Support IO and Bytes as form data by @cyangle in [#175](https://github.com/mamantoha/crest/pull/176)
+- Support IO and Bytes as form data by @cyangle in [#175](https://github.com/mamantoha/crest/pull/176). This allow direct file upload.
+
+  ```crystal
+  file = File.open("#{__DIR__}/avatar.png")
+  response = Crest::Request.post("https://httpbin.org/upload", form: file)
+  ```
 
 ## [1.2.1][] (2022-02-17)
 
