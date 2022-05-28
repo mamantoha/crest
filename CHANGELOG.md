@@ -2,6 +2,9 @@
 
 ## [...]
 
+- Set default MIME type to application/octet-stream by @cyangle in [#174](https://github.com/mamantoha/crest/pull/174)
+- Support IO and Bytes as form data by @cyangle in [#175](https://github.com/mamantoha/crest/pull/176)
+
 ## [1.2.1][] (2022-02-17)
 
 - Bug fixes and stability improvements for `Crest::Requests` [#172](https://github.com/mamantoha/crest/pull/172)
