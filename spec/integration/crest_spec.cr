@@ -80,6 +80,15 @@ describe Crest do
     (response.body).should match(/Upload OK/)
   end
 
+  it "upload IO::Memory with nested form" do
+    file_content = "id,name\n1,test"
+    file = IO::Memory.new(file_content)
+    response = Crest.post("#{TEST_SERVER_URL}/upload_nested", form: {:user => {:file => file}})
+    (response.body).should match(/Upload OK/)
+    file_path = response.body.gsub("Upload OK - ", "")
+    (File.read(file_path)).should eq(file_content)
+  end
+
   it "do POST with nested form" do
     response = Crest.post("#{TEST_SERVER_URL}/post", form: {:params1 => "one", :nested => {:params2 => "two"}})
 

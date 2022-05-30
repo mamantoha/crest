@@ -1,5 +1,5 @@
 # :nodoc:
-class File
+abstract class IO
   def to_json(json : JSON::Builder)
     nil
   end

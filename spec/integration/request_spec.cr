@@ -293,6 +293,18 @@ describe Crest::Request do
     (File.read(file_path)).should eq(file_content)
   end
 
+  it "upload IO::Memory as form hash value" do
+    file_content = "id,name\n1,test"
+    file = IO::Memory.new(file_content)
+    request = Crest::Request.new(:POST, "#{TEST_SERVER_URL}/upload", form: {"file.csv" => file})
+    (request.form_data.to_s).should contain("Content-Type: text/csv")
+    response = request.execute
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (File.read(file_path)).should eq(file_content)
+  end
+
   it "upload Bytes directly" do
     file_content = "id,name\n1,test"
     file = file_content.to_slice
