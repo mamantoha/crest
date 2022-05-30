@@ -393,6 +393,12 @@ Crest.post("http://httpbin.org/post", {:image => file})
 ```
 
 ```crystal
+file_content = "id,name\n1,test"
+file = IO::Memory.new(file_content)
+Crest.post("http://httpbin.org/post", {"data.csv" => file})
+```
+
+```crystal
 file = File.open("#{__DIR__}/example.png")
 resource = Crest::Resource.new("https://httpbin.org")
 response = resource["/post"].post({:image => file})
