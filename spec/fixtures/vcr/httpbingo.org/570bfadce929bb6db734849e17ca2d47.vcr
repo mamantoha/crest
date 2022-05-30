@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+access-control-allow-credentials: true
+access-control-allow-origin: *
+content-type: application/json; encoding=utf-8
+date: Sun, 29 May 2022 21:48:39 GMT
+transfer-encoding: chunked
+server: Fly/ccc539245 (2022-05-20)
+via: 1.1 fly.io
+fly-request-id: 01G48WNSQDYNPV872YCV123PDR-ams
+Content-Length: 663
+
+{}

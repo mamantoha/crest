@@ -25,5 +25,7 @@ development_dependencies:
     github: kemalcr/kemal-basic-auth
   ameba:
     github: crystal-ameba/ameba
+  vcr:
+    github: spoved/vcr.cr
 
 license: MIT
