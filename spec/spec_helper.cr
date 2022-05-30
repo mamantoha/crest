@@ -1,6 +1,7 @@
 require "spec"
 require "json"
 require "http_proxy"
+require "vcr"
 require "../src/crest"
 require "./support/server"
 
