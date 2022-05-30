@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.1][] (2022-05-30)
+
+- Multipart form with IO as hash value instead of just File by @cyangle in [#179](https://github.com/mamantoha/crest/pull/179)
+
 ## [1.3.0][] (2022-05-28)
 
 - Set default MIME type to application/octet-stream by @cyangle in [#174](https://github.com/mamantoha/crest/pull/174)
@@ -353,7 +357,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/mamantoha/crest/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/mamantoha/crest/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/mamantoha/crest/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/mamantoha/crest/compare/v1.1.0...v1.2.0
