@@ -4,6 +4,7 @@ require "http_proxy"
 require "vcr"
 require "../src/crest"
 require "./support/server"
+require "./ext/kemal"
 
 TEST_SERVER_HOST = "0.0.0.0"
 TEST_SERVER_PORT = 4567
