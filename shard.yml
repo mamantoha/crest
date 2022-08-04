@@ -21,6 +21,7 @@ development_dependencies:
   kemal:
     github: kemalcr/kemal
     version: ~> 1.0.0
+    branch: master
   kemal-basic-auth:
     github: kemalcr/kemal-basic-auth
   ameba:
