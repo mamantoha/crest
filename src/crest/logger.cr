@@ -14,7 +14,7 @@ module Crest
       @logger = ::Log.new("crest", backend, ::Log::Severity::Info)
       @logger.backend.as(::Log::IOBackend).formatter = default_formatter
 
-      @filters = [] of Array(String | Regex)
+      @filters = [] of Tuple(String | Regex, String)
     end
 
     abstract def request(request : Crest::Request) : Nil
@@ -33,7 +33,7 @@ module Crest
     end
 
     def filter(pattern : String | Regex, replacement : String)
-      @filters.push([pattern, replacement])
+      @filters.push({pattern, replacement})
     end
 
     private def apply_filters(output : String) : String
