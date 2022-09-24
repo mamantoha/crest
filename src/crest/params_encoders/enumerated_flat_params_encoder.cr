@@ -1,9 +1,6 @@
 module Crest
   class EnumeratedFlatParamsEncoder < Crest::ParamsEncoder
-    # ```
-    # Encoded array params start index, default 1
-    # ```
-    class_property array_start_index = 1
+    class_getter array_start_index = 1
 
     # ```
     # Crest::EnumeratedFlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
