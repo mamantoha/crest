@@ -1,6 +1,11 @@
 module Crest
   class EnumeratedFlatParamsEncoder < Crest::ParamsEncoder
     # ```
+    # Encoded array params start index, default 1
+    # ```
+    class_property array_start_index = 1
+
+    # ```
     # Crest::EnumeratedFlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c" => "C", "d" => 1})
     # # => 'a[1]=one&a[2]=two&a[3]=three&b=true&c=C&d=1'
     # ```
@@ -36,7 +41,7 @@ module Crest
     # # => [{"key1[arr][1]", "1"}, {"key1[arr][2]", "2"}, {"key1[arr][3]", "3"}]
     # ```
     def self.flatten_params(object : Array, parent_key : String? = nil) : Array(Tuple(String, Crest::ParamsValue))
-      object.each_with_index(1).reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, (item, index)|
+      object.each_with_index(array_start_index).reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, (item, index)|
         processed_key = parent_key ? "#{parent_key}[#{index}]" : ""
 
         case item
