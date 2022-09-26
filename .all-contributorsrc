@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "mamantoha",
+      "name": "Anton Maminov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61285?v=4",
+      "profile": "https://github.com/mamantoha",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "crest",
+  "projectOwner": "mamantoha"
+}
