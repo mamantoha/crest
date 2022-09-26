@@ -8,6 +8,14 @@ describe Crest::NestedParamsEncoder do
 
       Crest::NestedParamsEncoder.encode(input).should eq(output)
     end
+
+    it "encodes JSON::Any values" do
+      input = JSON.parse(File.read(File.join(__DIR__, "../../fixtures/json/complex_object.json")))
+      # "name=David&nationality=Danish&address[street]=12+High+Street&address[city]=London&avatar=&location=10&location=20&array[a][b][c]=1.23&array[a][b][c]=2.34&array[a][b][d]=true&array[a][b][e]=abc&array[a][b][f]=12&array[a][b][c]=3.45&array[a][b][c]=5.67&array[a][b][d]=false&array[a][b][e]=def&array[a][b][f]=34"
+      output = "name=David&nationality=Danish&address%5Bstreet%5D=12+High+Street&address%5Bcity%5D=London&avatar=&location=10&location=20&array%5Ba%5D%5Bb%5D%5Bc%5D=1.23&array%5Ba%5D%5Bb%5D%5Bc%5D=2.34&array%5Ba%5D%5Bb%5D%5Bd%5D=true&array%5Ba%5D%5Bb%5D%5Be%5D=abc&array%5Ba%5D%5Bb%5D%5Bf%5D=12&array%5Ba%5D%5Bb%5D%5Bc%5D=3.45&array%5Ba%5D%5Bb%5D%5Bc%5D=5.67&array%5Ba%5D%5Bb%5D%5Bd%5D=false&array%5Ba%5D%5Bb%5D%5Be%5D=def&array%5Ba%5D%5Bb%5D%5Bf%5D=34"
+
+      Crest::NestedParamsEncoder.encode(input.as_h).should eq(output)
+    end
   end
 
   describe "#decode" do

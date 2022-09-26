@@ -62,6 +62,18 @@ describe Crest do
     body["json"].should eq({"user" => {"name" => "John"}})
   end
 
+  it "do POST request with json complex object and json" do
+    response = Crest.post(
+      "#{TEST_SERVER_URL}/post",
+      {:size => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]},
+      json: true
+    )
+
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"size" => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]})
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", {:file => file})
@@ -181,6 +193,20 @@ describe Crest do
 
         body["form"].should eq({"size" => "small", "topping[]" => ["bacon", "onion"]})
       end
+
+      it "do POST request with complex object" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]},
+          params_encoder: Crest::FlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq(
+          {"size" => "small", "topping[][name]" => ["onion", "bacon"], "topping[][count]" => ["1", "2"]}
+        )
+      end
     end
 
     describe Crest::NestedParamsEncoder do
@@ -206,6 +232,86 @@ describe Crest do
         body = JSON.parse(response.body)
 
         body["form"].should eq({"size" => "small", "topping" => ["bacon", "onion"]})
+      end
+
+      it "do POST request with complex object" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]},
+          params_encoder: Crest::NestedParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq(
+          {"size" => "small", "topping[name]" => ["onion", "bacon"], "topping[count]" => ["1", "2"]}
+        )
+      end
+    end
+
+    describe Crest::EnumeratedFlatParamsEncoder do
+      it "do GET request" do
+        response = Crest.get(
+          "#{TEST_SERVER_URL}/get",
+          params: {"roll" => ["california", "philadelphia"]},
+          params_encoder: Crest::EnumeratedFlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["path"].should eq("/get?roll%5B1%5D=california&roll%5B2%5D=philadelphia")
+      end
+
+      it "do POST request" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => ["bacon", "onion"]},
+          params_encoder: Crest::EnumeratedFlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq({"size" => "small", "topping[1]" => "bacon", "topping[2]" => "onion"})
+      end
+
+      it "do POST request with complex object" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]},
+          params_encoder: Crest::EnumeratedFlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq(
+          {"size" => "small", "topping[1][name]" => "onion", "topping[1][count]" => "1", "topping[2][name]" => "bacon", "topping[2][count]" => "2"}
+        )
+      end
+    end
+
+    describe Crest::ZeroEnumeratedFlatParamsEncoder do
+      it "do GET request" do
+        response = Crest.get(
+          "#{TEST_SERVER_URL}/get",
+          params: {"roll" => ["california", "philadelphia"]},
+          params_encoder: Crest::ZeroEnumeratedFlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["path"].should eq("/get?roll%5B0%5D=california&roll%5B1%5D=philadelphia")
+      end
+
+      it "do POST request" do
+        response = Crest.post(
+          "#{TEST_SERVER_URL}/post",
+          form: {"size" => "small", "topping" => ["bacon", "onion"]},
+          params_encoder: Crest::ZeroEnumeratedFlatParamsEncoder
+        )
+
+        body = JSON.parse(response.body)
+
+        body["form"].should eq({"size" => "small", "topping[0]" => "bacon", "topping[1]" => "onion"})
       end
     end
   end

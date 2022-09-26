@@ -30,7 +30,7 @@ module Crest
         processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
 
         case v
-        when Hash, Array
+        when Hash, Array, JSON::Any
           memo += flatten_params(v, processed_key)
         else
           memo << {processed_key, v}
@@ -50,7 +50,27 @@ module Crest
       object.reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, item|
         processed_key = parent_key ? "#{parent_key}[]" : ""
 
-        memo << {processed_key, item}
+        case item
+        when Hash, JSON::Any
+          memo += flatten_params(item, processed_key)
+        else
+          memo << {processed_key, item}
+        end
+      end
+    end
+
+    def self.flatten_params(object : JSON::Any, parent_key = nil) : Array(Tuple(String, Crest::ParamsValue))
+      if hash = object.as_h?
+        flatten_params(hash, parent_key)
+      elsif array = object.as_a?
+        flatten_params(array, parent_key)
+      else
+        value : Crest::ParamsValue = nil
+        value = object.as_f? if value.nil?
+        value = object.as_i64? if value.nil?
+        value = object.as_bool? if value.nil?
+        value = object.as_s? if value.nil?
+        [{parent_key, value.as(Crest::ParamsValue)}]
       end
     end
   end
