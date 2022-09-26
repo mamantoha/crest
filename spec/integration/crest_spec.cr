@@ -62,6 +62,18 @@ describe Crest do
     body["json"].should eq({"user" => {"name" => "John"}})
   end
 
+  it "do POST request with json complex object and json" do
+    response = Crest.post(
+      "#{TEST_SERVER_URL}/post",
+      {:size => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]},
+      json: true
+    )
+
+    body = JSON.parse(response.body)
+
+    body["json"].should eq({"size" => "small", "topping" => [{"name" => "onion", "count" => 1}, {"name" => "bacon", "count" => 2}]})
+  end
+
   it "upload file" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest.post("#{TEST_SERVER_URL}/upload", {:file => file})
