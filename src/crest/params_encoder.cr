@@ -13,5 +13,36 @@ module Crest
     def self.encode(params : Hash) : String
       new.encode(params)
     end
+
+    # Transform JSON::Any `object` into a flat array of `{key, value}`.
+    #
+    # # `parent_key` — Should not be passed (used for recursion)
+    #
+    # ```
+    # params = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
+    #
+    # Crest::FlatParamsEncoder.flatten_params(params)
+    # # => [{"access[][name]", "mapping"}, {"access[][speed]", "fast"}, {"access[][name]", "any"}, {"access[][speed]", "slow"}]
+    #
+    # Crest::EnumeratedFlatParamsEncoder.flatten_params(params)
+    # # => [{"access[1][name]", "mapping"}, {"access[1][speed]", "fast"}, {"access[2][name]", "any"}, {"access[2][speed]", "slow"}]
+    # ```
+    def self.flatten_params(object : JSON::Any, parent_key = nil) : Array(Tuple(String, Crest::ParamsValue))
+      if hash = object.as_h?
+        flatten_params(hash, parent_key)
+      elsif array = object.as_a?
+        flatten_params(array, parent_key)
+      else
+        processed_key = parent_key ? parent_key : ""
+        value : Crest::ParamsValue = nil
+
+        value = object.as_f? if value.nil?
+        value = object.as_i64? if value.nil?
+        value = object.as_bool? if value.nil?
+        value = object.as_s? if value.nil?
+
+        [{processed_key, value.as(Crest::ParamsValue)}]
+      end
+    end
   end
 end
