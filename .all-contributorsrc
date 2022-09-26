@@ -23,6 +23,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "psikoz",
+      "name": "psikoz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40601249?v=4",
+      "profile": "https://github.com/psikoz",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
