@@ -2,6 +2,9 @@
 
 ## [...]
 
+- Support encoding `JSON::Any` as hash values with `Crest::EnumeratedFlatParamsEncoder` by @cyangle in https://github.com/mamantoha/crest/pull/181
+- back VCR by @mamantoha in https://github.com/mamantoha/crest/pull/180
+
 ## [1.3.1][] (2022-05-30)
 
 - Multipart form with IO as hash value instead of just File by @cyangle in [#179](https://github.com/mamantoha/crest/pull/179)
