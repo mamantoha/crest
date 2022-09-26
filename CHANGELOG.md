@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.4][] (2022-09-26)
+
+- Extract `Crest::ParamsEncoder#flatten_params(object : JSON::Any, parent_key = nil)` by @mamantoha in https://github.com/mamantoha/crest/pull/188
+
 ## [1.3.3][] (2022-09-26)
 
 - Allow `JSON::Any` in `FlatParamsEncoder` and `NestedParamsEncoder` by @mamantoha in https://github.com/mamantoha/crest/pull/187
@@ -366,7 +370,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.3...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.4...HEAD
+[1.3.4]: https://github.com/mamantoha/crest/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/mamantoha/crest/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/mamantoha/crest/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/mamantoha/crest/compare/v1.3.0...v1.3.1
