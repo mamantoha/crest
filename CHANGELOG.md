@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.3][] (2022-09-26)
+
+- Allow `JSON::Any` in `FlatParamsEncoder` and `NestedParamsEncoder` by @mamantoha in https://github.com/mamantoha/crest/pull/187
+
 ## [1.3.2][] (2022-09-26)
 
 - Support encoding `JSON::Any` as hash values with `Crest::EnumeratedFlatParamsEncoder` by @cyangle in https://github.com/mamantoha/crest/pull/181
@@ -362,7 +366,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.2...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.3...HEAD
+[1.3.3]: https://github.com/mamantoha/crest/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/mamantoha/crest/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/mamantoha/crest/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/mamantoha/crest/compare/v1.2.1...v1.3.0
