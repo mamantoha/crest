@@ -330,7 +330,7 @@ Crest::FlatParamsEncoder.encode({"a" => ["one", "two", "three"], "b" => true, "c
 # => 'a[]=one&a[]=two&a[]=three&b=true&c=C&d=1'
 ```
 
-#### Custom serializer
+### Custom parameters serializers
 
 You can build a custom params encoder.
 
@@ -338,7 +338,7 @@ The value of Crest `params_encoder` can be any subclass of `Crest::ParamsEncoder
 
 Also Crest include other encoders.
 
-`Crest::NestedParamsEncoder`
+#### `Crest::NestedParamsEncoder`
 
 ```crystal
 response = Crest.post(
@@ -350,7 +350,7 @@ response = Crest.post(
 # => curl -X POST http://httpbin.org/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'
 ```
 
-`Crest::EnumeratedFlatParamsEncoder`
+#### `Crest::EnumeratedFlatParamsEncoder`
 
 ```crystal
 response = Crest.post(
@@ -360,6 +360,18 @@ response = Crest.post(
 )
 
 # => curl -X POST http://httpbin.org/post -d 'size=small&topping[1]=bacon&topping[2]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+#### `Crest::ZeroEnumeratedFlatParamsEncoder`
+
+```crystal
+response = Crest.post(
+  "http://httpbin.org/post",
+  {"size" => "small", "topping" => ["bacon", "onion"]},
+  params_encoder: Crest::ZeroEnumeratedFlatParamsEncoder
+)
+
+# => curl -X POST http://httpbin.org/post -d 'size=small&topping[0]=bacon&topping[1]=onion' -H 'Content-Type: application/x-www-form-urlencoded'
 ```
 
 ### Streaming responses
