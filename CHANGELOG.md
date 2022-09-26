@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.3.2][] (2022-09-26)
+
 - Support encoding `JSON::Any` as hash values with `Crest::EnumeratedFlatParamsEncoder` by @cyangle in https://github.com/mamantoha/crest/pull/181
 - back VCR by @mamantoha in https://github.com/mamantoha/crest/pull/180
 
@@ -360,7 +362,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.1...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.2...HEAD
+[1.3.2]: https://github.com/mamantoha/crest/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/mamantoha/crest/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/mamantoha/crest/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/mamantoha/crest/compare/v1.2.0...v1.2.1
