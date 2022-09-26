@@ -40,5 +40,13 @@ describe Crest::EnumeratedFlatParamsEncoder do
 
       Crest::EnumeratedFlatParamsEncoder.encode(input).should eq(output)
     end
+
+    it "encodes JSON::Any values" do
+      input = JSON.parse(File.read(File.join(__DIR__, "../../fixtures/json/complex_object.json")))
+      # "name=David&nationality=Danish&address[street]=12+High+Street&address[city]=London&avatar=&location[1]=10&location[2]=20&array[1][a][b][1][c][1]=1.23&array[1][a][b][1][c][2]=2.34&array[1][a][b][1][d]=true&array[1][a][b][1][e]=abc&array[1][a][b][1][f]=12&array[2][a][b][1][c][1]=3.45&array[2][a][b][1][c][2]=5.67&array[2][a][b][1][d]=false&array[2][a][b][1][e]=def&array[2][a][b][1][f]=34"
+      output = "name=David&nationality=Danish&address%5Bstreet%5D=12+High+Street&address%5Bcity%5D=London&avatar=&location%5B1%5D=10&location%5B2%5D=20&array%5B1%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bc%5D%5B1%5D=1.23&array%5B1%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bc%5D%5B2%5D=2.34&array%5B1%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bd%5D=true&array%5B1%5D%5Ba%5D%5Bb%5D%5B1%5D%5Be%5D=abc&array%5B1%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bf%5D=12&array%5B2%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bc%5D%5B1%5D=3.45&array%5B2%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bc%5D%5B2%5D=5.67&array%5B2%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bd%5D=false&array%5B2%5D%5Ba%5D%5Bb%5D%5B1%5D%5Be%5D=def&array%5B2%5D%5Ba%5D%5Bb%5D%5B1%5D%5Bf%5D=34"
+
+      Crest::EnumeratedFlatParamsEncoder.encode(input.as_h).should eq(output)
+    end
   end
 end

@@ -1,0 +1,11 @@
+{
+  "name": "David",
+  "nationality": "Danish",
+  "address": { "street": "12 High Street", "city": "London" },
+  "avatar": null,
+  "location": [10, 20],
+  "array": [
+    { "a": { "b": [{ "c": [1.23, 2.34], "d": true, "e": "abc", "f": 12 }] } },
+    { "a": { "b": [{ "c": [3.45, 5.67], "d": false, "e": "def", "f": 34 }] } }
+  ]
+}
