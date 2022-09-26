@@ -4,7 +4,7 @@
 
 ## [1.3.4][] (2022-09-26)
 
-- Extract `Crest::ParamsEncoder#flatten_params(object : JSON::Any, parent_key = nil)` by @mamantoha in https://github.com/mamantoha/crest/pull/188
+- Extract `Crest::ParamsEncoder#flatten_params(object : JSON::Any, parent_key : String? = nil)` by @mamantoha in https://github.com/mamantoha/crest/pull/188
 
 ## [1.3.3][] (2022-09-26)
 

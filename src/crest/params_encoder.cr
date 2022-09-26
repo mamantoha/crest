@@ -27,7 +27,7 @@ module Crest
     # Crest::EnumeratedFlatParamsEncoder.flatten_params(params)
     # # => [{"access[1][name]", "mapping"}, {"access[1][speed]", "fast"}, {"access[2][name]", "any"}, {"access[2][speed]", "slow"}]
     # ```
-    def self.flatten_params(object : JSON::Any, parent_key = nil) : Array(Tuple(String, Crest::ParamsValue))
+    def self.flatten_params(object : JSON::Any, parent_key : String? = nil) : Array(Tuple(String, Crest::ParamsValue))
       if hash = object.as_h?
         flatten_params(hash, parent_key)
       elsif array = object.as_a?
