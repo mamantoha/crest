@@ -28,9 +28,9 @@ describe Crest::NestedParamsEncoder do
 
     it "transform JSON::Any" do
       input = params = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
-      output = [{"access[][name]", "mapping"}, {"access[][speed]", "fast"}, {"access[][name]", "any"}, {"access[][speed]", "slow"}]
+      output = [{"access[name]", "mapping"}, {"access[speed]", "fast"}, {"access[name]", "any"}, {"access[speed]", "slow"}]
 
-      Crest::FlatParamsEncoder.flatten_params(input).should eq(output)
+      Crest::NestedParamsEncoder.flatten_params(input).should eq(output)
     end
   end
 end
