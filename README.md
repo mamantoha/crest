@@ -676,9 +676,14 @@ Then select the Workbook -> Requests from the menu.
 
 ## Contributors
 
-- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
-- [icyleaf](https://github.com/icyleaf) Icyleaf Wang - logging support
-- [psikoz](https://github.com/psikoz) Logo design
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License
 
