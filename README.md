@@ -1,6 +1,6 @@
 # <img src="https://stars.medv.io/mamantoha/crest.svg" align="right"/>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal_dark.png" alt="crest" height="150px"></p>
@@ -690,6 +690,7 @@ Then select the Workbook -> Requests from the menu.
     <tr>
       <td align="center"><a href="https://github.com/mamantoha"><img src="https://avatars.githubusercontent.com/u/61285?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anton Maminov</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=mamantoha" title="Code">💻</a></td>
       <td align="center"><a href="https://www.linkedin.com/in/chao-yang-r/"><img src="https://avatars.githubusercontent.com/u/15083254?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chao Yang</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=cyangle" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/kates"><img src="https://avatars.githubusercontent.com/u/2256?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kates Gasis</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=kates" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
