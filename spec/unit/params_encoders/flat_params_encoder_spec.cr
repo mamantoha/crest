@@ -115,7 +115,7 @@ describe Crest::FlatParamsEncoder do
     end
 
     it "transform JSON::Any" do
-      input = params = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
+      input = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
       output = [{"access[][name]", "mapping"}, {"access[][speed]", "fast"}, {"access[][name]", "any"}, {"access[][speed]", "slow"}]
 
       Crest::FlatParamsEncoder.flatten_params(input).should eq(output)
