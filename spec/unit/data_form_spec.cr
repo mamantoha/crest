@@ -7,7 +7,7 @@ describe Crest::DataForm do
       parsed_input = [{"file[one]", "one"}, {"file[two]", "two"}]
       content_type = "multipart/form-data"
 
-      form = Crest::DataForm.generate(input)
+      form = Crest::DataForm.generate(input, Crest::FlatParamsEncoder)
 
       form.content_type.should contain(content_type)
       form.params.should eq(input)
@@ -21,7 +21,7 @@ describe Crest::DataForm do
       parsed_input = [{"file", file}, {"param1", "value1"}]
       content_type = "multipart/form-data"
 
-      form = Crest::DataForm.generate(input)
+      form = Crest::DataForm.generate(input, Crest::FlatParamsEncoder)
 
       form.content_type.should contain(content_type)
       form.params.should eq(input)
@@ -35,7 +35,7 @@ describe Crest::DataForm do
       parsed_input = [{"file", file}]
       content_type = "multipart/form-data"
 
-      form = Crest::DataForm.generate(input)
+      form = Crest::DataForm.generate(input, Crest::FlatParamsEncoder)
 
       form.content_type.should contain(content_type)
       form.params.should eq(input)
