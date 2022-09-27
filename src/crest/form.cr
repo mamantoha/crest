@@ -5,7 +5,7 @@ module Crest
 
     getter params, form_data, content_type
 
-    def self.generate(params : Hash, params_encoder = Crest::FlatParamsEncoder)
+    def self.generate(params : Hash, params_encoder : Crest::ParamsEncoder.class)
       new(params, params_encoder).generate
     end
 
