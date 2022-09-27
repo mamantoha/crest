@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.5][] (2022-09-27)
+
+- Use specified `Crest::ParamsEncoder` for `Crest::DataForm` by @mamantoha in https://github.com/mamantoha/crest/pull/189
+
 ## [1.3.4][] (2022-09-26)
 
 - Extract `Crest::ParamsEncoder#flatten_params(object : JSON::Any, parent_key : String? = nil)` by @mamantoha in https://github.com/mamantoha/crest/pull/188
@@ -370,7 +374,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.4...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.5...HEAD
+[1.3.5]: https://github.com/mamantoha/crest/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/mamantoha/crest/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/mamantoha/crest/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/mamantoha/crest/compare/v1.3.1...v1.3.2
