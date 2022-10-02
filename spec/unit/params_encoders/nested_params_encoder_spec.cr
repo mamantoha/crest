@@ -26,6 +26,13 @@ describe Crest::NestedParamsEncoder do
       Crest::NestedParamsEncoder.flatten_params(input).should eq(output)
     end
 
+    it "transform nested param with array of arrays" do
+      input = {"routes" => [["a", "b"], ["c"], [] of String]}
+      output = [{"routes", "a"}, {"routes", "b"}, {"routes", "c"}]
+
+      Crest::NestedParamsEncoder.flatten_params(input).should eq(output)
+    end
+
     it "transform JSON::Any" do
       input = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
       output = [{"access[name]", "mapping"}, {"access[speed]", "fast"}, {"access[name]", "any"}, {"access[speed]", "slow"}]

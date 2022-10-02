@@ -51,7 +51,7 @@ module Crest
         processed_key = parent_key ? parent_key : ""
 
         case item
-        when Hash, JSON::Any
+        when Hash, Array, JSON::Any
           memo += flatten_params(item, processed_key)
         else
           memo << {processed_key, item}

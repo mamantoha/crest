@@ -22,6 +22,13 @@ describe Crest::ZeroEnumeratedFlatParamsEncoder do
 
       Crest::ZeroEnumeratedFlatParamsEncoder.flatten_params(input).should eq(output)
     end
+
+    it "transform nested param with array of arrays" do
+      input = {"routes" => [["a", "b"], ["c"], [] of String]}
+      output = [{"routes[0][0]", "a"}, {"routes[0][1]", "b"}, {"routes[1][0]", "c"}]
+
+      Crest::ZeroEnumeratedFlatParamsEncoder.flatten_params(input).should eq(output)
+    end
   end
 
   describe "#encode" do

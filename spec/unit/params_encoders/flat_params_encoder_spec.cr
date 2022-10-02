@@ -51,6 +51,13 @@ describe Crest::FlatParamsEncoder do
       Crest::FlatParamsEncoder.encode(input).should eq(output)
     end
 
+    it "transform nested param with array of arrays" do
+      input = {"routes" => [["a", "b"], ["c"], [] of String]}
+      output = [{"routes[][]", "a"}, {"routes[][]", "b"}, {"routes[][]", "c"}]
+
+      Crest::FlatParamsEncoder.flatten_params(input).should eq(output)
+    end
+
     it "encodes JSON::Any values" do
       input = JSON.parse(File.read(File.join(__DIR__, "../../fixtures/json/complex_object.json")))
       # "name=David&nationality=Danish&address[street]=12+High+Street&address[city]=London&avatar=&location[]=10&location[]=20&array[][a][b][][c][]=1.23&array[][a][b][][c][]=2.34&array[][a][b][][d]=true&array[][a][b][][e]=abc&array[][a][b][][f]=12&array[][a][b][][c][]=3.45&array[][a][b][][c][]=5.67&array[][a][b][][d]=false&array[][a][b][][e]=def&array[][a][b][][f]=34"
