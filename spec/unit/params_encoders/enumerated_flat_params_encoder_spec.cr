@@ -23,6 +23,13 @@ describe Crest::EnumeratedFlatParamsEncoder do
       Crest::EnumeratedFlatParamsEncoder.flatten_params(input).should eq(output)
     end
 
+    it "transform nested param with array of arrays" do
+      input = {"routes" => [["a", "b"], ["c"], [] of String]}
+      output = [{"routes[1][1]", "a"}, {"routes[1][2]", "b"}, {"routes[2][1]", "c"}]
+
+      Crest::EnumeratedFlatParamsEncoder.flatten_params(input).should eq(output)
+    end
+
     it "transform JSON::Any" do
       input = JSON.parse(%({"access": [{"name": "mapping", "speed": "fast"}, {"name": "any", "speed": "slow"}]}))
       output = [{"access[1][name]", "mapping"}, {"access[1][speed]", "fast"}, {"access[2][name]", "any"}, {"access[2][speed]", "slow"}]
