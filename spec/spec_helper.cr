@@ -11,7 +11,7 @@ TEST_SERVER_URL  = "http://#{TEST_SERVER_HOST}:#{TEST_SERVER_PORT}"
 
 kemal_config = Kemal.config
 kemal_config.env = "development"
-kemal_config.logging = false
+# kemal_config.logging = false
 
 spawn do
   Kemal.run(port: TEST_SERVER_PORT)
