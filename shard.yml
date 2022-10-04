@@ -27,6 +27,8 @@ development_dependencies:
   ameba:
     github: crystal-ameba/ameba
   vcr:
-    github: spoved/vcr.cr
+    # github: spoved/vcr.cr
+    github: mamantoha/vcr.cr
+    branch: develop
 
 license: MIT
