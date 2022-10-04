@@ -2,6 +2,11 @@
 
 ## [...]
 
+## [1.3.6][] (2022-10-04)
+
+- Support encoding array of arrays by @cyangle in https://github.com/mamantoha/crest/pull/190
+- remove vcr by @mamantoha in https://github.com/mamantoha/crest/pull/192
+
 ## [1.3.5][] (2022-09-27)
 
 - Use specified `Crest::ParamsEncoder` for `Crest::DataForm` by @mamantoha in https://github.com/mamantoha/crest/pull/189
@@ -374,7 +379,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.5...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.6...HEAD
+[1.3.6]: https://github.com/mamantoha/crest/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/mamantoha/crest/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/mamantoha/crest/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/mamantoha/crest/compare/v1.3.2...v1.3.3
