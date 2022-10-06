@@ -28,5 +28,6 @@ development_dependencies:
     github: crystal-ameba/ameba
   vcr:
     github: spoved/vcr.cr
+    branch: master
 
 license: MIT
