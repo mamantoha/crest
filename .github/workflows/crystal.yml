@@ -19,18 +19,6 @@ jobs:
       - name: Check format
         run: crystal tool format --check
 
-  check_ameba:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: shards install
-      - name: Check ameba
-        run: ./bin/ameba
-
   test:
     strategy:
       fail-fast: false
