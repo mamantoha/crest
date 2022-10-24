@@ -24,8 +24,6 @@ development_dependencies:
     branch: master
   kemal-basic-auth:
     github: kemalcr/kemal-basic-auth
-  ameba:
-    github: crystal-ameba/ameba
   vcr:
     github: spoved/vcr.cr
     branch: master
