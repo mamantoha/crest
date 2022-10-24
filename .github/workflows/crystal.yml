@@ -13,7 +13,7 @@ jobs:
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install dependencies
         run: shards install
       - name: Check format
@@ -25,7 +25,7 @@ jobs:
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install dependencies
         run: shards install
       - name: Check ameba
@@ -46,7 +46,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install dependencies
         run: shards install
       - name: Run tests
