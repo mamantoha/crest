@@ -265,11 +265,11 @@ module Crest
     # To support IDN (https://en.wikipedia.org/wiki/Internationalized_domain_name)
     # The result will be `uri` with a ASCII-only host.
     private def normalize_uri(uri : URI) : URI
-      hostname = uri.host.not_nil!
+      if hostname = uri.host
+        return uri if hostname.ascii_only?
 
-      return uri if hostname.ascii_only?
-
-      uri.host = URI::Punycode.to_ascii(hostname)
+        uri.host = URI::Punycode.to_ascii(hostname)
+      end
 
       uri
     end
