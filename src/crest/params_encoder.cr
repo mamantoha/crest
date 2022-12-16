@@ -36,8 +36,8 @@ module Crest
         processed_key = parent_key ? parent_key : ""
         value : Crest::ParamsValue = nil
 
-        value = object.as_f? if value.nil?
         value = object.as_i64? if value.nil?
+        value = object.as_f? if value.nil?
         value = object.as_bool? if value.nil?
         value = object.as_s? if value.nil?
 
