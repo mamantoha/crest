@@ -1,13 +1,13 @@
+Lint/NotNil:
+  Description: Identifies usage of `not_nil!` calls
+  Excluded:
+  - spec/support/server.cr
+  Enabled: true
+  Severity: Warning
+
 Metrics/CyclomaticComplexity:
   Description: Disallows methods with a cyclomatic complexity higher than `MaxComplexity`
   MaxComplexity: 10
-  Excluded:
-  - src/ext/http/cookie.cr
-  Enabled: true
-  Severity: Convention
-
-Style/NegatedConditionsInUnless:
-  Description: Disallows negated conditions in unless
   Excluded:
   - src/ext/http/cookie.cr
   Enabled: true
