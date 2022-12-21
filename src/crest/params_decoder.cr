@@ -41,7 +41,7 @@ module Crest
         last_subkey = (i == subkeys.size - 1)
         subkey = subkey[0]
 
-        if (match = subkey.match(ARRAY_REGEX))
+        if match = subkey.match(ARRAY_REGEX)
           is_array = true
           subkey = match.pre_match
         end
