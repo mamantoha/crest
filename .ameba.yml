@@ -1,7 +1,12 @@
+Globs:
+  - "**/*.cr"
+  - "!samples"
+  - "!lib"
+
 Lint/NotNil:
   Description: Identifies usage of `not_nil!` calls
   Excluded:
-  - spec/support/server.cr
+    - spec/support/server.cr
   Enabled: true
   Severity: Warning
 
@@ -9,6 +14,6 @@ Metrics/CyclomaticComplexity:
   Description: Disallows methods with a cyclomatic complexity higher than `MaxComplexity`
   MaxComplexity: 10
   Excluded:
-  - src/ext/http/cookie.cr
+    - src/ext/http/cookie.cr
   Enabled: true
   Severity: Convention
