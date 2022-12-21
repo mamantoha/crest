@@ -29,5 +29,6 @@ development_dependencies:
     branch: master
   ameba:
     github: crystal-ameba/ameba
+    branch: master
 
 license: MIT
