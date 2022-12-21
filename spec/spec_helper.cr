@@ -21,7 +21,7 @@ until Kemal.config.running
   sleep 1.millisecond
 end
 
-def with_proxy_server(host = "127.0.0.1", port = 8080)
+def with_proxy_server(host = "127.0.0.1", port = 8080, &)
   wants_close = Channel(Nil).new
   server = HTTP::Proxy::Server.new
 

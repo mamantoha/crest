@@ -109,7 +109,8 @@ module Crest
       cookies = {} of String => String,
       params = {} of String => String,
       max_redirects = 10,
-      **options
+      **options,
+      &
     )
       @method = parse_verb(method)
       @url = url

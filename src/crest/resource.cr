@@ -81,7 +81,8 @@ module Crest
       @headers = {} of String => String,
       params = {} of String => String,
       cookies = {} of String => String,
-      **options
+      **options,
+      &
     )
       @base_url = @url
       @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
