@@ -117,13 +117,15 @@ get("/redirect_to_secret", &.redirect("/secret"))
 
 post "/upload" do |env|
   request_content_type = env.request.headers["Content-Type"]
-  file = if request_content_type.starts_with?("multipart/form-data")
-           env.params.files.values.first.tempfile
-         else
-           File.tempfile(suffix: MIME.extensions(request_content_type).first) do |f|
-             IO.copy(env.request.body.not_nil!, f)
-           end
-         end
+
+  file =
+    if request_content_type.starts_with?("multipart/form-data")
+      env.params.files.values.first.tempfile
+    else
+      File.tempfile(suffix: MIME.extensions(request_content_type).first) do |f|
+        env.request.body.try { |body| IO.copy(body, f) }
+      end
+    end
 
   "Upload OK - #{file.path}"
 end

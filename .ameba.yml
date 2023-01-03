@@ -3,13 +3,6 @@ Globs:
   - "!samples"
   - "!lib"
 
-Lint/NotNil:
-  Description: Identifies usage of `not_nil!` calls
-  Excluded:
-    - spec/support/server.cr
-  Enabled: true
-  Severity: Warning
-
 Metrics/CyclomaticComplexity:
   Description: Disallows methods with a cyclomatic complexity higher than `MaxComplexity`
   MaxComplexity: 10
