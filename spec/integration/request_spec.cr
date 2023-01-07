@@ -14,14 +14,14 @@ describe Crest::Request do
     request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get")
     request.execute
 
-    (request.http_client.closed?).should be_truthy
+    (request.closed?).should be_truthy
   end
 
   it "should not close connection after request if close_connetion is false" do
     request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get", close_connection: false)
     request.execute
 
-    (request.http_client.closed?).should be_falsey
+    (request.closed?).should be_falsey
   end
 
   it "do GET request" do

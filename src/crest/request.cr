@@ -223,6 +223,10 @@ module Crest
       @http_client.close if @close_connection
     end
 
+    def closed?
+      http_client.@io ? false : true
+    end
+
     private def process_result(http_client_res) : Crest::Response
       response = Response.new(http_client_res, self)
       logger.response(response) if logging

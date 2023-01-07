@@ -3,6 +3,7 @@
 ## [...]
 
 - Fixes for Crystal 1.7.0
+- Add `closed?` method to `Crest::Request`
 - **chore**: reverted VCR by @mamantoha in https://github.com/mamantoha/crest/pull/193
 - **chore**: use actions/checkout@v3 by @mamantoha in https://github.com/mamantoha/crest/pull/196
 - **chore**: use Crystal Ameba GitHub Action by @mamantoha in https://github.com/mamantoha/crest/pull/197
