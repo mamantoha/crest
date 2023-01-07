@@ -70,7 +70,6 @@ module Crest
       read_timeout, write_timeout, connect_timeout
 
     delegate close, to: http_client
-    delegate closed?, to: http_client
 
     @params = {} of String => Crest::ParamsValue
     @cookies = {} of String => Crest::ParamsValue
@@ -165,6 +164,10 @@ module Crest
       @url = concat_urls(@base_url, suburl)
 
       self
+    end
+
+    def closed?
+      http_client.@io ? false : true
     end
 
     private def new_http_client : HTTP::Client
