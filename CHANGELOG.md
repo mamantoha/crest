@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.3.7][] (2023-01-10)
+
 - Fixes for Crystal 1.7.0
 - Add `closed?` method to `Crest::Request`
 - **chore**: reverted VCR by @mamantoha in https://github.com/mamantoha/crest/pull/193
@@ -385,7 +387,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.6...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.7...HEAD
+[1.3.7]: https://github.com/mamantoha/crest/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/mamantoha/crest/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/mamantoha/crest/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/mamantoha/crest/compare/v1.3.3...v1.3.4
