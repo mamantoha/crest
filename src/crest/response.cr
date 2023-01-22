@@ -42,9 +42,7 @@ module Crest
     end
 
     def headers
-      headers = @request.headers.dup.merge!(http_client_res.headers)
-
-      normalize_headers(headers)
+      normalize_headers(http_client_res.headers)
     end
 
     def cookies
