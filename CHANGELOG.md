@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.3.8][] (2023-01-22)
+
 - Do not merge request headers into the response in [#203](https://github.com/mamantoha/crest/pull/203). Fixes [#201](https://github.com/mamantoha/crest/pull/201)
 
 ## [1.3.7][] (2023-01-10)
@@ -389,7 +391,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.7...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.8...HEAD
+[1.3.8]: https://github.com/mamantoha/crest/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/mamantoha/crest/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/mamantoha/crest/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/mamantoha/crest/compare/v1.3.4...v1.3.5
