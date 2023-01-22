@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Do not merge request headers into the response in [#203](https://github.com/mamantoha/crest/pull/203). Fixes [#201](https://github.com/mamantoha/crest/pull/201)
+
 ## [1.3.7][] (2023-01-10)
 
 - Fixes for Crystal 1.7.0
