@@ -10,6 +10,18 @@ describe Crest do
         response.headers.should_not contain("Access-Token")
       end
 
+      it "should set headers in the block" do
+        request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/get", headers: {"k1" => "v1"}) do |req|
+          req.headers["k2"] = "v2"
+        end
+
+        response = request.execute
+
+        (response.status_code).should eq(200)
+        (JSON.parse(response.body)["headers"]["k1"]).should eq("v1")
+        (JSON.parse(response.body)["headers"]["k2"]).should eq("v2")
+      end
+
       it "should get request headers" do
         response = Crest.get("#{TEST_SERVER_URL}/headers/set", params: {"foo" => "bar"})
         (response.status_code).should eq(200)

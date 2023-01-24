@@ -154,6 +154,8 @@ module Crest
       set_timeouts!
 
       yield self
+
+      @cookies.add_request_headers(@headers)
     end
 
     # When block is not given.
@@ -319,25 +321,23 @@ module Crest
       @form_data = form
     end
 
-    private def set_headers!(params) : HTTP::Headers
+    private def set_headers!(params) : Nil
       params.each do |key, value|
         @headers.add(key, value)
       end
 
       @headers["User-Agent"] = @user_agent.to_s if @user_agent
 
-      @headers
+      nil
     end
 
-    # Adds "Cookie" headers for the cookies in this collection to the @header instance and returns it
-    private def set_cookies!(cookies) : HTTP::Headers
+    # Adds "Cookie" headers for the cookies in the collection
+    private def set_cookies!(cookies) : Nil
       cookies = @params_encoder.flatten_params(cookies)
 
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
-
-      @cookies.add_request_headers(@headers)
     end
 
     protected def authenticate!

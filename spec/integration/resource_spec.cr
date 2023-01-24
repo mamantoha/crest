@@ -139,38 +139,6 @@ describe Crest::Response do
     body["args"].should eq({"image[type]" => "jpeg", "width" => "100", "height" => "100"})
   end
 
-  it "do GET request with default cookies" do
-    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => "v1", "k2" => "v2"})
-    response = resource["/"].get
-
-    (response.status_code).should eq(200)
-    (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
-  end
-
-  it "do GET request with default nested cookies" do
-    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => {"kk1" => "v1"}})
-    response = resource["/"].get
-
-    (response.status_code).should eq(200)
-    (response.cookies).should eq({"k1[kk1]" => "v1"})
-  end
-
-  it "do GET request with cookies" do
-    resource = Crest::Resource.new(TEST_SERVER_URL)
-    response = resource["/"].get(cookies: {"k1" => "v1"})
-
-    (response.status_code).should eq(200)
-    (response.cookies).should eq({"k1" => "v1"})
-  end
-
-  it "do GET request with cookies and default cookies" do
-    resource = Crest::Resource.new(TEST_SERVER_URL, cookies: {"k1" => "v1", "k2" => "v2"})
-    response = resource["/"].get(cookies: {"k2" => "vv2"})
-
-    (response.status_code).should eq(200)
-    (response.cookies).should eq({"k1" => "v1", "k2" => "vv2"})
-  end
-
   it "should accept block" do
     resource = Crest::Resource.new(TEST_SERVER_URL) do |res|
       res.headers.merge!({"foo" => "bar"})

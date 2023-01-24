@@ -46,7 +46,7 @@ module Crest
     end
 
     def cookies
-      request_cookies.merge(response_cookies)
+      cookies_to_h(@http_client_res.cookies)
     end
 
     def history : Array
@@ -84,14 +84,6 @@ module Crest
 
     private def raise_exception!
       raise RequestFailed.subclass_by_status_code(status_code).new(self)
-    end
-
-    private def request_cookies
-      cookies_to_h(@request.cookies)
-    end
-
-    private def response_cookies
-      cookies_to_h(@http_client_res.cookies)
     end
 
     private def normalize_headers(headers : HTTP::Headers)

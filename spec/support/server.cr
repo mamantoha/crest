@@ -207,16 +207,6 @@ get "/cookies/set" do |env|
   {"cookies" => result}.to_json
 end
 
-# Sets one or more simple cookies and redirect.
-# /cookies/set_redirect?name=value
-get "/cookies/set_redirect" do |env|
-  env.params.query.each do |param|
-    env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
-  end
-
-  env.redirect("/get")
-end
-
 # Delays responding for `:seconds` seconds.
 get "/delay/:seconds" do |env|
   seconds = env.params.url["seconds"].to_i
