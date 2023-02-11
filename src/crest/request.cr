@@ -191,7 +191,7 @@ module Crest
 
     # Execute HTTP request
     def execute : Crest::Response
-      @http_client.set_proxy(@proxy)
+      @proxy.try { |proxy| @http_client.proxy = proxy }
       authenticate!
       @logger.request(self) if @logging
 
@@ -206,7 +206,7 @@ module Crest
 
     # Execute streaming HTTP request
     def execute(&block : Crest::Response ->) : Nil
-      @http_client.set_proxy(@proxy)
+      @proxy.try { |proxy| @http_client.proxy = proxy }
       authenticate!
       @logger.request(self) if @logging
 
