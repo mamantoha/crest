@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
+        uses: mamantoha/install-crystal@v1
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Install dependencies
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
+        uses: mamantoha/install-crystal@v1
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Crystal Ameba Linter
@@ -43,7 +43,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
+        uses: mamantoha/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Check out repository code
