@@ -42,6 +42,10 @@ jobs:
           - {os: macos-latest}
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install pkg-config
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
