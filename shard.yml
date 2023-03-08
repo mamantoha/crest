@@ -19,11 +19,9 @@ dependencies:
 
 development_dependencies:
   kemal:
-    # github: kemalcr/kemal
-    # version: ~> 1.0.0
-    # branch: master
-    github: mamantoha/kemal
-    branch: develop
+    github: kemalcr/kemal
+    version: ~> 1.0.0
+    branch: master
   kemal-basic-auth:
     github: kemalcr/kemal-basic-auth
   vcr:
