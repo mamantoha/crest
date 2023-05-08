@@ -25,6 +25,7 @@ module Crest
     delegate to_curl, to: request
 
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
+      http_client_res.headers
     end
 
     def return! : Crest::Response
@@ -53,13 +54,18 @@ module Crest
       @request.redirection_history
     end
 
-    # Extracts filename from Content-Disposition header
+    # Extracts filename from "Content-Disposition" header
     def filename : String?
       filename_regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/xi
 
-      if match_data = (headers.find { |k, v| k.downcase == "content-disposition" }.try &.[1] || "").as(String).match(filename_regex)
+      if match_data = http_client_res.headers.fetch("Content-Disposition", "").match(filename_regex)
         return match_data[1]
       end
+    end
+
+    # Size of the message body in bytes taken from "Content-Length" header
+    def content_length : Int32
+      http_client_res.headers["Content-Length"].to_i
     end
 
     def invalid?
