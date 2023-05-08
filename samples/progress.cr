@@ -6,6 +6,7 @@ downloaded_size = 0
 
 Crest.get(url) do |response|
   output_file = response.filename || "crystal.zip"
+  content_length = response.content_length
 
   File.open(output_file, "w") do |file|
     buffer = Bytes.new(buffer_size)
@@ -18,8 +19,9 @@ Crest.get(url) do |response|
       file.write(buffer[0, bytes_read])
 
       downloaded_size += bytes_read
+      downloaded_in_percents = ((downloaded_size / content_length) * 100).round(0)
 
-      print "Received data: #{downloaded_size.humanize_bytes}"
+      print "Received data: #{downloaded_size.humanize_bytes} (#{downloaded_in_percents}%)"
       print "\r"
     end
   end
