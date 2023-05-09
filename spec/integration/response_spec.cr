@@ -33,6 +33,12 @@ describe Crest::Response do
     (response.filename).should be_nil
   end
 
+  it "response instance should have content length" do
+    response = Crest.get("#{TEST_SERVER_URL}/download?filename=filename.jpg")
+
+    (response.content_length).should eq(106)
+  end
+
   it "#to_curl" do
     response = Crest.get("#{TEST_SERVER_URL}")
 
