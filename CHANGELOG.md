@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.10][] (2023-05-09)
+
+- Add `Response#content_length` by @mamantoha in [#211](https://github.com/mamantoha/crest/pull/211)
+
 ## [1.3.9][] (2023-05-06)
 
 * Fixes the issue of retrieving the filename from the response header by @mamantoha in [#210](https://github.com/mamantoha/crest/pull/210)
@@ -395,7 +399,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.9...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.10...HEAD
+[1.3.10]: https://github.com/mamantoha/crest/compare/v1.3.9...v1.3.10
 [1.3.9]: https://github.com/mamantoha/crest/compare/v1.3.8...v1.3.9
 [1.3.8]: https://github.com/mamantoha/crest/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/mamantoha/crest/compare/v1.3.6...v1.3.7
