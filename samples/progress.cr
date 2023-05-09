@@ -1,11 +1,11 @@
 require "../src/crest"
 
-url = "https://github.com/crystal-lang/crystal/archive/1.8.1.zip"
+url = "https://releases.ubuntu.com/23.04/ubuntu-23.04-desktop-amd64.iso"
 buffer_size = 4096
 downloaded_size = 0
 
 Crest.get(url) do |response|
-  output_file = response.filename || "crystal.zip"
+  output_file = response.filename || "ubuntu-23.04-desktop-amd64.iso"
   content_length = response.content_length
 
   File.open(output_file, "w") do |file|

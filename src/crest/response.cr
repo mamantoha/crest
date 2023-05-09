@@ -64,8 +64,8 @@ module Crest
     end
 
     # Size of the message body in bytes taken from "Content-Length" header
-    def content_length : Int32
-      http_client_res.headers["Content-Length"].to_i
+    def content_length : Int64
+      http_client_res.headers["Content-Length"].to_i64
     end
 
     def invalid?
