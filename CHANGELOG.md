@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.11][] (2023-05-09)
+
+- Fixes `Response#content_length` to be Int64 by @mamantoha in [#212](https://github.com/mamantoha/crest/pull/212)
+
 ## [1.3.10][] (2023-05-09)
 
 - Add `Response#content_length` by @mamantoha in [#211](https://github.com/mamantoha/crest/pull/211)
@@ -399,7 +403,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.10...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.11...HEAD
+[1.3.11]: https://github.com/mamantoha/crest/compare/v1.3.10...v1.3.11
 [1.3.10]: https://github.com/mamantoha/crest/compare/v1.3.9...v1.3.10
 [1.3.9]: https://github.com/mamantoha/crest/compare/v1.3.8...v1.3.9
 [1.3.8]: https://github.com/mamantoha/crest/compare/v1.3.7...v1.3.8
