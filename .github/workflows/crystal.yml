@@ -50,3 +50,25 @@ jobs:
         run: shards install
       - name: Run tests
         run: crystal spec
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Crystal
+      uses: crystal-lang/install-crystal@v1
+      with:
+        crystal: 1.8
+    - run: make build
+    - name: Install kcov
+      run: |
+        sudo apt-get update
+        sudo apt-get install kcov
+    - name: Generate coverage
+      run: bin/crkcov --kcov-args --exclude-pattern=/usr/include,/usr/lib,lib/,spec/
+    - name: Report coverage
+      env:
+        COVERALLS_REPO_TOKEN: ${{ github.token }}
+      run: |
+        cd coverage
+        ../bin/coveralls --base-path src/coverage_reporter/
