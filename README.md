@@ -97,6 +97,7 @@ Optional parameters:
 - `:tls` - client certificates, you can pass in a custom `OpenSSL::SSL::Context::Client` (default to `nil`)
 - `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 - `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
+- `:multipart` make a multipart request with the appropriate HTTP headers even if not sending a file (default to `false`)
 - `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
 - `:max_redirects` - maximum number of redirects (default to 10)
 - `:logging` - enable logging (default to `false`)
