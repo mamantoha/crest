@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Add multipart parameter to request by @jphaward in [#214](https://github.com/mamantoha/crest/pull/214)
+
 ## [1.3.11][] (2023-05-09)
 
 - Fixes `Response#content_length` to be Int64 by @mamantoha in [#212](https://github.com/mamantoha/crest/pull/212)
