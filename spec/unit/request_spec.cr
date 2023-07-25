@@ -103,6 +103,14 @@ describe Crest::Request do
       (request.form_data.to_s).should contain("form-data; name=\"file\"; filename=")
     end
 
+    it "initialize the POST request with multipart if the multipart parameter is provided" do
+      request = Crest::Request.new(:post, "http://localhost", form: {:foo => "bar"}, multipart: true)
+      (request.method).should eq("POST")
+      (request.url).should eq("http://localhost")
+      (request.headers["Content-Type"]).should contain("multipart/form-data; boundary=")
+      (request.form_data.to_s).should contain("form-data; name=\"foo\"\r\n\r\nbar\r\n")
+    end
+
     it "do the POST request with nested form" do
       request = Crest::Request.new(:post, "http://localhost", form: {:params1 => "one", :nested => {:params2 => "two"}})
       (request.headers["Content-Type"]).should eq("application/x-www-form-urlencoded")

@@ -43,6 +43,7 @@ module Crest
   # - `tls` configuring TLS settings
   # - `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
   # - `json` make a JSON request with the appropriate HTTP headers (default to `false`)
+  # - `multipart` make a multipart request with the appropriate HTTP headers even if not sending a file (default to `false`)
   # - `user_agent` set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
   # - `max_redirects` maximum number of redirects (default to `10`)
   # - `logging` enable logging (default to `false`)
@@ -72,6 +73,7 @@ module Crest
     @p_user : String?
     @p_pass : String?
     @json : Bool
+    @multipart : Bool
     @user_agent : String?
     @logger : Crest::Logger
     @logging : Bool
@@ -83,7 +85,7 @@ module Crest
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
-      auth, proxy, p_addr, p_port, p_user, p_pass, json, user_agent,
+      auth, proxy, p_addr, p_port, p_user, p_pass, json, multipart, user_agent,
       read_timeout, write_timeout, connect_timeout
 
     property redirection_history, user, password
@@ -117,6 +119,7 @@ module Crest
       @headers = HTTP::Headers.new
       @cookies = HTTP::Cookies.new
       @json = options.fetch(:json, false).as(Bool)
+      @multipart = options.fetch(:multipart, false).as(Bool)
       @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
       @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
       @redirection_history = [] of Crest::Response
@@ -292,27 +295,26 @@ module Crest
     end
 
     private def multipart?(form : Hash) : Bool
-      @params_encoder.flatten_params(form).any?(&.[1].is_a?(IO))
+      @params_encoder.flatten_params(form).any?(&.[1].is_a?(IO)) || @multipart == true
+    end
+
+    private def form_class(form : Hash)
+      if @json
+        Crest::JSONForm
+      elsif multipart?(form)
+        Crest::DataForm
+      else
+        Crest::UrlencodedForm
+      end
     end
 
     private def generate_form_data!(form : Hash) : String | Bytes | IO | Nil
       return if form.empty?
 
-      form_class =
-        if @json
-          Crest::JSONForm
-        else
-          multipart?(form) ? Crest::DataForm : Crest::UrlencodedForm
-        end
+      generated_form = form_class(form).generate(form, @params_encoder)
 
-      form = form_class.generate(form, @params_encoder)
-
-      @form_data = form.form_data
-      content_type = form.content_type
-
-      @headers["Content-Type"] = content_type
-
-      @form_data
+      @headers["Content-Type"] = generated_form.content_type
+      @form_data = generated_form.form_data
     end
 
     private def generate_form_data!(form : String | Bytes | IO) : String | Bytes | IO | Nil
