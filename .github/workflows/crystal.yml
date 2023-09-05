@@ -13,7 +13,7 @@ jobs:
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check format
         run: crystal tool format --check
 
@@ -23,7 +23,7 @@ jobs:
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Crystal Ameba Linter
         id: crystal-ameba
         uses: crystal-ameba/github-action@v0.7.1
@@ -45,7 +45,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install dependencies
         run: shards install --skip-postinstall --skip-executables
       - name: Run tests
