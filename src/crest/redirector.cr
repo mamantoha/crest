@@ -4,6 +4,7 @@ module Crest
     end
 
     def follow : Crest::Response
+      p! @response
       case @response
       when .success?
         @response

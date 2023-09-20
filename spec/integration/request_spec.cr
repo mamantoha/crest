@@ -40,7 +40,7 @@ describe Crest::Request do
     body["path"].should eq("/get")
   end
 
-  it "do GET request with params" do
+  it "do GET request with params", focus: true do
     response = Crest::Request.execute(:get,
       "#{TEST_SERVER_URL}/get",
       params: {:width => 100, :height => 1455494400}
