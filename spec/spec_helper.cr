@@ -5,7 +5,7 @@ require "vcr"
 require "../src/crest"
 require "./support/server"
 
-TEST_SERVER_HOST = "0.0.0.0"
+TEST_SERVER_HOST = "127.0.0.1"
 TEST_SERVER_PORT = 4567
 TEST_SERVER_URL  = "http://#{TEST_SERVER_HOST}:#{TEST_SERVER_PORT}"
 
