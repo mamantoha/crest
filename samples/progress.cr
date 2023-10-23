@@ -1,11 +1,11 @@
 require "../src/crest"
 
-url = "https://releases.ubuntu.com/23.04/ubuntu-23.04-desktop-amd64.iso"
+url = "https://releases.ubuntu.com/mantic/ubuntu-23.10.1-desktop-amd64.iso"
 buffer_size = 4096
 downloaded_size = 0
 
 Crest.get(url) do |response|
-  output_file = response.filename || "ubuntu-23.04-desktop-amd64.iso"
+  output_file = response.filename || url.split('/').last
   content_length = response.content_length
 
   File.open(output_file, "w") do |file|
@@ -21,8 +21,10 @@ Crest.get(url) do |response|
       downloaded_size += bytes_read
       downloaded_in_percents = ((downloaded_size / content_length) * 100).round(0)
 
-      print "Received data: #{downloaded_size.humanize_bytes} (#{downloaded_in_percents}%)"
-      print "\r"
+      line = "Received data: #{downloaded_size.humanize_bytes}/#{content_length.humanize_bytes} (#{downloaded_in_percents}%)"
+
+      print "\r#{" " * (line.size + 10)}\r"
+      print line
     end
   end
 
