@@ -349,14 +349,14 @@ describe Crest::Response do
   end
 
   it "do GET request with logging" do
-    IO.pipe do |r, w|
-      logger = Crest::CommonLogger.new(w)
+    IO.pipe do |reader, writer|
+      logger = Crest::CommonLogger.new(writer)
 
       resource = Crest::Resource.new(TEST_SERVER_URL, logger: logger, logging: true)
       resource["/get"].get
 
-      r.gets.should match(/GET/)
-      r.gets.should match(/200/)
+      reader.gets.should match(/GET/)
+      reader.gets.should match(/200/)
     end
   end
 

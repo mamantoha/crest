@@ -23,15 +23,15 @@ describe Crest::Redirector do
     end
 
     it "should redirect with logger" do
-      IO.pipe do |r, w|
-        logger = Crest::CommonLogger.new(w)
+      IO.pipe do |reader, writer|
+        logger = Crest::CommonLogger.new(writer)
 
         response = Crest.get("#{TEST_SERVER_URL}/redirect/1", logger: logger, logging: true)
 
-        r.gets.should match(/GET/)
-        r.gets.should match(/302/)
-        r.gets.should match(/GET/)
-        r.gets.should match(/200/)
+        reader.gets.should match(/GET/)
+        reader.gets.should match(/302/)
+        reader.gets.should match(/GET/)
+        reader.gets.should match(/200/)
 
         (response.request.logging).should eq(true)
         (response.request.logger).should be_a(Crest::Logger)

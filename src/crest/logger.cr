@@ -37,9 +37,9 @@ module Crest
     end
 
     private def apply_filters(output : String) : String
-      @filters.each do |f|
-        pattern = f[0]
-        replacement = f[1]
+      @filters.each do |filter|
+        pattern = filter[0]
+        replacement = filter[1]
 
         output = output.gsub(pattern, replacement)
       end
