@@ -38,6 +38,7 @@ jobs:
           - {os: ubuntu-latest, crystal: latest}
           - {os: ubuntu-latest, crystal: nightly}
           - {os: macos-latest}
+          - {os: macos-14}
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Crystal
