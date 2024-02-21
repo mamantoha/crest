@@ -19,9 +19,7 @@ module Crest
     # # => [{"key1[key2]", "123"}]
     # ```
     def self.flatten_params(object : Hash, parent_key : String? = nil) : Array(Tuple(String, Crest::ParamsValue))
-      object.reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, item|
-        k, v = item
-
+      object.reduce([] of Tuple(String, Crest::ParamsValue)) do |memo, (k, v)|
         processed_key = parent_key ? "#{parent_key}[#{k}]" : k.to_s
 
         case v
