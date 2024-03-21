@@ -2,6 +2,10 @@
 
 ## [...]
 
+## [1.3.13][] (2024-03-21)
+
+- Use `http_proxy` >= 0.10.2
+
 ## [1.3.12][] (2023-07-26)
 
 - Add multipart parameter to request by @jphaward in [#214](https://github.com/mamantoha/crest/pull/214)
@@ -407,7 +411,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.12...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.3.13...HEAD
+[1.3.13]: https://github.com/mamantoha/crest/compare/v1.3.12...v1.3.13
 [1.3.12]: https://github.com/mamantoha/crest/compare/v1.3.11...v1.3.12
 [1.3.11]: https://github.com/mamantoha/crest/compare/v1.3.10...v1.3.11
 [1.3.10]: https://github.com/mamantoha/crest/compare/v1.3.9...v1.3.10
