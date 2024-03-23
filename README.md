@@ -242,7 +242,7 @@ With Proxy:
 ```crystal
 resource = Crest::Resource.new(
   "http://httpbin.org/get",
-  p_host: "localhost",
+  p_addr: "localhost",
   p_port: 3128
 )
 ```
