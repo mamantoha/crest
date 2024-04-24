@@ -384,9 +384,15 @@ module Crest
     end
 
     private def set_timeouts!
-      @read_timeout.try { |timeout| @http_client.read_timeout = timeout }
-      @write_timeout.try { |timeout| @http_client.write_timeout = timeout }
-      @connect_timeout.try { |timeout| @http_client.connect_timeout = timeout }
+      @read_timeout.try { |timeout| @http_client.read_timeout = timeout_to_time_span(timeout) }
+      @write_timeout.try { |timeout| @http_client.write_timeout = timeout_to_time_span(timeout) }
+      @connect_timeout.try { |timeout| @http_client.connect_timeout = timeout_to_time_span(timeout) }
+    end
+
+    private def timeout_to_time_span(timeout : Crest::TimeoutValue) : Time::Span
+      return timeout if timeout.is_a?(Time::Span)
+
+      timeout.to_time_span
     end
 
     # Extract the query parameters and append them to the `url`
