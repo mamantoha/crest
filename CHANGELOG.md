@@ -6,7 +6,7 @@
 
 - Fix typo in README.md by @kojix2 in [#223](https://github.com/mamantoha/crest/pull/223)
 - Fix to changes in `HTTP::Client` by @mamantoha in [#224](https://github.com/mamantoha/crest/pull/224)
-- Rewrite specs without Kemal add enable Windows CI @mamantoha in [#226](https://github.com/mamantoha/crest/pull/226)
+- Rewrite specs without Kemal and enable Windows CI @mamantoha in [#226](https://github.com/mamantoha/crest/pull/226)
 
 ## [1.3.13][] (2024-03-21)
 
