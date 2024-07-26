@@ -18,12 +18,6 @@ dependencies:
     version: ">= 0.10.2"
 
 development_dependencies:
-  kemal:
-    github: kemalcr/kemal
-    version: ~> 1.0.0
-    branch: master
-  kemal-basic-auth:
-    github: kemalcr/kemal-basic-auth
   vcr:
     github: spoved/vcr.cr
     branch: master

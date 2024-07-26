@@ -17,7 +17,7 @@ describe Crest do
         ex.response
       end
 
-      response.body.should eq("500 error")
+      response.body.chomp.should eq("500 Internal Server Error")
     end
 
     it "404 with Resource" do

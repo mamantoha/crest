@@ -259,9 +259,7 @@ module Crest
     end
 
     private def new_http_request(method, url, headers, body) : HTTP::Request
-      request_target = URI.parse(url).request_target
-
-      HTTP::Request.new(method, request_target, headers, body).tap do |request|
+      HTTP::Request.new(method, url, headers, body).tap do |request|
         # Set default headers
         request.headers["Accept"] ||= @json ? "application/json" : "*/*"
         request.headers["Host"] ||= host_header
@@ -374,7 +372,7 @@ module Crest
     end
 
     private def digest_auth_response(uri)
-      @http_client.exec(@method, uri.request_target)
+      @http_client.exec(@method, uri.to_s)
     end
 
     private def set_proxy!(p_addr, p_port, p_user, p_pass)

@@ -1,25 +1,14 @@
-require "kemal"
-require "kemal-basic-auth"
+require "http/server"
+require "json"
+require "crypto/subtle"
 
-class BasicAuthHandler < Kemal::BasicAuth::Handler
-  only ["/secret"]
-
-  def call(env)
-    return call_next(env) unless only_match?(env)
-
-    super
-  end
-end
-
-def render_response(env)
-  args = env.params.query.to_h
-  data = env.params.body.to_s
-  json = env.params.json
-  method = env.request.method
+def render_response(context : HTTP::Server::Context)
+  args = context.request.query_params.to_h
+  method = context.request.method
 
   raw_params = {} of String => Array(String)
 
-  env.params.body.each do |key, value|
+  context.request.form_params.each do |key, value|
     if raw_params.has_key?(key)
       raw_params[key] << value
     else
@@ -37,198 +26,214 @@ def render_response(env)
     end
   end
 
+  json =
+    begin
+      if body = context.request.body
+        JSON.parse(body.gets_to_end)
+      else
+        JSON.parse("{}")
+      end
+    rescue
+      JSON.parse("{}")
+    end
+
   headers = {} of String => String
-  env.request.headers.each do |key, value|
+  context.request.headers.each do |key, value|
     headers[key] = value.join(";")
   end
 
   cookies = {} of String => String
-  env.request.cookies.to_h.each do |_, cookie|
+  context.request.cookies.to_h.each do |_, cookie|
     cookies[cookie.name] = cookie.value
   end
 
-  env.response.content_type = "application/json"
-
   {
     "args"    => args,
-    "data"    => data,
     "form"    => form,
     "json"    => json,
     "headers" => headers,
     "cookies" => cookies,
     "method"  => method,
-    "path"    => env.request.resource,
+    "path"    => context.request.resource,
   }.to_json
 end
 
-add_handler BasicAuthHandler.new("username", "password")
+class HTTP::BasicAuthHandler
+  include HTTP::Handler
 
-error 404 do
-  "404 error"
-end
+  BASIC                 = "Basic"
+  AUTH                  = "Authorization"
+  AUTH_MESSAGE          = "Could not verify your access level for that URL.\nYou have to login with proper credentials"
+  HEADER_LOGIN_REQUIRED = "Basic realm=\"Login Required\""
+  PROTECTED_PATHS       = ["/secret"]
 
-error 500 do
-  "500 error"
-end
+  def initialize(@username : String, @password : String)
+  end
 
-get "/" do
-  "200 OK"
-end
+  def call(context) : Nil
+    return call_next(context) unless PROTECTED_PATHS.includes?(context.request.path)
 
-# Returns GET data.
-get "/get" do |env|
-  render_response(env)
-end
-
-# Returns request data. Allows only POST requests.
-post "/post" do |env|
-  render_response(env)
-end
-
-# Returns request data. Allows only PUT requests.
-put "/put" do |env|
-  render_response(env)
-end
-
-# Returns request data. Allows only PATCH requests.
-patch "/patch" do |env|
-  render_response(env)
-end
-
-# Returns request data. Allows only DELETE requests.
-delete "/delete" do |env|
-  render_response(env)
-end
-
-# HTML form that submits to /post
-get "/forms/post" do |_env|
-  render "#{__DIR__}/views/forms/post.ecr"
-end
-
-options "/" do |env|
-  env.response.headers["Allow"] = "OPTIONS, GET"
-end
-
-get "/secret" do
-  "Authorized"
-end
-
-get("/redirect_to_secret", &.redirect("/secret"))
-
-post "/upload" do |env|
-  request_content_type = env.request.headers["Content-Type"]
-
-  uploaded_file =
-    if request_content_type.starts_with?("multipart/form-data")
-      env.params.files.values.first.tempfile
-    else
-      File.tempfile(suffix: MIME.extensions(request_content_type).first) do |file|
-        env.request.body.try { |body| IO.copy(body, file) }
+    if value = context.request.headers[AUTH]?
+      if value.starts_with?(BASIC)
+        return call_next(context) if authorize?(value)
       end
     end
 
-  "Upload OK - #{uploaded_file.path}"
-end
-
-post "/upload_nested" do |env|
-  file = env.params.files["user[file]"].tempfile
-
-  "Upload OK - #{file.path}"
-end
-
-get "/user-agent" do |env|
-  env.request.headers["User-Agent"]
-end
-
-# Errors
-#
-get("/404", &.response.status_code=(404))
-
-get("/500", &.response.status_code=(500))
-
-# Stream
-#
-get "/stream/:count" do |env|
-  count = env.params.url["count"].to_i
-
-  count.times do
-    env.response.puts("200 OK")
+    context.response.status_code = 401
+    context.response.headers["WWW-Authenticate"] = HEADER_LOGIN_REQUIRED
+    context.response.print AUTH_MESSAGE
   end
 
-  env
-end
+  private def authorize?(value : String) : Bool
+    given_username, given_password = Base64.decode_string(value[BASIC.size + 1..-1]).split(":")
 
-# Redirects
-#
-get "/redirect/1" do |env|
-  env.redirect("/", body: "Redirecting to /")
-end
+    return false unless Crypto::Subtle.constant_time_compare(@username, given_username)
+    return false unless Crypto::Subtle.constant_time_compare(@password, given_password)
 
-get("/redirect/2", &.redirect("/redirect/1"))
-
-get "/redirect/circle1" do |env|
-  env.redirect("/redirect/circle2")
-end
-
-get "/redirect/circle2" do |env|
-  env.redirect("/redirect/circle1")
-end
-
-get("/redirect/not_found", &.redirect("/404"))
-
-get "/redirect_stream/:count" do |env|
-  count = env.params.url["count"].to_i
-
-  env.redirect("/stream/#{count}")
-end
-
-# Set response headers.
-# /headers/set?name=value
-get "/headers/set" do |env|
-  env.params.query.each do |param|
-    env.response.headers[param[0]] = param[1]
+    true
   end
-
-  ""
 end
 
-# Sets one or more simple cookies.
-# /cookies/set?name=value
-get "/cookies/set" do |env|
-  env.params.query.each do |param|
-    env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
+server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) do |context|
+  case context.request.path
+  when "/"
+    case context.request.method
+    when "GET"
+      context.response.print "200 OK"
+    when "OPTIONS"
+      context.response.headers["Allow"] = "OPTIONS, GET"
+    end
+  when "/get"
+    context.response.print render_response(context)
+  when "/post"
+    context.response.print render_response(context)
+  when "/put"
+    context.response.print render_response(context)
+  when "/patch"
+    context.response.print render_response(context)
+  when "/delete"
+    context.response.print render_response(context)
+  when "/404"
+    context.response.respond_with_status(:not_found, "404 error")
+  when "/500"
+    context.response.respond_with_status(:internal_server_error)
+  when "/secret"
+    context.response.print "Authorized"
+  when "/redirect_to_secret"
+    context.response.redirect("/secret")
+  when "/upload"
+    request_content_type = context.request.headers["Content-Type"]
+
+    file = nil
+
+    if request_content_type.starts_with?("multipart/form-data")
+      HTTP::FormData.parse(context.request) do |part|
+        file = File.tempfile("upload") do |f|
+          IO.copy(part.body, f)
+        end
+      end
+    else
+      suffix = MIME.extensions(request_content_type).first? || ""
+
+      file = File.tempfile(suffix: suffix) do |f|
+        context.request.body.try { |body| IO.copy(body, f) }
+      end
+    end
+
+    unless file
+      context.response.respond_with_status(:bad_request)
+      next
+    end
+
+    context.response.print "Upload OK - #{file.path}"
+  when "/upload_nested"
+    file = nil
+
+    HTTP::FormData.parse(context.request) do |part|
+      file = File.tempfile("upload") do |f|
+        IO.copy(part.body, f)
+      end
+    end
+
+    unless file
+      context.response.respond_with_status(:bad_request)
+      next
+    end
+
+    context.response.print "Upload OK - #{file.path}"
+  when "/user-agent"
+    context.response.print context.request.headers["User-Agent"]
+  when "/redirect/1"
+    context.response.redirect("/")
+  when "/redirect/2"
+    context.response.redirect("/redirect/1")
+  when "/redirect/circle1"
+    context.response.redirect("/redirect/circle2")
+  when "/redirect/circle2"
+    context.response.redirect("/redirect/circle1")
+  when "/redirect/not_found"
+    context.response.redirect("/404")
+  when "/headers/set"
+    context.request.query_params.each do |key, value|
+      context.response.headers[key] = value
+    end
+
+    context.response.print ""
+  when "/cookies/set"
+    context.request.query_params.each do |key, value|
+      context.response.cookies << HTTP::Cookie.new(name: key, value: value)
+    end
+
+    result = {} of String => String
+    context.response.cookies.to_h.each do |_, cookie|
+      result[cookie.name] = cookie.value
+    end
+
+    context.response.print({"cookies" => result}.to_json)
+  when "/cookies/set_redirect"
+    context.request.query_params.each do |key, value|
+      context.response.cookies << HTTP::Cookie.new(name: key, value: value)
+    end
+
+    context.response.redirect("/get")
+  when /^\/delay\/(\d+)$/
+    seconds = $1.to_i
+
+    sleep seconds
+
+    context.response.print "Delay #{seconds} seconds"
+  when /^\/stream\/(\d+)$/
+    count = $1.to_i
+
+    count.times do
+      context.response.puts("200 OK")
+    end
+
+    context.response
+  when /^\/redirect_stream\/(\d+)$/
+    count = $1.to_i
+
+    context.response.redirect("/stream/#{count}")
+  when "/download"
+    filename = context.request.query_params["filename"]? || "foo.bar"
+    file_path = "#{__DIR__}/fff.png"
+
+    filesize = File.size(file_path)
+
+    File.open(file_path) do |f|
+      disposition = "attachment"
+
+      context.response.headers["Content-Disposition"] = "#{disposition}; filename=\"#{File.basename(filename)}\""
+      context.response.content_length = filesize
+
+      IO.copy(f, context.response)
+    end
   end
-
-  result = {} of String => String
-  env.response.cookies.to_h.each do |_, cookie|
-    result[cookie.name] = cookie.value
-  end
-
-  {"cookies" => result}.to_json
 end
 
-# Sets one or more simple cookies and redirect.
-# /cookies/set_redirect?name=value
-get "/cookies/set_redirect" do |env|
-  env.params.query.each do |param|
-    env.response.cookies << HTTP::Cookie.new(name: param[0], value: param[1])
-  end
+address = server.bind_tcp TEST_SERVER_HOST, TEST_SERVER_PORT
+puts "Listening on http://#{address}"
 
-  env.redirect("/get")
-end
-
-# Delays responding for `:seconds` seconds.
-get "/delay/:seconds" do |env|
-  seconds = env.params.url["seconds"].to_i
-  sleep seconds
-
-  "Delay #{seconds} seconds"
-end
-
-# Matches /download?filename=foo.bar
-get "/download" do |env|
-  filename = env.params.query["filename"]? || "foo.bar"
-  file = File.open("#{__DIR__}/fff.png")
-
-  send_file env, file.path, mime_type: "Application/octet-stream", filename: filename
+spawn do
+  server.listen
 end
