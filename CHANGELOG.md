@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.4.0][] (2024-08-26)
+
 - Fix typo in README.md by @kojix2 in [#223](https://github.com/mamantoha/crest/pull/223)
 - Fix to changes in `HTTP::Client` by @mamantoha in [#224](https://github.com/mamantoha/crest/pull/224)
 - Rewrite specs without Kemal add enable Windows CI @mamantoha in [#226](https://github.com/mamantoha/crest/pull/226)
@@ -415,7 +417,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.3.13...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/mamantoha/crest/compare/v1.3.13...v1.4.0
 [1.3.13]: https://github.com/mamantoha/crest/compare/v1.3.12...v1.3.13
 [1.3.12]: https://github.com/mamantoha/crest/compare/v1.3.11...v1.3.12
 [1.3.11]: https://github.com/mamantoha/crest/compare/v1.3.10...v1.3.11
