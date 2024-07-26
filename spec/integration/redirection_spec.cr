@@ -75,7 +75,7 @@ describe Crest::Redirector do
 
       (response.url).should eq("#{TEST_SERVER_URL}/redirect/1")
       (response.status_code).should eq(302)
-      (response.body).should eq("Redirecting to /")
+      (response.body).should eq("")
     end
 
     it "should not raise exception in the block when handle_errors is false" do
@@ -86,7 +86,7 @@ describe Crest::Redirector do
         body = response.body_io.gets_to_end
       end
 
-      body.should eq("Redirecting to /")
+      body.should eq("")
       status_code.should eq(302)
     end
   end

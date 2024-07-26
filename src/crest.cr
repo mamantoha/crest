@@ -8,6 +8,7 @@ require "./ext/io"
 require "./ext/int"
 require "./ext/float"
 require "./ext/http/cookie"
+require "./ext/uri"
 
 # This module's static methods are the entry point for using the Crest client.
 #

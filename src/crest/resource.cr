@@ -233,7 +233,7 @@ module Crest
     end
 
     private def concat_urls(url : String, suburl : String) : String
-      File.join(url, suburl)
+      URI.join(url, URI.parse(suburl)).to_s
     end
   end
 end

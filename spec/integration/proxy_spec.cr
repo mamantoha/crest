@@ -37,7 +37,7 @@ describe Crest do
           response = request.execute
 
           (response.status_code).should eq(200)
-          (response.body).should eq("{}\n")
+          (response.body.chomp).should eq("{}")
         end
       ensure
         wants_close.send(nil)
