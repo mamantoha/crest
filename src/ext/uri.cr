@@ -4,10 +4,6 @@ class URI
   class BadURIError < Exception
   end
 
-  def self.parse(uri : URI)
-    uri.dup
-  end
-
   def self.join(*args)
     url = args[1..-1].reduce(URI.parse(args[0])) { |a, e| a.resolve(e) }
 
