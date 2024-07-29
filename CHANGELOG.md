@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Fix Crest::Resource#concat_urls [#229](https://github.com/mamantoha/crest/pull/229)
+
 ## [1.4.0][] (2024-08-26)
 
 - Fix typo in README.md by @kojix2 in [#223](https://github.com/mamantoha/crest/pull/223)
