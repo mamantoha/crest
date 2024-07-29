@@ -113,6 +113,8 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.print render_response(context)
   when "/delete"
     context.response.print render_response(context)
+  when "/foo/bar"
+    context.response.print render_response(context)
   when "/404"
     context.response.respond_with_status(:not_found, "404 error")
   when "/500"

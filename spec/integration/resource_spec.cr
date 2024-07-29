@@ -34,6 +34,15 @@ describe Crest::Response do
     body["path"].should eq("/get")
   end
 
+  it "do GET request with nested path" do
+    resource = Crest::Resource.new("#{TEST_SERVER_URL}/foo")
+    response = resource.get("bar")
+
+    body = JSON.parse(response.body)
+
+    body["path"].should eq("/foo/bar")
+  end
+
   it "do GET request with []" do
     site = Crest::Resource.new("#{TEST_SERVER_URL}")
     response = site["/get"].get
