@@ -201,7 +201,7 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
   when /^\/delay\/(\d+)$/
     seconds = $1.to_i
 
-    sleep seconds
+    sleep seconds.seconds
 
     context.response.print "Delay #{seconds} seconds"
   when /^\/stream\/(\d+)$/
