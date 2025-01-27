@@ -79,9 +79,9 @@ module Crest
     @logging : Bool
     @handle_errors : Bool
     @close_connection : Bool
-    @read_timeout : Crest::TimeoutValue?
-    @write_timeout : Crest::TimeoutValue?
-    @connect_timeout : Crest::TimeoutValue?
+    @read_timeout : Time::Span?
+    @write_timeout : Time::Span?
+    @connect_timeout : Time::Span?
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
@@ -147,9 +147,9 @@ module Crest
       @logging = options.fetch(:logging, false).as(Bool)
       @handle_errors = options.fetch(:handle_errors, true).as(Bool)
       @close_connection = options.fetch(:close_connection, true).as(Bool)
-      @read_timeout = options.fetch(:read_timeout, nil).as(Crest::TimeoutValue?)
-      @write_timeout = options.fetch(:write_timeout, nil).as(TimeoutValue?)
-      @connect_timeout = options.fetch(:connect_timeout, nil).as(TimeoutValue?)
+      @read_timeout = options.fetch(:read_timeout, nil).as(Time::Span?)
+      @write_timeout = options.fetch(:write_timeout, nil).as(Time::Span?)
+      @connect_timeout = options.fetch(:connect_timeout, nil).as(Time::Span?)
 
       @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
 
@@ -382,15 +382,9 @@ module Crest
     end
 
     private def set_timeouts!
-      @read_timeout.try { |timeout| @http_client.read_timeout = timeout_to_time_span(timeout) }
-      @write_timeout.try { |timeout| @http_client.write_timeout = timeout_to_time_span(timeout) }
-      @connect_timeout.try { |timeout| @http_client.connect_timeout = timeout_to_time_span(timeout) }
-    end
-
-    private def timeout_to_time_span(timeout : Crest::TimeoutValue) : Time::Span
-      return timeout if timeout.is_a?(Time::Span)
-
-      timeout.to_time_span
+      @read_timeout.try { |timeout| @http_client.read_timeout = timeout }
+      @write_timeout.try { |timeout| @http_client.write_timeout = timeout }
+      @connect_timeout.try { |timeout| @http_client.connect_timeout = timeout }
     end
 
     # Extract the query parameters and append them to the `url`
