@@ -101,9 +101,9 @@ module Crest
       @close_connection = options.fetch(:close_connection, false).as(Bool)
       @json = options.fetch(:json, false).as(Bool)
       @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
-      @read_timeout = options.fetch(:read_timeout, nil).as(Crest::TimeoutValue?)
-      @write_timeout = options.fetch(:write_timeout, nil).as(Crest::TimeoutValue?)
-      @connect_timeout = options.fetch(:connect_timeout, nil).as(Crest::TimeoutValue?)
+      @read_timeout = options.fetch(:read_timeout, nil).as(Time::Span?)
+      @write_timeout = options.fetch(:write_timeout, nil).as(Time::Span?)
+      @connect_timeout = options.fetch(:connect_timeout, nil).as(Time::Span?)
 
       yield self
     end

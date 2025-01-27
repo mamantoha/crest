@@ -5,8 +5,6 @@ require "base64"
 require "http-client-digest_auth"
 require "http_proxy"
 require "./ext/io"
-require "./ext/int"
-require "./ext/float"
 require "./ext/http/cookie"
 
 # This module's static methods are the entry point for using the Crest client.
@@ -40,7 +38,6 @@ module Crest
   USER_AGENT = "Crest/#{Crest::VERSION} (Crystal/#{Crystal::VERSION})"
 
   alias ParamsValue = Bool | Float32 | Float64 | Int32 | Int64 | String | Symbol | Nil | IO?
-  alias TimeoutValue = Int32 | Float32 | Time::Span
 
   HTTP_METHODS = %w{get delete post put patch options head}
 
