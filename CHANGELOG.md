@@ -2,6 +2,8 @@
 
 ## [...]
 
+- **(breaking-change)** Refactor timeout ivars to `Time::Span` [#232](https://github.com/mamantoha/crest/pull/232)
+
 ## [1.4.1][] (2024-08-29)
 
 - Fix Crest::Resource#concat_urls [#229](https://github.com/mamantoha/crest/pull/229)
