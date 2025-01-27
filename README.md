@@ -11,7 +11,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-
 [![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fmamantoha%2Fcrest&countColor=%23263759&style=plastic)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Fmamantoha%2Fcrest)
 
 HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.
@@ -721,6 +720,6 @@ Then select the Workbook -> Requests from the menu.
 
 ## License
 
-Copyright: 2017-2024 Anton Maminov (anton.maminov@gmail.com)
+Copyright: 2017-2025 Anton Maminov (anton.maminov@gmail.com)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
