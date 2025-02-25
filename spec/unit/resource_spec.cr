@@ -19,7 +19,7 @@ describe Crest::Resource do
     it "initialize new resource with logger" do
       resource = Crest::Resource.new("http://localhost", logging: true)
 
-      (resource.logging).should eq(true)
+      (resource.logging).should be_true
       (resource.logger).should be_a(Crest::Logger)
     end
 

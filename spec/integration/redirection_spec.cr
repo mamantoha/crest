@@ -33,7 +33,7 @@ describe Crest::Redirector do
         reader.gets.should match(/GET/)
         reader.gets.should match(/200/)
 
-        (response.request.logging).should eq(true)
+        (response.request.logging).should be_true
         (response.request.logger).should be_a(Crest::Logger)
       end
     end

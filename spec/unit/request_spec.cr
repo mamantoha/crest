@@ -8,7 +8,7 @@ describe Crest::Request do
       (request.max_redirects).should eq(10)
       (request.host).should eq("localhost")
       (request.port).should eq(80)
-      (request.tls?).should eq(nil)
+      (request.tls?).should be_nil
       (request.user).should be_nil
       (request.password).should be_nil
       (request.proxy).should be_nil
@@ -28,42 +28,42 @@ describe Crest::Request do
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost")
       (request.headers).should eq(HTTP::Headers{"Content-Type" => "application/json"})
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with string params" do
       request = Crest::Request.new(:get, "http://localhost", params: "foo=hello+world&bar=456")
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?foo=hello+world&bar=456")
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with params" do
       request = Crest::Request.new(:get, "http://localhost", params: {:foo => "hello world", :bar => 456})
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?foo=hello+world&bar=456")
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with string params and existing params in url" do
       request = Crest::Request.new(:get, "http://localhost?json", params: "key=123")
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?json&key=123")
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with params in url" do
       request = Crest::Request.new(:get, "http://localhost?json", params: {:key => 123})
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?json&key=123")
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with nil value in params" do
       request = Crest::Request.new(:get, "http://localhost", params: {:json => nil, :key => 123})
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost?json=&key=123")
-      (request.form_data).should eq(nil)
+      (request.form_data).should be_nil
     end
 
     it "initialize the GET request with cookies" do
@@ -149,7 +149,7 @@ describe Crest::Request do
 
     it "initialize Request with :logging and logger" do
       request = Crest::Request.new(:get, "http://localhost", logging: true)
-      (request.logging).should eq(true)
+      (request.logging).should be_true
       (request.logger).should be_a(Crest::Logger)
     end
   end
