@@ -151,7 +151,7 @@ module Crest
       @write_timeout = options.fetch(:write_timeout, nil).as(Time::Span?)
       @connect_timeout = options.fetch(:connect_timeout, nil).as(Time::Span?)
 
-      @http_request = HTTP::Request.new(@method, @url, body: @form_data, headers: @headers)
+      @http_request = new_http_request(@method, @url, @headers, @form_data)
 
       set_proxy!(@p_addr, @p_port, @p_user, @p_pass)
       set_timeouts!
@@ -259,7 +259,9 @@ module Crest
     end
 
     private def new_http_request(method, url, headers, body) : HTTP::Request
-      HTTP::Request.new(method, url, headers, body).tap do |request|
+      resource = URI.parse(url).request_target
+
+      HTTP::Request.new(method, resource, headers, body).tap do |request|
         # Set default headers
         request.headers["Accept"] ||= @json ? "application/json" : "*/*"
         request.headers["Host"] ||= host_header
