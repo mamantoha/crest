@@ -1,12 +1,12 @@
 HTTP/1.1 200 OK
 access-control-allow-credentials: true
 access-control-allow-origin: *
-content-type: application/json; encoding=utf-8
-date: Mon, 30 May 2022 08:11:50 GMT
+content-type: application/json; charset=utf-8
+date: Tue, 25 Feb 2025 09:56:25 GMT
 transfer-encoding: chunked
-server: Fly/ccc539245 (2022-05-20)
+server: Fly/01acac8f2 (2025-02-24)
 via: 1.1 fly.io
-fly-request-id: 01G4A0AWPBX1C5GTAS7A8E3Y33-ams
-Content-Length: 637
+fly-request-id: 01JMY8JJVRN1F6026Q89KAS6S7-fra
+Content-Length: 599
 
 {}
