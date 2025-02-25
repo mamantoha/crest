@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Support Crystal 1.16.0-dev [#233](https://github.com/mamantoha/crest/pull/233)
+
 ## [1.5.0][] (2025-01-27)
 
 - **(breaking-change)** Refactor timeout ivars to `Time::Span` [#232](https://github.com/mamantoha/crest/pull/232)
