@@ -15,8 +15,6 @@ module Crest
       end.to_s
 
       info(message)
-
-      message
     end
 
     def response(response : Crest::Response) : Nil
@@ -27,8 +25,6 @@ module Crest
       end.to_s
 
       info(message)
-
-      message
     end
 
     private def colorful_method(method)
