@@ -2,9 +2,9 @@ HTTP/1.1 302 Found
 access-control-allow-credentials: true
 access-control-allow-origin: *
 location: /get
-date: Tue, 25 Feb 2025 09:56:25 GMT
-server: Fly/01acac8f2 (2025-02-24)
-via: 1.1 fly.io
-fly-request-id: 01JMY8JK60MKSEZHNKM7086K7X-fra
+date: Wed, 26 Mar 2025 12:07:15 GMT
+server: Fly/fe78b1aa (2025-03-20)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01JQ95JZCJ98P8R73P2WTSAAS2-fra
 content-length: 0
 
