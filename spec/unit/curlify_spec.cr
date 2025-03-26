@@ -48,16 +48,16 @@ describe Crest::Curlify do
   end
 
   it "converts a request with proxy" do
-    request = Crest::Request.new(:get, "http://httpbin.org", p_addr: "127.0.0.1", p_port: 8080)
+    request = Crest::Request.new(:get, "http://httpbin.org", p_addr: PROXY_HOST, p_port: PROXY_PORT)
 
-    result = "curl -X GET http://httpbin.org --proxy 127.0.0.1:8080"
+    result = "curl -X GET http://httpbin.org --proxy #{PROXY_HOST}:#{PROXY_PORT}"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with proxy with authentication" do
-    request = Crest::Request.new(:get, "http://httpbin.org", p_addr: "127.0.0.1", p_port: 8080, p_user: "user", p_pass: "pass")
+    request = Crest::Request.new(:get, "http://httpbin.org", p_addr: PROXY_HOST, p_port: PROXY_PORT, p_user: "user", p_pass: "pass")
 
-    result = "curl -X GET http://httpbin.org --proxy user:pass@127.0.0.1:8080"
+    result = "curl -X GET http://httpbin.org --proxy user:pass@#{PROXY_HOST}:#{PROXY_PORT}"
     (request.to_curl).should eq(result)
   end
 
