@@ -39,7 +39,7 @@ module Crest
 
   alias ParamsValue = Bool | Float32 | Float64 | Int32 | Int64 | String | Symbol | Nil | IO?
 
-  HTTP_METHODS = %w{get delete post put patch options head}
+  HTTP_METHODS = %w[get delete post put patch options head]
 
   {% for method in Crest::HTTP_METHODS %}
     # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
