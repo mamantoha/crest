@@ -233,8 +233,8 @@ module Crest
     end
 
     private def concat_urls(base_url : String, path : String) : String
-      base_url = base_url.ends_with?('/') ? base_url[...-1] : base_url
-      path = path.starts_with?('/') ? path[1..] : path
+      base_url = base_url.chomp('/')
+      path = path.lchop('/')
 
       [base_url, path].join('/')
     end
