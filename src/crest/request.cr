@@ -165,28 +165,28 @@ module Crest
     end
 
     {% for method in Crest::HTTP_METHODS %}
-      # Execute a {{method.id.upcase}} request and and yields the `Crest::Response` to the block.
+      # Execute a {{ method.id.upcase }} request and and yields the `Crest::Response` to the block.
       #
       # ```
-      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}") do |resp|
+      # Crest::Request.{{ method.id }}("http://httpbin.org/{{ method.id }}") do |resp|
       #   while line = resp.body_io.gets
       #     puts line
       #   end
       # end
       # ```
-      def self.{{method.id}}(url : String, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
-        request = Request.new(:{{method.id}}, url, form, **args)
+      def self.{{ method.id }}(url : String, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
+        request = Request.new(:{{ method.id }}, url, form, **args)
 
         response = request.execute(&block)
       end
 
-      # Execute a {{method.id.upcase}} request and returns a `Crest::Response`.
+      # Execute a {{ method.id.upcase }} request and returns a `Crest::Response`.
       #
       # ```
-      # Crest::Request.{{method.id}}("http://httpbin.org/{{method.id}}")
+      # Crest::Request.{{ method.id }}("http://httpbin.org/{{ method.id }}")
       # ```
-      def self.{{method.id}}(url : String, form = {} of String => String, **args) : Crest::Response
-        request = Request.new(:{{method.id}}, url, form, **args)
+      def self.{{ method.id }}(url : String, form = {} of String => String, **args) : Crest::Response
+        request = Request.new(:{{ method.id }}, url, form, **args)
 
         request.execute
       end

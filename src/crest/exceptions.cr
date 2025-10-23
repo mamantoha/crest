@@ -118,9 +118,9 @@ module Crest
 
   {% for code, status in STATUSES %}
     # :nodoc:
-    class {{status.gsub(/\W/, "").id}} < RequestFailed
+    class {{ status.gsub(/\W/, "").id }} < RequestFailed
     end
 
-    EXCEPTIONS_MAP[{{code.id}}] = Crest::{{status.gsub(/\W/, "").id}}
+    EXCEPTIONS_MAP[{{ code.id }}] = Crest::{{ status.gsub(/\W/, "").id }}
   {% end %}
 end
