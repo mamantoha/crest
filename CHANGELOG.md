@@ -2,6 +2,8 @@
 
 ## [...]
 
+ - Replace `options`-hash initializers with explicit typed keyword arguments in `Crest::Request` and `Crest::Resource` [#238](https://github.com/mamantoha/crest/pull/238)
+
 ## [1.5.1][] (2025-02-25)
 
 - Support Crystal 1.16.0-dev [#233](https://github.com/mamantoha/crest/pull/233)
