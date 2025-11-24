@@ -13,7 +13,7 @@ jobs:
         with:
           crystal: nightly
       - name: Check out repository code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Install dependencies
         run: shards install --skip-postinstall --skip-executables
       - name: Generate documentation
