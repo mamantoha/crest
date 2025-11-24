@@ -80,30 +80,30 @@ module Crest
       @headers = {} of String => String,
       params = {} of String => String,
       cookies = {} of String => String,
-      **options,
+      @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
+      @tls : OpenSSL::SSL::Context::Client? = nil,
+      http_client : HTTP::Client? = nil,
+      @user : String? = nil,
+      @password : String? = nil,
+      @p_addr : String? = nil,
+      @p_port : Int32? = nil,
+      @p_user : String? = nil,
+      @p_pass : String? = nil,
+      @logger : Crest::Logger = Crest::CommonLogger.new,
+      @logging : Bool = false,
+      @handle_errors : Bool = true,
+      @close_connection : Bool = false,
+      @json : Bool = false,
+      @user_agent : String? = nil,
+      @read_timeout : Time::Span? = nil,
+      @write_timeout : Time::Span? = nil,
+      @connect_timeout : Time::Span? = nil,
       &
     )
       @base_url = @url
-      @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
       @params = @params_encoder.flatten_params(params).to_h
       @cookies = @params_encoder.flatten_params(cookies).to_h
-      @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
-      @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
-      @user = options.fetch(:user, nil).as(String | Nil)
-      @password = options.fetch(:password, nil).as(String | Nil)
-      @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
-      @p_port = options.fetch(:p_port, nil).as(Int32 | Nil)
-      @p_user = options.fetch(:p_user, nil).as(String | Nil)
-      @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
-      @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
-      @logging = options.fetch(:logging, false).as(Bool)
-      @handle_errors = options.fetch(:handle_errors, true).as(Bool)
-      @close_connection = options.fetch(:close_connection, false).as(Bool)
-      @json = options.fetch(:json, false).as(Bool)
-      @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
-      @read_timeout = options.fetch(:read_timeout, nil).as(Time::Span?)
-      @write_timeout = options.fetch(:write_timeout, nil).as(Time::Span?)
-      @connect_timeout = options.fetch(:connect_timeout, nil).as(Time::Span?)
+      @http_client = http_client || new_http_client
 
       yield self
     end
