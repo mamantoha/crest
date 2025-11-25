@@ -104,24 +104,38 @@ module Crest
 
     def initialize(
       method : Symbol,
-      url : String,
+      @url : String,
       form = {} of String => String,
       *,
       headers = {} of String => String,
       cookies = {} of String => String,
       params = {} of String => String,
-      max_redirects = 10,
-      **options,
+      @max_redirects : Int32 = 10,
+      @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
+      @user_agent : String? = nil,
+      @json : Bool = false,
+      @multipart : Bool = false,
+      @tls : OpenSSL::SSL::Context::Client? = nil,
+      http_client : HTTP::Client? = nil,
+      @auth : String = "basic",
+      @user : String? = nil,
+      @password : String? = nil,
+      @p_addr : String? = nil,
+      @p_port : Int32? = nil,
+      @p_user : String? = nil,
+      @p_pass : String? = nil,
+      @logger : Crest::Logger = Crest::CommonLogger.new,
+      @logging : Bool = false,
+      @handle_errors : Bool = true,
+      @close_connection : Bool = true,
+      @read_timeout : Time::Span? = nil,
+      @write_timeout : Time::Span? = nil,
+      @connect_timeout : Time::Span? = nil,
       &
     )
       @method = parse_verb(method)
-      @url = url
       @headers = HTTP::Headers.new
       @cookies = HTTP::Cookies.new
-      @json = options.fetch(:json, false).as(Bool)
-      @multipart = options.fetch(:multipart, false).as(Bool)
-      @params_encoder = options.fetch(:params_encoder, Crest::FlatParamsEncoder).as(Crest::ParamsEncoder.class)
-      @user_agent = options.fetch(:user_agent, nil).as(String | Nil)
       @redirection_history = [] of Crest::Response
 
       set_headers!(headers)
@@ -132,24 +146,7 @@ module Crest
         @url = url + process_url_params(params)
       end
 
-      @max_redirects = max_redirects
-
-      @tls = options.fetch(:tls, nil).as(OpenSSL::SSL::Context::Client | Nil)
-      @http_client = options.fetch(:http_client, new_http_client).as(HTTP::Client)
-      @auth = options.fetch(:auth, "basic").as(String)
-      @user = options.fetch(:user, nil).as(String | Nil)
-      @password = options.fetch(:password, nil).as(String | Nil)
-      @p_addr = options.fetch(:p_addr, nil).as(String | Nil)
-      @p_port = options.fetch(:p_port, nil).as(Int32 | Nil)
-      @p_user = options.fetch(:p_user, nil).as(String | Nil)
-      @p_pass = options.fetch(:p_pass, nil).as(String | Nil)
-      @logger = options.fetch(:logger, Crest::CommonLogger.new).as(Crest::Logger)
-      @logging = options.fetch(:logging, false).as(Bool)
-      @handle_errors = options.fetch(:handle_errors, true).as(Bool)
-      @close_connection = options.fetch(:close_connection, true).as(Bool)
-      @read_timeout = options.fetch(:read_timeout, nil).as(Time::Span?)
-      @write_timeout = options.fetch(:write_timeout, nil).as(Time::Span?)
-      @connect_timeout = options.fetch(:connect_timeout, nil).as(Time::Span?)
+      @http_client = http_client || new_http_client
 
       @http_request = new_http_request(@method, @url, @headers, @form_data)
 

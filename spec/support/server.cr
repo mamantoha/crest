@@ -1,6 +1,7 @@
 require "http/server"
 require "json"
 require "crypto/subtle"
+require "./constants"
 
 def render_response(context : HTTP::Server::Context)
   args = context.request.query_params.to_h
@@ -236,6 +237,10 @@ end
 address = server.bind_tcp TEST_SERVER_HOST, TEST_SERVER_PORT
 puts "Listening on http://#{address}"
 
-spawn do
+if ARGV.includes?("--cli")
   server.listen
+else
+  spawn do
+    server.listen
+  end
 end
