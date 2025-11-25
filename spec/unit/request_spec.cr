@@ -27,7 +27,7 @@ describe Crest::Request do
       request = Crest::Request.new(:get, "http://localhost", headers: {"Content-Type" => "application/json"})
       (request.method).should eq("GET")
       (request.url).should eq("http://localhost")
-      (request.headers).should eq(HTTP::Headers{"Content-Type" => "application/json"})
+      (request.headers).should eq(HTTP::Headers{"Content-Type" => "application/json", "User-Agent" => Crest::USER_AGENT})
       (request.form_data).should be_nil
     end
 
@@ -68,7 +68,7 @@ describe Crest::Request do
 
     it "initialize the GET request with cookies" do
       request = Crest::Request.new(:get, "http://localhost", cookies: {:foo => "123", :bar => 456})
-      (request.headers).should eq(HTTP::Headers{"Cookie" => "foo=123; bar=456"})
+      (request.headers).should eq(HTTP::Headers{"Cookie" => "foo=123; bar=456", "User-Agent" => Crest::USER_AGENT})
     end
 
     it "initialize the POST request with form" do
@@ -157,7 +157,7 @@ describe Crest::Request do
   describe "#to_curl" do
     it "converts request to cURL command" do
       request = Crest::Request.new(:get, "http://localhost")
-      (request.to_curl).should eq("curl -X GET http://localhost")
+      (request.to_curl).should eq("curl -X GET http://localhost -H 'User-Agent: #{Crest::USER_AGENT}'")
     end
   end
 end

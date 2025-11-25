@@ -42,7 +42,7 @@ describe Crest::Response do
   it "#to_curl" do
     response = Crest.get("#{TEST_SERVER_URL}")
 
-    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}")
+    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL} -H 'User-Agent: #{Crest::USER_AGENT}'")
   end
 
   describe "to_s" do

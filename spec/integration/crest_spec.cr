@@ -319,13 +319,13 @@ describe Crest do
   context ".to_curl" do
     it "curlify GET request with params" do
       response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
-      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get?width=100&height=100")
+      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get?width=100&height=100 -H 'User-Agent: #{Crest::USER_AGENT}'")
     end
 
     it "curlify POST request with form" do
       response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'title=Title' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
 
@@ -335,7 +335,7 @@ describe Crest do
 
       (response.body).should match(/Upload OK/)
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{File.expand_path(file.path)}' -H 'Content-Type: multipart/form-data'"
+        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{File.expand_path(file.path)}' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: multipart/form-data'"
       )
     end
 
@@ -351,7 +351,7 @@ describe Crest do
       body["json"].should eq({"age" => 27, "name" => {"first" => "Kurt", "last" => "Cobain"}})
 
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'Content-Type: application/json'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d '{\"age\":27,\"name\":{\"first\":\"Kurt\",\"last\":\"Cobain\"}}' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/json'"
       )
     end
 
@@ -362,7 +362,7 @@ describe Crest do
       )
 
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping%5B%5D=bacon&topping%5B%5D=onion' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping%5B%5D=bacon&topping%5B%5D=onion' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
 
@@ -374,7 +374,7 @@ describe Crest do
       )
 
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping=bacon&topping=onion' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d 'size=small&topping=bacon&topping=onion' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
   end
@@ -397,7 +397,7 @@ describe Crest do
 
     it "set custom user agent even if headers" do
       response = Crest.get("#{TEST_SERVER_URL}/user-agent", user_agent: "Crest", headers: {"User-Agent" => "Crest-headers"})
-      (response.body).should eq("Crest")
+      (response.body).should eq("Crest-headers")
     end
   end
 end

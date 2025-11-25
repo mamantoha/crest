@@ -112,7 +112,7 @@ module Crest
       params = {} of String => String,
       @max_redirects : Int32 = 10,
       @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
-      @user_agent : String? = nil,
+      @user_agent : String? = Crest::USER_AGENT,
       @json : Bool = false,
       @multipart : Bool = false,
       @tls : OpenSSL::SSL::Context::Client? = nil,
@@ -262,7 +262,7 @@ module Crest
         # Set default headers
         request.headers["Accept"] ||= @json ? "application/json" : "*/*"
         request.headers["Host"] ||= host_header
-        request.headers["User-Agent"] ||= Crest::USER_AGENT
+        @user_agent.try { |ua| request.headers["User-Agent"] ||= ua }
       end
     end
 
@@ -323,7 +323,7 @@ module Crest
         @headers.add(key, value)
       end
 
-      @headers["User-Agent"] = @user_agent.to_s if @user_agent
+      @user_agent.try { |ua| @headers["User-Agent"] ||= ua }
 
       @headers
     end

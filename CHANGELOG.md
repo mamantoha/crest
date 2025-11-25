@@ -3,6 +3,7 @@
 ## [...]
 
  - Replace `options`-hash initializers with explicit typed keyword arguments in `Crest::Request` and `Crest::Resource` [#238](https://github.com/mamantoha/crest/pull/238)
+ - Fix default `User-Agent` applied to outgoing requests (now uses `Crest::USER_AGENT` when not provided) [#239](https://github.com/mamantoha/crest/pull/239)
 
 ## [1.5.1][] (2025-02-25)
 

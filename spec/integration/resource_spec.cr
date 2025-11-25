@@ -393,7 +393,7 @@ describe Crest::Response do
     resource = Crest::Resource.new("#{TEST_SERVER_URL}")
     response = resource["/get"].get
 
-    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get")
+    (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get -H 'User-Agent: #{Crest::USER_AGENT}'")
   end
 
   context "user_agent" do

@@ -8,70 +8,70 @@ describe Crest::Curlify do
   it "converts simple GET request" do
     request = Crest::Request.new(:get, "http://httpbin.org/get")
 
-    result = "curl -X GET http://httpbin.org/get"
+    result = "curl -X GET http://httpbin.org/get -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts GET request with params" do
     request = Crest::Request.new(:get, "http://httpbin.org/get", params: {"foo" => "bar"})
 
-    result = "curl -X GET http://httpbin.org/get?foo=bar"
+    result = "curl -X GET http://httpbin.org/get?foo=bar -H 'User-Agent: #{Crest::USER_AGENT}'"
     curlify(request).should eq(result)
   end
 
   it "converts a request with basic auth as parameters" do
     request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", user: "user", password: "passwd")
 
-    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd --user user:passwd"
+    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd --user user:passwd -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with digest auth as parameters" do
     request = Crest::Request.new(:get, "http://httpbin.org/digest-auth/auth/user/passwd/MD5", auth: "digest", user: "user", password: "passwd")
 
-    result = "curl -X GET http://httpbin.org/digest-auth/auth/user/passwd/MD5 --digest --user user:passwd"
+    result = "curl -X GET http://httpbin.org/digest-auth/auth/user/passwd/MD5 --digest --user user:passwd -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request to invalid domain with digest auth" do
     request = Crest::Request.new(:get, "https://domain.invalid", auth: "digest", user: "user", password: "passwd")
 
-    result = "curl -X GET https://domain.invalid --digest --user user:passwd"
+    result = "curl -X GET https://domain.invalid --digest --user user:passwd -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with basic auth in headers" do
     request = Crest::Request.new(:get, "http://httpbin.org/basic-auth/user/passwd", headers: {"Authorization" => "Basic dXNlcjpwYXNzd2Q="})
 
-    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd -H 'Authorization: Basic dXNlcjpwYXNzd2Q='"
+    result = "curl -X GET http://httpbin.org/basic-auth/user/passwd -H 'Authorization: Basic dXNlcjpwYXNzd2Q=' -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with proxy" do
     request = Crest::Request.new(:get, "http://httpbin.org", p_addr: PROXY_SERVER_HOST, p_port: PROXY_SERVER_PORT)
 
-    result = "curl -X GET http://httpbin.org --proxy #{PROXY_SERVER_HOST}:#{PROXY_SERVER_PORT}"
+    result = "curl -X GET http://httpbin.org --proxy #{PROXY_SERVER_HOST}:#{PROXY_SERVER_PORT} -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with proxy with authentication" do
     request = Crest::Request.new(:get, "http://httpbin.org", p_addr: PROXY_SERVER_HOST, p_port: PROXY_SERVER_PORT, p_user: "user", p_pass: "pass")
 
-    result = "curl -X GET http://httpbin.org --proxy user:pass@#{PROXY_SERVER_HOST}:#{PROXY_SERVER_PORT}"
+    result = "curl -X GET http://httpbin.org --proxy user:pass@#{PROXY_SERVER_HOST}:#{PROXY_SERVER_PORT} -H 'User-Agent: #{Crest::USER_AGENT}'"
     (request.to_curl).should eq(result)
   end
 
   it "converts a request with cookies" do
     request = Crest::Request.new(:get, "http://httpbin.org/get", cookies: {"k1" => "v1", "k2" => {"kk2" => "vv2"}})
 
-    result = "curl -X GET http://httpbin.org/get -H 'Cookie: k1=v1; k2[kk2]=vv2'"
+    result = "curl -X GET http://httpbin.org/get -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Cookie: k1=v1; k2[kk2]=vv2'"
     (request.to_curl).should eq(result)
   end
 
   it "converts POST request" do
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "author" => "admin"})
 
-    result = "curl -X POST http://httpbin.org/post -d 'title=New+Title&author=admin' -H 'Content-Type: application/x-www-form-urlencoded'"
+    result = "curl -X POST http://httpbin.org/post -d 'title=New+Title&author=admin' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/x-www-form-urlencoded'"
     curlify(request).should eq(result)
   end
 
@@ -80,7 +80,7 @@ describe Crest::Curlify do
 
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "file" => file})
 
-    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F 'file=@#{"#{File.expand_path(file.path)}"}' -H 'Content-Type: multipart/form-data'"
+    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F 'file=@#{"#{File.expand_path(file.path)}"}' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
 
@@ -94,7 +94,7 @@ describe Crest::Curlify do
   it "converts POST request with json" do
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {:foo => "bar"}.to_json, headers: {"Content-Type" => "application/json"})
 
-    result = "curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
+    result = "curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json' -H 'User-Agent: #{Crest::USER_AGENT}'"
 
     curlify(request).should eq(result)
   end
@@ -102,7 +102,7 @@ describe Crest::Curlify do
   it "converts POST request with json" do
     request = Crest::Request.new(:post, "http://httpbin.org/post", {:foo => "bar"}, json: true)
 
-    result = "curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'Content-Type: application/json'"
+    result = "curl -X POST http://httpbin.org/post -d '{\"foo\":\"bar\"}' -H 'User-Agent: #{Crest::USER_AGENT}' -H 'Content-Type: application/json'"
 
     curlify(request).should eq(result)
   end

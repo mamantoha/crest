@@ -94,7 +94,7 @@ module Crest
       @handle_errors : Bool = true,
       @close_connection : Bool = false,
       @json : Bool = false,
-      @user_agent : String? = nil,
+      @user_agent : String? = Crest::USER_AGENT,
       @read_timeout : Time::Span? = nil,
       @write_timeout : Time::Span? = nil,
       @connect_timeout : Time::Span? = nil,
