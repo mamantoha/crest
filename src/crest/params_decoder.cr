@@ -3,7 +3,7 @@ module Crest
   module ParamsDecoder
     extend self
 
-    alias Type = Nil | String | Array(Type) | Hash(String, Type)
+    alias Type = String | Array(Type) | Hash(String, Type)?
 
     SUBKEYS_REGEX = /[^\[\]]+(?:\]?\[\])?/
     ARRAY_REGEX   = /[\[\]]+\Z/
@@ -51,7 +51,7 @@ module Crest
       end
     end
 
-    private def prepare_context(context, subkey : String, is_array : Bool, last_subkey : Bool) : Hash(String, Type) | Array(Type) | String | Nil
+    private def prepare_context(context, subkey : String, is_array : Bool, last_subkey : Bool) : Hash(String, Type) | Array(Type) | String?
       if !last_subkey || is_array
         context = new_context(subkey, is_array, context) if context.is_a?(Hash)
       end
@@ -69,7 +69,7 @@ module Crest
       context[subkey] ||= value_type.new
     end
 
-    def match_context(context, subkey) : Type | Nil
+    def match_context(context, subkey) : Type?
       context << {} of String => Type if !context.last?.is_a?(Hash) || context.last.as(Hash).has_key?(subkey)
       context.last?
     end

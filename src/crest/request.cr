@@ -62,7 +62,7 @@ module Crest
     @http_request : HTTP::Request
     @headers : HTTP::Headers
     @cookies : HTTP::Cookies
-    @form_data : String | Bytes | IO | Nil
+    @form_data : String | Bytes | IO?
     @max_redirects : Int32
     @auth : String
     @user : String?
@@ -305,7 +305,7 @@ module Crest
       end
     end
 
-    private def generate_form_data!(form : Hash) : String | Bytes | IO | Nil
+    private def generate_form_data!(form : Hash) : String | Bytes | IO?
       return if form.empty?
 
       generated_form = form_class(form).generate(form, @params_encoder)
@@ -314,7 +314,7 @@ module Crest
       @form_data = generated_form.form_data
     end
 
-    private def generate_form_data!(form : String | Bytes | IO) : String | Bytes | IO | Nil
+    private def generate_form_data!(form : String | Bytes | IO) : String | Bytes | IO?
       @form_data = form
     end
 
