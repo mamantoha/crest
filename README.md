@@ -721,6 +721,6 @@ Then select the Workbook -> Requests from the menu.
 
 ## License
 
-Copyright: 2017-2025 Anton Maminov (anton.maminov@gmail.com)
+Copyright: 2017-2026 Anton Maminov (anton.maminov@gmail.com)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
