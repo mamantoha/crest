@@ -46,6 +46,17 @@ describe Crest do
       end
     end
 
+    it "Unsupported HTTP status code 456" do
+      response = begin
+        Crest.get("#{TEST_SERVER_URL}/status/456")
+      rescue ex : Crest::RequestFailed
+        ex.response
+      end
+
+      response.status_code.should eq(456)
+      response.body.chomp.should eq("456 ")
+    end
+
     it "call .response on the exception to get the server's response" do
       response =
         begin

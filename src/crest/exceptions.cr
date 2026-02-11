@@ -110,7 +110,11 @@ module Crest
     end
 
     def message
-      "HTTP status code #{http_code}: #{STATUSES[http_code]}"
+      result = "HTTP status code #{http_code}"
+      if msg = STATUSES[http_code]?
+        result += ": #{msg}"
+      end
+      result
     end
   end
 

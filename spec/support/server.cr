@@ -120,6 +120,8 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.respond_with_status(:not_found, "404 error")
   when "/500"
     context.response.respond_with_status(:internal_server_error)
+  when /^\/status\/(\d+)$/
+    context.response.respond_with_status($1.to_i)
   when "/secret"
     context.response.print "Authorized"
   when "/redirect_to_secret"
