@@ -9,7 +9,7 @@
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/mamantoha/crest)
 [![License](https://img.shields.io/github/license/mamantoha/crest.svg)](https://github.com/mamantoha/crest/blob/master/LICENSE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fmamantoha%2Fcrest&countColor=%23263759&style=plastic)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Fmamantoha%2Fcrest)
@@ -703,6 +703,7 @@ Then select the Workbook -> Requests from the menu.
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/chao-yang-r/"><img src="https://avatars.githubusercontent.com/u/15083254?v=4?s=100" width="100px;" alt="Chao Yang"/><br /><sub><b>Chao Yang</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=cyangle" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/psikoz"><img src="https://avatars.githubusercontent.com/u/40601249?v=4?s=100" width="100px;" alt="psikoz"/><br /><sub><b>psikoz</b></sub></a><br /><a href="#design-psikoz" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jphaward"><img src="https://avatars.githubusercontent.com/u/52081790?v=4?s=100" width="100px;" alt="jphaward"/><br /><sub><b>jphaward</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=jphaward" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://miry.codeberg.page/"><img src="https://avatars.githubusercontent.com/u/21104?v=4?s=100" width="100px;" alt="Michael Nikitochkin"/><br /><sub><b>Michael Nikitochkin</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=miry" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
