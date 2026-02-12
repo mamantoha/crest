@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crest">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="crest">
+  <title>Crest::NestedParamsEncoder - crest master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          crest
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="crest/Crest" data-name="crest">
+      <a href="../Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="../Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Curlify" data-name="crest::curlify">
+      <a href="../Crest/Curlify.html">Curlify</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/DataForm" data-name="crest::dataform(t)">
+      <a href="../Crest/DataForm.html">DataForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/EnumeratedFlatParamsEncoder" data-name="crest::enumeratedflatparamsencoder">
+      <a href="../Crest/EnumeratedFlatParamsEncoder.html">EnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/FlatParamsEncoder" data-name="crest::flatparamsencoder">
+      <a href="../Crest/FlatParamsEncoder.html">FlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Form" data-name="crest::form(t)">
+      <a href="../Crest/Form.html">Form</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/JSONForm" data-name="crest::jsonform(t)">
+      <a href="../Crest/JSONForm.html">JSONForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Logger" data-name="crest::logger">
+      <a href="../Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" current" data-id="crest/Crest/NestedParamsEncoder" data-name="crest::nestedparamsencoder">
+      <a href="../Crest/NestedParamsEncoder.html">NestedParamsEncoder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="crest/Crest/ParamsDecoder" data-name="crest::paramsdecoder">
+      <a href="../Crest/ParamsDecoder.html">ParamsDecoder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/ParamsDecoder/Type" data-name="crest::paramsdecoder::type">
+      <a href="../Crest/ParamsDecoder/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsEncoder" data-name="crest::paramsencoder">
+      <a href="../Crest/ParamsEncoder.html">ParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsValue" data-name="crest::paramsvalue">
+      <a href="../Crest/ParamsValue.html">ParamsValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Redirector" data-name="crest::redirector">
+      <a href="../Crest/Redirector.html">Redirector</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Request" data-name="crest::request">
+      <a href="../Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="../Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Resource" data-name="crest::resource">
+      <a href="../Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Response" data-name="crest::response">
+      <a href="../Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/UrlencodedForm" data-name="crest::urlencodedform(t)">
+      <a href="../Crest/UrlencodedForm.html">UrlencodedForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ZeroEnumeratedFlatParamsEncoder" data-name="crest::zeroenumeratedflatparamsencoder">
+      <a href="../Crest/ZeroEnumeratedFlatParamsEncoder.html">ZeroEnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> Crest::<wbr>NestedParamsEncoder
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Crest/NestedParamsEncoder.html">Crest::NestedParamsEncoder</a></li><li class="superclass"><a href="../Crest/ParamsEncoder.html">Crest::ParamsEncoder</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/params_encoders/nested_params_encoder.cr#L2" target="_blank">
+        crest/params_encoders/nested_params_encoder.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+
+  
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#flatten_params%28object%3AHash%2Cparent_key%3AString%7CNil%3Dnil%29%3AArray%28Tuple%28String%2CCrest%3A%3AParamsValue%29%29-class-method" class="signature"><strong>.flatten_params</strong>(object : Hash, parent_key : String | Nil = <span class="n">nil</span>) : Array(Tuple(String, Crest::ParamsValue))</a>
+        
+          <div class="summary"><p>Transform deeply nested params containers into a flat array of <code>{key, value}</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#flatten_params%28object%3AArray%2Cparent_key%3AString%7CNil%3Dnil%29%3AArray%28Tuple%28String%2CCrest%3A%3AParamsValue%29%29-class-method" class="signature"><strong>.flatten_params</strong>(object : Array, parent_key : String | Nil = <span class="n">nil</span>) : Array(Tuple(String, Crest::ParamsValue))</a>
+        
+          <div class="summary"><p>Transform deeply nested params containers into a flat array of <code>{key, value}</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#encode%28params%3AHash%29%3AString-instance-method" class="signature"><strong>#encode</strong>(params : Hash) : String</a>
+        
+          <div class="summary"><p>Converts the given params into a URI query string.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+  <h3>Instance methods inherited from class <code><a href="../Crest/ParamsEncoder.html">Crest::ParamsEncoder</a></code></h3>
+  
+  
+    <a href="../Crest/ParamsEncoder.html#encode%28params%3AHash%29%3AString-instance-method" class="tooltip">
+      <span>encode(params : Hash) : String</span>
+    encode</a>
+    
+  
+
+
+      
+
+
+      
+
+  <h3>Class methods inherited from class <code><a href="../Crest/ParamsEncoder.html">Crest::ParamsEncoder</a></code></h3>
+  
+  
+    <a href="../Crest/ParamsEncoder.html#encode%28params%3AHash%29%3AString-class-method" class="tooltip">
+      <span>encode(params : Hash) : String</span>
+    encode</a>, 
+    
+  
+    <a href="../Crest/ParamsEncoder.html#flatten_params%28object%3AJSON%3A%3AAny%2Cparent_key%3AString%7CNil%3Dnil%29%3AArray%28Tuple%28String%2CCrest%3A%3AParamsValue%29%29-class-method" class="tooltip">
+      <span>flatten_params(object : JSON::Any, parent_key : String | Nil = <span class="n">nil</span>) : Array(Tuple(String, Crest::ParamsValue))</span>
+    flatten_params</a>
+    
+  
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+
+  
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="flatten_params(object:Hash,parent_key:String|Nil=nil):Array(Tuple(String,Crest::ParamsValue))-class-method">
+      <div class="signature">
+        
+        def self.<strong>flatten_params</strong>(object : Hash, parent_key : String | Nil = <span class="n">nil</span>) : Array(Tuple(String, <a href="../Crest/ParamsValue.html">Crest::ParamsValue</a>))
+
+        <a class="method-permalink" href="#flatten_params%28object%3AHash%2Cparent_key%3AString%7CNil%3Dnil%29%3AArray%28Tuple%28String%2CCrest%3A%3AParamsValue%29%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Transform deeply nested params containers into a flat array of <code>{key, value}</code>.</p>
+<p><code>parent_key</code> — Should not be passed (used for recursion)</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">NestedParamsEncoder</span>.flatten_params({<span class="n">:key1</span> <span class="o">=&gt;</span> {<span class="n">:key2</span> <span class="o">=&gt;</span> <span class="s">&quot;123&quot;</span>}})
+<span class="c"># =&gt; [{&quot;key1[key2]&quot;, &quot;123&quot;}]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/params_encoders/nested_params_encoder.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="flatten_params(object:Array,parent_key:String|Nil=nil):Array(Tuple(String,Crest::ParamsValue))-class-method">
+      <div class="signature">
+        
+        def self.<strong>flatten_params</strong>(object : Array, parent_key : String | Nil = <span class="n">nil</span>) : Array(Tuple(String, <a href="../Crest/ParamsValue.html">Crest::ParamsValue</a>))
+
+        <a class="method-permalink" href="#flatten_params%28object%3AArray%2Cparent_key%3AString%7CNil%3Dnil%29%3AArray%28Tuple%28String%2CCrest%3A%3AParamsValue%29%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Transform deeply nested params containers into a flat array of <code>{key, value}</code>.</p>
+<p><code>parent_key</code> — Should not be passed (used for recursion)</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">NestedParamsEncoder</span>.flatten_params({<span class="n">:key1</span> <span class="o">=&gt;</span> {<span class="n">:arr</span> <span class="o">=&gt;</span> [<span class="s">&quot;1&quot;</span>, <span class="s">&quot;2&quot;</span>, <span class="s">&quot;3&quot;</span>]}})
+<span class="c"># =&gt; [{&quot;key1[arr]&quot;, &quot;1&quot;}, {&quot;key1[arr]&quot;, &quot;2&quot;}, {&quot;key1[arr]&quot;, &quot;3&quot;}]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/params_encoders/nested_params_encoder.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="encode(params:Hash):String-instance-method">
+      <div class="signature">
+        
+        def <strong>encode</strong>(params : Hash) : String
+
+        <a class="method-permalink" href="#encode%28params%3AHash%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts the given params into a URI query string. Keys and values
+will converted to strings and appropriately escaped for the URI.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">NestedParamsEncoder</span>.encode({<span class="s">&quot;a&quot;</span> <span class="o">=&gt;</span> [<span class="s">&quot;one&quot;</span>, <span class="s">&quot;two&quot;</span>, <span class="s">&quot;three&quot;</span>], <span class="s">&quot;b&quot;</span> <span class="o">=&gt;</span> <span class="n">true</span>, <span class="s">&quot;c&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;d&quot;</span> <span class="o">=&gt;</span> <span class="n">1</span>})
+<span class="c"># =&gt; &#39;a=one&amp;a=two&amp;a=three&amp;b=true&amp;c=C&amp;d=1&#39;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/params_encoders/nested_params_encoder.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

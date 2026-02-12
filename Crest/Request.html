@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crest">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="crest">
+  <title>Crest::Request - crest master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          crest
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="crest/Crest" data-name="crest">
+      <a href="../Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="../Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Curlify" data-name="crest::curlify">
+      <a href="../Crest/Curlify.html">Curlify</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/DataForm" data-name="crest::dataform(t)">
+      <a href="../Crest/DataForm.html">DataForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/EnumeratedFlatParamsEncoder" data-name="crest::enumeratedflatparamsencoder">
+      <a href="../Crest/EnumeratedFlatParamsEncoder.html">EnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/FlatParamsEncoder" data-name="crest::flatparamsencoder">
+      <a href="../Crest/FlatParamsEncoder.html">FlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Form" data-name="crest::form(t)">
+      <a href="../Crest/Form.html">Form</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/JSONForm" data-name="crest::jsonform(t)">
+      <a href="../Crest/JSONForm.html">JSONForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Logger" data-name="crest::logger">
+      <a href="../Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/NestedParamsEncoder" data-name="crest::nestedparamsencoder">
+      <a href="../Crest/NestedParamsEncoder.html">NestedParamsEncoder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="crest/Crest/ParamsDecoder" data-name="crest::paramsdecoder">
+      <a href="../Crest/ParamsDecoder.html">ParamsDecoder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/ParamsDecoder/Type" data-name="crest::paramsdecoder::type">
+      <a href="../Crest/ParamsDecoder/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsEncoder" data-name="crest::paramsencoder">
+      <a href="../Crest/ParamsEncoder.html">ParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsValue" data-name="crest::paramsvalue">
+      <a href="../Crest/ParamsValue.html">ParamsValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Redirector" data-name="crest::redirector">
+      <a href="../Crest/Redirector.html">Redirector</a>
+      
+    </li>
+  
+  <li class=" current" data-id="crest/Crest/Request" data-name="crest::request">
+      <a href="../Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="../Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Resource" data-name="crest::resource">
+      <a href="../Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Response" data-name="crest::response">
+      <a href="../Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/UrlencodedForm" data-name="crest::urlencodedform(t)">
+      <a href="../Crest/UrlencodedForm.html">UrlencodedForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ZeroEnumeratedFlatParamsEncoder" data-name="crest::zeroenumeratedflatparamsencoder">
+      <a href="../Crest/ZeroEnumeratedFlatParamsEncoder.html">ZeroEnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> Crest::<wbr>Request
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Crest/Request.html">Crest::Request</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A class that used to make the requests
+The result of a <code><a href="../Crest/Request.html">Crest::Request</a></code> is a <code><a href="../Crest/Response.html">Crest::Response</a></code> object.</p>
+<p>Simple example:</p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:post</span>, <span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="s">&quot;age&quot;</span> <span class="o">=&gt;</span> <span class="n">27</span>}, params: {<span class="n">:name</span> <span class="o">=&gt;</span> <span class="s">&quot;Kurt&quot;</span>})
+request.execute
+
+<span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.execute(<span class="n">:post</span>, <span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="s">&quot;age&quot;</span> <span class="o">=&gt;</span> <span class="n">27</span>}, json: <span class="n">true</span>)
+
+<span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="s">&quot;age&quot;</span> <span class="o">=&gt;</span> <span class="n">27</span>}, json: <span class="n">true</span>)</code></pre>
+<p>Block style:</p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:get</span>, <span class="s">&quot;http://httpbin.org/get&quot;</span>) <span class="k">do</span> <span class="o">|</span>request<span class="o">|</span>
+  request.headers.add(<span class="s">&quot;foo&quot;</span>, <span class="s">&quot;bar&quot;</span>)
+  request.user <span class="o">=</span> <span class="s">&quot;username&quot;</span>
+  request.password <span class="o">=</span> <span class="s">&quot;password&quot;</span>
+<span class="k">end</span>
+
+response <span class="o">=</span> request.execute</code></pre>
+<p>Mandatory parameters:</p>
+<ul>
+<li><code><a href="../Crest/Request.html#method%3AString-instance-method">#method</a></code></li>
+<li><code><a href="../Crest/Request.html#url%3AString-instance-method">#url</a></code></li>
+</ul>
+<p>Optional parameters:</p>
+<ul>
+<li><code><a href="../Crest/Request.html#headers%3AHTTP%3A%3AHeaders-instance-method">#headers</a></code> a hash containing the request headers</li>
+<li><code><a href="../Crest/Request.html#cookies%3AHTTP%3A%3ACookies-instance-method">#cookies</a></code> a hash containing the request cookies</li>
+<li><code>form</code> a hash containing form data (or a raw string)</li>
+<li><code>params</code> a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (?)
+and a sequence of attribute–value pairs separated by a delimiter (&amp;).</li>
+<li><code>params_encoder</code> params encoder (default to <code><a href="../Crest/FlatParamsEncoder.html">Crest::FlatParamsEncoder</a></code>)</li>
+<li><code><a href="../Crest/Request.html#auth%3AString-instance-method">#auth</a></code> access authentication method <code>basic</code> or <code>digest</code> (default to <code>basic</code>)</li>
+<li><code><a href="../Crest/Request.html#user%3AString%3F-instance-method">#user</a></code> and <code><a href="../Crest/Request.html#password%3AString%3F-instance-method">#password</a></code> for authentication</li>
+<li><code><a href="../Crest/Request.html#tls%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AClient%3F-instance-method">#tls</a></code> configuring TLS settings</li>
+<li><code><a href="../Crest/Request.html#p_addr%3AString%3F-instance-method">#p_addr</a></code>, <code><a href="../Crest/Request.html#p_port%3AInt32%3F-instance-method">#p_port</a></code>, <code><a href="../Crest/Request.html#p_user%3AString%3F-instance-method">#p_user</a></code>, <code><a href="../Crest/Request.html#p_pass%3AString%3F-instance-method">#p_pass</a></code> for proxy</li>
+<li><code><a href="../Crest/Request.html#json%3ABool-instance-method">#json</a></code> make a JSON request with the appropriate HTTP headers (default to <code>false</code>)</li>
+<li><code><a href="../Crest/Request.html#multipart%3ABool-instance-method">#multipart</a></code> make a multipart request with the appropriate HTTP headers even if not sending a file (default to <code>false</code>)</li>
+<li><code><a href="../Crest/Request.html#user_agent%3AString%3F-instance-method">#user_agent</a></code> set &quot;User-Agent&quot; HTTP header (default to <code><a href="../Crest.html#USER_AGENT">Crest::USER_AGENT</a></code>)</li>
+<li><code><a href="../Crest/Request.html#max_redirects%3AInt32-instance-method">#max_redirects</a></code> maximum number of redirects (default to <code>10</code>)</li>
+<li><code><a href="../Crest/Request.html#logging%3ABool-instance-method">#logging</a></code> enable logging (default to <code>false</code>)</li>
+<li><code><a href="../Crest/Request.html#logger%3ACrest%3A%3ALogger-instance-method">#logger</a></code> set logger (default to <code><a href="../Crest/CommonLogger.html">Crest::CommonLogger</a></code>)</li>
+<li><code><a href="../Crest/Request.html#handle_errors%3ABool-instance-method">#handle_errors</a></code> error handling (default to <code>true</code>)</li>
+<li><code><a href="../Crest/Request.html#close_connection%3ABool-instance-method">#close_connection</a></code> close the connection after request is completed (default to <code>true</code>)</li>
+<li><code><a href="../Crest/Request.html#http_client%3AHTTP%3A%3AClient-instance-method">#http_client</a></code> instance of <code>HTTP::Client</code></li>
+<li><code><a href="../Crest/Request.html#read_timeout%3ATime%3A%3ASpan%3F-instance-method">#read_timeout</a></code> read timeout (default to <code>nil</code>)</li>
+<li><code><a href="../Crest/Request.html#write_timeout%3ATime%3A%3ASpan%3F-instance-method">#write_timeout</a></code> write timeout (default to <code>nil</code>)</li>
+<li><code><a href="../Crest/Request.html#connect_timeout%3ATime%3A%3ASpan%3F-instance-method">#connect_timeout</a></code> connect timeout (default to <code>nil</code>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L57" target="_blank">
+        crest/request.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28method%3ASymbol%2Curl%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Cheaders%3D%7B%7DofString%3D%3EString%2Ccookies%3D%7B%7DofString%3D%3EString%2Cparams%3D%7B%7DofString%3D%3EString%2Cmax_redirects%3AInt32%3D10%2Cparams_encoder%3ACrest%3A%3AParamsEncoder.class%3DCrest%3A%3AFlatParamsEncoder%2Cuser_agent%3AString%7CNil%3Dnil%2Cjson%3ABool%3Dfalse%2Cmultipart%3ABool%3Dfalse%2Ctls%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AClient%7CNil%3Dnil%2Chttp_client%3AHTTP%3A%3AClient%7CNil%3Dnil%2Cauth%3AString%3D%22basic%22%2Cuser%3AString%7CNil%3Dnil%2Cpassword%3AString%7CNil%3Dnil%2Cp_addr%3AString%7CNil%3Dnil%2Cp_port%3AInt32%7CNil%3Dnil%2Cp_user%3AString%7CNil%3Dnil%2Cp_pass%3AString%7CNil%3Dnil%2Clogger%3ACrest%3A%3ALogger%3DCrest%3A%3ACommonLogger.new%2Clogging%3ABool%3Dfalse%2Chandle_errors%3ABool%3Dtrue%2Cclose_connection%3ABool%3Dtrue%2Cread_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cwrite_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cconnect_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2C%26%29-class-method" class="signature"><strong>.new</strong>(method : Symbol, url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, *, headers = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, cookies = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, params = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, max_redirects : Int32 = <span class="n">10</span>, params_encoder : <span class="t">Crest</span><span class="t">::</span><span class="t">ParamsEncoder</span>.<span class="k">class</span> = <span class="t">Crest</span><span class="t">::</span><span class="t">FlatParamsEncoder</span>, user_agent : String | Nil = <span class="n">nil</span>, json : Bool = <span class="n">false</span>, multipart : Bool = <span class="n">false</span>, tls : OpenSSL::SSL::Context::Client | Nil = <span class="n">nil</span>, http_client : HTTP::Client | Nil = <span class="n">nil</span>, auth : String = <span class="s">&quot;basic&quot;</span>, user : String | Nil = <span class="n">nil</span>, password : String | Nil = <span class="n">nil</span>, p_addr : String | Nil = <span class="n">nil</span>, p_port : Int32 | Nil = <span class="n">nil</span>, p_user : String | Nil = <span class="n">nil</span>, p_pass : String | Nil = <span class="n">nil</span>, logger : Crest::Logger = <span class="t">Crest</span><span class="t">::</span><span class="t">CommonLogger</span>.new, logging : Bool = <span class="n">false</span>, handle_errors : Bool = <span class="n">true</span>, close_connection : Bool = <span class="n">true</span>, read_timeout : Time::Span | Nil = <span class="n">nil</span>, write_timeout : Time::Span | Nil = <span class="n">nil</span>, connect_timeout : Time::Span | Nil = <span class="n">nil</span>, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28method%3ASymbol%2Curl%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29-class-method" class="signature"><strong>.new</strong>(method : Symbol, url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args)</a>
+        
+          <div class="summary"><p>When block is not given.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#delete%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.delete</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a DELETE request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.delete</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a DELETE request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28method%2Curl%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.execute</strong>(method, url, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28method%2Curl%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.execute</strong>(method, url, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.get</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a GET request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.get</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a GET request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#head%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.head</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a HEAD request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#head%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.head</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a HEAD request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#options%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.options</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a OPTIONS request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#options%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.options</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a OPTIONS request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#patch%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.patch</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a PATCH request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#patch%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.patch</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a PATCH request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#post%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.post</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a POST request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#post%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.post</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a POST request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#put%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method" class="signature"><strong>.put</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute a PUT request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#put%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method" class="signature"><strong>.put</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : Crest::Response</a>
+        
+          <div class="summary"><p>Execute a PUT request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#auth%3AString-instance-method" class="signature"><strong>#auth</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#close</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#close</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close_connection%3ABool-instance-method" class="signature"><strong>#close_connection</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#closed%3F-instance-method" class="signature"><strong>#closed?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#connect_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#connect_timeout</strong> : Time::Span?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cookies%3AHTTP%3A%3ACookies-instance-method" class="signature"><strong>#cookies</strong> : HTTP::Cookies</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%3ACrest%3A%3AResponse-instance-method" class="signature"><strong>#execute</strong> : Crest::Response</a>
+        
+          <div class="summary"><p>Execute HTTP request</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-instance-method" class="signature"><strong>#execute</strong>(&block : Crest::Response -> ) : Nil</a>
+        
+          <div class="summary"><p>Execute streaming HTTP request</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#form_data%3AIO%7CSlice%28UInt8%29%7CString%7CNil-instance-method" class="signature"><strong>#form_data</strong> : IO | Slice(UInt8) | String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#handle_errors%3ABool-instance-method" class="signature"><strong>#handle_errors</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#headers%3AHTTP%3A%3AHeaders-instance-method" class="signature"><strong>#headers</strong> : HTTP::Headers</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#host</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#host</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#http_client%3AHTTP%3A%3AClient-instance-method" class="signature"><strong>#http_client</strong> : HTTP::Client</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#http_request%3AHTTP%3A%3ARequest-instance-method" class="signature"><strong>#http_request</strong> : HTTP::Request</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#json%3ABool-instance-method" class="signature"><strong>#json</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#logger%3ACrest%3A%3ALogger-instance-method" class="signature"><strong>#logger</strong> : Crest::Logger</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#logging%3ABool-instance-method" class="signature"><strong>#logging</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_redirects%3AInt32-instance-method" class="signature"><strong>#max_redirects</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#method%3AString-instance-method" class="signature"><strong>#method</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#multipart%3ABool-instance-method" class="signature"><strong>#multipart</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#p_addr%3AString%3F-instance-method" class="signature"><strong>#p_addr</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#p_pass%3AString%3F-instance-method" class="signature"><strong>#p_pass</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#p_port%3AInt32%3F-instance-method" class="signature"><strong>#p_port</strong> : Int32?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#p_user%3AString%3F-instance-method" class="signature"><strong>#p_user</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#password%3AString%3F-instance-method" class="signature"><strong>#password</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#password%3D%28password%3ANil%7CString%29-instance-method" class="signature"><strong>#password=</strong>(password : Nil | String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#port</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#port</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#proxy%3AHTTP%3A%3AProxy%3A%3AClient%3F-instance-method" class="signature"><strong>#proxy</strong> : HTTP::Proxy::Client?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#read_timeout</strong> : Time::Span?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#redirection_history%3AArray%28Crest%3A%3AResponse%29-instance-method" class="signature"><strong>#redirection_history</strong> : Array(Crest::Response)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#redirection_history%3D%28redirection_history%3AArray%28Crest%3A%3AResponse%29%29-instance-method" class="signature"><strong>#redirection_history=</strong>(redirection_history : Array(Crest::Response))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tls%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AClient%3F-instance-method" class="signature"><strong>#tls</strong> : OpenSSL::SSL::Context::Client?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tls%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#tls?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tls%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#tls?</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_curl-instance-method" class="signature"><strong>#to_curl</strong></a>
+        
+          <div class="summary"><p>Convert <code><a href="../Crest/Request.html">Request</a></code> object to cURL command</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#url%3AString-instance-method" class="signature"><strong>#url</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#user%3AString%3F-instance-method" class="signature"><strong>#user</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#user%3D%28user%3ANil%7CString%29-instance-method" class="signature"><strong>#user=</strong>(user : Nil | String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#user_agent%3AString%3F-instance-method" class="signature"><strong>#user_agent</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write_timeout%3ATime%3A%3ASpan%3F-instance-method" class="signature"><strong>#write_timeout</strong> : Time::Span?</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(method:Symbol,url:String,form={}ofString=&gt;String,*,headers={}ofString=&gt;String,cookies={}ofString=&gt;String,params={}ofString=&gt;String,max_redirects:Int32=10,params_encoder:Crest::ParamsEncoder.class=Crest::FlatParamsEncoder,user_agent:String|Nil=nil,json:Bool=false,multipart:Bool=false,tls:OpenSSL::SSL::Context::Client|Nil=nil,http_client:HTTP::Client|Nil=nil,auth:String=&quot;basic&quot;,user:String|Nil=nil,password:String|Nil=nil,p_addr:String|Nil=nil,p_port:Int32|Nil=nil,p_user:String|Nil=nil,p_pass:String|Nil=nil,logger:Crest::Logger=Crest::CommonLogger.new,logging:Bool=false,handle_errors:Bool=true,close_connection:Bool=true,read_timeout:Time::Span|Nil=nil,write_timeout:Time::Span|Nil=nil,connect_timeout:Time::Span|Nil=nil,&amp;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(method : Symbol, url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, *, headers = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, cookies = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, params = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, max_redirects : Int32 = <span class="n">10</span>, params_encoder : <span class="t">Crest</span><span class="t">::</span><span class="t">ParamsEncoder</span>.<span class="k">class</span> = <span class="t">Crest</span><span class="t">::</span><span class="t">FlatParamsEncoder</span>, user_agent : String | Nil = <span class="n">nil</span>, json : Bool = <span class="n">false</span>, multipart : Bool = <span class="n">false</span>, tls : OpenSSL::SSL::Context::Client | Nil = <span class="n">nil</span>, http_client : HTTP::Client | Nil = <span class="n">nil</span>, auth : String = <span class="s">&quot;basic&quot;</span>, user : String | Nil = <span class="n">nil</span>, password : String | Nil = <span class="n">nil</span>, p_addr : String | Nil = <span class="n">nil</span>, p_port : Int32 | Nil = <span class="n">nil</span>, p_user : String | Nil = <span class="n">nil</span>, p_pass : String | Nil = <span class="n">nil</span>, logger : <a href="../Crest/Logger.html">Crest::Logger</a> = <span class="t">Crest</span><span class="t">::</span><span class="t">CommonLogger</span>.new, logging : Bool = <span class="n">false</span>, handle_errors : Bool = <span class="n">true</span>, close_connection : Bool = <span class="n">true</span>, read_timeout : Time::Span | Nil = <span class="n">nil</span>, write_timeout : Time::Span | Nil = <span class="n">nil</span>, connect_timeout : Time::Span | Nil = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#new%28method%3ASymbol%2Curl%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Cheaders%3D%7B%7DofString%3D%3EString%2Ccookies%3D%7B%7DofString%3D%3EString%2Cparams%3D%7B%7DofString%3D%3EString%2Cmax_redirects%3AInt32%3D10%2Cparams_encoder%3ACrest%3A%3AParamsEncoder.class%3DCrest%3A%3AFlatParamsEncoder%2Cuser_agent%3AString%7CNil%3Dnil%2Cjson%3ABool%3Dfalse%2Cmultipart%3ABool%3Dfalse%2Ctls%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AClient%7CNil%3Dnil%2Chttp_client%3AHTTP%3A%3AClient%7CNil%3Dnil%2Cauth%3AString%3D%22basic%22%2Cuser%3AString%7CNil%3Dnil%2Cpassword%3AString%7CNil%3Dnil%2Cp_addr%3AString%7CNil%3Dnil%2Cp_port%3AInt32%7CNil%3Dnil%2Cp_user%3AString%7CNil%3Dnil%2Cp_pass%3AString%7CNil%3Dnil%2Clogger%3ACrest%3A%3ALogger%3DCrest%3A%3ACommonLogger.new%2Clogging%3ABool%3Dfalse%2Chandle_errors%3ABool%3Dtrue%2Cclose_connection%3ABool%3Dtrue%2Cread_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cwrite_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cconnect_timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2C%26%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(method:Symbol,url:String,form={}ofString=&gt;String,**args)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(method : Symbol, url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args)
+
+        <a class="method-permalink" href="#new%28method%3ASymbol%2Curl%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>When block is not given.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L160" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="delete(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>delete</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#delete%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a DELETE request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.delete(<span class="s">&quot;http://httpbin.org/delete&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>delete</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#delete%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a DELETE request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.delete(<span class="s">&quot;http://httpbin.org/delete&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute(method,url,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>execute</strong>(method, url, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#execute%28method%2Curl%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute(method,url,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>execute</strong>(method, url, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#execute%28method%2Curl%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L100" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>get</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#get%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a GET request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.get(<span class="s">&quot;http://httpbin.org/get&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>get</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#get%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a GET request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.get(<span class="s">&quot;http://httpbin.org/get&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="head(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>head</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#head%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a HEAD request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.head(<span class="s">&quot;http://httpbin.org/head&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="head(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>head</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#head%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a HEAD request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.head(<span class="s">&quot;http://httpbin.org/head&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="options(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>options</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#options%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a OPTIONS request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.options(<span class="s">&quot;http://httpbin.org/options&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="options(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>options</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#options%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a OPTIONS request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.options(<span class="s">&quot;http://httpbin.org/options&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="patch(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>patch</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#patch%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a PATCH request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.patch(<span class="s">&quot;http://httpbin.org/patch&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="patch(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>patch</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#patch%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a PATCH request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.patch(<span class="s">&quot;http://httpbin.org/patch&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="post(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>post</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#post%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a POST request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="post(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>post</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#post%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a POST request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="put(url:String,form={}ofString=&gt;String,**args,&amp;block:Crest::Response-&gt;):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>put</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args, &block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#put%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%2C%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a PUT request and and yields the <code><a href="../Crest/Response.html">Crest::Response</a></code> to the block.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.put(<span class="s">&quot;http://httpbin.org/put&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">while</span> line <span class="o">=</span> resp.body_io.gets
+    puts line
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="put(url:String,form={}ofString=&gt;String,**args):Crest::Response-class-method">
+      <div class="signature">
+        
+        def self.<strong>put</strong>(url : String, form = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">String</span>, **args) : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#put%28url%3AString%2Cform%3D%7B%7DofString%3D%3EString%2C%2A%2Aargs%29%3ACrest%3A%3AResponse-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute a PUT request and returns a <code><a href="../Crest/Response.html">Crest::Response</a></code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.put(<span class="s">&quot;http://httpbin.org/put&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="auth:String-instance-method">
+      <div class="signature">
+        
+        def <strong>auth</strong> : String
+
+        <a class="method-permalink" href="#auth%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong>(*args, **options)
+
+        <a class="method-permalink" href="#close%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#close%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close_connection:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>close_connection</strong> : Bool
+
+        <a class="method-permalink" href="#close_connection%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="closed?-instance-method">
+      <div class="signature">
+        
+        def <strong>closed?</strong>
+
+        <a class="method-permalink" href="#closed%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L226" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="connect_timeout:Time::Span?-instance-method">
+      <div class="signature">
+        
+        def <strong>connect_timeout</strong> : Time::Span?
+
+        <a class="method-permalink" href="#connect_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cookies:HTTP::Cookies-instance-method">
+      <div class="signature">
+        
+        def <strong>cookies</strong> : HTTP::Cookies
+
+        <a class="method-permalink" href="#cookies%3AHTTP%3A%3ACookies-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute:Crest::Response-instance-method">
+      <div class="signature">
+        
+        def <strong>execute</strong> : <a href="../Crest/Response.html">Crest::Response</a>
+
+        <a class="method-permalink" href="#execute%3ACrest%3A%3AResponse-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute HTTP request</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L193" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute(&amp;block:Crest::Response-&gt;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>execute</strong>(&block : <a href="../Crest/Response.html">Crest::Response</a> -> ) : Nil
+
+        <a class="method-permalink" href="#execute%28%26block%3ACrest%3A%3AResponse-%3E%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Execute streaming HTTP request</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L208" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="form_data:IO|Slice(UInt8)|String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>form_data</strong> : IO | Slice(UInt8) | String | Nil
+
+        <a class="method-permalink" href="#form_data%3AIO%7CSlice%28UInt8%29%7CString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="handle_errors:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>handle_errors</strong> : Bool
+
+        <a class="method-permalink" href="#handle_errors%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="headers:HTTP::Headers-instance-method">
+      <div class="signature">
+        
+        def <strong>headers</strong> : HTTP::Headers
+
+        <a class="method-permalink" href="#headers%3AHTTP%3A%3AHeaders-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>host</strong>(*args, **options)
+
+        <a class="method-permalink" href="#host%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>host</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#host%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="http_client:HTTP::Client-instance-method">
+      <div class="signature">
+        
+        def <strong>http_client</strong> : HTTP::Client
+
+        <a class="method-permalink" href="#http_client%3AHTTP%3A%3AClient-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="http_request:HTTP::Request-instance-method">
+      <div class="signature">
+        
+        def <strong>http_request</strong> : HTTP::Request
+
+        <a class="method-permalink" href="#http_request%3AHTTP%3A%3ARequest-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="json:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>json</strong> : Bool
+
+        <a class="method-permalink" href="#json%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="logger:Crest::Logger-instance-method">
+      <div class="signature">
+        
+        def <strong>logger</strong> : <a href="../Crest/Logger.html">Crest::Logger</a>
+
+        <a class="method-permalink" href="#logger%3ACrest%3A%3ALogger-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="logging:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>logging</strong> : Bool
+
+        <a class="method-permalink" href="#logging%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_redirects:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>max_redirects</strong> : Int32
+
+        <a class="method-permalink" href="#max_redirects%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="method:String-instance-method">
+      <div class="signature">
+        
+        def <strong>method</strong> : String
+
+        <a class="method-permalink" href="#method%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="multipart:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>multipart</strong> : Bool
+
+        <a class="method-permalink" href="#multipart%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="p_addr:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>p_addr</strong> : String?
+
+        <a class="method-permalink" href="#p_addr%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="p_pass:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>p_pass</strong> : String?
+
+        <a class="method-permalink" href="#p_pass%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="p_port:Int32?-instance-method">
+      <div class="signature">
+        
+        def <strong>p_port</strong> : Int32?
+
+        <a class="method-permalink" href="#p_port%3AInt32%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="p_user:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>p_user</strong> : String?
+
+        <a class="method-permalink" href="#p_user%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="password:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>password</strong> : String?
+
+        <a class="method-permalink" href="#password%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="password=(password:Nil|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>password=</strong>(password : Nil | String)
+
+        <a class="method-permalink" href="#password%3D%28password%3ANil%7CString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>port</strong>(*args, **options)
+
+        <a class="method-permalink" href="#port%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>port</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#port%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="proxy:HTTP::Proxy::Client?-instance-method">
+      <div class="signature">
+        
+        def <strong>proxy</strong> : HTTP::Proxy::Client?
+
+        <a class="method-permalink" href="#proxy%3AHTTP%3A%3AProxy%3A%3AClient%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_timeout:Time::Span?-instance-method">
+      <div class="signature">
+        
+        def <strong>read_timeout</strong> : Time::Span?
+
+        <a class="method-permalink" href="#read_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="redirection_history:Array(Crest::Response)-instance-method">
+      <div class="signature">
+        
+        def <strong>redirection_history</strong> : Array(<a href="../Crest/Response.html">Crest::Response</a>)
+
+        <a class="method-permalink" href="#redirection_history%3AArray%28Crest%3A%3AResponse%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="redirection_history=(redirection_history:Array(Crest::Response))-instance-method">
+      <div class="signature">
+        
+        def <strong>redirection_history=</strong>(redirection_history : Array(<a href="../Crest/Response.html">Crest::Response</a>))
+
+        <a class="method-permalink" href="#redirection_history%3D%28redirection_history%3AArray%28Crest%3A%3AResponse%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tls:OpenSSL::SSL::Context::Client?-instance-method">
+      <div class="signature">
+        
+        def <strong>tls</strong> : OpenSSL::SSL::Context::Client?
+
+        <a class="method-permalink" href="#tls%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AClient%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tls?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>tls?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#tls%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tls?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>tls?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#tls%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_curl-instance-method">
+      <div class="signature">
+        
+        def <strong>to_curl</strong>
+
+        <a class="method-permalink" href="#to_curl-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Convert <code><a href="../Crest/Request.html">Request</a></code> object to cURL command</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L243" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="url:String-instance-method">
+      <div class="signature">
+        
+        def <strong>url</strong> : String
+
+        <a class="method-permalink" href="#url%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="user:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>user</strong> : String?
+
+        <a class="method-permalink" href="#user%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="user=(user:Nil|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>user=</strong>(user : Nil | String)
+
+        <a class="method-permalink" href="#user%3D%28user%3ANil%7CString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="user_agent:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>user_agent</strong> : String?
+
+        <a class="method-permalink" href="#user_agent%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write_timeout:Time::Span?-instance-method">
+      <div class="signature">
+        
+        def <strong>write_timeout</strong> : Time::Span?
+
+        <a class="method-permalink" href="#write_timeout%3ATime%3A%3ASpan%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crest/blob/8d7d600bdcb0057dab25f186637788dc86d2356f/src/crest/request.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

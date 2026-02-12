@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crest">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="crest">
+  <title>crest master</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          crest
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="crest/Crest" data-name="crest">
+      <a href="Crest.html">Crest</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/CommonLogger" data-name="crest::commonlogger">
+      <a href="Crest/CommonLogger.html">CommonLogger</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Curlify" data-name="crest::curlify">
+      <a href="Crest/Curlify.html">Curlify</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/DataForm" data-name="crest::dataform(t)">
+      <a href="Crest/DataForm.html">DataForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/EnumeratedFlatParamsEncoder" data-name="crest::enumeratedflatparamsencoder">
+      <a href="Crest/EnumeratedFlatParamsEncoder.html">EnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/FlatParamsEncoder" data-name="crest::flatparamsencoder">
+      <a href="Crest/FlatParamsEncoder.html">FlatParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Form" data-name="crest::form(t)">
+      <a href="Crest/Form.html">Form</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/JSONForm" data-name="crest::jsonform(t)">
+      <a href="Crest/JSONForm.html">JSONForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Logger" data-name="crest::logger">
+      <a href="Crest/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/NestedParamsEncoder" data-name="crest::nestedparamsencoder">
+      <a href="Crest/NestedParamsEncoder.html">NestedParamsEncoder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="crest/Crest/ParamsDecoder" data-name="crest::paramsdecoder">
+      <a href="Crest/ParamsDecoder.html">ParamsDecoder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crest/Crest/ParamsDecoder/Type" data-name="crest::paramsdecoder::type">
+      <a href="Crest/ParamsDecoder/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsEncoder" data-name="crest::paramsencoder">
+      <a href="Crest/ParamsEncoder.html">ParamsEncoder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ParamsValue" data-name="crest::paramsvalue">
+      <a href="Crest/ParamsValue.html">ParamsValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Redirector" data-name="crest::redirector">
+      <a href="Crest/Redirector.html">Redirector</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Request" data-name="crest::request">
+      <a href="Crest/Request.html">Request</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/RequestFailed" data-name="crest::requestfailed">
+      <a href="Crest/RequestFailed.html">RequestFailed</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Resource" data-name="crest::resource">
+      <a href="Crest/Resource.html">Resource</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/Response" data-name="crest::response">
+      <a href="Crest/Response.html">Response</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/UrlencodedForm" data-name="crest::urlencodedform(t)">
+      <a href="Crest/UrlencodedForm.html">UrlencodedForm</a>
+      
+    </li>
+  
+  <li class=" " data-id="crest/Crest/ZeroEnumeratedFlatParamsEncoder" data-name="crest::zeroenumeratedflatparamsencoder">
+      <a href="Crest/ZeroEnumeratedFlatParamsEncoder.html">ZeroEnumeratedFlatParamsEncoder</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="img-srchttpsstars.medv.iomamantohacrest.svg-alignright" class="anchor" href="#img-srchttpsstars.medv.iomamantohacrest.svg-alignright">  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a><img src="https://stars.medv.io/mamantoha/crest.svg" align="right"/></h1>
+<p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal_dark.png" alt="crest" height="150px"></p>
+<p><a href="https://app.codacy.com/app/mamantoha/crest?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mamantoha/crest&amp;utm_campaign=Badge_Grade_Dashboard"><img src="https://api.codacy.com/project/badge/Grade/16e439ef2706472988306ef13da91a51" alt="Codacy Badge" /></a>
+<img src="https://github.com/mamantoha/crest/workflows/Crystal%20CI/badge.svg" alt="Crystal CI" />
+<a href="https://github.com/mamantoha/crest/releases"><img src="https://img.shields.io/github/release/mamantoha/crest.svg" alt="GitHub release" /></a>
+<a href="https://github.com/mamantoha/crest/pulse"><img src="https://img.shields.io/github/commits-since/mamantoha/crest/latest.svg" alt="Commits Since Last Release" /></a>
+<a href="https://mamantoha.github.io/crest/"><img src="https://img.shields.io/badge/docs-available-brightgreen.svg" alt="Docs" /></a>
+<a href="https://deepwiki.com/mamantoha/crest"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" /></a>
+<a href="https://github.com/mamantoha/crest/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mamantoha/crest.svg" alt="License" /></a></p>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<p><a href="#contributors-"><img src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square" alt="All Contributors" /></a></p>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p><a href="https://visitorbadge.io/status?path=https://github.com/mamantoha/crest"><img src="https://api.visitorbadge.io/api/visitors?path=https://github.com/mamantoha/crest&amp;countColor=#263759&amp;style=plastic" alt="Visitors" /></a></p>
+<p>HTTP and REST client for Crystal, inspired by the Ruby's RestClient gem.</p>
+<p>Beloved features:</p>
+<ul>
+<li>Redirects support.</li>
+<li>HTTP(S) proxy support.</li>
+<li>Elegant Key/Value headers, cookies, query params, and form data.</li>
+<li>Multipart file uploads.</li>
+<li>JSON request with the appropriate HTTP headers.</li>
+<li>Streaming requests.</li>
+<li>International Domain Names.</li>
+<li>Digest access authentication.</li>
+<li>Logging.</li>
+</ul>
+<p>Hopefully, someday I can remove this shard though. Ideally, Crystal's standard library would do all this already.</p>
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+<p>Add this to your application's <code>shard.yml</code>:</p>
+<pre><code class="language-yaml">dependencies:
+  crest:
+    github: mamantoha/crest</code></pre>
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;crest&quot;</span></code></pre>
+<p>Basic usage:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/get&quot;</span>,
+  params: {<span class="n">:lang</span> <span class="o">=&gt;</span> <span class="s">&quot;en&quot;</span>},
+  user_agent: <span class="s">&quot;Mozilla/5.0&quot;</span>
+)
+<span class="c"># curl -L http://httpbin.org/get?lang=en -H &#39;User-Agent: Mozilla/5.0&#39;</span>
+
+<span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="n">:age</span> <span class="o">=&gt;</span> <span class="n">27</span>, <span class="n">:name</span> <span class="o">=&gt;</span> {<span class="n">:first</span> <span class="o">=&gt;</span> <span class="s">&quot;Kurt&quot;</span>, <span class="n">:last</span> <span class="o">=&gt;</span> <span class="s">&quot;Cobain&quot;</span>}}
+)
+<span class="c"># curl -L --data &quot;age=27&amp;name[first]=Kurt&amp;name[last]=Cobain&quot; -X POST &quot;http://httpbin.org/post&quot;</span>
+
+<span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="s">&quot;file&quot;</span> <span class="o">=&gt;</span> <span class="t">File</span>.open(<span class="s">&quot;avatar.png&quot;</span>), <span class="s">&quot;name&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;John&quot;</span>}
+)
+<span class="c"># curl -X POST http://httpbin.org/post -F &#39;file=@/path/to/avatar.png&#39; -F &#39;name=John&#39; -H &#39;Content-Type: multipart/form-data&#39;</span>
+
+response <span class="o">=</span> <span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="n">:age</span> <span class="o">=&gt;</span> <span class="n">27</span>, <span class="n">:name</span> <span class="o">=&gt;</span> {<span class="n">:first</span> <span class="o">=&gt;</span> <span class="s">&quot;Kurt&quot;</span>, <span class="n">:last</span> <span class="o">=&gt;</span> <span class="s">&quot;Cobain&quot;</span>}},
+  json: <span class="n">true</span>
+)
+<span class="c"># curl -X POST http://httpbin.org/post -d &#39;{&quot;age&quot;:27,&quot;name&quot;:{&quot;first&quot;:&quot;Kurt&quot;,&quot;last&quot;:&quot;Cobain&quot;}}&#39; -H &#39;Content-Type: application/json&#39;</span></code></pre>
+<h3><a id="request" class="anchor" href="#request">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Request</h3>
+<p><code><a href="Crest/Request.html">Crest::Request</a></code> accept next parameters:</p>
+<p>Mandatory parameters:</p>
+<ul>
+<li><code>:method</code> - HTTP method (<code>:get</code>. <code>:post</code>, <code>:put</code>, <code>:patch</code>, <code>:delete</code>, <code>:options</code>, <code>head</code>)</li>
+<li><code>:url</code> - URL (e.g.: <code>http://httpbin.org/ip</code>)</li>
+</ul>
+<p>Optional parameters:</p>
+<ul>
+<li><code>:form</code> - a hash containing form data (or a raw string or IO or Bytes)</li>
+<li><code>:headers</code> - a hash containing the request headers</li>
+<li><code>:cookies</code> - a hash containing the request cookies</li>
+<li><code>:params</code> - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (<code>?</code>) and a sequence of attribute–value pairs separated by a delimiter (<code>&amp;</code>)</li>
+<li><code>:params_encoder</code> params encoder (default to <code><a href="Crest/FlatParamsEncoder.html">Crest::FlatParamsEncoder</a></code>)</li>
+<li><code>:auth</code> - access authentication method <code>basic</code> or <code>digest</code> (default to <code>basic</code>)</li>
+<li><code>:user</code> and <code>:password</code> - for authentication</li>
+<li><code>:tls</code> - client certificates, you can pass in a custom <code>OpenSSL::SSL::Context::Client</code> (default to <code>nil</code>)</li>
+<li><code>:p_addr</code>, <code>:p_port</code>, <code>:p_user</code>, and <code>:p_pass</code> - specify a per-request proxy by passing these parameters</li>
+<li><code>:json</code> - make a JSON request with the appropriate HTTP headers (default to <code>false</code>)</li>
+<li><code>:multipart</code> make a multipart request with the appropriate HTTP headers even if not sending a file (default to <code>false</code>)</li>
+<li><code>:user_agent</code> - set &quot;User-Agent&quot; HTTP header (default to <code><a href="Crest.html#USER_AGENT">Crest::USER_AGENT</a></code>)</li>
+<li><code>:max_redirects</code> - maximum number of redirects (default to 10)</li>
+<li><code>:logging</code> - enable logging (default to <code>false</code>)</li>
+<li><code>:logger</code> - set logger (default to <code><a href="Crest/CommonLogger.html">Crest::CommonLogger</a></code>)</li>
+<li><code>:handle_errors</code> - error handling (default to <code>true</code>)</li>
+<li><code>:close_connection</code> - close the connection after request is completed (default to <code>true</code>)</li>
+<li><code>:http_client</code> - instance of <code>HTTP::Client</code></li>
+<li><code>:read_timeout</code> - read timeout (default to <code>nil</code>)</li>
+<li><code>:write_timeout</code> - write timeout (default to <code>nil</code>)</li>
+<li><code>:connect_timeout</code> - connect timeout (default to <code>nil</code>)</li>
+</ul>
+<p>More detailed examples:</p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:post</span>,
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  headers: {<span class="s">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>},
+  form: {<span class="n">:width</span> <span class="o">=&gt;</span> <span class="n">640</span>, <span class="s">&quot;height&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;480&quot;</span>}
+)
+request.execute
+<span class="c"># curl -L --data &quot;width=640&amp;height=480&quot; --header &quot;Content-Type: application/json&quot; -X POST &quot;http://httpbin.org/post&quot;</span></code></pre>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.execute(<span class="n">:get</span>,
+  <span class="s">&quot;http://httpbin.org/get&quot;</span>,
+  params: {<span class="n">:width</span> <span class="o">=&gt;</span> <span class="n">640</span>, <span class="s">&quot;height&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;480&quot;</span>},
+  headers: {<span class="s">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>}
+)
+<span class="c"># curl -L --header &quot;Content-Type: application/json&quot; &quot;http://httpbin.org/get?width=640&amp;height=480&quot;</span></code></pre>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:post</span>, <span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="n">:foo</span> <span class="o">=&gt;</span> <span class="s">&quot;bar&quot;</span>}, json: <span class="n">true</span>)
+
+<span class="c"># curl -X POST http://httpbin.org/post -d &#39;{\&quot;foo\&quot;:\&quot;bar\&quot;}&#39; -H &#39;Content-Type: application/json&#39;&quot;</span></code></pre>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.get(
+  <span class="s">&quot;http://httpbin.org/get&quot;</span>,
+  p_addr: <span class="s">&quot;127.0.0.1&quot;</span>,
+  p_port: <span class="n">3128</span>,
+  p_user: <span class="s">&quot;admin&quot;</span>,
+  p_pass: <span class="s">&quot;1234&quot;</span>
+)
+<span class="c"># curl -L --proxy admin:1234@127.0.0.1:3128 &quot;http://httpbin.org/get&quot;</span></code></pre>
+<p>A block can be passed to the <code><a href="Crest/Request.html">Crest::Request</a></code> initializer.</p>
+<p>This block will then be called with the <code><a href="Crest/Request.html">Crest::Request</a></code>.</p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:get</span>, <span class="s">&quot;http://httpbin.org/headers&quot;</span>) <span class="k">do</span> <span class="o">|</span>request<span class="o">|</span>
+  request.headers.add(<span class="s">&quot;foo&quot;</span>, <span class="s">&quot;bar&quot;</span>)
+<span class="k">end</span>
+
+request.execute
+<span class="c"># curl -L --header &quot;foo: bar&quot; http://httpbin.org/headers</span></code></pre>
+<h3><a id="resource" class="anchor" href="#resource">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Resource</h3>
+<p>A <code><a href="Crest/Resource.html">Crest::Resource</a></code> class can be instantiated for access to a RESTful resource,
+including authentication, proxy and logging.</p>
+<p>Additionally, you can set default <code>params</code>, <code>headers</code>, and <code>cookies</code> separately.
+So you can use <code><a href="Crest/Resource.html">Crest::Resource</a></code> to share common <code>params</code>, <code>headers</code>, and <code>cookies</code>.</p>
+<p>The final parameters consist of:</p>
+<ul>
+<li>default parameters from initializer</li>
+<li>parameters provided in call method (<code>get</code>, <code>post</code>, etc)</li>
+</ul>
+<p>This is especially useful if you wish to define your site in one place and
+call it in multiple locations.</p>
+<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(
+  <span class="s">&quot;http://httpbin.org&quot;</span>,
+  params: {<span class="s">&quot;key&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;value&quot;</span>},
+  headers: {<span class="s">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>},
+  cookies: {<span class="s">&quot;lang&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;uk&quot;</span>}
+)
+
+resource[<span class="s">&quot;/get&quot;</span>].get(
+  headers: {<span class="s">&quot;Auth-Token&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;secret&quot;</span>}
+)
+
+resource[<span class="s">&quot;/post&quot;</span>].post(
+  {<span class="n">:height</span> <span class="o">=&gt;</span> <span class="n">100</span>, <span class="s">&quot;width&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;100&quot;</span>},
+  params: {<span class="n">:secret</span> <span class="o">=&gt;</span> <span class="s">&quot;secret&quot;</span>}
+)</code></pre>
+<p>Use the <code>[]</code> syntax to allocate subresources:</p>
+<pre><code class="language-crystal">site <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(<span class="s">&quot;http://httpbin.org&quot;</span>)
+
+site[<span class="s">&quot;/post&quot;</span>].post({<span class="n">:param1</span> <span class="o">=&gt;</span> <span class="s">&quot;value1&quot;</span>, <span class="n">:param2</span> <span class="o">=&gt;</span> <span class="s">&quot;value2&quot;</span>})
+<span class="c"># curl -L --data &quot;param1=value1&amp;param2=value2&quot; -X POST http://httpbin.org/post</span></code></pre>
+<p>You can pass <code>suburl</code> through <code>Request#http_verb</code> methods:</p>
+<pre><code class="language-crystal">site <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(<span class="s">&quot;http://httpbin.org&quot;</span>)
+
+site.post(<span class="s">&quot;/post&quot;</span>, {<span class="n">:param1</span> <span class="o">=&gt;</span> <span class="s">&quot;value1&quot;</span>, <span class="n">:param2</span> <span class="o">=&gt;</span> <span class="s">&quot;value2&quot;</span>})
+<span class="c"># curl -L --data &quot;param1=value1&amp;param2=value2&quot; -X POST http://httpbin.org/post</span>
+
+site.get(<span class="s">&quot;/get&quot;</span>, params: {<span class="n">:status</span> <span class="o">=&gt;</span> <span class="s">&quot;active&quot;</span>})
+<span class="c"># curl -L http://httpbin.org/get?status=active</span></code></pre>
+<p>A block can be passed to the <code><a href="Crest/Resource.html">Crest::Resource</a></code> instance.</p>
+<p>This block will then be called with the <code><a href="Crest/Resource.html">Crest::Resource</a></code>.</p>
+<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(<span class="s">&quot;http://httpbin.org&quot;</span>) <span class="k">do</span> <span class="o">|</span>resource<span class="o">|</span>
+  resource.headers.merge!({<span class="s">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;bar&quot;</span>})
+<span class="k">end</span>
+
+resource[<span class="s">&quot;/headers&quot;</span>].get</code></pre>
+<p>With HTTP basic authentication:</p>
+<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(
+  <span class="s">&quot;http://httpbin.org/basic-auth/user/passwd&quot;</span>,
+  user: <span class="s">&quot;user&quot;</span>,
+  password: <span class="s">&quot;passwd&quot;</span>
+)</code></pre>
+<p>With Proxy:</p>
+<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(
+  <span class="s">&quot;http://httpbin.org/get&quot;</span>,
+  p_addr: <span class="s">&quot;localhost&quot;</span>,
+  p_port: <span class="n">3128</span>
+)</code></pre>
+<h3><a id="result-handling" class="anchor" href="#result-handling">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Result handling</h3>
+<p>The result of a <code><a href="Crest/Request.html">Crest::Request</a></code> and <code><a href="Crest/Resource.html">Crest::Resource</a></code> is a <code><a href="Crest/Response.html">Crest::Response</a></code> object.</p>
+<p>Response objects have several useful methods:</p>
+<ul>
+<li><code>Response#body</code>: The response body as a <code>String</code></li>
+<li><code>Response#body_io</code>: The response body as a <code>IO</code></li>
+<li><code>Response#status</code>: The response status as a <code>HTTP::Status</code></li>
+<li><code>Response#status_code</code>: The HTTP response code</li>
+<li><code>Response#headers</code>: A hash of HTTP response headers</li>
+<li><code>Response#cookies</code>: A hash of HTTP cookies set by the server</li>
+<li><code>Response#request</code>: The <code><a href="Crest/Request.html">Crest::Request</a></code> object used to make the request</li>
+<li><code>Response#http_client_res</code>: The <code>HTTP::Client::Response</code> object</li>
+<li><code>Response#history</code>: A list of each response received in a redirection chain</li>
+</ul>
+<h3><a id="exceptions" class="anchor" href="#exceptions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Exceptions</h3>
+<ul>
+<li>for status codes between <code>200</code> and <code>207</code>, a <code><a href="Crest/Response.html">Crest::Response</a></code> will be returned</li>
+<li>for status codes <code>301</code>, <code>302</code>, <code>303</code> or <code>307</code>, the redirection will be followed and the request transformed into a <code>GET</code></li>
+<li>for other cases, a <code><a href="Crest/RequestFailed.html">Crest::RequestFailed</a></code> holding the <code><a href="Crest/Response.html">Crest::Response</a></code> will be raised</li>
+<li>call <code>.response</code> on the exception to get the server's response</li>
+</ul>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/status/404&quot;</span>)
+<span class="c"># =&gt; HTTP status code 404: Not Found (Crest::NotFound)</span>
+
+<span class="k">begin</span>
+  <span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/status/404&quot;</span>)
+<span class="k">rescue</span> ex : <span class="t">Crest</span><span class="t">::</span><span class="t">NotFound</span>
+  puts ex.response
+<span class="k">end</span></code></pre>
+<p>To not raise exceptions but return the <code><a href="Crest/Response.html">Crest::Response</a></code> you can set <code>handle_errors</code> to <code>false</code>.</p>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/status/404&quot;</span>, handle_errors: <span class="n">false</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  <span class="k">case</span> resp
+  <span class="k">when</span> .success?
+    puts resp.body_io.gets_to_end
+  <span class="k">when</span> .client_error?
+    puts <span class="s">&quot;Client error&quot;</span>
+  <span class="k">when</span> .server_error?
+    puts <span class="s">&quot;Server error&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="c"># =&gt; Client error</span>
+
+response.status_code <span class="c"># =&gt; 404</span></code></pre>
+<p>But note that it may be more straightforward to use exceptions to handle different HTTP error response cases:</p>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="k">begin</span>
+  <span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/status/404&quot;</span>)
+<span class="k">rescue</span> ex : <span class="t">Crest</span><span class="t">::</span><span class="t">NotFound</span>
+  puts <span class="s">&quot;Not found&quot;</span>
+  ex.response
+<span class="k">rescue</span> ex : <span class="t">Crest</span><span class="t">::</span><span class="t">InternalServerError</span>
+  puts <span class="s">&quot;Internal server error&quot;</span>
+  ex.response
+<span class="k">end</span>
+<span class="c"># =&gt; Not found</span>
+
+response.status_code <span class="c"># =&gt; 404</span></code></pre>
+<h3><a id="parameters-serializer" class="anchor" href="#parameters-serializer">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Parameters serializer</h3>
+<p><code><a href="Crest/ParamsEncoder.html">Crest::ParamsEncoder</a></code> class is used to encode parameters.</p>
+<p>The encoder affect both how <code>crest</code> processes query strings and how it serializes POST bodies.</p>
+<p>The default encoder is <code><a href="Crest/FlatParamsEncoder.html">Crest::FlatParamsEncoder</a></code>.</p>
+<p>It provides <code>#encode</code> method, which converts the given params into a URI query string:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">FlatParamsEncoder</span>.encode({<span class="s">&quot;a&quot;</span> <span class="o">=&gt;</span> [<span class="s">&quot;one&quot;</span>, <span class="s">&quot;two&quot;</span>, <span class="s">&quot;three&quot;</span>], <span class="s">&quot;b&quot;</span> <span class="o">=&gt;</span> <span class="n">true</span>, <span class="s">&quot;c&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;d&quot;</span> <span class="o">=&gt;</span> <span class="n">1</span>})
+<span class="c"># =&gt; &#39;a[]=one&amp;a[]=two&amp;a[]=three&amp;b=true&amp;c=C&amp;d=1&#39;</span></code></pre>
+<h3><a id="custom-parameters-serializers" class="anchor" href="#custom-parameters-serializers">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Custom parameters serializers</h3>
+<p>You can build a custom params encoder.</p>
+<p>The value of Crest <code>params_encoder</code> can be any subclass of <code><a href="Crest/ParamsEncoder.html">Crest::ParamsEncoder</a></code> that implement <code>#encode(Hash) #=&gt; String</code></p>
+<p>Also Crest include other encoders.</p>
+<h4><a id="crestnested-params-encoder" class="anchor" href="#crestnested-params-encoder">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a><code><a href="Crest/NestedParamsEncoder.html">Crest::NestedParamsEncoder</a></code></h4>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="s">&quot;size&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;small&quot;</span>, <span class="s">&quot;topping&quot;</span> <span class="o">=&gt;</span> [<span class="s">&quot;bacon&quot;</span>, <span class="s">&quot;onion&quot;</span>]},
+  params_encoder: <span class="t">Crest</span><span class="t">::</span><span class="t">NestedParamsEncoder</span>
+)
+
+<span class="c"># =&gt; curl -X POST http://httpbin.org/post -d &#39;size=small&amp;topping=bacon&amp;topping=onion&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</span></code></pre>
+<h4><a id="crestenumerated-flat-params-encoder" class="anchor" href="#crestenumerated-flat-params-encoder">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a><code><a href="Crest/EnumeratedFlatParamsEncoder.html">Crest::EnumeratedFlatParamsEncoder</a></code></h4>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="s">&quot;size&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;small&quot;</span>, <span class="s">&quot;topping&quot;</span> <span class="o">=&gt;</span> [<span class="s">&quot;bacon&quot;</span>, <span class="s">&quot;onion&quot;</span>]},
+  params_encoder: <span class="t">Crest</span><span class="t">::</span><span class="t">EnumeratedFlatParamsEncoder</span>
+)
+
+<span class="c"># =&gt; curl -X POST http://httpbin.org/post -d &#39;size=small&amp;topping[1]=bacon&amp;topping[2]=onion&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</span></code></pre>
+<h4><a id="crestzero-enumerated-flat-params-encoder" class="anchor" href="#crestzero-enumerated-flat-params-encoder">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a><code><a href="Crest/ZeroEnumeratedFlatParamsEncoder.html">Crest::ZeroEnumeratedFlatParamsEncoder</a></code></h4>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="s">&quot;size&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;small&quot;</span>, <span class="s">&quot;topping&quot;</span> <span class="o">=&gt;</span> [<span class="s">&quot;bacon&quot;</span>, <span class="s">&quot;onion&quot;</span>]},
+  params_encoder: <span class="t">Crest</span><span class="t">::</span><span class="t">ZeroEnumeratedFlatParamsEncoder</span>
+)
+
+<span class="c"># =&gt; curl -X POST http://httpbin.org/post -d &#39;size=small&amp;topping[0]=bacon&amp;topping[1]=onion&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</span></code></pre>
+<h3><a id="streaming-responses" class="anchor" href="#streaming-responses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Streaming responses</h3>
+<p>Normally, when you use <code><a href="Crest.html">Crest</a></code>, <code><a href="Crest/Request.html">Crest::Request</a></code> or <code><a href="Crest/Resource.html">Crest::Resource</a></code> methods to retrieve data, the entire response is buffered in memory and returned as the response to the call.</p>
+<p>However, if you are retrieving a large amount of data, for example, an iso, or any other large file, you may want to stream the response directly to disk rather than loading it into memory. If you have a very large file, it may become impossible to load it into memory.</p>
+<p>If you want to stream the data from the response to a file as it comes, rather than entirely in memory, you can pass a block to which you pass a additional logic, which you can use to stream directly to a file as each chunk is received.</p>
+<p>With a block, an <code><a href="Crest/Response.html">Crest::Response</a></code> body is returned and the response's body is available as an <code>IO</code> by invoking <code>Crest::Response#body_io</code>.</p>
+<p>The following is an example:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(<span class="s">&quot;https://github.com/crystal-lang/crystal/archive/1.0.0.zip&quot;</span>) <span class="k">do</span> <span class="o">|</span>resp<span class="o">|</span>
+  filename <span class="o">=</span> resp.filename <span class="o">||</span> <span class="s">&quot;crystal.zip&quot;</span>
+
+  <span class="t">File</span>.open(filename, <span class="s">&quot;w&quot;</span>) <span class="k">do</span> <span class="o">|</span>file<span class="o">|</span>
+    <span class="t">IO</span>.copy(resp.body_io, file)
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<h3><a id="advanced-usage" class="anchor" href="#advanced-usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Advanced Usage</h3>
+<p>This section covers some of <code>crest</code> more advanced features.</p>
+<h4><a id="multipart" class="anchor" href="#multipart">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Multipart</h4>
+<p>Yeah, that's right! This does multipart sends for you!</p>
+<pre><code class="language-crystal">file <span class="o">=</span> <span class="t">File</span>.open(<span class="s">&quot;</span><span class="i">#{</span>__DIR__<span class="i">}</span><span class="s">/example.png&quot;</span>)
+<span class="t">Crest</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="n">:image</span> <span class="o">=&gt;</span> file})</code></pre>
+<pre><code class="language-crystal">file_content <span class="o">=</span> <span class="s">&quot;id,name\n1,test&quot;</span>
+file <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(file_content)
+<span class="t">Crest</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="s">&quot;data.csv&quot;</span> <span class="o">=&gt;</span> file})</code></pre>
+<pre><code class="language-crystal">file <span class="o">=</span> <span class="t">File</span>.open(<span class="s">&quot;</span><span class="i">#{</span>__DIR__<span class="i">}</span><span class="s">/example.png&quot;</span>)
+resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(<span class="s">&quot;https://httpbin.org&quot;</span>)
+response <span class="o">=</span> resource[<span class="s">&quot;/post&quot;</span>].post({<span class="n">:image</span> <span class="o">=&gt;</span> file})</code></pre>
+<h4><a id="json-payload" class="anchor" href="#json-payload">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>JSON payload</h4>
+<p><code>crest</code> speaks JSON natively by passing <code>json: true</code> argument to <code>crest</code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.post(<span class="s">&quot;http://httpbin.org/post&quot;</span>, {<span class="n">:foo</span> <span class="o">=&gt;</span> <span class="s">&quot;bar&quot;</span>}, json: <span class="n">true</span>)</code></pre>
+<p>As well you can serialize your <em>form</em> to a string by itself before passing it to <code>crest</code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.post(
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="n">:foo</span> <span class="o">=&gt;</span> <span class="s">&quot;bar&quot;</span>}.to_json
+  headers: {<span class="s">&quot;Accept&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>, <span class="s">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>},
+)</code></pre>
+<h4><a id="headers" class="anchor" href="#headers">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Headers</h4>
+<p>Request headers can be set by passing a hash containing keys and values representing header names and values:</p>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/bearer&quot;</span>,
+  headers: {<span class="s">&quot;Authorization&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Bearer cT0febFoD5lxAlNAXHo6g&quot;</span>}
+)
+response.headers
+<span class="c"># =&gt; {&quot;Authorization&quot; =&gt; [&quot;Bearer cT0febFoD5lxAlNAXHo6g&quot;]}</span></code></pre>
+<h4><a id="cookies" class="anchor" href="#cookies">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Cookies</h4>
+<p><code>Request</code> and <code>Response</code> objects know about HTTP cookies, and will automatically extract and set headers for them as needed:</p>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/cookies/set&quot;</span>,
+  params: {<span class="s">&quot;k1&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;v1&quot;</span>, <span class="s">&quot;k2&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;v2&quot;</span>}
+)
+response.cookies
+<span class="c"># =&gt; {&quot;k1&quot; =&gt; &quot;v1&quot;, &quot;k2&quot; =&gt; &quot;v2&quot;}</span></code></pre>
+<pre><code class="language-crystal">response <span class="o">=</span> <span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/cookies&quot;</span>,
+  cookies: {<span class="s">&quot;k1&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;v1&quot;</span>, <span class="s">&quot;k2&quot;</span> <span class="o">=&gt;</span> {<span class="s">&quot;kk2&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;vv2&quot;</span>}}
+)
+response.cookies
+<span class="c"># =&gt; {&quot;k1&quot; =&gt; &quot;v1&quot;, &quot;k2[kk2]&quot; =&gt; &quot;vv2&quot;}</span></code></pre>
+<h4><a id="basic-access-authentication" class="anchor" href="#basic-access-authentication">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Basic access authentication</h4>
+<p>For basic access authentication for an HTTP user agent you should to provide a <code>user</code> name and <code>password</code> when making a request.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/basic-auth/user/passwd&quot;</span>,
+  user: <span class="s">&quot;user&quot;</span>,
+  password: <span class="s">&quot;passwd&quot;</span>
+)
+<span class="c"># curl -L --user user:passwd http://httpbin.org/basic-auth/user/passwd</span></code></pre>
+<h4><a id="digest-access-authentication" class="anchor" href="#digest-access-authentication">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Digest access authentication</h4>
+<p>For digest access authentication for an HTTP user agent you should to provide a <code>user</code> name and <code>password</code> when making a request.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(
+  <span class="s">&quot;https://httpbin.org/digest-auth/auth/user/passwd/MD5&quot;</span>,
+  auth: <span class="s">&quot;digest&quot;</span>,
+  user: <span class="s">&quot;user&quot;</span>,
+  password: <span class="s">&quot;passwd&quot;</span>
+)
+<span class="c"># curl -L --digest --user user:passwd https://httpbin.org/digest-auth/auth/user/passwd/MD5</span></code></pre>
+<h4><a id="ssltls-support" class="anchor" href="#ssltls-support">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>SSL/TLS support</h4>
+<p>If <code>tls</code> is given it will be used:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(<span class="s">&quot;https://expired.badssl.com&quot;</span>, tls: <span class="t">OpenSSL</span><span class="t">::</span><span class="t">SSL</span><span class="t">::</span><span class="t">Context</span><span class="t">::</span><span class="t">Client</span>.insecure)</code></pre>
+<h4><a id="proxy" class="anchor" href="#proxy">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Proxy</h4>
+<p>If you need to use a proxy, you can configure individual requests with the proxy host and port arguments to any request method:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/ip&quot;</span>,
+  p_addr: <span class="s">&quot;localhost&quot;</span>,
+  p_port: <span class="n">3128</span>
+)</code></pre>
+<p>To use authentication with your proxy, use next syntax:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(
+  <span class="s">&quot;http://httpbin.org/ip&quot;</span>,
+  p_addr: <span class="s">&quot;localhost&quot;</span>,
+  p_port: <span class="n">3128</span>,
+  p_user: <span class="s">&quot;user&quot;</span>,
+  p_pass: <span class="s">&quot;qwerty&quot;</span>
+)</code></pre>
+<h4><a id="logging" class="anchor" href="#logging">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Logging</h4>
+<blockquote>
+<p><code>Logger</code> class is completely taken from <a href="https://github.com/icyleaf/halite">halite</a> shard.
+Thanks <a href="https://github.com/icyleaf">icyleaf</a>!</p>
+</blockquote>
+<p>By default, the <code><a href="Crest.html">Crest</a></code> does not enable logging. You can enable it per request by setting <code>logging: true</code>:</p>
+<pre><code class="language-crystal"><span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/get&quot;</span>, logging: <span class="n">true</span>)</code></pre>
+<h5><a id="filter-sensitive-information-from-logs-with-a-regex-matcher" class="anchor" href="#filter-sensitive-information-from-logs-with-a-regex-matcher">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Filter sensitive information from logs with a regex matcher</h5>
+<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.get(<span class="s">&quot;http://httpbin.org/get&quot;</span>, params: {api_key <span class="o">=&gt;</span> <span class="s">&quot;secret&quot;</span>}, logging: <span class="n">true</span>) <span class="k">do</span> <span class="o">|</span>request<span class="o">|</span>
+  request.logger.filter(<span class="s">/(api_key=)(\w+)/</span>, <span class="s">&quot;\\1[REMOVED]&quot;</span>)
+<span class="k">end</span>
+
+<span class="c"># =&gt; crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?api_key=[REMOVED]</span></code></pre>
+<h5><a id="customize-logger" class="anchor" href="#customize-logger">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Customize logger</h5>
+<p>You can create the custom logger by integration <code><a href="Crest/Logger.html">Crest::Logger</a></code> abstract class.
+Here has two methods must be implement: <code>Crest::Logger.request</code> and <code>Crest::Logger.response</code>.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">MyLogger</span> <span class="o">&lt;</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Logger</span>
+  <span class="k">def</span> <span class="m">request</span>(request)
+    @logger.info { <span class="s">&quot;&gt;&gt; | %s | %s&quot;</span> <span class="o">%</span> [request.method, request.url] }
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">response</span>(response)
+    @logger.info { <span class="s">&quot;&lt;&lt; | %s | %s&quot;</span> <span class="o">%</span> [response.status_code, response.url] }
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Crest</span>.get(<span class="s">&quot;http://httpbin.org/get&quot;</span>, logging: <span class="n">true</span>, logger: <span class="t">MyLogger</span>.new)</code></pre>
+<h4><a id="redirection" class="anchor" href="#redirection">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Redirection</h4>
+<p>By default, <code>crest</code> will follow HTTP 30x redirection requests.</p>
+<p>To disable automatic redirection, set <code>:max_redirects =&gt; 0</code>.</p>
+<pre><code class="language-crystal"><span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.execute(method: <span class="n">:get</span>, url: <span class="s">&quot;http://httpbin.org/redirect/1&quot;</span>, max_redirects: <span class="n">0</span>)
+<span class="c"># =&gt; Crest::Found: 302 Found</span></code></pre>
+<h4><a id="access-httpclient" class="anchor" href="#access-httpclient">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Access HTTP::Client</h4>
+<p>You can access <code>HTTP::Client</code> via the <code>http_client</code> instance method.</p>
+<p>This is usually used to set additional options (e.g. read timeout, authorization header etc.)</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">HTTP</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;httpbin.org&quot;</span>)
+client.read_timeout <span class="o">=</span> <span class="n">1</span>.second
+
+<span class="k">begin</span>
+  <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:get</span>,
+    <span class="s">&quot;http://httpbin.org/delay/10&quot;</span>,
+    http_client: client
+  )
+<span class="k">rescue</span> <span class="t">IO</span><span class="t">::</span><span class="t">TimeoutError</span>
+  puts <span class="s">&quot;Timeout!&quot;</span>
+<span class="k">end</span></code></pre>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">HTTP</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;httpbin.org&quot;</span>)
+client.read_timeout <span class="o">=</span> <span class="n">1</span>.second
+
+<span class="k">begin</span>
+  resource <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Resource</span>.new(<span class="s">&quot;http://httpbin.org&quot;</span>, http_client: client)
+  resource.get(<span class="s">&quot;/delay/10&quot;</span>)
+<span class="k">rescue</span> <span class="t">IO</span><span class="t">::</span><span class="t">TimeoutError</span>
+  puts <span class="s">&quot;Timeout!&quot;</span>
+<span class="k">end</span></code></pre>
+<h4><a id="convert-request-object-to-c-url-command" class="anchor" href="#convert-request-object-to-c-url-command">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Convert Request object to cURL command</h4>
+<p>Use <code>to_curl</code> method on instance of <code><a href="Crest/Request.html">Crest::Request</a></code> to convert request to cURL command.</p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(
+  <span class="n">:post</span>,
+  <span class="s">&quot;http://httpbin.org/post&quot;</span>,
+  {<span class="s">&quot;title&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;New Title&quot;</span>, <span class="s">&quot;author&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;admin&quot;</span>}
+)
+request.to_curl
+<span class="c"># =&gt; curl -X POST http://httpbin.org/post -d &#39;title=New+Title&amp;author=admin&#39; -H &#39;Content-Type: application/x-www-form-urlencoded&#39;</span></code></pre>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(
+  <span class="n">:get</span>,
+  <span class="s">&quot;http://httpbin.org/basic-auth/user/passwd&quot;</span>,
+  user: <span class="s">&quot;user&quot;</span>,
+  password: <span class="s">&quot;passwd&quot;</span>
+)
+request.to_curl
+<span class="c"># =&gt; curl -X GET http://httpbin.org/basic-auth/user/passwd --user user:passwd</span></code></pre>
+<p>Also you can directly use <code><a href="Crest/Curlify.html">Crest::Curlify</a></code> which accept instance of <code><a href="Crest/Request.html">Crest::Request</a></code></p>
+<pre><code class="language-crystal">request <span class="o">=</span> <span class="t">Crest</span><span class="t">::</span><span class="t">Request</span>.new(<span class="n">:get</span>, <span class="s">&quot;http://httpbin.org&quot;</span>)
+<span class="t">Crest</span><span class="t">::</span><span class="t">Curlify</span>.new(request).to_curl
+<span class="c"># =&gt; curl -X GET http://httpbin.org</span></code></pre>
+<h4><a id="params-decoder" class="anchor" href="#params-decoder">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Params decoder</h4>
+<p><code><a href="Crest/ParamsDecoder.html">Crest::ParamsDecoder</a></code> is a module for decoding query-string into parameters.</p>
+<pre><code class="language-crystal">query <span class="o">=</span> <span class="s">&quot;size=small&amp;topping[1]=bacon&amp;topping[2]=onion&quot;</span>
+<span class="t">Crest</span><span class="t">::</span><span class="t">ParamsDecoder</span>.decode(query)
+<span class="c"># =&gt; {&quot;size&quot; =&gt; &quot;small&quot;, &quot;topping&quot; =&gt; [&quot;bacon&quot;, &quot;onion&quot;]}</span></code></pre>
+<h2><a id="development" class="anchor" href="#development">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Development</h2>
+<p>Install dependencies:</p>
+<pre><code class="language-console">shards</code></pre>
+<p>To run test:</p>
+<pre><code class="language-console">crystal spec</code></pre>
+<h3><a id="workbook" class="anchor" href="#workbook">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Workbook</h3>
+<pre><code class="language-console">crystal play
+open http://localhost:8080</code></pre>
+<p>Then select the Workbook -&gt; Requests from the menu.</p>
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+<ol>
+<li>Fork it (<a href="https://github.com/mamantoha/crest/fork">https://github.com/mamantoha/crest/fork</a>)</li>
+<li>Create your feature branch (git checkout -b my-new-feature)</li>
+<li>Commit your changes (git commit -am 'Add some feature')</li>
+<li>Push to the branch (git push origin my-new-feature)</li>
+<li>Create a new Pull Request</li>
+</ol>
+<h2><a id="contributors" class="anchor" href="#contributors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributors</h2>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mamantoha"><img src="https://avatars.githubusercontent.com/u/61285?v=4?s=100" width="100px;" alt="Anton Maminov"/><br /><sub><b>Anton Maminov</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=mamantoha" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/chao-yang-r/"><img src="https://avatars.githubusercontent.com/u/15083254?v=4?s=100" width="100px;" alt="Chao Yang"/><br /><sub><b>Chao Yang</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=cyangle" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/psikoz"><img src="https://avatars.githubusercontent.com/u/40601249?v=4?s=100" width="100px;" alt="psikoz"/><br /><sub><b>psikoz</b></sub></a><br /><a href="#design-psikoz" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jphaward"><img src="https://avatars.githubusercontent.com/u/52081790?v=4?s=100" width="100px;" alt="jphaward"/><br /><sub><b>jphaward</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=jphaward" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://miry.codeberg.page/"><img src="https://avatars.githubusercontent.com/u/21104?v=4?s=100" width="100px;" alt="Michael Nikitochkin"/><br /><sub><b>Michael Nikitochkin</b></sub></a><br /><a href="https://github.com/mamantoha/crest/commits?author=miry" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<h2><a id="license" class="anchor" href="#license">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>License</h2>
+<p>Copyright: 2017-2026 Anton Maminov (anton.maminov@gmail.com)</p>
+<p>This library is distributed under the MIT license. Please see the LICENSE file.</p>
+</div>
+</body>
+</html>
