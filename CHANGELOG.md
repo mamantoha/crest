@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Handle unknown HTTP status code by @miry in [#240](https://github.com/mamantoha/crest/pull/240)
+
 ## [1.6.1][] (2026-02-05)
 
 - Require [http_proxy](https://github.com/mamantoha/http_proxy) shard >= 0.14.0
