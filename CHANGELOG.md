@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Prevent `Crest::Resource` from leaking per-request URL, headers, params, and cookies across calls in [#243](https://github.com/mamantoha/crest/pull/243)
+
 ## [1.6.2][] (2026-02-12)
 
 - Handle unknown HTTP status code by @miry in [#240](https://github.com/mamantoha/crest/pull/240)
