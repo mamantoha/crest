@@ -100,7 +100,6 @@ module Crest
       @connect_timeout : Time::Span? = nil,
       &
     )
-      @base_url = @url
       @params = @params_encoder.flatten_params(params).to_h
       @cookies = @params_encoder.flatten_params(cookies).to_h
       @http_client = http_client || new_http_client
@@ -123,12 +122,16 @@ module Crest
         params = {} of String => String,
         cookies = {} of String => String
       ) : Crest::Response
-        @url = concat_urls(@base_url, suburl) if suburl
-        @headers = @headers.merge(headers)
-        @params = merge_params(params)
-        @cookies = merge_cookies(cookies)
+        request_url = suburl ? concat_urls(@url, suburl) : @url
 
-        execute_request(:{{ method.id }}, form)
+        execute_request(
+          :{{ method.id }},
+          request_url,
+          form,
+          request_headers(headers),
+          merge_params(params),
+          merge_cookies(cookies)
+        )
       end
 
       # :ditto:
@@ -146,12 +149,17 @@ module Crest
         cookies = {} of String => String,
         &block : Crest::Response ->
       ) : Nil
-        @url = concat_urls(@base_url, suburl) if suburl
-        @headers = @headers.merge(headers)
-        @params = merge_params(params)
-        @cookies = merge_cookies(cookies)
+        request_url = suburl ? concat_urls(@url, suburl) : @url
 
-        execute_request(:{{ method.id }}, form, &block)
+        execute_request(
+          :{{ method.id }},
+          request_url,
+          form,
+          request_headers(headers),
+          merge_params(params),
+          merge_cookies(cookies),
+          &block
+        )
       end
 
       # :ditto:
@@ -161,9 +169,30 @@ module Crest
     {% end %}
 
     def [](suburl)
-      @url = concat_urls(@base_url, suburl)
-
-      self
+      self.class.new(
+        concat_urls(@url, suburl),
+        headers: @headers.dup,
+        params: @params.dup,
+        cookies: @cookies.dup,
+        params_encoder: @params_encoder,
+        tls: @tls,
+        http_client: @http_client,
+        user: @user,
+        password: @password,
+        p_addr: @p_addr,
+        p_port: @p_port,
+        p_user: @p_user,
+        p_pass: @p_pass,
+        logger: @logger,
+        logging: @logging,
+        handle_errors: @handle_errors,
+        close_connection: @close_connection,
+        json: @json,
+        user_agent: @user_agent,
+        read_timeout: @read_timeout,
+        write_timeout: @write_timeout,
+        connect_timeout: @connect_timeout,
+      )
     end
 
     def closed?
@@ -175,22 +204,44 @@ module Crest
       HTTP::Client.new(uri, tls: @tls)
     end
 
-    private def execute_request(method : Symbol, form = {} of String => String)
-      Request.execute(**request_params(method, form))
+    private def execute_request(
+      method : Symbol,
+      url : String,
+      form = {} of String => String,
+      headers = {} of String => String,
+      params = {} of String => Crest::ParamsValue,
+      cookies = {} of String => Crest::ParamsValue,
+    )
+      Request.execute(**request_params(method, url, form, headers, params, cookies))
     end
 
-    private def execute_request(method : Symbol, form = {} of String => String, &block : Crest::Response ->)
-      Request.execute(**request_params(method, form), &block)
+    private def execute_request(
+      method : Symbol,
+      url : String,
+      form = {} of String => String,
+      headers = {} of String => String,
+      params = {} of String => Crest::ParamsValue,
+      cookies = {} of String => Crest::ParamsValue,
+      &block : Crest::Response ->
+    )
+      Request.execute(**request_params(method, url, form, headers, params, cookies), &block)
     end
 
-    private def request_params(method : Symbol, form = {} of String => String)
+    private def request_params(
+      method : Symbol,
+      url : String,
+      form = {} of String => String,
+      headers = {} of String => String,
+      params = {} of String => Crest::ParamsValue,
+      cookies = {} of String => Crest::ParamsValue,
+    )
       {
         method:           method,
         form:             form,
-        url:              @url,
-        params:           @params,
-        cookies:          @cookies,
-        headers:          @headers,
+        url:              url,
+        params:           params,
+        cookies:          cookies,
+        headers:          headers,
         tls:              @tls,
         user:             @user,
         password:         @password,
@@ -210,6 +261,10 @@ module Crest
         write_timeout:    @write_timeout,
         connect_timeout:  @connect_timeout,
       }
+    end
+
+    private def request_headers(other : Hash)
+      @headers.merge(other)
     end
 
     private def merge_params(other : Hash)
