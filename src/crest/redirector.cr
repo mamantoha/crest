@@ -46,15 +46,7 @@ module Crest
     end
 
     private def extract_url_from_headers
-      location_url = @response.http_client_res.headers["location"]
-      location_uri = URI.parse(location_url)
-
-      return location_url if location_uri.absolute?
-
-      uri = URI.parse(@request.url)
-      port = uri.port ? ":#{uri.port}" : ""
-
-      "#{uri.scheme}://#{uri.host}#{port}#{location_url}"
+      resolved_redirect_uri.to_s
     end
 
     private def new_request
@@ -111,25 +103,36 @@ module Crest
     end
 
     private def redirect_method : Symbol
-      return :get unless preserve_method_on_redirect?
-
       case @request.method
-      when "DELETE"  then :delete
-      when "POST"    then :post
-      when "PUT"     then :put
-      when "PATCH"   then :patch
-      when "OPTIONS" then :options
+      when "DELETE"  then preserve_method_on_redirect? ? :delete : :get
+      when "POST"    then preserve_method_on_redirect? ? :post : :get
+      when "PUT"     then preserve_method_on_redirect? ? :put : :get
+      when "PATCH"   then preserve_method_on_redirect? ? :patch : :get
+      when "OPTIONS" then preserve_method_on_redirect? ? :options : :get
       when "HEAD"    then :head
       else                :get
       end
     end
 
     private def redirect_form_data
-      preserve_method_on_redirect? ? @request.form_data : nil
+      preserve_body_on_redirect? ? @request.form_data : nil
     end
 
     private def preserve_method_on_redirect? : Bool
-      [307, 308].includes?(@response.status_code)
+      case @response.status_code
+      when 301
+        @request.method != "POST"
+      when 302, 303
+        false
+      when 307, 308
+        true
+      else
+        false
+      end
+    end
+
+    private def preserve_body_on_redirect? : Bool
+      preserve_method_on_redirect? && !@request.form_data.nil?
     end
 
     private def redirect_headers
@@ -141,7 +144,7 @@ module Crest
       headers.delete("Content-Length")
       headers.delete("Transfer-Encoding")
 
-      unless preserve_method_on_redirect? && @request.form_data
+      unless preserve_body_on_redirect?
         headers.delete("Content-Type")
       end
 
@@ -149,12 +152,16 @@ module Crest
     end
 
     private def preserve_credentials_on_redirect? : Bool
-      redirect_uri = URI.parse(extract_url_from_headers)
+      redirect_uri = resolved_redirect_uri
       request_uri = URI.parse(@request.url)
 
       redirect_uri.scheme == request_uri.scheme &&
         redirect_uri.host == request_uri.host &&
         redirect_uri.port == request_uri.port
+    end
+
+    private def resolved_redirect_uri : URI
+      URI.parse(@request.url).resolve(@response.http_client_res.headers["location"])
     end
 
     private def raise_exception!

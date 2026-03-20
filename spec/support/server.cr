@@ -186,6 +186,18 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
   when "/redirect/308"
     context.response.status_code = 308
     context.response.headers["Location"] = "/post"
+  when "/redirect/301_post"
+    context.response.status_code = 301
+    context.response.headers["Location"] = "/post"
+  when "/redirect/301_put"
+    context.response.status_code = 301
+    context.response.headers["Location"] = "/put"
+  when "/redirect/302_post"
+    context.response.status_code = 302
+    context.response.headers["Location"] = "/post"
+  when "/foo/redirect_relative"
+    context.response.status_code = 302
+    context.response.headers["Location"] = "bar?via=relative"
   when "/redirect/delay"
     context.response.redirect("/delay/2")
   when "/headers/set"

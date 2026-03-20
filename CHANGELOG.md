@@ -6,6 +6,8 @@
 - Preserve HTTP method and request body for `307` and `308` redirects in [#244](https://github.com/mamantoha/crest/pull/244)
 - Preserve request settings such as auth, params encoder, multipart mode, user agent, TLS, proxy, and timeouts across redirects
 - Do not forward authentication credentials on cross-origin redirects
+- Rewrite redirected non-GET requests for `301` and `302` with explicit method-preservation rules
+- Resolve relative `Location` headers against the current request URI during redirects
 
 ## [1.6.2][] (2026-02-12)
 

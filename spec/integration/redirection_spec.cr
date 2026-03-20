@@ -110,6 +110,46 @@ describe Crest::Redirector do
       response.history.first.status_code.should eq(308)
     end
 
+    it "rewrites POST to GET on 301 redirects" do
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/301_post", {"title" => "Title"})
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      body["method"].should eq("GET")
+      body["form"].should eq({} of String => String)
+      response.history.first.status_code.should eq(301)
+    end
+
+    it "preserves PUT on 301 redirects" do
+      response = Crest.put("#{TEST_SERVER_URL}/redirect/301_put", {"title" => "Title"})
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      body["method"].should eq("PUT")
+      body["form"].should eq({"title" => "Title"})
+      response.history.first.status_code.should eq(301)
+    end
+
+    it "rewrites POST to GET on 302 redirects" do
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/302_post", {"title" => "Title"})
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      body["method"].should eq("GET")
+      body["form"].should eq({} of String => String)
+      response.history.first.status_code.should eq(302)
+    end
+
+    it "resolves relative redirect locations against the current request URL" do
+      response = Crest.get("#{TEST_SERVER_URL}/foo/redirect_relative")
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      response.url.should eq("#{TEST_SERVER_URL}/foo/bar?via=relative")
+      body["path"].should eq("/foo/bar?via=relative")
+      response.history.first.status_code.should eq(302)
+    end
+
     it "preserves read timeout across redirects" do
       expect_raises IO::TimeoutError do
         Crest.get("#{TEST_SERVER_URL}/redirect/delay", read_timeout: 1.second)
