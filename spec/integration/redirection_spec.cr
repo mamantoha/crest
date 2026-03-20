@@ -109,6 +109,12 @@ describe Crest::Redirector do
       body["form"].should eq({"title" => "Title"})
       response.history.first.status_code.should eq(308)
     end
+
+    it "preserves read timeout across redirects" do
+      expect_raises IO::TimeoutError do
+        Crest.get("#{TEST_SERVER_URL}/redirect/delay", read_timeout: 1.second)
+      end
+    end
   end
 
   describe Crest::Request do

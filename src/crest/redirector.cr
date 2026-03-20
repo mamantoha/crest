@@ -74,8 +74,12 @@ module Crest
         url: url,
         form: redirect_form_data,
         max_redirects: @request.max_redirects - 1,
-        headers: @request.headers.to_h,
+        headers: redirect_headers,
         cookies: @response.cookies,
+        params_encoder: @request.params_encoder,
+        auth: @request.auth,
+        user: @request.user,
+        password: @request.password,
         logging: @request.logging,
         logger: @request.logger,
         handle_errors: @request.handle_errors,
@@ -84,8 +88,13 @@ module Crest
         p_user: @request.p_user,
         p_pass: @request.p_pass,
         json: @request.json,
+        multipart: @request.multipart,
+        user_agent: @request.user_agent,
         close_connection: @request.close_connection,
         tls: @request.tls,
+        read_timeout: @request.read_timeout,
+        write_timeout: @request.write_timeout,
+        connect_timeout: @request.connect_timeout,
       )
     end
 
@@ -109,6 +118,22 @@ module Crest
 
     private def preserve_method_on_redirect? : Bool
       [307, 308].includes?(@response.status_code)
+    end
+
+    private def redirect_headers
+      headers = @request.headers.to_h.dup
+
+      headers.delete("Authorization")
+      headers.delete("Cookie")
+      headers.delete("Host")
+      headers.delete("Content-Length")
+      headers.delete("Transfer-Encoding")
+
+      unless preserve_method_on_redirect? && @request.form_data
+        headers.delete("Content-Type")
+      end
+
+      headers
     end
 
     private def raise_exception!

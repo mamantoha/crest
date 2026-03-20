@@ -184,6 +184,8 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
   when "/redirect/308"
     context.response.status_code = 308
     context.response.headers["Location"] = "/post"
+  when "/redirect/delay"
+    context.response.redirect("/delay/2")
   when "/headers/set"
     context.request.query_params.each do |key, value|
       context.response.headers[key] = value
