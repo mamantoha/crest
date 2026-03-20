@@ -45,14 +45,8 @@ module Crest
       new_request.execute(&block)
     end
 
-    private def extract_url_from_headers
-      resolved_redirect_uri.to_s
-    end
-
     private def new_request
-      url = extract_url_from_headers
-
-      new_request = prepare_new_request(url)
+      new_request = prepare_new_request(resolved_redirect_uri.to_s)
       new_request.redirection_history = @response.history + [@response]
 
       @request.close
