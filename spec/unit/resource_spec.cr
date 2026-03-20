@@ -36,6 +36,7 @@ describe Crest::Resource do
 
       resource.url.should eq("http://localhost/resource")
       resource.headers.should eq({"X-Something" => "1"})
+      site.url.should eq("http://localhost")
     end
 
     it "initialize new resource with params" do
@@ -43,6 +44,16 @@ describe Crest::Resource do
 
       resource.url.should eq("http://localhost")
       resource.params.should eq({"foo" => "123", "bar" => "456"})
+    end
+
+    it "returns independent subresources" do
+      site = Crest::Resource.new("http://localhost", headers: {"X-Something" => "1"})
+      resource = site["/resource"]
+
+      resource.headers["X-Other"] = "2"
+
+      site.headers.should eq({"X-Something" => "1"})
+      resource.headers.should eq({"X-Something" => "1", "X-Other" => "2"})
     end
   end
 end

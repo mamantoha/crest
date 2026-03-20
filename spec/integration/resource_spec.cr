@@ -125,6 +125,21 @@ describe Crest::Response do
     body["args"].should eq({"width" => "100", "height" => "100"})
   end
 
+  it "does not leak per-request headers and params between calls" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+
+    first_response = resource.get("/get", headers: {"X-Trace" => "1"}, params: {"width" => "100"})
+    second_response = resource.get("/get")
+
+    first_body = JSON.parse(first_response.body)
+    second_body = JSON.parse(second_response.body)
+
+    first_body["args"].should eq({"width" => "100"})
+    first_body["headers"].as_h["X-Trace"].should eq("1")
+    second_body["args"].should eq({} of String => String)
+    second_body["headers"].as_h["X-Trace"]?.should be_nil
+  end
+
   it "do GET request with suburl and default nested params" do
     resource = Crest::Resource.new(
       TEST_SERVER_URL,
@@ -178,6 +193,16 @@ describe Crest::Response do
 
     (response.status_code).should eq(200)
     (response.cookies).should eq({"k1" => "v1", "k2" => "vv2"})
+  end
+
+  it "does not leak per-request cookies between calls" do
+    resource = Crest::Resource.new(TEST_SERVER_URL)
+
+    first_response = resource["/"].get(cookies: {"k1" => "v1"})
+    second_response = resource["/"].get
+
+    first_response.cookies.should eq({"k1" => "v1"})
+    second_response.cookies.should eq({} of String => String)
   end
 
   it "should accept block" do
