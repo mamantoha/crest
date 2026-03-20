@@ -77,9 +77,9 @@ module Crest
         headers: redirect_headers,
         cookies: @response.cookies,
         params_encoder: @request.params_encoder,
-        auth: @request.auth,
-        user: @request.user,
-        password: @request.password,
+        auth: redirect_auth,
+        user: redirect_user,
+        password: redirect_password,
         logging: @request.logging,
         logger: @request.logger,
         handle_errors: @request.handle_errors,
@@ -96,6 +96,18 @@ module Crest
         write_timeout: @request.write_timeout,
         connect_timeout: @request.connect_timeout,
       )
+    end
+
+    private def redirect_auth : String
+      preserve_credentials_on_redirect? ? @request.auth : "basic"
+    end
+
+    private def redirect_user : String?
+      preserve_credentials_on_redirect? ? @request.user : nil
+    end
+
+    private def redirect_password : String?
+      preserve_credentials_on_redirect? ? @request.password : nil
     end
 
     private def redirect_method : Symbol
@@ -134,6 +146,15 @@ module Crest
       end
 
       headers
+    end
+
+    private def preserve_credentials_on_redirect? : Bool
+      redirect_uri = URI.parse(extract_url_from_headers)
+      request_uri = URI.parse(@request.url)
+
+      redirect_uri.scheme == request_uri.scheme &&
+        redirect_uri.host == request_uri.host &&
+        redirect_uri.port == request_uri.port
     end
 
     private def raise_exception!
