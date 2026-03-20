@@ -3,6 +3,7 @@
 ## [...]
 
 - Prevent `Crest::Resource` from leaking per-request URL, headers, params, and cookies across calls in [#243](https://github.com/mamantoha/crest/pull/243)
+- Preserve HTTP method and request body for `307` and `308` redirects in [#244](https://github.com/mamantoha/crest/pull/244)
 
 ## [1.6.2][] (2026-02-12)
 
