@@ -126,6 +126,8 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.print "Authorized"
   when "/redirect_to_secret"
     context.response.redirect("/secret")
+  when "/redirect_to_other_origin"
+    context.response.redirect("#{ALT_TEST_SERVER_URL}/auth-header")
   when "/upload"
     request_content_type = context.request.headers["Content-Type"]
 
@@ -178,6 +180,26 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.redirect("/redirect/circle1")
   when "/redirect/not_found"
     context.response.redirect("/404")
+  when "/redirect/307"
+    context.response.status_code = 307
+    context.response.headers["Location"] = "/post"
+  when "/redirect/308"
+    context.response.status_code = 308
+    context.response.headers["Location"] = "/post"
+  when "/redirect/301_post"
+    context.response.status_code = 301
+    context.response.headers["Location"] = "/post"
+  when "/redirect/301_put"
+    context.response.status_code = 301
+    context.response.headers["Location"] = "/put"
+  when "/redirect/302_post"
+    context.response.status_code = 302
+    context.response.headers["Location"] = "/post"
+  when "/foo/redirect_relative"
+    context.response.status_code = 302
+    context.response.headers["Location"] = "bar?via=relative"
+  when "/redirect/delay"
+    context.response.redirect("/delay/2")
   when "/headers/set"
     context.request.query_params.each do |key, value|
       context.response.headers[key] = value
@@ -239,10 +261,27 @@ end
 address = server.bind_tcp TEST_SERVER_HOST, TEST_SERVER_PORT
 puts "Listening on http://#{address}"
 
+alt_server = HTTP::Server.new do |context|
+  case context.request.path
+  when "/auth-header"
+    context.response.print(context.request.headers["Authorization"]?)
+  else
+    context.response.respond_with_status(:not_found)
+  end
+end
+
+alt_address = alt_server.bind_tcp ALT_TEST_SERVER_HOST, ALT_TEST_SERVER_PORT
+puts "Listening on http://#{alt_address}"
+
 if ARGV.includes?("--cli")
   server.listen
+  alt_server.listen
 else
   spawn do
     server.listen
+  end
+
+  spawn do
+    alt_server.listen
   end
 end

@@ -59,6 +59,14 @@ describe Crest do
           Crest::Request.execute(:get, "#{TEST_SERVER_URL}/redirect_to_secret", user: "root", password: "qwerty")
         end
       end
+
+      it "should not forward credentials on cross-origin redirect" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/redirect_to_other_origin", user: "username", password: "password")
+
+        response.status_code.should eq(200)
+        response.body.should eq("")
+        response.url.should eq("#{ALT_TEST_SERVER_URL}/auth-header")
+      end
     end
 
     context Crest do

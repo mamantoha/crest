@@ -86,7 +86,7 @@ module Crest
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
       auth, proxy, p_addr, p_port, p_user, p_pass, json, multipart, user_agent,
-      read_timeout, write_timeout, connect_timeout
+      read_timeout, write_timeout, connect_timeout, params_encoder
 
     property redirection_history, user, password
 
