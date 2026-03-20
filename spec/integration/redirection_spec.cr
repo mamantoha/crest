@@ -89,6 +89,26 @@ describe Crest::Redirector do
       body.should eq("")
       status_code.should eq(302)
     end
+
+    it "preserves method and form body for 307 redirects" do
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/307", {"title" => "Title"})
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      body["method"].should eq("POST")
+      body["form"].should eq({"title" => "Title"})
+      response.history.first.status_code.should eq(307)
+    end
+
+    it "preserves method and form body for 308 redirects" do
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/308", {"title" => "Title"})
+      body = JSON.parse(response.body)
+
+      response.status_code.should eq(200)
+      body["method"].should eq("POST")
+      body["form"].should eq({"title" => "Title"})
+      response.history.first.status_code.should eq(308)
+    end
   end
 
   describe Crest::Request do

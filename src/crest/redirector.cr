@@ -70,8 +70,9 @@ module Crest
 
     private def prepare_new_request(url)
       Request.new(
-        method: :get,
+        method: redirect_method,
         url: url,
+        form: redirect_form_data,
         max_redirects: @request.max_redirects - 1,
         headers: @request.headers.to_h,
         cookies: @response.cookies,
@@ -86,6 +87,28 @@ module Crest
         close_connection: @request.close_connection,
         tls: @request.tls,
       )
+    end
+
+    private def redirect_method : Symbol
+      return :get unless preserve_method_on_redirect?
+
+      case @request.method
+      when "DELETE"  then :delete
+      when "POST"    then :post
+      when "PUT"     then :put
+      when "PATCH"   then :patch
+      when "OPTIONS" then :options
+      when "HEAD"    then :head
+      else                :get
+      end
+    end
+
+    private def redirect_form_data
+      preserve_method_on_redirect? ? @request.form_data : nil
+    end
+
+    private def preserve_method_on_redirect? : Bool
+      [307, 308].includes?(@response.status_code)
     end
 
     private def raise_exception!

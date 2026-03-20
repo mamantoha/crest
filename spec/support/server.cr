@@ -178,6 +178,12 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.redirect("/redirect/circle1")
   when "/redirect/not_found"
     context.response.redirect("/404")
+  when "/redirect/307"
+    context.response.status_code = 307
+    context.response.headers["Location"] = "/post"
+  when "/redirect/308"
+    context.response.status_code = 308
+    context.response.headers["Location"] = "/post"
   when "/headers/set"
     context.request.query_params.each do |key, value|
       context.response.headers[key] = value
