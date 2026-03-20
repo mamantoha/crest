@@ -77,11 +77,7 @@ module Crest
     end
 
     def to_s(io : IO) : Nil
-      {% if compare_versions(Crystal::VERSION, "1.1.1") > 0 %}
-        io.write_string(body.to_slice)
-      {% else %}
-        io.write_utf8(body.to_slice)
-      {% end %}
+      io.write_string(body.to_slice)
     end
 
     def inspect
@@ -112,11 +108,7 @@ module Crest
     end
 
     private def cookies_to_h(cookies : HTTP::Cookies)
-      {% if compare_versions(Crystal::VERSION, "1.1.1") > 0 %}
-        cookies.to_h.map { |e| [e[1].name.to_s, URI.encode_path(e[1].value)] }.to_h
-      {% else %}
-        cookies.to_h.map { |e| [e[1].name.to_s, URI.encode(e[1].value)] }.to_h
-      {% end %}
+      cookies.to_h.map { |e| [e[1].name.to_s, URI.encode_path(e[1].value)] }.to_h
     end
 
     private def body_truncated(size)

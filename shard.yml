@@ -7,7 +7,7 @@ authors:
 description: |
   HTTP and REST client for Crystal
 
-crystal: ">= 1.0.0"
+crystal: ">= 1.2.0"
 
 dependencies:
   http-client-digest_auth:

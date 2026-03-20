@@ -8,6 +8,7 @@
 - Do not forward authentication credentials on cross-origin redirects
 - Rewrite redirected non-GET requests for `301` and `302` with explicit method-preservation rules
 - Resolve relative `Location` headers against the current request URI during redirects
+- Raise the minimum Crystal version to `1.2.0` and remove obsolete compatibility checks
 
 ## [1.6.2][] (2026-02-12)
 
