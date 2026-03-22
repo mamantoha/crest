@@ -29,9 +29,9 @@ module Crest
 
         case v
         when Hash, Array, JSON::Any
-          memo += flatten_params(v, processed_key)
+          memo.concat(flatten_params(v, processed_key))
         else
-          memo << {processed_key, v}
+          memo.push({processed_key, v})
         end
       end
     end
@@ -50,9 +50,9 @@ module Crest
 
         case item
         when Hash, Array, JSON::Any
-          memo += flatten_params(item, processed_key)
+          memo.concat(flatten_params(item, processed_key))
         else
-          memo << {processed_key, item}
+          memo.push({processed_key, item})
         end
       end
     end
