@@ -90,6 +90,7 @@ Optional parameters:
 - `:form` - a hash containing form data (or a raw string or IO or Bytes)
 - `:headers` - a hash containing the request headers
 - `:cookies` - a hash containing the request cookies
+- `:cookie_jar` - an optional `HTTP::CookieJar` used to persist cookies across requests
 - `:params` - a hash that represent query params (or a raw string) - a string separated from the preceding part by a question mark (`?`) and a sequence of attribute–value pairs separated by a delimiter (`&`)
 - `:params_encoder` params encoder (default to `Crest::FlatParamsEncoder`)
 - `:auth` - access authentication method `basic` or `digest` (default to `basic`)
@@ -193,6 +194,30 @@ resource["/post"].post(
   params: {:secret => "secret"}
 )
 ```
+
+`Crest::Resource` can also share a cookie jar across requests:
+
+```crystal
+jar = HTTP::CookieJar.new
+
+resource = Crest::Resource.new(
+  "https://example.com",
+  cookie_jar: jar
+)
+
+resource.post(
+  "/login",
+  form: {
+    "email"    => "user@example.com",
+    "password" => "secret",
+  }
+)
+
+response = resource["/dashboard"].get
+```
+
+This is useful for login flows where the server returns `Set-Cookie` headers
+that should be reused by later requests.
 
 Use the `[]` syntax to allocate subresources:
 
