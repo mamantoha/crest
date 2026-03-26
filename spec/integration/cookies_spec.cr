@@ -43,6 +43,35 @@ describe Crest do
         (JSON.parse(response.body)["cookies"]).should eq({"k1" => "v1", "k2" => "v2"})
         (JSON.parse(response.body)["headers"]["Cookie"]).should eq("k1=v1; k2=v2")
       end
+
+      it "should send cookies from a cookie jar and extract response cookies into it" do
+        jar = HTTP::CookieJar.new
+        jar.add(TEST_SERVER_URL, HTTP::Cookie.new("session", "persisted"))
+
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set", params: {"k1" => "v1"}, cookie_jar: jar)
+
+        (response.status_code).should eq(200)
+        (jar.cookies_for(TEST_SERVER_URL).to_h["session"].value).should eq("persisted")
+        (jar.cookies_for("#{TEST_SERVER_URL}/cookies").to_h["k1"].value).should eq("v1")
+
+        echoed = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/get", cookie_jar: jar)
+        (JSON.parse(echoed.body)["cookies"]).should eq({"session" => "persisted"})
+      end
+
+      it "should let explicit request cookies override cookie jar cookies" do
+        jar = HTTP::CookieJar.new
+        jar.add(TEST_SERVER_URL, HTTP::Cookie.new("k1", "jar"))
+        jar.add(TEST_SERVER_URL, HTTP::Cookie.new("k2", "jar"))
+
+        response = Crest::Request.execute(
+          :get,
+          "#{TEST_SERVER_URL}/get",
+          cookies: {"k1" => "manual"},
+          cookie_jar: jar
+        )
+
+        (JSON.parse(response.body)["cookies"]).should eq({"k1" => "manual", "k2" => "jar"})
+      end
     end
   end
 end

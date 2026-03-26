@@ -16,6 +16,8 @@ dependencies:
   http_proxy:
     github: mamantoha/http_proxy
     version: ">= 0.14.0"
+  cookie_jar:
+    github: mamantoha/http-cookie_jar
 
 development_dependencies:
   vcr:

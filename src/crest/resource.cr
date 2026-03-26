@@ -67,6 +67,7 @@ module Crest
       p_addr, p_port, p_user, p_pass,
       handle_errors, close_connection,
       json, user_agent,
+      cookie_jar,
       read_timeout, write_timeout, connect_timeout
 
     delegate close, to: http_client
@@ -80,6 +81,7 @@ module Crest
       @headers = {} of String => String,
       params = {} of String => String,
       cookies = {} of String => String,
+      @cookie_jar : HTTP::CookieJar? = nil,
       @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
       @tls : OpenSSL::SSL::Context::Client? = nil,
       http_client : HTTP::Client? = nil,
@@ -174,6 +176,7 @@ module Crest
         headers: @headers.dup,
         params: @params.dup,
         cookies: @cookies.dup,
+        cookie_jar: @cookie_jar,
         params_encoder: @params_encoder,
         tls: @tls,
         http_client: @http_client,
@@ -241,6 +244,7 @@ module Crest
         url:              url,
         params:           params,
         cookies:          cookies,
+        cookie_jar:       @cookie_jar,
         headers:          headers,
         tls:              @tls,
         user:             @user,

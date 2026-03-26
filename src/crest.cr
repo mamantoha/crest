@@ -4,6 +4,7 @@ require "uri"
 require "base64"
 require "http-client-digest_auth"
 require "http_proxy"
+require "cookie_jar"
 require "./ext/io"
 require "./ext/http/cookie"
 

@@ -46,6 +46,13 @@ describe Crest::Resource do
       resource.params.should eq({"foo" => "123", "bar" => "456"})
     end
 
+    it "initialize new resource with cookie jar" do
+      jar = HTTP::CookieJar.new
+      resource = Crest::Resource.new("http://localhost", cookie_jar: jar)
+
+      resource.cookie_jar.should be(jar)
+    end
+
     it "returns independent subresources" do
       site = Crest::Resource.new("http://localhost", headers: {"X-Something" => "1"})
       resource = site["/resource"]
@@ -54,6 +61,14 @@ describe Crest::Resource do
 
       site.headers.should eq({"X-Something" => "1"})
       resource.headers.should eq({"X-Something" => "1", "X-Other" => "2"})
+    end
+
+    it "preserves cookie jar on subresources" do
+      jar = HTTP::CookieJar.new
+      site = Crest::Resource.new("http://localhost", cookie_jar: jar)
+      resource = site["/resource"]
+
+      resource.cookie_jar.should be(jar)
     end
   end
 end

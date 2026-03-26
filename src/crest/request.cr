@@ -82,11 +82,12 @@ module Crest
     @read_timeout : Time::Span?
     @write_timeout : Time::Span?
     @connect_timeout : Time::Span?
+    @cookie_jar : HTTP::CookieJar?
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
       auth, proxy, p_addr, p_port, p_user, p_pass, json, multipart, user_agent,
-      read_timeout, write_timeout, connect_timeout, params_encoder
+      read_timeout, write_timeout, connect_timeout, params_encoder, cookie_jar
 
     property redirection_history, user, password
 
@@ -109,6 +110,7 @@ module Crest
       *,
       headers = {} of String => String,
       cookies = {} of String => String,
+      @cookie_jar : HTTP::CookieJar? = nil,
       params = {} of String => String,
       @max_redirects : Int32 = 10,
       @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
@@ -195,7 +197,7 @@ module Crest
       authenticate!
       @logger.request(self) if @logging
 
-      @http_request = new_http_request(@method, @url, @headers, @form_data)
+      @http_request = new_http_request(@method, @url, request_headers, @form_data)
 
       http_response = @http_client.exec(@http_request)
 
@@ -210,7 +212,7 @@ module Crest
       authenticate!
       @logger.request(self) if @logging
 
-      @http_request = new_http_request(@method, @url, @headers, @form_data)
+      @http_request = new_http_request(@method, @url, request_headers, @form_data)
 
       @http_client.exec(@http_request) do |http_response|
         response = process_result(http_response, &block)
@@ -228,12 +230,14 @@ module Crest
     end
 
     private def process_result(http_client_res) : Crest::Response
+      @cookie_jar.try &.extract(http_client_res.headers, @url)
       response = Response.new(http_client_res, self)
       logger.response(response) if logging
       response.return!
     end
 
     private def process_result(http_client_res, &block : Crest::Response ->)
+      @cookie_jar.try &.extract(http_client_res.headers, @url)
       response = Response.new(http_client_res, self)
       logger.response(response) if logging
       response.return!(&block)
@@ -337,6 +341,30 @@ module Crest
       end
 
       @cookies.add_request_headers(@headers)
+    end
+
+    private def request_headers : HTTP::Headers
+      headers = @headers.dup
+
+      if headers.has_key?("Cookie")
+        headers.delete("Cookie")
+      end
+
+      request_cookies = HTTP::Cookies.new
+
+      @cookie_jar.try do |cookie_jar|
+        cookie_jar.cookies_for(@url).to_h.each_value do |cookie|
+          request_cookies << cookie
+        end
+      end
+
+      @cookies.to_h.each_value do |cookie|
+        request_cookies << cookie
+      end
+
+      request_cookies.add_request_headers(headers) unless request_cookies.empty?
+
+      headers
     end
 
     protected def authenticate!
