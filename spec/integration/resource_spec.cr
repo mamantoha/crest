@@ -195,6 +195,18 @@ describe Crest::Response do
     (response.cookies).should eq({"k1" => "v1", "k2" => "vv2"})
   end
 
+  it "uses cookie jar across resource requests and subresources" do
+    jar = HTTP::CookieJar.new
+    resource = Crest::Resource.new(TEST_SERVER_URL, cookie_jar: jar)
+
+    set_response = resource.get("/cookies/set", params: {"k1" => "v1"})
+    set_response.status_code.should eq(200)
+    jar.cookies_for("#{TEST_SERVER_URL}/cookies").to_h["k1"].value.should eq("v1")
+
+    echo_response = resource["/cookies"].get
+    JSON.parse(echo_response.body)["cookies"].should eq({"k1" => "v1"})
+  end
+
   it "does not leak per-request cookies between calls" do
     resource = Crest::Resource.new(TEST_SERVER_URL)
 

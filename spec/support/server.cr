@@ -217,6 +217,13 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     end
 
     context.response.print({"cookies" => result}.to_json)
+  when "/cookies"
+    result = {} of String => String
+    context.request.cookies.to_h.each do |_, cookie|
+      result[cookie.name] = cookie.value
+    end
+
+    context.response.print({"cookies" => result}.to_json)
   when "/cookies/set_redirect"
     context.request.query_params.each do |key, value|
       context.response.cookies << HTTP::Cookie.new(name: key, value: value)
