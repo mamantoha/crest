@@ -61,7 +61,8 @@ module Crest
         form: redirect_form_data,
         max_redirects: @request.max_redirects - 1,
         headers: redirect_headers,
-        cookies: @response.cookies,
+        cookies: redirect_cookies,
+        cookie_jar: @request.cookie_jar,
         params_encoder: @request.params_encoder,
         auth: redirect_auth,
         user: redirect_user,
@@ -82,6 +83,10 @@ module Crest
         write_timeout: @request.write_timeout,
         connect_timeout: @request.connect_timeout,
       )
+    end
+
+    private def redirect_cookies
+      @request.cookie_jar ? ({} of String => String) : @response.cookies
     end
 
     private def redirect_auth : String
