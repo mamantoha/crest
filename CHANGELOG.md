@@ -9,7 +9,7 @@
 - Rewrite redirected non-GET requests for `301` and `302` with explicit method-preservation rules
 - Resolve relative `Location` headers against the current request URI during redirects
 - Raise the minimum Crystal version to `1.2.0` and remove obsolete compatibility checks
-- Integrate the external `cookie_jar` shard and add `HTTP::CookieJar` support to `Crest::Request` and `Crest::Resource`
+- Integrate the external `cookie_jar` shard and add `HTTP::CookieJar` support to `Crest::Request` and `Crest::Resource` in [#245](https://github.com/mamantoha/crest/pull/245)
 
 ## [1.6.2][] (2026-02-12)
 
