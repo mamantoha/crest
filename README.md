@@ -573,11 +573,11 @@ Crest.get("http://httpbin.org/get", logging: true)
 ##### Filter sensitive information from logs with a regex matcher
 
 ```crystal
-resource = Crest::Request.get("http://httpbin.org/get", params: {api_key => "secret"}, logging: true) do |request|
-  request.logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
+resource = Crest::Request.get("http://httpbin.org/get", params: {"access_token" => "secret"}, logging: true) do |request|
+  request.logger.filter(/(access_token=)([^&]+)/, "\\1[REMOVED]")
 end
 
-# => crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?api_key=[REMOVED]
+# => crest | 2018-07-04 14:49:49 | GET | http://httpbin.org/get?access_token=[REMOVED]
 ```
 
 ##### Customize logger

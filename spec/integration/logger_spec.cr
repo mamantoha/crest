@@ -20,14 +20,14 @@ describe Crest::Logger do
   describe "filters" do
     it "filter logs by regex" do
       IO.pipe do |reader, writer|
-        params = {:width => "100", :height => 100, :api_key => "secret"}
+        params = {:width => "100", :height => 100, :access_token => "secret", :v => "2"}
         logger = Crest::CommonLogger.new(writer)
-        logger.filter(/(api_key=)(\w+)/, "\\1[REMOVED]")
+        logger.filter(/(access_token=)([^&]+)/, "\\1[REMOVED]")
 
         Crest::Request.get("#{TEST_SERVER_URL}/get", params: params, logger: logger, logging: true)
 
         data_time = "\\d{4}-\\d{2}-\\d{2} d{2}:\\d{2}:\\d{2}"
-        url = "#{TEST_SERVER_URL}/get?width=100&height=100&api_key=[REMOVED]"
+        url = "#{TEST_SERVER_URL}/get?width=100&height=100&access_token=[REMOVED]&v=2"
         response_body = "\"Width: 100, height: 100\""
 
         reader.gets.should match(Regex.new("crest | #{data_time} | .* GET.* | #{url}"))
