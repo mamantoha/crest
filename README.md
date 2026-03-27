@@ -584,15 +584,21 @@ end
 
 You can create the custom logger by integration `Crest::Logger` abstract class.
 Here has two methods must be implement: `Crest::Logger.request` and `Crest::Logger.response`.
+Log messages through `info(...)`, because filters are applied by `Crest::Logger#info`.
 
 ```crystal
 class MyLogger < Crest::Logger
+  def initialize(io : IO = STDOUT)
+    super
+    filter(/(access_token=)([^&]+)/, "\\1[REMOVED]")
+  end
+
   def request(request)
-    @logger.info { ">> | %s | %s" % [request.method, request.url] }
+    info(">> | %s | %s" % [request.method, request.url])
   end
 
   def response(response)
-    @logger.info { "<< | %s | %s" % [response.status_code, response.url] }
+    info("<< | %s | %s" % [response.status_code, response.url])
   end
 end
 
