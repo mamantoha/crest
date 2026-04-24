@@ -6,7 +6,6 @@ date: Mon, 24 Nov 2025 18:10:48 GMT
 server: Fly/0dffd420 (2025-11-24)
 via: 1.1 fly.io, 1.1 fly.io
 fly-request-id: 01KAVGZA397SRN2NA3YJFE43HN-fra
-transfer-encoding: chunked
 Content-Length: 609
 
 {}
