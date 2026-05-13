@@ -1,6 +1,5 @@
+# <img src="https://starlines.qoo.monster/assets/mamantoha/crest" align="right"/>
 <p align="left"><img src="https://raw.githubusercontent.com/mamantoha/crest/master/logo/logotype_horizontal_dark.png" alt="crest" height="150px"></p>
-
-[![crest](https://starlines.qoo.monster/assets/mamantoha/crest)](https://github.com/mamantoha/crest)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/16e439ef2706472988306ef13da91a51)](https://app.codacy.com/app/mamantoha/crest?utm_source=github.com&utm_medium=referral&utm_content=mamantoha/crest&utm_campaign=Badge_Grade_Dashboard)
 ![Crystal CI](https://github.com/mamantoha/crest/workflows/Crystal%20CI/badge.svg)
