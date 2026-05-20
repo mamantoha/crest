@@ -59,7 +59,7 @@ module Crest
       filename_regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/xi
 
       if match_data = http_client_res.headers.fetch("Content-Disposition", "").match(filename_regex)
-        return match_data[1]
+        match_data[1]
       end
     end
 
