@@ -13,6 +13,14 @@ describe Crest::Response do
     (response.server_error?).should be_false
   end
 
+  it "response instance should have original request" do
+    response = Crest.post("#{TEST_SERVER_URL}/post", {"fizz" => "buz"}, json: true)
+
+    (response.request).should be_a(Crest::Request)
+    (response.request.form_data).should eq("{\"fizz\":\"buz\"}")
+    (response.url).should eq("#{TEST_SERVER_URL}/post")
+  end
+
   it "response instance should have status and status_code" do
     response = Crest.get("#{TEST_SERVER_URL}")
 
