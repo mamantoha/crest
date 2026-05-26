@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Add opt-in `stream_multipart` multipart uploads for `Crest::Request` and `Crest::Resource` (via `Crest::StreamDataForm`) [#246](https://github.com/mamantoha/crest/pull/246)
+
 ## [1.7.0][] (2026-03-08)
 
 - Prevent `Crest::Resource` from leaking per-request URL, headers, params, and cookies across calls in [#243](https://github.com/mamantoha/crest/pull/243)

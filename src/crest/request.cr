@@ -44,6 +44,7 @@ module Crest
   # - `p_addr`, `p_port`, `p_user`, `p_pass` for proxy
   # - `json` make a JSON request with the appropriate HTTP headers (default to `false`)
   # - `multipart` make a multipart request with the appropriate HTTP headers even if not sending a file (default to `false`)
+  # - `stream_multipart` stream multipart request body to reduce memory usage (default to `false`)
   # - `user_agent` set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
   # - `max_redirects` maximum number of redirects (default to `10`)
   # - `logging` enable logging (default to `false`)
@@ -74,6 +75,7 @@ module Crest
     @p_pass : String?
     @json : Bool
     @multipart : Bool
+    @stream_multipart : Bool
     @user_agent : String?
     @logger : Crest::Logger
     @logging : Bool
@@ -87,6 +89,7 @@ module Crest
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
       auth, proxy, p_addr, p_port, p_user, p_pass, json, multipart, user_agent,
+      stream_multipart,
       read_timeout, write_timeout, connect_timeout, params_encoder, cookie_jar
 
     property redirection_history, user, password
@@ -117,6 +120,7 @@ module Crest
       @user_agent : String? = nil,
       @json : Bool = false,
       @multipart : Bool = false,
+      @stream_multipart : Bool = false,
       @tls : OpenSSL::SSL::Context::Client? = nil,
       http_client : HTTP::Client? = nil,
       @auth : String = "basic",
@@ -303,7 +307,7 @@ module Crest
       if @json
         Crest::JSONForm
       elsif multipart?(form)
-        Crest::DataForm
+        @stream_multipart ? Crest::StreamDataForm : Crest::DataForm
       else
         Crest::UrlencodedForm
       end

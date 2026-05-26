@@ -1,6 +1,6 @@
 module Crest
   abstract class Form(T)
-    @form_data : String = ""
+    @form_data : String | IO = ""
     @content_type : String = ""
 
     getter params, form_data, content_type

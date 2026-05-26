@@ -272,6 +272,15 @@ describe Crest::Request do
     (File.read(file_path)).should eq(File.read(file.path))
   end
 
+  it "upload file with streamed multipart form" do
+    file = File.open("#{__DIR__}/../support/fff.png")
+    response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: {:file => file}, stream_multipart: true)
+    body = response.body
+    (body).should match(/Upload OK/)
+    file_path = body.gsub("Upload OK - ", "")
+    (File.read(file_path)).should eq(File.read(file.path))
+  end
+
   it "upload file directly" do
     file = File.open("#{__DIR__}/../support/fff.png")
     response = Crest::Request.post("#{TEST_SERVER_URL}/upload", form: file, headers: {"Content-Type" => "image/png"})
