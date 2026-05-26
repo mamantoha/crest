@@ -43,3 +43,20 @@ describe Crest::DataForm do
     end
   end
 end
+
+describe Crest::StreamDataForm do
+  describe "#generate" do
+    it "generate streamed form" do
+      input = {:file => {"one" => "one", "two" => "two"}}
+      parsed_input = [{"file[one]", "one"}, {"file[two]", "two"}]
+      content_type = "multipart/form-data"
+
+      form = Crest::StreamDataForm.generate(input, Crest::FlatParamsEncoder)
+
+      form.content_type.should contain(content_type)
+      form.params.should eq(input)
+      form.parsed_params.should eq(parsed_input)
+      form.form_data.should be_a(IO)
+    end
+  end
+end

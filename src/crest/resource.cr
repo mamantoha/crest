@@ -66,7 +66,7 @@ module Crest
       logging, logger,
       p_addr, p_port, p_user, p_pass,
       handle_errors, close_connection,
-      json, user_agent,
+      json, user_agent, stream_multipart,
       cookie_jar,
       read_timeout, write_timeout, connect_timeout
 
@@ -96,6 +96,7 @@ module Crest
       @handle_errors : Bool = true,
       @close_connection : Bool = false,
       @json : Bool = false,
+      @stream_multipart : Bool = false,
       @user_agent : String? = nil,
       @read_timeout : Time::Span? = nil,
       @write_timeout : Time::Span? = nil,
@@ -191,6 +192,7 @@ module Crest
         handle_errors: @handle_errors,
         close_connection: @close_connection,
         json: @json,
+        stream_multipart: @stream_multipart,
         user_agent: @user_agent,
         read_timeout: @read_timeout,
         write_timeout: @write_timeout,
@@ -259,6 +261,7 @@ module Crest
         http_client:      @http_client,
         close_connection: @close_connection,
         json:             @json,
+        stream_multipart: @stream_multipart,
         params_encoder:   @params_encoder,
         user_agent:       @user_agent,
         read_timeout:     @read_timeout,
