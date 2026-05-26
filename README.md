@@ -100,6 +100,7 @@ Optional parameters:
 - `:p_addr`, `:p_port`, `:p_user`, and `:p_pass` - specify a per-request proxy by passing these parameters
 - `:json` - make a JSON request with the appropriate HTTP headers (default to `false`)
 - `:multipart` make a multipart request with the appropriate HTTP headers even if not sending a file (default to `false`)
+- `:stream_multipart` - stream multipart request body to reduce memory usage (default to `false`)
 - `:user_agent` - set "User-Agent" HTTP header (default to `Crest::USER_AGENT`)
 - `:max_redirects` - maximum number of redirects (default to 10)
 - `:logging` - enable logging (default to `false`)
@@ -429,7 +430,18 @@ This section covers some of `crest` more advanced features.
 
 #### Multipart
 
-Yeah, that's right! This does multipart sends for you!
+Use multipart when an endpoint expects `multipart/form-data`.
+
+Crest automatically uses multipart when your `form` includes an `IO` (for example `File` or `IO::Memory`).
+You can also force multipart for text-only forms with `multipart: true`.
+
+By default, multipart is buffered in memory before sending. For large uploads, enable
+`stream_multipart: true` to stream the request body and reduce memory usage.
+
+Use cases:
+
+- Small/medium uploads and maximum compatibility: default multipart
+- Large files or many concurrent uploads: `stream_multipart: true`
 
 ```crystal
 file = File.open("#{__DIR__}/example.png")
@@ -443,8 +455,31 @@ Crest.post("http://httpbin.org/post", {"data.csv" => file})
 ```
 
 ```crystal
+# Force multipart even without file fields
+Crest.post(
+  "http://httpbin.org/post",
+  {:name => "john", :role => "admin"},
+  multipart: true
+)
+```
+
+```crystal
+# Stream multipart upload to avoid buffering full body in memory
+file = File.open("#{__DIR__}/large.iso")
+Crest.post(
+  "http://httpbin.org/post",
+  {:image => file},
+  stream_multipart: true
+)
+```
+
+```crystal
+# Resource-level default for repeated uploads
 file = File.open("#{__DIR__}/example.png")
-resource = Crest::Resource.new("https://httpbin.org")
+resource = Crest::Resource.new(
+  "https://httpbin.org",
+  stream_multipart: true
+)
 response = resource["/post"].post({:image => file})
 ```
 
