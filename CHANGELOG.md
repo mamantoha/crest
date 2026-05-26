@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.8.0][] (2026-05-26)
+
 - Add opt-in `stream_multipart` multipart uploads for `Crest::Request` and `Crest::Resource` (via `Crest::StreamDataForm`) [#246](https://github.com/mamantoha/crest/pull/246)
 
 ## [1.7.0][] (2026-03-08)
@@ -454,7 +456,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.7.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/mamantoha/crest/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/mamantoha/crest/compare/v1.6.2...v1.7.0
 [1.6.2]: https://github.com/mamantoha/crest/compare/v1.6.1...v1.6.2
 [1.6.1]: https://github.com/mamantoha/crest/compare/v1.6.0...v1.6.1
