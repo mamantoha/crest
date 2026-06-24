@@ -10,17 +10,15 @@ module Crest
       reader, writer = IO.pipe
 
       spawn do
-        begin
-          HTTP::FormData.build(writer) do |formdata|
-            content_type_ch.send(formdata.content_type)
+        HTTP::FormData.build(writer) do |formdata|
+          content_type_ch.send(formdata.content_type)
 
-            parsed_params.each do |name, value|
-              add_field(formdata, name.to_s, value)
-            end
+          parsed_params.each do |name, value|
+            add_field(formdata, name.to_s, value)
           end
-        ensure
-          writer.close
         end
+      ensure
+        writer.close
       end
 
       @form_data = reader
