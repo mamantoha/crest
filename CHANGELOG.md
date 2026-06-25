@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Preserve streamed multipart request bodies across `307` and `308` redirects [#248](https://github.com/mamantoha/crest/pull/248)
+
 ## [1.8.0][] (2026-05-26)
 
 - Add opt-in `stream_multipart` multipart uploads for `Crest::Request` and `Crest::Resource` (via `Crest::StreamDataForm`) [#246](https://github.com/mamantoha/crest/pull/246)

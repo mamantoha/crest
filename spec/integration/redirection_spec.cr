@@ -110,6 +110,28 @@ describe Crest::Redirector do
       response.history.first.status_code.should eq(308)
     end
 
+    it "preserves streamed multipart form body for 307 redirects" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/upload_307", form: {:file => file}, stream_multipart: true)
+      body = response.body
+
+      body.should match(/Upload OK/)
+      file_path = body.gsub("Upload OK - ", "")
+      File.read(file_path).should eq(File.read(file.path))
+      response.history.first.status_code.should eq(307)
+    end
+
+    it "preserves streamed multipart form body for 308 redirects" do
+      file = File.open("#{__DIR__}/../support/fff.png")
+      response = Crest.post("#{TEST_SERVER_URL}/redirect/upload_308", form: {:file => file}, stream_multipart: true)
+      body = response.body
+
+      body.should match(/Upload OK/)
+      file_path = body.gsub("Upload OK - ", "")
+      File.read(file_path).should eq(File.read(file.path))
+      response.history.first.status_code.should eq(308)
+    end
+
     it "rewrites POST to GET on 301 redirects" do
       response = Crest.post("#{TEST_SERVER_URL}/redirect/301_post", {"title" => "Title"})
       body = JSON.parse(response.body)

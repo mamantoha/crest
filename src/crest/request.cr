@@ -85,6 +85,7 @@ module Crest
     @write_timeout : Time::Span?
     @connect_timeout : Time::Span?
     @cookie_jar : HTTP::CookieJar?
+    @stream_multipart_params : Array(Tuple(String, Crest::ParamsValue))?
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
@@ -316,7 +317,14 @@ module Crest
     private def generate_form_data!(form : Hash) : String | Bytes | IO?
       return if form.empty?
 
-      generated_form = form_class(form).generate(form, @params_encoder)
+      generated_form =
+        if @stream_multipart && multipart?(form)
+          stream_multipart_params = @params_encoder.flatten_params(form)
+          @stream_multipart_params = stream_multipart_params
+          Crest::StreamDataForm.generate(stream_multipart_params, @params_encoder)
+        else
+          form_class(form).generate(form, @params_encoder)
+        end
 
       @headers["Content-Type"] = generated_form.content_type
       @form_data = generated_form.form_data
@@ -324,6 +332,25 @@ module Crest
 
     private def generate_form_data!(form : String | Bytes | IO) : String | Bytes | IO?
       @form_data = form
+    end
+
+    protected def form_data_for_redirect
+      stream_multipart_params = @stream_multipart_params
+      return @form_data unless stream_multipart_params
+
+      rewind_stream_multipart_params
+      generated_form = Crest::StreamDataForm.generate(stream_multipart_params, @params_encoder)
+
+      @headers["Content-Type"] = generated_form.content_type
+      generated_form.form_data
+    end
+
+    private def rewind_stream_multipart_params
+      @stream_multipart_params.try do |params|
+        params.each do |_, value|
+          value.rewind if value.is_a?(IO)
+        end
+      end
     end
 
     private def set_headers!(params) : HTTP::Headers

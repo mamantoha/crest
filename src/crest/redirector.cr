@@ -55,12 +55,15 @@ module Crest
     end
 
     private def prepare_new_request(url)
+      form = redirect_form_data
+      headers = redirect_headers
+
       Request.new(
         method: redirect_method,
         url: url,
-        form: redirect_form_data,
+        form: form,
         max_redirects: @request.max_redirects - 1,
-        headers: redirect_headers,
+        headers: headers,
         cookies: redirect_cookies,
         cookie_jar: @request.cookie_jar,
         params_encoder: @request.params_encoder,
@@ -114,7 +117,7 @@ module Crest
     end
 
     private def redirect_form_data
-      preserve_body_on_redirect? ? @request.form_data : nil
+      preserve_body_on_redirect? ? @request.form_data_for_redirect : nil
     end
 
     private def preserve_method_on_redirect? : Bool

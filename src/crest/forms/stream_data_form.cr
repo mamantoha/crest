@@ -5,6 +5,10 @@ module Crest
   class StreamDataForm(T) < Crest::Form(T)
     DEFAULT_MIME_TYPE = "application/octet-stream"
 
+    def self.generate(params : Array(Tuple(String, Crest::ParamsValue)), params_encoder : Crest::ParamsEncoder.class)
+      new(params, params_encoder).generate
+    end
+
     def generate
       content_type_ch = Channel(String).new(1)
       reader, writer = IO.pipe
@@ -28,7 +32,12 @@ module Crest
     end
 
     def parsed_params
-      @params_encoder.flatten_params(@params)
+      case params = @params
+      when Array
+        params
+      else
+        @params_encoder.flatten_params(params)
+      end
     end
 
     private def add_field(formdata : HTTP::FormData::Builder, name : String | Symbol, value : Crest::ParamsValue)
