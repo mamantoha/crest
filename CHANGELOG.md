@@ -2,6 +2,7 @@
 
 ## [...]
 
+- Decode bare query parameters without values as `nil` [#249](https://github.com/mamantoha/crest/pull/249)
 - Preserve streamed multipart request bodies across `307` and `308` redirects [#248](https://github.com/mamantoha/crest/pull/248)
 
 ## [1.8.0][] (2026-05-26)
