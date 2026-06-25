@@ -2,6 +2,8 @@
 
 ## [...]
 
+## [1.8.1][] (2026-06-25)
+
 - Decode `+` as a space in query parameter keys and values [#250](https://github.com/mamantoha/crest/pull/250)
 - Decode bare query parameters without values as `nil` [#249](https://github.com/mamantoha/crest/pull/249)
 - Preserve streamed multipart request bodies across `307` and `308` redirects [#248](https://github.com/mamantoha/crest/pull/248)
@@ -460,7 +462,8 @@
 
 - First release :tada:
 
-[...]: https://github.com/mamantoha/crest/compare/v1.8.0...HEAD
+[...]: https://github.com/mamantoha/crest/compare/v1.8.1...HEAD
+[1.8.1]: https://github.com/mamantoha/crest/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/mamantoha/crest/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/mamantoha/crest/compare/v1.6.2...v1.7.0
 [1.6.2]: https://github.com/mamantoha/crest/compare/v1.6.1...v1.6.2
