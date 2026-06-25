@@ -26,8 +26,8 @@ module Crest
         parts = pair.split('=', 2)
         key = parts[0]
         value = parts[1]? || ""
-        key = URI.decode(key)
-        value = URI.decode(value)
+        key = URI.decode_www_form(key)
+        value = URI.decode_www_form(value)
         decode_pair(key, value, params)
       end
 
