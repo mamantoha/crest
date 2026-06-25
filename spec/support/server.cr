@@ -186,6 +186,12 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
   when "/redirect/308"
     context.response.status_code = 308
     context.response.headers["Location"] = "/post"
+  when "/redirect/upload_307"
+    context.response.status_code = 307
+    context.response.headers["Location"] = "/upload"
+  when "/redirect/upload_308"
+    context.response.status_code = 308
+    context.response.headers["Location"] = "/upload"
   when "/redirect/301_post"
     context.response.status_code = 301
     context.response.headers["Location"] = "/post"
