@@ -15,6 +15,13 @@ describe Crest::ParamsDecoder do
     Crest::ParamsDecoder.decode(query).should eq(params)
   end
 
+  it "decodes params without value as nil" do
+    query = "json&bar=2"
+    params = {"json" => nil, "bar" => "2"}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
   it "decodes array" do
     query = "a[]=one&a[]=two&a[]=three"
     params = {"a" => ["one", "two", "three"]}
