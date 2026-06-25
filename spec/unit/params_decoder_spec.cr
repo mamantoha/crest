@@ -64,6 +64,20 @@ describe Crest::ParamsDecoder do
     Crest::ParamsDecoder.decode(query).should eq(params)
   end
 
+  it "decodes plus signs as spaces" do
+    query = "first+name=John+Doe"
+    params = {"first name" => "John Doe"}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
+  it "decodes encoded plus signs as plus signs" do
+    query = "equation=a%2Bb"
+    params = {"equation" => "a+b"}
+
+    Crest::ParamsDecoder.decode(query).should eq(params)
+  end
+
   it "decodes params with nil" do
     query = "foo=&bar=2"
     params = {"foo" => nil, "bar" => "2"}
