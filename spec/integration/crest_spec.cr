@@ -319,13 +319,13 @@ describe Crest do
   context ".to_curl" do
     it "curlify GET request with params" do
       response = Crest.get("#{TEST_SERVER_URL}/get", params: {:width => 100, :height => 100})
-      (response.to_curl).should eq("curl -X GET #{TEST_SERVER_URL}/get?width=100&height=100")
+      (response.to_curl).should eq("curl -X GET '#{TEST_SERVER_URL}/get?width=100&height=100'")
     end
 
     it "curlify POST request with form" do
       response = Crest.post("#{TEST_SERVER_URL}/post", {:title => "Title"})
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/post -d 'title=Title' -H 'Content-Type: application/x-www-form-urlencoded'"
+        "curl -X POST #{TEST_SERVER_URL}/post -d title=Title -H 'Content-Type: application/x-www-form-urlencoded'"
       )
     end
 
@@ -335,7 +335,7 @@ describe Crest do
 
       (response.body).should match(/Upload OK/)
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/upload -F 'file=@#{File.expand_path(file.path)}' -H 'Content-Type: multipart/form-data'"
+        "curl -X POST #{TEST_SERVER_URL}/upload -F file=@#{File.expand_path(file.path)} -H 'Content-Type: multipart/form-data'"
       )
     end
 

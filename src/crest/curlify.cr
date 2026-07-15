@@ -16,18 +16,16 @@ module Crest
     end
 
     def to_curl
-      ["curl", method, url, proxy, basic_auth, form_data, headers].reject(&.empty?).join(" ")
+      args = ["curl", "-X", @request.method, @request.url]
+      args.concat(proxy)
+      args.concat(basic_auth)
+      args.concat(form_data)
+      args.concat(headers)
+
+      Process.quote_posix(args)
     end
 
-    private def method
-      "-X #{@request.method}"
-    end
-
-    private def url
-      "#{@request.url}"
-    end
-
-    private def headers : String
+    private def headers : Array(String)
       headers = [] of String
 
       @request.headers.each do |k, v|
@@ -44,13 +42,14 @@ module Crest
             v
           end
 
-        headers << "-H '#{k}: #{value}'"
+        headers << "-H"
+        headers << "#{k}: #{value}"
       end
 
-      headers.join(" ")
+      headers
     end
 
-    private def form_data : String
+    private def form_data : Array(String)
       raise HTTP::FormData::Error.new "Cannot extract form-data from HTTP request: body is empty" unless @request.form_data
       body = IO::Memory.new(@request.form_data.to_s)
 
@@ -67,38 +66,40 @@ module Crest
             part.body.gets_to_end
           end
 
-        form_data << "-F '#{part.name}=#{value}'"
+        form_data << "-F"
+        form_data << "#{part.name}=#{value}"
       end
 
-      form_data.join(" ")
+      form_data
     rescue HTTP::FormData::Error
       body = @request.form_data.to_s
+      return [] of String if body.empty?
 
-      body.empty? ? "" : "-d '#{body}'"
+      ["-d", body]
     end
 
-    private def basic_auth : String
-      return "" unless basic_auth?
+    private def basic_auth : Array(String)
+      return [] of String unless basic_auth?
 
       params = [] of String
 
       params << "--digest" if @request.auth == "digest"
-      params << "--user #{@request.user}:#{@request.password}"
+      params << "--user"
+      params << "#{@request.user}:#{@request.password}"
 
-      params.join(" ")
+      params
     end
 
     # --proxy <[protocol://][user:password@]proxyhost[:port]> url
-    private def proxy : String
-      return "" unless @request.proxy
+    private def proxy : Array(String)
+      return [] of String unless @request.proxy
 
-      params = [] of String
+      value = String.build do |io|
+        io << "#{@request.p_user}:#{@request.p_pass}@" if proxy_auth?
+        io << "#{@request.p_addr}:#{@request.p_port}"
+      end
 
-      params << "--proxy "
-      params << "#{@request.p_user}:#{@request.p_pass}@" if proxy_auth?
-      params << "#{@request.p_addr}:#{@request.p_port}"
-
-      params.join
+      ["--proxy", value]
     end
 
     private def basic_auth? : Bool
