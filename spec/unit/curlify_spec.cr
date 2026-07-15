@@ -35,8 +35,7 @@ describe Crest::Curlify do
 
     result = curlify(request)
 
-    result.should eq("curl -X POST 'http://example.test/path;echo?value=$(touch)&quoted='\"'\"'value'\"'\"'' -d 'value='\"'\"'; echo injected; #' -H 'X-Test: $(echo injected) '\"'\"'quoted'\"'\"''"
-    )
+    result.should eq("curl -X POST 'http://example.test/path;echo?value=$(touch)&quoted='\"'\"'value'\"'\"'' -d 'value='\"'\"'; echo injected; #' -H 'X-Test: $(echo injected) '\"'\"'quoted'\"'\"''")
     Process.parse_arguments_posix(result).should eq(expected_args)
   end
 
