@@ -86,6 +86,7 @@ module Crest
     @connect_timeout : Time::Span?
     @cookie_jar : HTTP::CookieJar?
     @redirect_cookie_jar : HTTP::CookieJar
+    @generated_cookie_header : String?
     @stream_multipart_params : Array(Tuple(String, Crest::ParamsValue))?
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
@@ -166,6 +167,7 @@ module Crest
       yield self
 
       add_request_cookies_to_redirect_jar
+      add_request_cookie_header
     end
 
     # When block is not given.
@@ -370,21 +372,20 @@ module Crest
       @headers
     end
 
-    # Adds "Cookie" headers for the cookies in this collection to the @header instance and returns it
-    private def set_cookies!(cookies) : HTTP::Headers
+    private def set_cookies!(cookies) : Nil
       cookies = @params_encoder.flatten_params(cookies)
 
       cookies.each do |k, v|
         @cookies << HTTP::Cookie.new(k.to_s, v.to_s)
       end
-
-      @cookies.add_request_headers(@headers)
     end
 
     private def request_headers : HTTP::Headers
       headers = @headers.dup
 
-      if headers.has_key?("Cookie")
+      if cookie_header = headers["Cookie"]?
+        return headers if cookie_header != @generated_cookie_header
+
         headers.delete("Cookie")
       end
 
@@ -407,6 +408,13 @@ module Crest
       request_cookies.add_request_headers(headers) unless request_cookies.empty?
 
       headers
+    end
+
+    private def add_request_cookie_header : Nil
+      return if @headers.has_key?("Cookie")
+
+      @cookies.add_request_headers(@headers)
+      @generated_cookie_header = @headers["Cookie"]?
     end
 
     private def add_request_cookies_to_redirect_jar : Nil
