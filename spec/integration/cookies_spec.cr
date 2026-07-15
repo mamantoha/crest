@@ -44,6 +44,40 @@ describe Crest do
         (JSON.parse(response.body)["headers"]["Cookie"]).should eq("k1=v1; k2=v2")
       end
 
+      it "does not send response cookies to another host on redirect" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_redirect_other_host")
+
+        (JSON.parse(response.body)["cookies"]).should eq({} of String => String)
+      end
+
+      it "does not send response cookies outside their path on redirect" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_path_redirect")
+
+        (JSON.parse(response.body)["cookies"]).should eq({} of String => String)
+      end
+
+      it "does not send secure response cookies over HTTP on redirect" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_secure_redirect")
+
+        (JSON.parse(response.body)["cookies"]).should eq({} of String => String)
+      end
+
+      it "removes expired response cookies during a redirect chain" do
+        response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set_delete_redirect")
+
+        (JSON.parse(response.body)["cookies"]).should eq({} of String => String)
+      end
+
+      it "keeps explicit cookies on same-host redirects" do
+        response = Crest::Request.execute(
+          :get,
+          "#{TEST_SERVER_URL}/cookies/set_redirect",
+          cookies: {"session" => "explicit"}
+        )
+
+        (JSON.parse(response.body)["cookies"]).should eq({"session" => "explicit"})
+      end
+
       it "should send cookies from a cookie jar and extract response cookies into it" do
         jar = HTTP::CookieJar.new
         jar.add(TEST_SERVER_URL, HTTP::Cookie.new("session", "persisted"))
@@ -71,6 +105,7 @@ describe Crest do
         )
 
         (JSON.parse(response.body)["cookies"]).should eq({"k1" => "manual", "k2" => "jar"})
+        (jar.cookies_for(TEST_SERVER_URL).to_h["k1"].value).should eq("jar")
       end
     end
   end

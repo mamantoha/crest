@@ -89,7 +89,12 @@ module Crest
     end
 
     private def request_cookies
-      cookies_to_h(@request.cookies)
+      cookies = @request.cookie_jar.try do |cookie_jar|
+        cookies_to_h(cookie_jar.cookies_for(@request.url))
+      end || {} of String => String
+
+      cookies.merge!(cookies_to_h(@request.redirect_cookie_jar.cookies_for(@request.url)))
+      cookies.merge!(cookies_to_h(@request.cookies))
     end
 
     private def response_cookies

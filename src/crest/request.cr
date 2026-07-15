@@ -85,13 +85,15 @@ module Crest
     @write_timeout : Time::Span?
     @connect_timeout : Time::Span?
     @cookie_jar : HTTP::CookieJar?
+    @redirect_cookie_jar : HTTP::CookieJar
     @stream_multipart_params : Array(Tuple(String, Crest::ParamsValue))?
 
     getter http_client, http_request, method, url, tls, form_data, headers, cookies,
       max_redirects, logging, logger, handle_errors, close_connection,
       auth, proxy, p_addr, p_port, p_user, p_pass, json, multipart, user_agent,
       stream_multipart,
-      read_timeout, write_timeout, connect_timeout, params_encoder, cookie_jar
+      read_timeout, write_timeout, connect_timeout, params_encoder, cookie_jar,
+      redirect_cookie_jar
 
     property redirection_history, user, password
 
@@ -115,6 +117,7 @@ module Crest
       headers = {} of String => String,
       cookies = {} of String => String,
       @cookie_jar : HTTP::CookieJar? = nil,
+      @redirect_cookie_jar : HTTP::CookieJar = HTTP::CookieJar.new,
       params = {} of String => String,
       @max_redirects : Int32 = 10,
       @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,
@@ -161,6 +164,8 @@ module Crest
       set_timeouts!
 
       yield self
+
+      add_request_cookies_to_redirect_jar
     end
 
     # When block is not given.
@@ -235,6 +240,7 @@ module Crest
     end
 
     private def process_result(http_client_res) : Crest::Response
+      @redirect_cookie_jar.extract(http_client_res.headers, @url)
       @cookie_jar.try &.extract(http_client_res.headers, @url)
       response = Response.new(http_client_res, self)
       logger.response(response) if logging
@@ -242,6 +248,7 @@ module Crest
     end
 
     private def process_result(http_client_res, &block : Crest::Response ->)
+      @redirect_cookie_jar.extract(http_client_res.headers, @url)
       @cookie_jar.try &.extract(http_client_res.headers, @url)
       response = Response.new(http_client_res, self)
       logger.response(response) if logging
@@ -389,6 +396,10 @@ module Crest
         end
       end
 
+      @redirect_cookie_jar.cookies_for(@url).to_h.each_value do |cookie|
+        request_cookies << cookie
+      end
+
       @cookies.to_h.each_value do |cookie|
         request_cookies << cookie
       end
@@ -396,6 +407,27 @@ module Crest
       request_cookies.add_request_headers(headers) unless request_cookies.empty?
 
       headers
+    end
+
+    private def add_request_cookies_to_redirect_jar : Nil
+      @cookies.each do |cookie|
+        @redirect_cookie_jar.add(
+          @url,
+          HTTP::Cookie.new(
+            cookie.name,
+            cookie.value,
+            path: cookie.path || "/",
+            expires: cookie.expires,
+            domain: cookie.domain,
+            secure: cookie.secure,
+            http_only: cookie.http_only,
+            samesite: cookie.samesite,
+            extension: cookie.extension,
+            max_age: cookie.max_age,
+            creation_time: cookie.creation_time
+          )
+        )
+      end
     end
 
     protected def authenticate!
