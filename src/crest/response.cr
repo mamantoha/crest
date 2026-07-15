@@ -89,6 +89,10 @@ module Crest
     end
 
     private def request_cookies
+      sent_cookies = cookies_to_h(HTTP::Cookies.from_client_headers(@request.http_request.headers))
+
+      return sent_cookies unless sent_cookies.empty?
+
       cookies = @request.cookie_jar.try do |cookie_jar|
         cookies_to_h(cookie_jar.cookies_for(@request.url))
       end || {} of String => String

@@ -26,6 +26,43 @@ describe Crest do
         (response.cookies).should eq({"k1" => "v1", "k2" => "v2"})
       end
 
+      it "sends a caller-supplied Cookie header" do
+        response = Crest::Request.execute(
+          :get,
+          "#{TEST_SERVER_URL}/get",
+          headers: {"Cookie" => "session=header"}
+        )
+
+        (JSON.parse(response.body)["cookies"]).should eq({"session" => "header"})
+        (response.cookies).should eq({"session" => "header"})
+      end
+
+      it "lets a caller-supplied Cookie header override configured cookies" do
+        jar = HTTP::CookieJar.new
+        jar.add(TEST_SERVER_URL, HTTP::Cookie.new("from_jar", "jar"))
+
+        response = Crest::Request.execute(
+          :get,
+          "#{TEST_SERVER_URL}/get",
+          headers: {"Cookie" => "session=header"},
+          cookies: {"explicit" => "cookie"},
+          cookie_jar: jar
+        )
+
+        (JSON.parse(response.body)["cookies"]).should eq({"session" => "header"})
+        (response.cookies).should eq({"session" => "header"})
+      end
+
+      it "does not forward a caller-supplied Cookie header on redirect" do
+        response = Crest::Request.execute(
+          :get,
+          "#{TEST_SERVER_URL}/cookies/set_redirect",
+          headers: {"Cookie" => "session=header"}
+        )
+
+        (JSON.parse(response.body)["cookies"]).should eq({} of String => String)
+      end
+
       it "should access cookies from the server" do
         response = Crest::Request.execute(:get, "#{TEST_SERVER_URL}/cookies/set", params: {"k1" => "v1", "k2" => "v2"})
 
