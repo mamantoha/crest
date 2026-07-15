@@ -2,6 +2,7 @@
 
 ## [...]
 
+- Preserve caller-supplied `Cookie` headers and give them precedence over configured cookies [#254](https://github.com/mamantoha/crest/pull/254)
 - Rebuild cookies for each redirect destination to prevent cross-host, path, and secure-cookie leaks [#253](https://github.com/mamantoha/crest/pull/253)
 - Shell-quote every argument in generated cURL commands [#252](https://github.com/mamantoha/crest/pull/252)
 - Avoid globally extending `IO` for JSON serialization and raise a clear error when an `IO` value is used in a JSON form [#251](https://github.com/mamantoha/crest/pull/251)
