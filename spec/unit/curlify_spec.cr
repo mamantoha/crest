@@ -100,7 +100,8 @@ describe Crest::Curlify do
 
     request = Crest::Request.new(:post, "http://httpbin.org/post", form: {"title" => "New Title", "file" => file})
 
-    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F file=@#{"#{File.expand_path(file.path)}"} -H 'Content-Type: multipart/form-data'"
+    file_arg = Process.quote_posix("file=@#{File.expand_path(file.path)}")
+    result = "curl -X POST http://httpbin.org/post -F 'title=New Title' -F #{file_arg} -H 'Content-Type: multipart/form-data'"
     curlify(request).should eq(result)
   end
 

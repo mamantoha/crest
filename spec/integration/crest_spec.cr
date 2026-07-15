@@ -334,8 +334,9 @@ describe Crest do
       response = Crest.post("#{TEST_SERVER_URL}/upload", form: {:file => file})
 
       (response.body).should match(/Upload OK/)
+      file_arg = Process.quote_posix("file=@#{File.expand_path(file.path)}")
       (response.to_curl).should eq(
-        "curl -X POST #{TEST_SERVER_URL}/upload -F file=@#{File.expand_path(file.path)} -H 'Content-Type: multipart/form-data'"
+        "curl -X POST #{TEST_SERVER_URL}/upload -F #{file_arg} -H 'Content-Type: multipart/form-data'"
       )
     end
 
