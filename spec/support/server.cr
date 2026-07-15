@@ -232,9 +232,24 @@ server = HTTP::Server.new([HTTP::BasicAuthHandler.new("username", "password")]) 
     context.response.print({"cookies" => result}.to_json)
   when "/cookies/set_redirect"
     context.request.query_params.each do |key, value|
-      context.response.cookies << HTTP::Cookie.new(name: key, value: value)
+      context.response.cookies << HTTP::Cookie.new(name: key, value: value, path: "/")
     end
 
+    context.response.redirect("/get")
+  when "/cookies/set_redirect_other_host"
+    context.response.cookies << HTTP::Cookie.new(name: "session", value: "secret")
+    context.response.redirect("http://localhost:#{ALT_TEST_SERVER_PORT}/cookies")
+  when "/cookies/set_path_redirect"
+    context.response.cookies << HTTP::Cookie.new(name: "session", value: "secret", path: "/cookies/private")
+    context.response.redirect("/get")
+  when "/cookies/set_secure_redirect"
+    context.response.cookies << HTTP::Cookie.new(name: "session", value: "secret", secure: true)
+    context.response.redirect("/get")
+  when "/cookies/set_delete_redirect"
+    context.response.cookies << HTTP::Cookie.new(name: "session", value: "secret")
+    context.response.redirect("/cookies/delete_redirect")
+  when "/cookies/delete_redirect"
+    context.response.cookies << HTTP::Cookie.new(name: "session", value: "", max_age: Time::Span.zero)
     context.response.redirect("/get")
   when /^\/delay\/(\d+)$/
     seconds = $1.to_i
@@ -278,6 +293,8 @@ alt_server = HTTP::Server.new do |context|
   case context.request.path
   when "/auth-header"
     context.response.print(context.request.headers["Authorization"]?)
+  when "/cookies"
+    context.response.print(render_response(context))
   else
     context.response.respond_with_status(:not_found)
   end
