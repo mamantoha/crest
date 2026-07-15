@@ -443,7 +443,7 @@ module Crest
     private def basic_auth!
       auth = "Basic #{Base64.strict_encode("#{@user}:#{@password}")}"
 
-      @headers.add("Authorization", auth)
+      @headers["Authorization"] = auth
     end
 
     private def digest_auth!
@@ -458,7 +458,7 @@ module Crest
       digest_auth = HTTP::Client::DigestAuth.new
       auth = digest_auth.auth_header(uri, www_authenticate, @method)
 
-      @headers.add("Authorization", auth)
+      @headers["Authorization"] = auth
     end
 
     private def digest_auth_response(uri)

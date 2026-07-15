@@ -15,6 +15,25 @@ describe Crest do
         (response.body).should eq("Authorized")
       end
 
+      it "should not accumulate authorization headers when reusing a request" do
+        request = Crest::Request.new(
+          :get,
+          "#{TEST_SERVER_URL}/get",
+          user: "username",
+          password: "password",
+          close_connection: false
+        )
+
+        request.execute
+        response = request.execute
+
+        authorization = "Basic #{Base64.strict_encode("username:password")}"
+        request.headers.get("Authorization").should eq([authorization])
+        JSON.parse(response.body)["headers"]["Authorization"].should eq(authorization)
+      ensure
+        request.try &.close
+      end
+
       it "should be successful in the initializer block" do
         request = Crest::Request.new(:get, "#{TEST_SERVER_URL}/secret") do |req|
           req.user = "username"
