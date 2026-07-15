@@ -2,6 +2,8 @@
 
 ## [...]
 
+- Avoid globally extending `IO` for JSON serialization and raise a clear error when an `IO` value is used in a JSON form [#251](https://github.com/mamantoha/crest/pull/251)
+
 ## [1.8.1][] (2026-06-25)
 
 - Decode `+` as a space in query parameter keys and values [#250](https://github.com/mamantoha/crest/pull/250)
