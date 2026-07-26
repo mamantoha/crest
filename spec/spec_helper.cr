@@ -6,12 +6,21 @@ require "../src/crest"
 require "./support/constants"
 require "./support/server"
 
-def with_proxy_server(host = PROXY_SERVER_HOST, port = PROXY_SERVER_PORT, &)
+def with_proxy_server(host = PROXY_SERVER_HOST, port = 0, &)
   wants_close = Channel(Nil).new
+  started = Channel(Socket::IPAddress | Exception).new(1)
   server = HTTP::Proxy::Server.new
 
   spawn do
-    server.bind_tcp(host, port)
+    address =
+      begin
+        server.bind_tcp(host, port)
+      rescue ex
+        started.send(ex)
+        next
+      end
+
+    started.send(address)
     server.listen
   end
 
@@ -20,7 +29,8 @@ def with_proxy_server(host = PROXY_SERVER_HOST, port = PROXY_SERVER_PORT, &)
     server.close
   end
 
-  Fiber.yield
+  address = started.receive
+  raise address if address.is_a?(Exception)
 
-  yield host, port, wants_close
+  yield host, address.port, wants_close
 end
