@@ -2,6 +2,7 @@
 
 ## [...]
 
+- Filter redirect headers case-insensitively to prevent credential leaks through lowercase or mixed-case `Authorization` and `Cookie` headers
 - Preserve caller-supplied `Cookie` headers and give them precedence over configured cookies [#254](https://github.com/mamantoha/crest/pull/254)
 - Rebuild cookies for each redirect destination to prevent cross-host, path, and secure-cookie leaks [#253](https://github.com/mamantoha/crest/pull/253)
 - Shell-quote every argument in generated cURL commands [#252](https://github.com/mamantoha/crest/pull/252)

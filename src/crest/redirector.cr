@@ -134,7 +134,7 @@ module Crest
     end
 
     private def redirect_headers
-      headers = @request.headers.to_h.dup
+      headers = @request.headers.dup
 
       headers.delete("Authorization")
       headers.delete("Cookie")

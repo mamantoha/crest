@@ -2,6 +2,39 @@ require "../spec_helper"
 
 describe Crest::Redirector do
   describe Crest do
+    [
+      {"authorization", "cookie", "host", "content-type", "content-length"},
+      {"aUtHoRiZaTiOn", "cOoKiE", "hOsT", "cOnTeNt-TyPe", "cOnTeNt-LeNgTh"},
+    ].each do |authorization, cookie, host, content_type, content_length|
+      it "filters redirect headers case-insensitively with #{authorization}" do
+        request = Crest::Request.new(
+          :get,
+          "#{TEST_SERVER_URL}/redirect_to_other_origin",
+          headers: {
+            authorization  => "Bearer secret",
+            cookie         => "session=secret",
+            host           => "original.example",
+            content_type   => "text/plain",
+            content_length => "0",
+            "X-Custom"     => "preserved",
+          }
+        )
+
+        response = request.execute
+        headers = response.request.http_request.headers
+
+        response.body.should eq("")
+        headers.has_key?("Authorization").should be_false
+        headers.has_key?("Cookie").should be_false
+        headers["Host"].should eq("#{ALT_TEST_SERVER_HOST}:#{ALT_TEST_SERVER_PORT}")
+        headers.has_key?("Content-Type").should be_false
+        headers.has_key?("Content-Length").should be_false
+        headers["X-Custom"].should eq("preserved")
+        request.headers["Authorization"].should eq("Bearer secret")
+        request.headers["Cookie"].should eq("session=secret")
+      end
+    end
+
     it "should redirect" do
       response = Crest.get("#{TEST_SERVER_URL}/redirect/1")
 
