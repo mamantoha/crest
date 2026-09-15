@@ -188,7 +188,7 @@ module Crest
       def self.{{ method.id }}(url : String, form = {} of String => String, **args, &block : Crest::Response ->) : Nil
         request = Request.new(:{{ method.id }}, url, form, **args)
 
-        response = request.execute(&block)
+        request.execute(&block)
       end
 
       # Execute a {{ method.id.upcase }} request and returns a `Crest::Response`.

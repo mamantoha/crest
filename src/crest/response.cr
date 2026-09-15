@@ -25,7 +25,6 @@ module Crest
     delegate to_curl, to: request
 
     def initialize(@http_client_res : HTTP::Client::Response, @request : Crest::Request)
-      http_client_res.headers
     end
 
     def return! : Crest::Response
@@ -82,10 +81,6 @@ module Crest
 
     def inspect
       "<Crest::Response #{status_code.inspect} #{body_truncated(10).inspect}>"
-    end
-
-    private def raise_exception!
-      raise RequestFailed.subclass_by_status_code(status_code).new(self)
     end
 
     private def request_cookies
