@@ -2,6 +2,7 @@
 
 ## [...]
 
+- **Breaking:** Generate exception classes and status descriptions solely from Crystal's `HTTP::Status`. Rename `OK` to `Ok`, `IMUsed` to `ImUsed`, `URITooLong` to `UriTooLong`, `HTTPVersionNotSupported` to `HttpVersionNotSupported`, and `TooManyConnectionsFromThisIP` to `MisdirectedRequest`. Remove Crest-only exception classes and descriptions for statuses 425, 449, 450, and 509; statuses absent from Crystal now use `RequestFailed` with a numeric-only message. Available exceptions follow the installed Crystal version.
 - Filter redirect headers case-insensitively to prevent credential leaks through lowercase or mixed-case `Authorization` and `Cookie` headers
 - Preserve caller-supplied `Cookie` headers and give them precedence over configured cookies [#254](https://github.com/mamantoha/crest/pull/254)
 - Rebuild cookies for each redirect destination to prevent cross-host, path, and secure-cookie leaks [#253](https://github.com/mamantoha/crest/pull/253)
