@@ -18,6 +18,7 @@ dependencies:
     version: ">= 0.17.0"
   cookie_jar:
     github: mamantoha/http-cookie_jar
+    version: ">= 0.2.0"
 
 development_dependencies:
   vcr:
