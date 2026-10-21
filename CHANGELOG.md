@@ -2,6 +2,7 @@
 
 ## [...]
 
+- Prevent credentials from leaking through Digest authentication request URLs.
 - Enable strict domain validation for redirect cookies to mitigate cross-site cookie injection.
 - **Breaking:** Generate exception classes and status descriptions solely from Crystal's `HTTP::Status`. Rename `OK` to `Ok`, `IMUsed` to `ImUsed`, `URITooLong` to `UriTooLong`, `HTTPVersionNotSupported` to `HttpVersionNotSupported`, and `TooManyConnectionsFromThisIP` to `MisdirectedRequest`. Remove Crest-only exception classes and descriptions for statuses 425, 449, 450, and 509; statuses absent from Crystal now use `RequestFailed` with a numeric-only message. Available exceptions follow the installed Crystal version.
 - Filter redirect headers case-insensitively to prevent credential leaks through lowercase or mixed-case `Authorization` and `Cookie` headers

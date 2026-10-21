@@ -470,7 +470,7 @@ module Crest
     end
 
     private def digest_auth_response(uri)
-      @http_client.exec(@method, uri.to_s)
+      @http_client.exec(@method, uri.request_target)
     end
 
     private def set_proxy!(p_addr, p_port, p_user, p_pass)
