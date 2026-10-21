@@ -118,7 +118,7 @@ module Crest
       headers = {} of String => String,
       cookies = {} of String => String,
       @cookie_jar : HTTP::CookieJar? = nil,
-      @redirect_cookie_jar : HTTP::CookieJar = HTTP::CookieJar.new,
+      @redirect_cookie_jar : HTTP::CookieJar = HTTP::CookieJar.new(HTTP::DefaultCookiePolicy.new(strict_domain: true)),
       params = {} of String => String,
       @max_redirects : Int32 = 10,
       @params_encoder : Crest::ParamsEncoder.class = Crest::FlatParamsEncoder,

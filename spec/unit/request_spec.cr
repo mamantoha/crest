@@ -2,6 +2,17 @@ require "../spec_helper"
 
 describe Crest::Request do
   describe "#initialize" do
+    it "rejects country-code second-level domain cookies in the default redirect jar" do
+      request = Crest::Request.new(:get, "https://attacker.co.uk")
+      jar = request.redirect_cookie_jar
+      jar.extract(HTTP::Headers{"Set-Cookie" => "session=attacker; Domain=co.uk; Path=/"}, request.url)
+
+      jar.cookies_for("https://victim.co.uk").should be_empty
+
+      jar.extract(HTTP::Headers{"Set-Cookie" => "session=valid; Domain=attacker.co.uk; Path=/"}, request.url)
+      jar.cookies_for("https://sub.attacker.co.uk").to_h["session"].value.should eq("valid")
+    end
+
     it "new HTTP request" do
       request = Crest::Request.new(:get, "http://localhost/get")
       (request.url).should eq("http://localhost/get")
